@@ -129,9 +129,9 @@ Two writers, deliberately separate:
   `archive/games/` — until 2026-10-21 it did not, so every hourly capture was
   discarded with the runner and no 2026 CFB partition ever reached `main`.
 - **Backward, occasional.** `archive_backfill.py` seeds history from sources
-  that cost no quota: the openfootball CC0 history, the BallDontLie/CFBD/CBBD
-  caches already on disk, and nflverse. Safe to re-run at any time; it seeded
-  35,460 games across 11 competitions.
+  that cost no quota (the CFBD/CBBD caches already on disk). Safe to re-run
+  at any time. It reads only the college caches and the current
+  `data_<comp>.json` payloads.
 
 Two rules the archive enforces, both learned the hard way:
 
@@ -170,14 +170,13 @@ provider already returns on every response and persists them to
 is refused **before** it fires once a provider's tracked remaining budget hits
 its safety reserve, instead of firing blind and finding out via a 429.
 
-**This is automatic for CFBD, CBBD, BallDontLie, and API-Football** — any
-code that builds `CollegeFootballDataAdapter`, `CollegeBasketballDataAdapter`,
-`BallDontLieAdapter`, or `APISportsAdapter` (via `provider_adapters.py`, which
-every fetch/backfill/refresh script already does) is covered with zero extra
-work, because the enforcement lives in each adapter's default HTTP getter, not
-in each call site. football-data.org and The Odds API route through
-`fetch_data.py`'s own separate `_get()` and are tagged per call site with
-`provider="football_data"` / `provider="odds_api"`.
+**This is automatic for CFBD and CBBD** — any code that builds
+`CollegeFootballDataAdapter` or `CollegeBasketballDataAdapter` (via
+`provider_adapters.py`, which every fetch/refresh script already does) is
+covered with zero extra work, because the enforcement lives in each adapter's
+default HTTP getter, not in each call site. The Odds API routes through
+`fetch_data.py`'s own separate `_get()` and is tagged per call site with
+`provider="odds_api"`.
 
 **Adding a new provider or a new call site**: pass `provider="<key>"` to
 `_get_json`/`_get_csv_text` (or `fetch_data._get`) and add a `PROVIDER_SPECS`

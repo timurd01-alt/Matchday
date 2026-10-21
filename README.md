@@ -42,9 +42,9 @@ python build_cfb_snapshot.py
   describes the previous completed season, and says so in its own note.
 - **Nothing is rewritten.** A settled score is never revised; a graded pick is never
   rescored. `archive/games/` is the raw record and refuses revisions.
-- **Shadow forecasts never enter the official ledger.** `forecast_pause.py` governs
-  publication, and a displayed live read can never later be graded as though it had
-  been an official call.
+- **Only locked picks are graded.** The graded record comes from the engine's
+  handoff (`betbetter_picks.json` → `scorecard`); a pick shown after its lock can
+  never be graded as though it had been an official call.
 - **Model-market disagreement is reported, not endorsed.** On graded college samples a
   wider gap predicted *worse* results — the sign is inverted — so nothing here ranks,
   filters or stakes on it.

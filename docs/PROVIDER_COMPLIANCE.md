@@ -1,5 +1,12 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-10-21 (cleanup only, no sourcing change. Review entries and
+provider checks that applied only to retired sports or retired providers
+(football-data.org, API-Football, BALLDONTLIE, Big Balls, nflverse,
+OpenFootball) were removed; they remain in git history. Live providers are
+unchanged: CFBD, CBBD, The Odds API, SportsGameOdds (college fallback),
+SportsDataIO (disabled), Open-Meteo, ESPN public facts, News RSS.)
+
 Reviewed: 2026-10-10 (the NCAAM preseason rating now uses each team's posted
 2026-27 roster from ESPN's public team-roster endpoint -- who is on a team is a
 common-knowledge fact under the ESPN rule -- in place of the transfer-portal
@@ -171,93 +178,6 @@ three current NCAA.com/AP links were included in the college snapshot to keep
 the feed useful while the normal provider refresh is rate-limited. No article
 body, restricted provider field, new endpoint, or ESPN content was added.)
 
-Reviewed: 2026-08-23 (development-pause notice only. The notice accurately
-describes unresolved data licensing and permission requirements without
-asserting unlawful prior acquisition, changing a provider, endpoint, source,
-retained payload, redistribution scope, or the operating state of existing
-forecasts and feeds.)
-
-Reviewed: 2026-08-18 (MLB recovery and personnel-semantics hardening only. No
-provider, endpoint, key, contracted tier, retained raw payload, or
-redistribution scope changed. SportsGameOdds pitcher and hitter prop identities
-remain compact non-ESPN bookmaker-derived research context, but are now kept
-only as `starter_candidates` / `market_listed_hitters`; they cannot populate a
-canonical lineup, confirmed starter, or high-confidence readiness state.
-SportsDataIO remains disabled pending the existing commercial redistribution,
-endpoint-entitlement, and live quota-header review. Its dormant normalizer now
-preserves exact game/time, opener, per-player confirmation, and source
-timestamps and rejects ambiguous same-team/doubleheader joins. BALLDONTLIE and
-Retrosheet uses remain unchanged. Private zero-weight MLB shadow receipts add
-no provider fields to the public API or site.)
-
-Reviewed: 2026-08-16 (prediction archive, scorecard, and market-benchmark
-display corrections only. No provider, endpoint, source, retained payload, or
-redistribution scope changed. Existing normalized fixture outcomes and market
-snapshots are now filtered to verified locked predictions, settled according
-to each competition's existing regulation-versus-advancement rules, and
-aggregated across the actual eligible samples. Client rendering changes use
-plain-text DOM construction and do not expose additional provider fields.)
-
-Reviewed: 2026-08-14 (season-boundary and Champions League display correction.
-No provider, endpoint, source, or redistribution scope changed. Existing
-football-data.org match metadata is now filtered so only league-phase fixtures
-contribute to the live league-phase table, and completed-season tables and
-brackets are withheld from current-season views while match results remain
-available under the provider's existing attribution requirements.)
-
-Reviewed: 2026-08-14 (NFL roster display semantics only; no new source,
-endpoint, download, or production signal. The already-reviewed nflverse
-expected-depth-chart view may establish whether both teams have normalized
-coverage, but it has no validated player-quality grades and remains
-unconfirmed/zero-weight. The UI now distinguishes "Roster coverage" from
-"Roster edge" and explicitly marks the latter not scored instead of implying
-that a covered depth chart is a numerical talent comparison.)
-
-Reviewed: 2026-08-12 (MLB pregame personnel fallback. SportsGameOdds' existing
-Version 3 application-display permission and 2,500-object Amateur allowance
-were re-checked against its current MLB documentation. Matchday now requests
-pitcher-strikeout and batter-hit markets inside the same bounded event objects
-already used for game odds; the provider documents that market count does not
-change object cost. Only players backed by an available non-ESPN bookmaker are
-retained. Pitchers are labelled market-listed candidates, hitters are labelled
-likely active/unordered, both remain unconfirmed and zero-weight, and no raw
-odds/player payload is redistributed. A separate bullpen-rest proxy uses only
-Matchday's existing fixture history (games in the prior 72 hours and time since
-the previous game); it explicitly does not claim individual reliever usage or
-availability. Big Balls' advertised MLB lineup route was live-tested and still
-returned `meta.available=false` with empty arrays; its MLB injury call timed
-out and opaque upstream provenance remains unresolved, so it stays disabled.
-SportsFBI was rejected because its Terms limit the license to personal,
-non-commercial use and prohibit redistribution/derivative competing products;
-ClearSports was rejected because its free credits are for testing and its
-Terms prohibit redistribution without permission. MySportsFeeds' free offer
-is likewise personal/private. MLB StatsAPI remains excluded under MLB's
-automated-access terms. No scraping or direct ESPN access was introduced.)
-
-Reviewed: 2026-08-11 (NFL pregame context through nflverse. The current 2026
-`depth_charts` and `weekly_rosters` release assets were live-verified through
-GitHub's release API and carry source timestamps from 2026-08-10. nflreadr's
-1.5.0 release notes state that depth charts are ESPN-derived starting in 2025;
-this provenance is disclosed in every fixture receipt and in the UI. Matchday
-publishes only a compact, normalized expected-starter view inside its analytics
-experience, not the raw bulk file, and labels it unconfirmed rather than a
-gameday lineup. The daily private cache avoids repeated bulk downloads. The
-dedicated nflverse 2026 injury asset does not exist yet, so 2025 rows are never
-carried forward or represented as current. Repository data is offered under CC
-BY 4.0 and attribution is retained, but nflverse also warns that underlying
-football data remain subject to owner terms; this is a residual licensing risk,
-not a claim of ESPN/NFL endorsement. Direct ESPN endpoint access and scraping
-remain disabled.)
-
-Reviewed: 2026-08-10 (pregame-context retention and quota priority add no new
-provider or endpoint. Normalized injuries, lineups, starters, weather, venue
-context, and provenance already acquired from cleared sources are retained in
-a fixture-id/team/kickoff-bound private CI cache so a later empty/transient
-fixture rebuild cannot erase them. A kickoff or team-identity change prevents
-carryover. API-FOOTBALL's existing injury and lineup calls now run before
-postgame statistics against the same enforced daily/minute quota; this changes
-priority only and does not bypass reserves, terms, or source restrictions.)
-
 Reviewed: 2026-08-10 (CFBD quota reconciliation uses the provider's documented
 `/info` endpoint, which the official CFBD guidance states does not count against
 monthly limits. It is called only when the persisted ledger would otherwise
@@ -272,43 +192,6 @@ zero usage credits and returns the standard remaining/used/last-cost headers.
 It is called only after the private ledger would otherwise block a paid market
 request, and its persisted six-hour claim prevents unbounded polling.)
 
-Reviewed: 2026-08-10 (zero-cost coverage hardening. Added a pinned offline
-OpenFootball `football.json` importer at revision
-`a5dd38b3bcbe3aa2477cf400f569264253d51431`; the repository declares its
-schema, data, and scripts CC0/public domain. Matchday accepts only completed
-domestic-league results, validates fixture identities and scores, records the
-exact revision/file/license on every normalized row, and keeps the resulting
-corpus research-only and zero-weight. This is not a live provider and does not
-authorize unrelated football sites or moving/unpinned GitHub datasets. The
-provider-neutral manual availability contract remains provenance-gated,
-pregame-only, tamper-evident, and zero-weight; no source is enabled merely
-because it is publicly viewable or the site is noncommercial.)
-
-Reviewed: 2026-08-08 (SportsGameOdds v2 free-tier market fallback. Version 3
-Terms, dated 2026-06-23, permit Data to reach end users inside an application
-that supplies material independent value, while prohibiting standalone feeds,
-bulk exports, resale, and substitute services. The live Amateur key confirms a
-2,500-object monthly ceiling and access to NFL, NBA, MLB, NHL, NCAAF, NCAAB,
-MLS, and UEFA Champions League. Matchday requests at most eight near-term
-events per supported competition (15 for a complete MLB slate), caches the
-normalized result for 24 hours,
-keeps a 100-object reserve, and does not persist raw payloads. Because the free
-payload includes ESPN BET, provider-wide fair/consensus fields are rejected;
-Matchday recomputes the game market only from matched non-ESPN bookmakers.
-Event `players` are prop-linked identities, not confirmed lineups or injury
-reports, so they are neither persisted nor represented as personnel coverage.)
-
-Reviewed: 2026-08-07 (Big Balls Sports Data pregame adapter and quota handling are
-staged but disabled. The provider's terms page identifies itself as an initial draft
-with an effective date pending public launch; its public attribution page does not name
-the upstream source for the NBA/NHL injury feed, and its OpenAPI description says the
-gateway aggregates free-tier sources and scrapers while response provenance is an opaque
-source tier. That is insufficient to prove the injury rows are not ESPN-originated, so
-Matchday's standing ESPN exclusion prevents activation. The provider's machine-readable
-contract also says stored lineups are not ingested, despite broader marketing claims;
-MLB/soccer lineups, MLB injuries, starting pitchers, bullpens, NFL injuries, and college
-injuries remain explicitly missing. A configured key alone cannot enable this overlay.)
-
 Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
 Authorized The Odds API consensus snapshots now retain exact competition, fixture,
 kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
@@ -316,73 +199,12 @@ the existing append-only research ledger. Legacy unordered pair-cache entries an
 post-lock quotes are excluded from the official same-time benchmark. Closing quotes
 remain a separately labeled diagnostic and cannot alter a locked forecast.)
 
-Reviewed: 2026-08-03 (sport-aware pregame context and a disabled-by-default SportsDataIO
-overlay; activation requires a live public-redistribution agreement and endpoint coverage.
-Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,
-StatsBomb Open Data selective historical research with required credit/logo, Retrosheet official
-event downloads with its mandatory prominent notice before any transfer/publication, authorized
-basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-origin releases remain
-excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
-picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
-
-Reviewed: 2026-08-03 (the disabled-by-default Matchday Terminal X publisher adds a new
-distribution surface but no provider, endpoint, scrape, raw payload, odds line, news text,
-player data, or third-party mark. Prediction copy is derived only from Matchday's verified,
-immutable pregame receipt after the same integrity gate used for grading; legacy,
-quarantined, mutable, graded, and post-kickoff records are excluded. The publisher links
-back to Matchday, uses X's official API, keeps credentials private, and makes no claim of
-league affiliation, certainty, betting advice, or provider authorship.)
-
-NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
-family already approved above. Source file hashes are embedded in every reconstructed training row
-and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted artifacts, and
-backtest reports are local/gitignored, and the runtime loader enforces research-only, zero-weight
-attachment to future fixtures.
-
-Quarterback research uses passer identifiers and play outcomes already contained in the approved
-nflverse `pbp` releases. It does not add a roster, injury, depth-chart, ESPN, or Sports Reference
-source and does not infer that the last observed primary passer is a confirmed future starter.
-
-Elo calibration adds no provider or dataset. It is fitted only from Matchday's chronological game
-outcomes and stored inside the local zero-weight research artifact.
-
-Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
-manually transcribed as a small attributed editorial selection with a direct source link; no
-automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
 Reviewed: 2026-07-28 (NCAAF roster-talent recovery uses one request to the already-licensed
 CollegeFootballData talent endpoint before the broader build, then persists only Matchday's
 derived rating fields; no raw provider payload is published or newly redistributed.)
 Reviewed: 2026-07-27 (NCAAF and NCAAM's derived way-too-early projections now blend the
 already-licensed CFBD/CBBD prior-postseason rankings feeds with their existing talent/recruiting
 feeds; no new provider, endpoint family, raw-feed display, or redistribution behavior.)
-Reviewed: 2026-07-26 (API-FOOTBALL's free-plan date restriction confirmed live against real past
-match dates while building `backfill_lineups.py` -- historical dates outside a rolling ~3-day
-window are rejected outright, same key/plan already licensed for live box scores/lineups/injuries,
-no new provider; full detail in the Changelog below.)
-Reviewed: 2026-07-26 (Five candidate sources -- Kaggle, the Sports Reference family,
-WorldFootball.net, Flashscore, Sofascore, and Sportradar -- evaluated against live ToS text for
-the historical-backfill and live-score gaps; Sports Reference, WorldFootball.net, Flashscore, and
-Sofascore all rejected on explicit clause text, Sportradar rejected on practical accessibility
-with a licensing-clause flag for a lawyer if that changes, and Kaggle explained as needing a
-per-dataset check rather than a platform-wide call -- full detail in the Changelog below); a new
-one-time `backfill_history.py` script added the same day to seed `ratings_elo.json` from real past
-seasons on the providers already licensed above (CFBD/CBBD/BALLDONTLIE/football-data.org/
-API-FOOTBALL, no new provider), a materially different bulk-historical-pull usage pattern from the
-existing hourly incremental fetch -- detailed below.
-Reviewed: 2026-07-25 (Polymarket evaluated as a possible internal-only calibration reference for
-`audit_model_vs_market.py` and rejected -- Section 4.2's automated-access/scraping ban and
-Section 1's Restricted-Territory Content-vs-Technology-Features split, both quoted below, block it
-regardless of the narrow internal-only/non-displayed use case; API-FOOTBALL box scores/lineups wired into `build()` and a new injuries
-feed added on the same key, both detailed below; NCAAF/NCAAM season player-stat leaders added
-via CFBD/CBBD's `/stats/player/season`, on the same keys already used for
-schedules/standings/talent/recruiting; MLB tier turned on in the sport picker; BALLDONTLIE
-disclosure on `legal.html` updated to name MLB alongside NBA/NFL; NFL season player-stat leaders
-added from nflverse-data's `stats_player` release under CC BY 4.0, with nflverse-data's separate
-`espn_data` release explicitly excluded, detailed below; six fabricated/unverified The Odds API
-outright-market sport_keys for UCL and the five domestic leagues removed after live verification
-against the provider's own sports catalog, detailed below). This is an engineering checklist, not
-legal advice.
-
 ## Launch rules
 
 - Keep every API key in `config_keys.py` or server environment variables. Never
@@ -433,14 +255,6 @@ legal advice.
 
 ## Provider-specific checks
 
-- **football-data.org:** retain the visible required attribution, keep the key
-  private, use one application/domain per subscription, and stay within the
-  plan's request rate and competition coverage.
-- **OpenFootball (`openfootball/football.json`):** offline historical domestic-
-  league results only, pinned to the reviewed CC0 revision above. Preserve the
-  revision and per-row source file, reject incomplete or implausible scores,
-  and validate identity/overlap before any production use. Do not present it as
-  a live, official, lineup, injury, player-value, or event-stat source.
 - **The Odds API:** user-facing analytics are permitted, but never redistribute
   the market data as a raw feed. Keep odds informational and verify plan quota.
   Outright/futures markets are a small, fixed catalog, not "every sport_key
@@ -477,13 +291,7 @@ legal advice.
   of the free plan's nine books. Build consensus only from `byBookmaker` after
   excluding every ESPN-labelled identifier. The event `players` map is tied
   to props and is not proof of a lineup, starter, injury, or availability.
-- **BALLDONTLIE:** use the official API only; do not scrape, share the key,
-  present data as official league data, or retain/redistribute it beyond
-  reasonable application needs. Covers NBA, NFL, and MLB fixtures/scores on
-  the free launch key -- MLB was fetched and cached since launch but only
-  exposed in the sport picker starting 2026-07-25. Confirm the free-tier
-  request/monthly-call quota still comfortably covers three sports' worth of
-  polling before increasing refresh frequency for any of them.
+
 - **API-Sports / SportsDataIO / Sportmonks:** use only products and endpoints
   included in the active subscription. Never resell the provider's raw data.
   API-FOOTBALL's `/fixtures/lineups` and box-score stats
@@ -513,6 +321,7 @@ legal advice.
   dedupes by player id before writing `m['injuries']`. Confirm current plan
   coverage against the actual dashboard before relying on any of this in
   production, same caution as CFBD/CBBD below.
+
 - **CollegeFootballData / CollegeBasketballData:** the free key is suitable for
   testing and has a limited monthly allowance. Confirm the active tier permits
   the intended public-app traffic before production launch; do not assume that
@@ -527,21 +336,6 @@ legal advice.
   the top-3-per-category leaderboard is written to the public JSON payload;
   full per-player stat objects stay in-process, consistent with the
   no-bulk-download rule above.
-- **nflverse-data:** public, unauthenticated GitHub release, no API key. The
-  repository is CC BY 4.0 (SPDX `CC-BY-4.0`, confirmed against the actual
-  LICENSE file via the GitHub API, not a summary page) -- attribution is
-  required and is on `legal.html` next to the BALLDONTLIE NFL credit.
-  Matchday only reads the `stats_player` release (`NflverseAdapter` in
-  `provider_adapters.py`, "Player Summary Stats", built with R's
-  `nflfastR::calculate_stats()` from play-by-play data). nflverse-data
-  separately publishes an `espn_data` release ("ESPN Stats" -- ESPN Total
-  QBR, `qbr_season_level.csv` / `qbr_week_level.csv`); per the ESPN standing
-  rule above, that release is never fetched, and `stats_player`'s own
-  columns were checked live and contain no ESPN-attributed field or value.
-  Re-verify this separation if nflverse ever restructures `stats_player` to
-  blend in another provider's columns. Only the top-3-per-category
-  leaderboard is written to `data_nfl.json`, matching the CFBD/CBBD
-  no-bulk-download precedent.
 - **Open-Meteo:** the free API is non-commercial, rate-limited, and CC BY 4.0.
   Keep the visible Open-Meteo link next to weather. Upgrade or disable weather
   before adding ads, subscriptions, or another commercial use.
@@ -555,56 +349,6 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
-
-- **2026-08-08:** Added SportsGameOdds as a quota-bounded fallback only when
-  the existing Odds API has no near-term game market. Live account verification
-  confirmed all eight advertised Amateur leagues and the real monthly counters.
-  The adapter requests no more than eight upcoming events in a 36-hour window,
-  once per competition per 24 hours, and persists only normalized market/venue
-  fields. Consensus is rebuilt per bookmaker after removing overround and
-  excluding ESPN BET; provider aggregate prices and raw event/player/odds
-  objects are not stored. Market snapshot and lock receipts now preserve the
-  actual provider identity instead of hardcoding The Odds API. SportsGameOdds
-  does not clear injuries, lineups, probable starters, starting goalies, or
-  bullpen availability because the verified event schema supplies none of
-  those as authoritative personnel fields.
-
-- **2026-08-07:** Staged a disabled-by-default Big Balls Sports Data injury
-  adapter for the two competitions its active injury endpoint actually supports
-  (NBA and NHL). Normalization joins full team names/codes, drops a report when
-  its own expected-return date precedes the target fixture, records bounded
-  provenance, and lets only hard Out/Inactive/Injured Reserve/Suspension labels
-  enter the existing capped injury nudge. A 45-minute normalized cache and the
-  provider's observed `X-RateLimit-*` headers protect the free tier. Production
-  activation is blocked: the provider's terms are explicitly a pre-launch draft,
-  the attribution page omits the injury source, and response metadata does not
-  identify upstream vendors, so Matchday cannot enforce its absolute ESPN-origin
-  exclusion. The machine-readable OpenAPI contract also states lineup ingestion
-  is not active; no lineup, starter, bullpen, NFL, college, soccer, or MLB coverage
-  is fabricated from marketing copy. The configured key is retained privately,
-  but a key alone does not enable any request.
-
-- **2026-07-28:** Replaced the incomplete six-player UCL "Model-built XI" presentation with the
-  organizer's published 2025/26 Team of the Season (11 names/teams/positions only), visibly
-  attributed and directly linked to UEFA's source page. This is a manually maintained editorial
-  fact record, not an automated UEFA feed or scraped article. No UEFA images, prose, statistics,
-  logos, or page markup are copied. When an attributed complete selection is unavailable, the UI
-  now calls a partial scorer-derived result "attacking leaders" instead of falsely calling it an XI.
-- **2026-07-26:** Built `backfill_lineups.py`, a one-time script to backfill Team of Tournament's
-  defender/goalkeeper data for a just-finished competition (UCL's 2025-26 season ended in
-  March/April, before the lineup-tracking feature existed) on the same API-FOOTBALL key already
-  licensed for live box scores/lineups/injuries -- no new provider. **Confirmed blocked on the
-  current free plan, not a code bug:** live-tested `/fixtures?date=` against real past match dates
-  (including the UCL final itself, 2026-05-30) and every one returned `"errors":{"plan":"Free
-  plans do not have access to this date, try from 2026-07-25 to 2026-07-27."}` -- the free plan
-  only serves a rolling ~3-day window around whenever the call is made, which is why the existing
-  live hourly fetch works fine (it only ever asks about LIVE/near-term matches) but a historical
-  backfill structurally cannot, on any budget or schedule. Also confirmed the bulk season endpoint
-  (`/fixtures?league=...&season=2025`, API-FOOTBALL numbers a season by its starting year) is
-  separately blocked for the current season ("try from 2022 to 2024"). The script fails fast with
-  this exact finding the moment it hits the wall rather than silently spending quota with zero
-  progress. Left in place, unused, for if a paid plan is ever adopted, or for the 2022-2024 seasons
-  specifically via the bulk endpoint.
 
 - **2026-07-26:** Evaluated five candidate sources raised for two open gaps -- multi-season
   historical results (the `data` agent's backfill work is hitting real free-tier depth limits on
@@ -870,84 +614,6 @@ record the review date here before each public release.
     Restricted-Territory / Technology-Features ambiguity above specifically should go to an actual
     lawyer before this is ever reconsidered.
 
-- **2026-07-25:** Investigated a reported "strong domestic-soccer teams undervalued"
-  prediction symptom, traced to hand-curated `ratings_<league>.json` files only covering a
-  handful of teams per league (e.g. 8 of 18 for Bundesliga/Ligue1) -- every other team fell back
-  to `rating_boost()`/`rating_parts()`'s flat neutral defaults, and soccer's `predict()` branch
-  (unlike the American-sports branch) applied those defaults unconditionally instead of gating
-  on whether a real rating existed, so two uncurated teams looked numerically identical to the
-  model. The proposed fix mirrored the American branch's real mechanism: derive per-team
-  strength from The Odds API's own championship-winner futures market
-  (`apply_market_strength()`), extending it from NFL/NBA/MLB/NHL/NCAAF/NCAAM to domestic soccer
-  via the `outright` keys already sitting in `COMPETITIONS`. Live-checked those keys against The
-  Odds API's own `/v4/sports/?all=true` (free of usage-credit cost per the provider's docs, so
-  safe to call with the monthly quota exhausted) before writing any of that code -- none of the
-  five domestic-league keys, nor UCL's, exist in the provider's real catalog; only
-  `soccer_fifa_world_cup_winner` (WC's) is real. This mechanism is therefore not available for
-  domestic leagues or UCL at all -- The Odds API simply does not sell those futures markets right
-  now. Implemented instead: (1) removed the six fabricated `outright` keys (see the-Odds-API
-  entry above) so `fetch_outrights()` stops making a guaranteed-failing request every build cycle
-  for those competitions; (2) gated soccer's `fifa`/`value`/`star` factors in `predict()` on
-  `_ratings_lookup()` finding a real entry, same treatment the American branch's `class` factor
-  already had, so an uncurated team now contributes zero rather than an identical phantom
-  default (`fetch_data.py`, `parts()` inside `predict()`). The underlying ratings-coverage gap
-  itself (most of a domestic table, and roughly 15 of UCL's 36 clubs, having no curated entry at
-  all) remains open -- closing it needs either a real per-team squad-value data source (none of
-  the currently-integrated providers offer one for domestic soccer) or expanding the hand-curated
-  files, neither of which this change attempts. Regression coverage:
-  `SoccerKnownRatingGateTests` and `OutrightMarketKeyVerificationTests` in
-  `test_model_inputs.py`.
-- **2026-07-25:** Added defensive/advanced-metric leader categories for NFL (nflverse:
-  `def_sacks`, `def_interceptions`, `def_tackles_solo`, `def_tackles_for_loss`, `def_qb_hits` --
-  same `stats_player` CSV already in use, confirmed live to carry these columns, no new release
-  touched), NCAAF (CFBD: `defensive` category rows -- confirmed live that the existing unfiltered
-  `/stats/player/season` call already returns them alongside the offensive categories, no second
-  request), NCAAM (CBBD: `steals`/`turnovers`, flat fields on the same `/stats/player/season`
-  row already pulled), and NHL (SportsDataIO: `PlusMinus`/`Hits`/`Takeaways`/`ShotsOnGoal`, same
-  `PlayerSeasonStats` call). None of this adds a new provider, endpoint, or request -- every
-  field already existed on a call this build was already making, confirmed against each
-  provider's real response before writing the category definitions. Checked whether NBA/MLB
-  (BALLDONTLIE) could get the same treatment: a live call against BALLDONTLIE's `season_averages`
-  (NBA) and `season_stats` (MLB) endpoints with the current key returned 401 Unauthorized on
-  both, confirming `BallDontLieAdapter`'s own docstring that the free plan excludes stats
-  endpoints entirely. NBA/MLB advanced metrics stay blocked until either that plan is upgraded or
-  a different provider is chosen for those two sports specifically.
-- **2026-07-25:** Wired API-FOOTBALL box scores/lineups into `build()`
-  (`fetch_api_football_box_scores()` in `fetch_data.py`, confirmed dead code
-  since the initial commit by an earlier audit the same day) and added a new
-  injuries feed (`fetch_api_football_injuries()` / `_parse_af_injuries()`,
-  same file) -- soccer's first real injury data, feeding `predict()`'s
-  existing injury-weighting nudge for the first time. Both calls sit in
-  `build()` right after the existing `fetch_sportmonks_enrichment(matches)`
-  call, for soccer competitions only. Verified live against real
-  API-FOOTBALL fixtures (not the full `build()` pipeline -- Matchday's
-  configured competitions have no live/near-kickoff fixtures right now,
-  European domestic leagues being off-season until late August): confirmed
-  `m['stats_extra']`, `m['lineups']`, and `m['injuries']` all populate
-  correctly, that `box_score_edge` inside `_upset_adjustment()` computes a
-  real nonzero value (0.493 against a real away-team-dominant fixture) and
-  clears the `strong_box_override` threshold, and that `predict()`'s `why`
-  breakdown picks up a real `injuries` entry end to end. Also found and
-  fixed a real duplicate-records bug in the process: API-FOOTBALL's
-  `/injuries` endpoint repeats every row verbatim (confirmed live -- 14 rows
-  for 7 distinct players on one fixture, identical player id and fixture id
-  each time), which would have silently doubled the injury-nudge weight per
-  player; `_parse_af_injuries()` dedupes by player id. Only API-FOOTBALL's
-  own "Missing Fixture" `player.type` is treated as a confirmed absence
-  ("Questionable" is a doubt, not counted), matching the injury nudge's
-  existing "hard out only" convention. Injuries get the smallest of the
-  three shared-quota caps (`API_FOOTBALL_MAX_INJURIES = 8`) and only target
-  LIVE/pre-kickoff-UPCOMING fixtures, reusing box scores' `/fixtures`-by-date
-  cache from the same run rather than paying for a second lookup. 11 new
-  regression tests added in `test_model_inputs.py` (injuries parsing/dedupe,
-  predict() integration confirming only confirmed-out counts, box_score_edge
-  against a real API-FOOTBALL stats shape, and quota-safety guards).
-  `python -m unittest test_model_inputs test_provider_adapters
-  test_generate_posts` stays green (66 tests). Model weighting/thresholds
-  (e.g. `strong_box_override`'s 0.35/75 cutoffs, the per-sport injury
-  weight) were not touched -- this is a data-wiring change, not a model
-  change; that distinction stays with `predictions`/the site owner.
-
 - **2026-07-25:** Added NCAAF/NCAAM season player-stat leaders
   (`CollegeFootballDataAdapter.leaders()` / `CollegeBasketballDataAdapter.leaders()`
   in `provider_adapters.py`, wired via the new `fetch_college_leaders()` cache
@@ -1002,14 +668,6 @@ record the review date here before each public release.
   interpretation changed here; this is an engineering checklist note, not
   legal advice.
 
-- **2026-07-29:** Added a provider-neutral NFL availability intake contract.
-  The code performs no scraping and assumes no permission from a provider.
-  Each batch must declare an accepted authorization basis and source reference;
-  ESPN-origin inputs, post-kickoff ingestion, and future-dated observations are
-  rejected. Accepted records remain zero-weight research receipts in a local,
-  gitignored, SHA-256-chained ledger. Enabling a provider still requires a
-  separate terms/tier review and configured authorized access.
-
 - **2026-07-29:** Added a provider-neutral market snapshot and benchmarking
   contract. It performs no scraping and enables no provider. Inputs must carry
   an accepted authorization basis and source reference and must be recorded
@@ -1036,17 +694,6 @@ record the review date here before each public release.
   Historical use still requires a tier/terms review and reproducible authorized
   exports; a season-end aggregate must never be relabeled as a pregame snapshot.
 
-- **2026-07-29:** Added an offline StatsBomb Open Data three-way soccer
-  challenger using only the official `hudl/open-data` repository layout. It
-  does not scrape StatsBomb/Hudl sites and cannot attach its selective research
-  coverage to live fixtures. Regulation outcomes are reconstructed from event
-  periods 1-2; extra time and shootouts are excluded from 1X2 grading. Match-
-  date blocks are sealed before updates, missing event files/incomplete pairs
-  are reported, prior starting-XI continuity never reads the target lineup,
-  and generated artifacts remain gitignored with production weight zero.
-  Anything published from these results must credit StatsBomb and use the
-  required logo under the repository's current terms.
-
 - **2026-07-29:** Closed the authorized-profile delivery gap. CI now builds a
   derived NFL team profile from official nflverse releases, keeps raw play-by-
   play only in the private Actions cache, and embeds matched derived fields in
@@ -1055,35 +702,6 @@ record the review date here before each public release.
   an explicit zero-weight receipt. Historical-only StatsBomb and Retrosheet
   profiles remain `attach_live=false`; no selective dataset is represented as
   live coverage. This is reasoning transparency, not model promotion.
-
-- **2026-07-29:** Reviewed Retrosheet's official current use notice and data-use
-  pages before the MLB historical integration. Retrosheet permits reuse, including
-  commercial products, when its specified copyright/attribution statement appears
-  prominently. The builder consumes only official downloaded 2020–2025 event and
-  game-log archives, records source hashes and the required notice in the frozen
-  derived artifact, and performs no website scraping. Historical Retrosheet inputs
-  are used only to fit and validate the run-strength challenger. Live reconstruction
-  uses the already authorized BALLDONTLIE team games/runs totals; unavailable stats
-  endpoints, target-game starters, lineups, and bullpen availability are not inferred.
-  The historical gate passed, but the live challenger remains a prospective shadow
-  with production weight zero.
-
-- **2026-08-03:** Added a credential-gated SportsDataIO pregame overlay for
-  NFL, NBA, MLB, NHL, NCAAF, and NCAAM. It uses the configured licensed API,
-  never scrapes pages, caches only normalized derived fields, and fails to an
-  explicit unavailable state when the active account does not include an
-  endpoint. The overlay is also disabled by default; a configured key alone is
-  insufficient, and activation requires explicit confirmation that the active
-  agreement permits live public redistribution. MLB/NBA starting-lineup requests use the provider's projections
-  product; NFL weekly injury reports use the stats product, while the other
-  league APIs expose `InjuredPlayers` in projections. Soccer keeps
-  the existing API-FOOTBALL/Sportmonks path because it already has native
-  fixture identity and lineup/injury integration. Market consensus from the
-  licensed Odds API is now passed through the existing authorized, pre-kickoff,
-  hash-chained snapshot contract for later benchmark analysis. Personnel,
-  workload, and venue additions remain prospective shadows with production
-  weight zero; this change does not claim that an unverified provider tier or
-  an unvalidated feature improves the production model.
 
 - **2026-09-18 (owner amendment):** Permitted a narrowly scoped AP Top 25
   refresh from ESPN's public college-football scoreboard response. Matchday

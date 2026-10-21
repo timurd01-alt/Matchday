@@ -81,12 +81,12 @@ def record_block(provider):
 # reconciles an old observation with the current one:
 #
 #   rolling_seconds : reset_header carries SECONDS remaining in the current
-#                      window (football-data.org's X-RequestCounter-Reset).
+#                      window (no current provider uses it).
 #   rolling_unix     : reset_header carries a unix timestamp when the window
-#                      next resets (BallDontLie's x-ratelimit-reset).
+#                      next resets (no current provider uses it).
 #   calendar_day     : no reset header exists; assume the provider's own
-#                       counter resets at UTC midnight (API-Football's daily
-#                       bucket, confirmed via its own body: "limit_day").
+#                       counter resets at UTC midnight (no current provider
+#                       uses it).
 #   calendar_month   : no reset header exists; assume the provider resets on
 #                       the 1st of the UTC month. CFBD's 429 body reads
 #                       "Monthly call quota exceeded", so this is
@@ -124,47 +124,6 @@ PROVIDER_SPECS = {
         "window": "calendar_month",
         "reserve": 25,
         "quota_body_markers": ("monthly call quota exceeded",),
-    },
-    "football_data": {
-        "remaining_header": "x-requests-available-minute",
-        "limit_header": None,
-        "reset_header": "x-requestcounter-reset",
-        "window": "rolling_seconds",
-        "reserve": 1,
-    },
-    "balldontlie": {
-        "remaining_header": "x-ratelimit-remaining",
-        "limit_header": "x-ratelimit-limit",
-        "reset_header": "x-ratelimit-reset",
-        "window": "rolling_unix",
-        "reserve": 1,
-    },
-    # Big Balls returns the tighter of its minute/day buckets in the standard
-    # X-RateLimit trio on every authenticated response. The reset is a unix
-    # timestamp. This enforces the observable bucket; Matchday additionally
-    # limits usage structurally to one cached league-wide injury request per
-    # supported competition, keeping the 1,000/day free allowance well clear.
-    "bigballs": {
-        "remaining_header": "x-ratelimit-remaining",
-        "limit_header": "x-ratelimit-limit",
-        "reset_header": "x-ratelimit-reset",
-        "window": "rolling_unix",
-        "reserve": 2,
-    },
-    # API-Football exposes two INDEPENDENT buckets on every response: a
-    # per-minute rate limit and a per-day request cap. Both must have room or
-    # the call is refused -- see check()/record_response()'s "api_football"
-    # special-casing, which updates/consults both sub-keys together.
-    "api_football": {
-        "sub_keys": {
-            "minute": {"remaining_header": "x-ratelimit-remaining",
-                       "limit_header": "x-ratelimit-limit",
-                       "window": "rolling_seconds_assumed", "assumed_seconds": 60,
-                       "reserve": 1},
-            "day": {"remaining_header": "x-ratelimit-requests-remaining",
-                    "limit_header": "x-ratelimit-requests-limit",
-                    "window": "calendar_day", "reserve": 5},
-        },
     },
     "odds_api": {
         "remaining_header": "x-requests-remaining",

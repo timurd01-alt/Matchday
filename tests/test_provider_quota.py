@@ -150,16 +150,6 @@ class QuotaModuleTests(unittest.TestCase):
         with open(self.path, encoding="utf-8") as handle:
             self.assertEqual(json.load(handle)["cfbd"]["remaining"], 40)
 
-    def test_local_debit_does_not_apply_to_rolling_windows(self):
-        """A rolling per-minute bucket refills on its own clock; a missing
-        header there means "no fresh reading", not "one more call spent"."""
-        pq.record_response("football_data",
-                           {"x-requests-available-minute": "8",
-                            "X-RequestCounter-Reset": "45"}, state_path=self.path)
-        pq.record_response("football_data", {}, state_path=self.path)
-        with open(self.path, encoding="utf-8") as handle:
-            self.assertEqual(json.load(handle)["football_data"]["remaining"], 8)
-
     def test_never_observed_monthly_provider_fails_closed(self):
         with self.assertRaises(pq.QuotaExceededError):
             pq.check("cfbd", state_path=self.path)
@@ -174,81 +164,6 @@ class QuotaModuleTests(unittest.TestCase):
     def test_unknown_provider_is_a_silent_no_op(self):
         pq.record_response("not_a_real_provider", {"whatever": "1"}, state_path=self.path)
         pq.check("not_a_real_provider", state_path=self.path)
-
-    # ---- football-data.org: rolling per-minute window, seconds-until-reset -
-    def test_football_data_rolling_seconds_window(self):
-        pq.record_response("football_data",
-                           {"x-requests-available-minute": "0", "X-RequestCounter-Reset": "45"},
-                           state_path=self.path)
-        with self.assertRaises(pq.QuotaExceededError):
-            pq.check("football_data", state_path=self.path)
-
-    def test_football_data_window_expiry_clears_the_block(self):
-        pq.record_response("football_data",
-                           {"x-requests-available-minute": "0", "X-RequestCounter-Reset": "1"},
-                           state_path=self.path)
-        with open(self.path, encoding="utf-8") as handle:
-            state = json.load(handle)
-        # Backdate the reset moment into the past, simulating the 1-second
-        # window having actually elapsed since the observation.
-        state["football_data"]["reset_at"] = (
-            datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(seconds=1)
-        ).isoformat()
-        with open(self.path, "w", encoding="utf-8") as handle:
-            json.dump(state, handle)
-        pq.check("football_data", state_path=self.path)
-
-    # ---- BallDontLie: rolling window, unix-epoch reset -----------------
-    def test_balldontlie_unix_reset_header(self):
-        future = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
-        pq.record_response("balldontlie",
-                           {"x-ratelimit-limit": "5", "x-ratelimit-remaining": "1",
-                            "x-ratelimit-reset": str(int(future.timestamp()))},
-                           state_path=self.path)
-        with self.assertRaises(pq.QuotaExceededError):
-            pq.check("balldontlie", state_path=self.path)  # 1 <= reserve(1)
-
-    def test_balldontlie_healthy_remaining_is_not_blocked(self):
-        pq.record_response("balldontlie", {"x-ratelimit-limit": "5", "x-ratelimit-remaining": "4",
-                                           "x-ratelimit-reset": "9999999999"},
-                           state_path=self.path)
-        pq.check("balldontlie", state_path=self.path)
-
-    def test_bigballs_uses_observed_unix_reset_bucket(self):
-        future = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
-        pq.record_response("bigballs",
-                           {"x-ratelimit-limit": "100", "x-ratelimit-remaining": "2",
-                            "x-ratelimit-reset": str(int(future.timestamp()))},
-                           state_path=self.path)
-        with self.assertRaises(pq.QuotaExceededError):
-            pq.check("bigballs", state_path=self.path)
-
-    # ---- API-Football: two independent buckets from one response ------
-    def test_api_football_tracks_minute_and_day_independently(self):
-        pq.record_response("api_football",
-                           {"x-ratelimit-limit": "10", "x-ratelimit-remaining": "9",
-                            "x-ratelimit-requests-limit": "100", "x-ratelimit-requests-remaining": "92"},
-                           state_path=self.path)
-        pq.check("api_football", state_path=self.path)  # both well above reserve
-
-    def test_api_football_day_bucket_alone_can_block_the_call(self):
-        """Confirmed live 2026-07-31: minute bucket healthy (9/10) while the
-        day bucket can independently run out -- either one exhausting must
-        refuse the call, not just the minute bucket."""
-        pq.record_response("api_football",
-                           {"x-ratelimit-limit": "10", "x-ratelimit-remaining": "9",
-                            "x-ratelimit-requests-limit": "100", "x-ratelimit-requests-remaining": "3"},
-                           state_path=self.path)
-        with self.assertRaises(pq.QuotaExceededError):
-            pq.check("api_football", state_path=self.path)
-
-    def test_api_football_minute_bucket_alone_can_block_the_call(self):
-        pq.record_response("api_football",
-                           {"x-ratelimit-limit": "10", "x-ratelimit-remaining": "1",
-                            "x-ratelimit-requests-limit": "100", "x-ratelimit-requests-remaining": "80"},
-                           state_path=self.path)
-        with self.assertRaises(pq.QuotaExceededError):
-            pq.check("api_football", state_path=self.path)
 
     # ---- The Odds API: used/remaining pair, no explicit limit header ---
     def test_odds_api_confirmed_live_exhausted_state_is_enforced(self):
@@ -336,8 +251,8 @@ class QuotaModuleTests(unittest.TestCase):
 
     def test_status_reports_every_tracked_provider(self):
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "10"}, state_path=self.path)
-        pq.record_response("balldontlie", {"x-ratelimit-limit": "5", "x-ratelimit-remaining": "3",
-                                           "x-ratelimit-reset": "9999999999"}, state_path=self.path)
+        pq.record_response("odds_api", {"x-requests-remaining": "300", "x-requests-used": "200"},
+                           state_path=self.path)
         lines = pq.status(self.path)
         self.assertEqual(len(lines), 2)
         self.assertTrue(any("cfbd" in line for line in lines))

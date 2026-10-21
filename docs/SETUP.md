@@ -59,15 +59,13 @@ The production workflow runs hourly. The scheduler may use longer caches for dis
 
 ## Prediction lifecycle
 
-1. Upcoming fixtures receive a model probability and selected outcome.
-2. Early forecasts are labeled preliminary while late information is still missing. The official pick is written to the competition's `picks_log*.json` ledger inside the 24-hour lock window before kickoff.
-3. The selected side and confidence are not rewritten. If odds arrive later, market-comparison fields may be added without changing the locked pick.
+1. The engine writes `betbetter_picks.json` (picks, results, scorecard, ratings). `betbetter_handoff.py` validates it and attaches each pick to its fixture; `build_cfb_snapshot.py` builds `matchday-cfb-snapshot.js` for the browser.
+2. Each pick locks before kickoff. The Scorecard page states the lock lead.
+3. After the game is final the engine grades the locked pick. The graded record is `betbetter_picks.json` → `scorecard.sports.<sport>.recent`. A locked pick is never rewritten.
 4. In-progress games are shown as result pending, not as a live scoreboard.
-5. After the provider marks a game final, the locked record is graded and persisted. A failed persistence check fails the fetch instead of silently publishing an ungraded result.
 
 The Odds API is queried only for upcoming fixtures close to kickoff and the response is cached to protect quota. A missing market does not prevent the model from locking its independent prediction.
 
-The private market benchmark automatically segments completed comparisons by competition, realized home/away outcome, favorite versus underdog result, model-market agreement, confidence band, and closing-favorite strength. Segments report log loss and Brier score on the same fixtures; they remain research-only and do not automatically retune the model.
 
 The expanded match view shows market, injury, lineup, starter/key-player, weather, and venue readiness using sport-native labels. Empty provider containers count as missing data. SportsDataIO can overlay injuries on the college feeds without replacing their schedules; endpoint availability still depends on the configured SportsDataIO product and account tier. Keep `SPORTSDATAIO_PREGAME_ENABLED` off for free-trial, replay, or personal/research-only access. Before production activation, confirm that the agreement permits live public redistribution, inspect the contracted tier's live quota headers, add its verified quota-ledger rule, and explicitly wire the enable flag into CI. New personnel and venue fields are captured as prospective shadows with production weight zero until they pass the model-promotion protocol.
 

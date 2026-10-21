@@ -19,6 +19,6 @@ The public pipeline covers NCAA football and NCAA men's basketball, and nothing 
 
 ## Official data and Matchday outputs
 
-Official scores, schedules, standings, polls, odds, and player data come from attributed providers. Elo ratings, SRS, predictions, projected rankings, title estimates, upset indicators, and related explanations are Matchday-derived outputs.
+Official scores, schedules, standings, polls, odds, and player data come from attributed providers. Power ratings, SRS, predictions, projected rankings, title estimates, upset indicators, and related explanations are Matchday-derived outputs.
 
 For the code and issue tracker, visit the [Matchday repository](https://github.com/timurd01-alt/Matchday).
