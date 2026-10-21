@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021E",
+  "tag": "Maintenance",
+  "title": "Removed leftovers from retired sports",
+  "items": [
+   "Removed unused scripts, quota settings and documentation left over from the sports Matchday no longer covers. Nothing visible on the site changes.",
+   "Setup and FAQ pages now describe how picks are actually locked and graded today."
+  ]
+ },
+ {
   "date": "Build 1021D",
   "tag": "Content",
   "title": "Roadmap & limits brought up to date",
