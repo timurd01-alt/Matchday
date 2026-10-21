@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021A",
+  "tag": "Fix",
+  "title": "Rating vs schedule: crowded corners spread out",
+  "items": [
+   "Zooming into a basketball corner of Rating vs schedule drew all ~165 teams as overlapping logos. Large corners now show logos for the 40 best-ranked teams and dots for the rest (still tappable), on a taller chart with logos pushed apart so none overlap."
+  ]
+ },
+ {
   "date": "Build 1019A",
   "tag": "Fix",
   "title": "Team pages: right games, right order",
