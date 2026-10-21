@@ -1,53 +1,12 @@
 {
   "handoff_version": 11,
   "source": "sigmalab",
-  "generated_at": "2026-10-20T23:18:01.865596+00:00",
+  "generated_at": "2026-10-21T18:26:42.060332+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
   ],
   "picks": [
-    {
-      "event_id": "a3ed14cd9d938b3c5bea48fb0c78805d",
-      "sport": "ncaaf",
-      "competition": "NCAAF",
-      "home": "Marshall Thundering Herd",
-      "away": "South Alabama Jaguars",
-      "kickoff": "2026-10-20T23:30:00Z",
-      "pick_name": "South Alabama Jaguars",
-      "pick": "a",
-      "model_pct": 61.1,
-      "market_pct": 53.9,
-      "edge_points": 7.2,
-      "model_name": "NCAAF adjusted-margin model",
-      "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-10-20T23:02:57.574627+00:00",
-      "official_pick": false,
-      "basis": "live_shadow_forecast",
-      "moves_until_kickoff": false,
-      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
-      "sides": [
-        {
-          "selection": "Marshall Thundering Herd",
-          "is_home": true,
-          "model_pct": 38.9
-        },
-        {
-          "selection": "South Alabama Jaguars",
-          "is_home": false,
-          "model_pct": 61.1
-        }
-      ],
-      "model_line": {
-        "home_margin": -7.7,
-        "total": 66.1
-      },
-      "projected_score": {
-        "home": 27,
-        "away": 34,
-        "simulations": 10000
-      }
-    },
     {
       "event_id": "b04425f83695783f343344ca6d33261c",
       "sport": "ncaaf",
@@ -55,11 +14,11 @@
       "home": "Sam Houston Bearkats",
       "away": "New Mexico State Aggies",
       "kickoff": "2026-10-22T00:00:00Z",
-      "pick_name": "Sam Houston Bearkats",
+      "pick_name": "Sam Houston State Bearkats",
       "pick": "h",
       "model_pct": 52.3,
-      "market_pct": null,
-      "edge_points": null,
+      "market_pct": 42.3,
+      "edge_points": 10.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:02.524101+00:00",
@@ -69,19 +28,14 @@
       "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
       "sides": [
         {
+          "selection": "Sam Houston State Bearkats",
+          "is_home": true,
+          "model_pct": 52.3
+        },
+        {
           "selection": "New Mexico State Aggies",
           "is_home": false,
           "model_pct": 47.7
-        },
-        {
-          "selection": "Sam Houston State Bearkats",
-          "is_home": false,
-          "model_pct": null
-        },
-        {
-          "selection": "Sam Houston Bearkats",
-          "is_home": true,
-          "model_pct": 52.3
         }
       ],
       "model_line": {
@@ -145,8 +99,8 @@
       "pick_name": "James Madison Dukes",
       "pick": "a",
       "model_pct": 75.5,
-      "market_pct": 77.7,
-      "edge_points": -2.2,
+      "market_pct": 78.0,
+      "edge_points": -2.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:07.298782+00:00",
@@ -156,19 +110,14 @@
       "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
       "sides": [
         {
+          "selection": "Appalachian State Mountaineers",
+          "is_home": true,
+          "model_pct": 24.5
+        },
+        {
           "selection": "James Madison Dukes",
           "is_home": false,
           "model_pct": 75.5
-        },
-        {
-          "selection": "Appalachian State Mountaineers",
-          "is_home": false,
-          "model_pct": null
-        },
-        {
-          "selection": "App State Mountaineers",
-          "is_home": true,
-          "model_pct": 24.5
         }
       ],
       "model_line": {
@@ -191,8 +140,8 @@
       "pick_name": "Memphis Tigers",
       "pick": "h",
       "model_pct": 77.4,
-      "market_pct": 76.4,
-      "edge_points": 1.0,
+      "market_pct": 76.2,
+      "edge_points": 1.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:16.913320+00:00",
@@ -232,8 +181,8 @@
       "pick_name": "Virginia Cavaliers",
       "pick": "h",
       "model_pct": 56.8,
-      "market_pct": 52.8,
-      "edge_points": 4.0,
+      "market_pct": 53.6,
+      "edge_points": 3.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:21.448518+00:00",
@@ -273,8 +222,8 @@
       "pick_name": "UConn Huskies",
       "pick": "h",
       "model_pct": 83.9,
-      "market_pct": 84.2,
-      "edge_points": -0.3,
+      "market_pct": 84.3,
+      "edge_points": -0.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:29.640464+00:00",
@@ -291,12 +240,7 @@
         {
           "selection": "UMass Minutemen",
           "is_home": false,
-          "model_pct": null
-        },
-        {
-          "selection": "Massachusetts Minutemen",
-          "is_home": false,
-          "model_pct": 16.1
+          "model_pct": 16.2
         }
       ],
       "model_line": {
@@ -319,8 +263,8 @@
       "pick_name": "Tulsa Golden Hurricane",
       "pick": "h",
       "model_pct": 50.9,
-      "market_pct": 52.3,
-      "edge_points": -1.4,
+      "market_pct": 52.4,
+      "edge_points": -1.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:35.029510+00:00",
@@ -360,8 +304,8 @@
       "pick_name": "Air Force Falcons",
       "pick": "a",
       "model_pct": 62.0,
-      "market_pct": 64.2,
-      "edge_points": -2.2,
+      "market_pct": 64.3,
+      "edge_points": -2.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:40.212436+00:00",
@@ -401,8 +345,8 @@
       "pick_name": "NC State Wolfpack",
       "pick": "a",
       "model_pct": 69.5,
-      "market_pct": 69.5,
-      "edge_points": 0.0,
+      "market_pct": 69.3,
+      "edge_points": 0.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:03:45.493730+00:00",
@@ -483,8 +427,8 @@
       "pick_name": "Toledo Rockets",
       "pick": "h",
       "model_pct": 62.6,
-      "market_pct": 59.5,
-      "edge_points": 3.1,
+      "market_pct": 59.9,
+      "edge_points": 2.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:33.450305+00:00",
@@ -524,8 +468,8 @@
       "pick_name": "LSU Tigers",
       "pick": "a",
       "model_pct": 63.0,
-      "market_pct": 71.7,
-      "edge_points": -8.7,
+      "market_pct": 71.5,
+      "edge_points": -8.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:38.531084+00:00",
@@ -647,8 +591,8 @@
       "pick_name": "Texas Tech Red Raiders",
       "pick": "a",
       "model_pct": 72.2,
-      "market_pct": 77.7,
-      "edge_points": -5.5,
+      "market_pct": 77.9,
+      "edge_points": -5.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:01.261997+00:00",
@@ -688,8 +632,8 @@
       "pick_name": "Northwestern Wildcats",
       "pick": "h",
       "model_pct": 84.0,
-      "market_pct": 85.1,
-      "edge_points": -1.1,
+      "market_pct": 85.3,
+      "edge_points": -1.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:21.567713+00:00",
@@ -729,8 +673,8 @@
       "pick_name": "SMU Mustangs",
       "pick": "h",
       "model_pct": 87.2,
-      "market_pct": 88.5,
-      "edge_points": -1.3,
+      "market_pct": 88.8,
+      "edge_points": -1.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:07.851856+00:00",
@@ -811,8 +755,8 @@
       "pick_name": "Miami (OH) RedHawks",
       "pick": "a",
       "model_pct": 56.5,
-      "market_pct": 55.2,
-      "edge_points": 1.3,
+      "market_pct": 55.5,
+      "edge_points": 1.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:04:57.431407+00:00",
@@ -934,8 +878,8 @@
       "pick_name": "Oregon Ducks",
       "pick": "a",
       "model_pct": 66.2,
-      "market_pct": 74.9,
-      "edge_points": -8.7,
+      "market_pct": 75.2,
+      "edge_points": -9.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:02.991877+00:00",
@@ -975,8 +919,8 @@
       "pick_name": "Georgia Tech Yellow Jackets",
       "pick": "h",
       "model_pct": 69.3,
-      "market_pct": 62.2,
-      "edge_points": 7.1,
+      "market_pct": 62.5,
+      "edge_points": 6.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:42.318897+00:00",
@@ -1042,7 +986,7 @@
         "total": 55.1
       },
       "projected_score": {
-        "home": 34,
+        "home": 35,
         "away": 17,
         "simulations": 10000
       }
@@ -1057,8 +1001,8 @@
       "pick_name": "BYU Cougars",
       "pick": "a",
       "model_pct": 63.8,
-      "market_pct": 69.1,
-      "edge_points": -5.3,
+      "market_pct": 69.5,
+      "edge_points": -5.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:20.495636+00:00",
@@ -1095,11 +1039,11 @@
       "home": "Northern Illinois Huskies",
       "away": "Hawai'i Rainbow Warriors",
       "kickoff": "2026-10-24T19:30:00Z",
-      "pick_name": "Hawai'i Rainbow Warriors",
+      "pick_name": "Hawaii Rainbow Warriors",
       "pick": "a",
       "model_pct": 56.5,
-      "market_pct": null,
-      "edge_points": null,
+      "market_pct": 63.0,
+      "edge_points": -6.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:55.120633+00:00",
@@ -1115,11 +1059,6 @@
         },
         {
           "selection": "Hawaii Rainbow Warriors",
-          "is_home": false,
-          "model_pct": null
-        },
-        {
-          "selection": "Hawai'i Rainbow Warriors",
           "is_home": false,
           "model_pct": 56.5
         }
@@ -1144,8 +1083,8 @@
       "pick_name": "South Carolina Gamecocks",
       "pick": "h",
       "model_pct": 50.2,
-      "market_pct": 54.7,
-      "edge_points": -4.5,
+      "market_pct": 54.3,
+      "edge_points": -4.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:28.164819+00:00",
@@ -1185,8 +1124,8 @@
       "pick_name": "Buffalo Bulls",
       "pick": "h",
       "model_pct": 63.0,
-      "market_pct": 61.3,
-      "edge_points": 1.7,
+      "market_pct": 59.1,
+      "edge_points": 3.9,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:06.937972+00:00",
@@ -1226,8 +1165,8 @@
       "pick_name": "Iowa Hawkeyes",
       "pick": "a",
       "model_pct": 65.2,
-      "market_pct": 68.8,
-      "edge_points": -3.6,
+      "market_pct": 68.9,
+      "edge_points": -3.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:36.048580+00:00",
@@ -1253,7 +1192,7 @@
       },
       "projected_score": {
         "home": 21,
-        "away": 28,
+        "away": 30,
         "simulations": 10000
       }
     },
@@ -1267,8 +1206,8 @@
       "pick_name": "UCLA Bruins",
       "pick": "h",
       "model_pct": 75.5,
-      "market_pct": 83.2,
-      "edge_points": -7.7,
+      "market_pct": 83.1,
+      "edge_points": -7.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:05:48.503414+00:00",
@@ -1308,8 +1247,8 @@
       "pick_name": "Ball State Cardinals",
       "pick": "h",
       "model_pct": 82.3,
-      "market_pct": 82.4,
-      "edge_points": -0.1,
+      "market_pct": 82.9,
+      "edge_points": -0.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:01.194266+00:00",
@@ -1349,8 +1288,8 @@
       "pick_name": "North Texas Mean Green",
       "pick": "a",
       "model_pct": 62.7,
-      "market_pct": 54.5,
-      "edge_points": 8.2,
+      "market_pct": 54.7,
+      "edge_points": 8.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:13.032797+00:00",
@@ -1472,8 +1411,8 @@
       "pick_name": "Ohio Bobcats",
       "pick": "h",
       "model_pct": 81.3,
-      "market_pct": 79.1,
-      "edge_points": 2.2,
+      "market_pct": 79.3,
+      "edge_points": 2.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:26.383212+00:00",
@@ -1513,8 +1452,8 @@
       "pick_name": "Troy Trojans",
       "pick": "h",
       "model_pct": 84.3,
-      "market_pct": 84.2,
-      "edge_points": 0.1,
+      "market_pct": 84.0,
+      "edge_points": 0.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:31.499651+00:00",
@@ -1554,8 +1493,8 @@
       "pick_name": "Louisiana Tech Bulldogs",
       "pick": "h",
       "model_pct": 78.3,
-      "market_pct": 79.4,
-      "edge_points": -1.1,
+      "market_pct": 79.7,
+      "edge_points": -1.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:42.027610+00:00",
@@ -1582,6 +1521,47 @@
       "projected_score": {
         "home": 31,
         "away": 17,
+        "simulations": 10000
+      }
+    },
+    {
+      "event_id": "8e7bee2f3b66bdb4f992e30400aca4cb",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Southern Miss Golden Eagles",
+      "away": "Louisiana Ragin' Cajuns",
+      "kickoff": "2026-10-24T21:00:00Z",
+      "pick_name": "Louisiana Ragin Cajuns",
+      "pick": "a",
+      "model_pct": 72.0,
+      "market_pct": 76.9,
+      "edge_points": -4.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-10-20T23:06:36.946299+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Southern Mississippi Golden Eagles",
+          "is_home": true,
+          "model_pct": 28.0
+        },
+        {
+          "selection": "Louisiana Ragin Cajuns",
+          "is_home": false,
+          "model_pct": 72.0
+        }
+      ],
+      "model_line": {
+        "home_margin": -9.0,
+        "total": 56.0
+      },
+      "projected_score": {
+        "home": 21,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -1613,11 +1593,6 @@
         {
           "selection": "San Jose State Spartans",
           "is_home": false,
-          "model_pct": null
-        },
-        {
-          "selection": "San José State Spartans",
-          "is_home": false,
           "model_pct": 37.3
         }
       ],
@@ -1641,8 +1616,8 @@
       "pick_name": "Boise State Broncos",
       "pick": "a",
       "model_pct": 77.7,
-      "market_pct": 80.9,
-      "edge_points": -3.2,
+      "market_pct": 81.6,
+      "edge_points": -3.9,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:06:53.763141+00:00",
@@ -1682,8 +1657,8 @@
       "pick_name": "Colorado State Rams",
       "pick": "h",
       "model_pct": 55.2,
-      "market_pct": 48.7,
-      "edge_points": 6.5,
+      "market_pct": 48.9,
+      "edge_points": 6.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:00.091476+00:00",
@@ -1723,8 +1698,8 @@
       "pick_name": "Clemson Tigers",
       "pick": "h",
       "model_pct": 55.0,
-      "market_pct": 57.3,
-      "edge_points": -2.3,
+      "market_pct": 56.9,
+      "edge_points": -1.9,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:13.182688+00:00",
@@ -1764,8 +1739,8 @@
       "pick_name": "Oklahoma State Cowboys",
       "pick": "h",
       "model_pct": 79.3,
-      "market_pct": 80.6,
-      "edge_points": -1.3,
+      "market_pct": 80.9,
+      "edge_points": -1.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:06.332996+00:00",
@@ -1846,8 +1821,8 @@
       "pick_name": "Arizona Wildcats",
       "pick": "h",
       "model_pct": 72.3,
-      "market_pct": 73.6,
-      "edge_points": -1.3,
+      "market_pct": 73.7,
+      "edge_points": -1.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:45.928179+00:00",
@@ -1887,8 +1862,8 @@
       "pick_name": "USC Trojans",
       "pick": "a",
       "model_pct": 58.4,
-      "market_pct": 57.6,
-      "edge_points": 0.8,
+      "market_pct": 57.7,
+      "edge_points": 0.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:31.268036+00:00",
@@ -1928,8 +1903,8 @@
       "pick_name": "Texas State Bobcats",
       "pick": "h",
       "model_pct": 81.4,
-      "market_pct": 80.4,
-      "edge_points": 1.0,
+      "market_pct": 80.7,
+      "edge_points": 0.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:59.284167+00:00",
@@ -1969,8 +1944,8 @@
       "pick_name": "Kentucky Wildcats",
       "pick": "h",
       "model_pct": 75.6,
-      "market_pct": 78.1,
-      "edge_points": -2.5,
+      "market_pct": 78.2,
+      "edge_points": -2.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:39.722864+00:00",
@@ -2010,8 +1985,8 @@
       "pick_name": "North Carolina Tar Heels",
       "pick": "h",
       "model_pct": 76.0,
-      "market_pct": 73.8,
-      "edge_points": 2.2,
+      "market_pct": 73.9,
+      "edge_points": 2.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:52.341817+00:00",
@@ -2051,8 +2026,8 @@
       "pick_name": "Texas Longhorns",
       "pick": "h",
       "model_pct": 55.3,
-      "market_pct": 59.2,
-      "edge_points": -3.9,
+      "market_pct": 59.6,
+      "edge_points": -4.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:07:25.094845+00:00",
@@ -2092,8 +2067,8 @@
       "pick_name": "UTSA Roadrunners",
       "pick": "a",
       "model_pct": 50.6,
-      "market_pct": 56.3,
-      "edge_points": -5.7,
+      "market_pct": 56.1,
+      "edge_points": -5.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:08:05.437950+00:00",
@@ -2133,8 +2108,8 @@
       "pick_name": "New Mexico Lobos",
       "pick": "h",
       "model_pct": 70.5,
-      "market_pct": 64.0,
-      "edge_points": 6.5,
+      "market_pct": 63.2,
+      "edge_points": 7.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-20T23:08:12.225418+00:00",
@@ -2160,7 +2135,7 @@
       },
       "projected_score": {
         "home": 30,
-        "away": 20,
+        "away": 21,
         "simulations": 10000
       }
     },
@@ -2364,7 +2339,7 @@
         "total": 53.0
       },
       "projected_score": {
-        "home": 23,
+        "home": 24,
         "away": 27,
         "simulations": 10000
       }
@@ -4215,17 +4190,17 @@
       }
     },
     {
-      "event_id": "schedule:401856734",
+      "event_id": "581c12d11a86412432fe89645cbe80b2",
       "sport": "ncaaf",
       "competition": "NCAAF",
       "home": "Georgia Bulldogs",
       "away": "Florida Gators",
-      "kickoff": "2026-10-31T19:30Z",
+      "kickoff": "2026-10-31T19:30:00Z",
       "pick_name": "Georgia Bulldogs",
       "pick": "h",
       "model_pct": 83.6,
-      "market_pct": null,
-      "edge_points": null,
+      "market_pct": 76.6,
+      "edge_points": 7.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-11T22:48:21.773929+00:00",
@@ -4251,7 +4226,7 @@
       },
       "projected_score": {
         "home": 38,
-        "away": 21,
+        "away": 23,
         "simulations": 10000
       }
     },
@@ -9212,7 +9187,7 @@
       },
       "projected_score": {
         "home": 38,
-        "away": 23,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -10608,7 +10583,7 @@
       },
       "projected_score": {
         "home": 35,
-        "away": 20,
+        "away": 21,
         "simulations": 10000
       }
     },
@@ -12248,7 +12223,7 @@
       },
       "projected_score": {
         "home": 38,
-        "away": 14,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -15980,7 +15955,7 @@
         "total": 50.0
       },
       "projected_score": {
-        "home": 28,
+        "home": 30,
         "away": 20,
         "simulations": 10000
       }
@@ -18897,7 +18872,7 @@
         "total": 61.8
       },
       "projected_score": {
-        "home": 34,
+        "home": 35,
         "away": 23,
         "simulations": 10000
       }
@@ -34864,6 +34839,57 @@
     }
   },
   "results": [
+    {
+      "event_id": "401871092",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-10-20",
+      "kickoff": "2026-10-20T23:30Z",
+      "home": "Marshall Thundering Herd",
+      "away": "South Alabama Jaguars",
+      "home_score": 20.0,
+      "away_score": 13.0,
+      "margin": 7.0,
+      "winner": "Marshall Thundering Herd",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401871069",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-10-20",
+      "kickoff": "2026-10-20T23:00Z",
+      "home": "Delaware Blue Hens",
+      "away": "Missouri State Bears",
+      "home_score": 61.0,
+      "away_score": 38.0,
+      "margin": 23.0,
+      "winner": "Delaware Blue Hens",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401871055",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-10-20",
+      "kickoff": "2026-10-20T23:00Z",
+      "home": "Florida International Panthers",
+      "away": "Middle Tennessee Blue Raiders",
+      "home_score": 23.0,
+      "away_score": 26.0,
+      "margin": -3.0,
+      "winner": "Middle Tennessee Blue Raiders",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
     {
       "event_id": "401871091",
       "sport": "ncaaf",
@@ -50962,15 +50988,6 @@
   ],
   "fixtures": [
     {
-      "event_id": "401871092",
-      "sport": "ncaaf",
-      "competition": null,
-      "kickoff": "2026-10-20T23:30Z",
-      "home": "Marshall Thundering Herd",
-      "away": "South Alabama Jaguars",
-      "status": "pre"
-    },
-    {
       "event_id": "401871070",
       "sport": "ncaaf",
       "competition": null,
@@ -59334,7 +59351,7 @@
       "season_role": "prior_completed",
       "factors_season": 2026,
       "source": "Box scores (four factors) and opponent-adjusted efficiency",
-      "generated_through": "2026-10-20",
+      "generated_through": "2026-10-21",
       "teams": {
         "TCU Horned Frogs": {
           "games": 35,
@@ -66204,7 +66221,7 @@
       "matchup_score": 33.53,
       "model_pick": "Texas Longhorns",
       "model_pct": 55.3,
-      "market_pct": 59.2
+      "market_pct": 59.6
     },
     "considered": 49,
     "horizon_days": 7,
@@ -66213,7 +66230,7 @@
   },
   "coverage": {
     "picks": 473,
-    "games_without_a_pick": 1,
+    "games_without_a_pick": 0,
     "competitions": [
       "NCAAF",
       "NCAAM"
@@ -66222,8 +66239,8 @@
       "ncaaf",
       "ncaam"
     ],
-    "results": 510,
-    "fixtures": 483
+    "results": 513,
+    "fixtures": 482
   },
   "publication": {
     "official_publication_eligible": false,
@@ -66243,48 +66260,48 @@
           "duplicate_cards_not_counted": 176,
           "fbs_versus_fcs_not_counted": 220,
           "locked_selections": 826,
-          "graded_selections": 816,
-          "awaiting_result": 10
+          "graded_selections": 822,
+          "awaiting_result": 4
         },
         "record": {
-          "picks": 408,
-          "wins": 307,
-          "losses": 101,
-          "hit_rate_pct": 75.2,
-          "expected_hit_rate_pct": 74.5,
-          "calibration_gap_points": 0.8,
+          "picks": 411,
+          "wins": 308,
+          "losses": 103,
+          "hit_rate_pct": 74.9,
+          "expected_hit_rate_pct": 74.4,
+          "calibration_gap_points": 0.5,
           "confidence_interval_pct": [
-            70.8,
-            79.2
+            70.5,
+            78.9
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 724,
-          "beat_market_pct": 45.6,
+          "graded_priced_selections": 730,
+          "beat_market_pct": 45.8,
           "beat_market": {
-            "picks": 724,
-            "wins": 330,
-            "losses": 394,
+            "picks": 730,
+            "wins": 334,
+            "losses": 396,
             "ties": 0,
-            "hit_rate_pct": 45.6,
+            "hit_rate_pct": 45.8,
             "expected_hit_rate_pct": 50.0,
-            "calibration_gap_points": -4.4,
+            "calibration_gap_points": -4.2,
             "confidence_interval_pct": [
-              42.0,
-              49.2
+              42.2,
+              49.4
             ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 330,
-            "wins": 255,
-            "losses": 75,
-            "hit_rate_pct": 77.3,
-            "expected_hit_rate_pct": 75.0,
-            "calibration_gap_points": 2.3,
+            "picks": 333,
+            "wins": 256,
+            "losses": 77,
+            "hit_rate_pct": 76.9,
+            "expected_hit_rate_pct": 74.9,
+            "calibration_gap_points": 2.0,
             "confidence_interval_pct": [
-              72.5,
-              81.5
+              72.1,
+              81.1
             ]
           },
           "disagreed_with_market": {
@@ -66299,18 +66316,18 @@
               56.4
             ]
           },
-          "disagreement_share_pct": 9.6,
+          "disagreement_share_pct": 9.5,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
           "available": true,
-          "underdog_lift_points": 2.9,
-          "contested_underdogs": 154,
+          "underdog_lift_points": 2.8,
+          "contested_underdogs": 156,
           "contested_band_pct": [
             30.0,
             50.0
           ],
-          "mean_divergence_points": 7.0,
+          "mean_divergence_points": 6.9,
           "outright_disagreements": {
             "picks": 33,
             "wins": 12,
@@ -66421,17 +66438,17 @@
           },
           {
             "band": "60–70%",
-            "picks": 94,
-            "hit_rate_pct": 64.9,
-            "expected_hit_rate_pct": 64.7,
-            "calibration_gap_points": 0.2
+            "picks": 96,
+            "hit_rate_pct": 64.6,
+            "expected_hit_rate_pct": 64.6,
+            "calibration_gap_points": -0.0
           },
           {
             "band": "70–80%",
-            "picks": 70,
-            "hit_rate_pct": 74.3,
+            "picks": 71,
+            "hit_rate_pct": 73.2,
             "expected_hit_rate_pct": 74.8,
-            "calibration_gap_points": -0.5
+            "calibration_gap_points": -1.6
           },
           {
             "band": "80–90%",
@@ -66456,8 +66473,8 @@
             "selection": "South Alabama Jaguars",
             "probability_pct": 61.7,
             "market_probability_pct": 54.8,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "20–13"
           },
           {
             "event_name": "Missouri State Bears at Delaware Blue Hens",
@@ -66466,8 +66483,8 @@
             "selection": "Delaware Blue Hens",
             "probability_pct": 62.7,
             "market_probability_pct": 56.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "61–38"
           },
           {
             "event_name": "Middle Tennessee Blue Raiders at Florida International Panthers",
@@ -66476,8 +66493,8 @@
             "selection": "Florida International Panthers",
             "probability_pct": 76.3,
             "market_probability_pct": 77.1,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "23–26"
           },
           {
             "event_name": "Nebraska Cornhuskers at Oregon Ducks",
