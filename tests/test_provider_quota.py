@@ -503,6 +503,17 @@ class SpendAccountingTests(unittest.TestCase):
         report = pq.usage_report(state_path=self.path)
         self.assertEqual(report["cfbd"]["spent"], 5)
         self.assertEqual(report["cfbd"]["top_endpoints"][0], ("/games", 5))
+        self.assertEqual(report["cfbd"]["budget_would_decline"], 0)
+
+    def test_usage_report_carries_advisory_refusals(self):
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"},
+                           state_path=self.path, url="https://x.dev/games")
+        state = json.loads(open(self.path, encoding="utf-8").read())
+        state["cfbd"]["budget_would_decline"] = 3
+        with open(self.path, "w", encoding="utf-8") as f:
+            json.dump(state, f)
+        report = pq.usage_report(state_path=self.path)
+        self.assertEqual(report["cfbd"]["budget_would_decline"], 3)
 
 
 class BudgetRationingTests(unittest.TestCase):

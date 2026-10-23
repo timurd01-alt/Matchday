@@ -729,6 +729,10 @@ def usage_report(state_path=None):
             "ceiling": ceiling,
             "share_of_ceiling": round(spent / ceiling, 4) if ceiling else None,
             "top_endpoints": sorted(usage.items(), key=lambda kv: (-kv[1], kv[0]))[:8],
+            # Refusals the advisory budget would have made. Paired with the
+            # spend above, this is the evidence for flipping `enforce`.
+            "budget_would_decline": int(entry.get("budget_would_decline") or 0),
+            "budget_last_advice": entry.get("budget_last_advice"),
         }
     return report
 
@@ -744,3 +748,15 @@ def status(state_path=None):
                      f"{f'/{limit}' if limit is not None else ''} remaining"
                      f" (observed {entry.get('observed_at', '?')})")
     return lines
+
+
+if __name__ == "__main__":
+    import sys
+    # `--usage` prints this period's spend to the CI log. The ledger only
+    # exists in the Actions cache, so without this nobody outside a runner
+    # can read the evidence `quota_budget.json` says to wait for.
+    if "--usage" in sys.argv:
+        print(json.dumps(usage_report(), indent=2, default=str))
+    else:
+        for line in status():
+            print(line)

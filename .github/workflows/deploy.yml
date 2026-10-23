@@ -185,6 +185,14 @@ jobs:
 
       # Runs after every report step above so it ranks this run's evidence.
       # Never blocks the build.
+      # The spend ledger lives only in this runner's cache. Printing it is
+      # the only way to read the evidence quota_budget.json waits on before
+      # `enforce` may flip. Counts and endpoint paths only -- no keys.
+      - name: Report provider spend this period
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python provider_quota.py --usage
+
       - name: Rank the next task from accumulated evidence
         if: github.event_name != 'push'
         continue-on-error: true

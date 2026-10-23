@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1022A",
+  "tag": "Ops",
+  "title": "Data-usage reporting",
+  "items": [
+   "Each hourly refresh now logs how many calls every data provider has used this month and on what, so future limits are set from real usage rather than estimates."
+  ]
+ },
+ {
   "date": "Build 1021F",
   "tag": "Fix",
   "title": "Full 2026 football season archived",
