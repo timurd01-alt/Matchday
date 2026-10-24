@@ -31,7 +31,7 @@ the project-file archives and different databases are not a single transaction.
    For Sigma Lab's main database, run this using the actual recovery folder:
 
    ```powershell
-   python tools/exact_database_backup.py restore --archive "sigma-main/sigmalab.sqlite3.gz" --output "C:/RecoveredSigmaLabData/sigmalab.sqlite3"
+   python tools/exact_database_backup.py restore --archive "sigma-main/sigmalab.sqlite3.gz" --output "C:/SigmaLabData/sigmalab.sqlite3"
    ```
 
    Run it from the recovery package directory. If using the script saved in a
@@ -41,9 +41,10 @@ the project-file archives and different databases are not a single transaction.
    It refuses to overwrite an existing file. A failed/interrupted restore must
    be retried with a new output filename. NTFS compression keeps the large
    restored file compressed on disk transparently; SQLite reads it normally.
-3. Change `SIGMALAB_DB` in Sigma Lab's restored `.env` to
-   `C:/RecoveredSigmaLabData/sigmalab.sqlite3`. Alternatively restore to the
-   original `C:/SigmaLabData/sigmalab.sqlite3` and keep the original setting.
+3. Keep `SIGMALAB_DB` in Sigma Lab's restored `.env` set to
+   `C:/SigmaLabData/sigmalab.sqlite3`. Restore the original directory layout:
+   the basketball impact model also explicitly reads its supplementary files
+   from `C:/SigmaLabData/sdv`, independently of the database setting.
 4. Restore the two smaller databases with the same tool:
 
    ```powershell
@@ -53,7 +54,8 @@ the project-file archives and different databases are not a single transaction.
 
    Use new empty destinations. Never combine recovered databases with WAL/SHM
    files left by another copy. Restore `Sigma-Lab-external-data` from the saved
-   project ZIP alongside the main database, including its `sdv` directory.
+   project ZIP into `C:/SigmaLabData`, including its `sdv` directory. Copy the
+   contents of `Sigma-Lab-external-data`, not that enclosing directory itself.
 5. Restore the same code, model settings, ballots and dependency versions
    before running ratings. Use the saved lockfiles. Check the rating workflow
    with collection disabled/offline first; then resume normal collection.
