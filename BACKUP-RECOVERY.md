@@ -1,5 +1,10 @@
 # Matchday and Sigma Lab recovery
 
+For exact database recovery, use [EXACT-RECOVERY.md](EXACT-RECOVERY.md) and
+`scripts/exact_database_backup.py`. Native archives preserve internal row IDs
+and database settings and are verified by byte-identical decompression.
+The SQL exports described below are an additional logical recovery option.
+
 The irreplaceable input is Sigma Lab's configured database, currently
 `C:\SigmaLabData\sigmalab.sqlite3` (approximately 92 GB on 2026-10-24).
 Cloning GitHub alone does not restore it. Sigma Lab ignores `data/`; Matchday
