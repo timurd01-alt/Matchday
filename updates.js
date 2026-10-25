@@ -5,6 +5,15 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 1025E",
+  "tag": "UI",
+  "title": "Q&A matches the Roadmap page",
+  "items": [
+   "Reused the Roadmap page styling exactly: Inter typography, compact title, four-part summary, sidebar navigation and open text sections.",
+   "Preserved the high-level methodology and corrected content."
+  ]
+ },
+ {
+  "date": "Build 1025E",
   "tag": "New",
   "title": "Official quarterback availability beside matchups",
   "items": [

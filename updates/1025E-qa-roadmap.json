@@ -1,0 +1,10 @@
+{
+  "rank": 528,
+  "date": "Build 1025E",
+  "tag": "UI",
+  "title": "Q&A matches the Roadmap page",
+  "items": [
+    "Reused the Roadmap page styling exactly: Inter typography, compact title, four-part summary, sidebar navigation and open text sections.",
+    "Preserved the high-level methodology and corrected content."
+  ]
+}

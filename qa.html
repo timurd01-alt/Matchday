@@ -25,30 +25,56 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
 <style>
-html{font-size:16px}body.qaPage{height:auto;overflow:auto;background:var(--bg);line-height:1.65}
-.qaPage .wrap{width:min(1120px,calc(100% - 40px));margin:auto;padding:24px 0 48px}
-.qaPage .back{display:inline-flex;align-items:center;min-height:44px;color:var(--text);font:700 .85rem var(--display);letter-spacing:.04em;text-transform:uppercase}
-.qaPage .back img{width:32px;height:32px;object-fit:contain;margin-right:12px}
-.qaPage .eyebrow{margin:30px 0 10px;color:var(--signal);font:600 .75rem var(--mono);letter-spacing:.1em}
-.qaPage .brand{font:700 clamp(2.6rem,6vw,4.5rem)/1.02 var(--display);letter-spacing:-.02em;text-transform:uppercase}
-.qaPage .lead{max-width:68ch;margin:18px 0;color:#bec8d3;font-size:1rem}
-.qaPage .meta{display:flex;flex-wrap:wrap;gap:12px 24px;padding:16px 0 24px;border-bottom:1px solid var(--line);color:var(--faint);font:.72rem var(--mono)}
-.qaPage .layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;margin-top:32px}
-.qaPage nav{position:sticky;top:24px;align-self:start;display:grid;gap:4px}
-.qaPage nav a{display:flex;align-items:center;min-height:44px;padding:8px 12px;border-left:2px solid var(--line);color:var(--faint);font:.78rem var(--mono)}
-.qaPage nav a:hover{color:var(--signal);border-color:var(--signal);background:var(--bg2)}
-.qaPage section{scroll-margin-top:24px;margin-bottom:32px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden}
-.qaPage h2{padding:16px 22px;border-bottom:1px solid var(--line);background:var(--bg2);font:700 1.5rem var(--display);text-transform:uppercase;letter-spacing:.025em}
-.qaPage .q{padding:22px;border-bottom:1px solid var(--line)}.qaPage .q:last-child{border:0}
-.qaPage h3{margin:0 0 8px;font:600 1rem/1.4 var(--sans)}
-.qaPage p{color:#bec8d3}.qaPage .q p{max-width:70ch;font-size:.9rem}
-.qaPage .q a,.qaPage .foot a{color:var(--signal);text-decoration:underline;text-underline-offset:3px}
-.qaPage .foot{padding-top:22px;border-top:1px solid var(--line);font-size:.75rem;color:var(--faint)}
-.qaPage a:focus-visible{outline:2px solid var(--brand);outline-offset:4px}
-.qaPage .skip{position:absolute;left:20px;top:-100px;background:var(--bg);padding:12px;color:var(--brand)}.qaPage .skip:focus{top:8px;z-index:20}
-@media(max-width:760px){.qaPage .wrap{width:calc(100% - 28px);padding-top:12px}.qaPage .layout{grid-template-columns:1fr;gap:24px}.qaPage nav{position:static;display:flex;flex-wrap:wrap;gap:6px}.qaPage nav a{border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}.qaPage .q{padding:18px}.qaPage h2{padding:14px 18px}.qaPage .eyebrow{margin-top:22px}}
+/* Same tokens as styles.css: one typeface, one size scale, one palette. */
+:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--body:#c3ccd8;--muted:#7e8a9a;--faint:#8a96a7;--signal:#b4d62c;--link:#76caff;--sans:"Inter",system-ui,sans-serif;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-base:.9rem;--fs-lg:1rem;--fs-title:clamp(1.6rem,3vw,2.2rem);--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--fs-base);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:3px}
+.wrap{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:28px 0 64px}
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--muted);font-size:var(--fs-sm);font-weight:var(--fw-medium);text-decoration:none}
+.back:hover{color:var(--signal)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;padding:20px 0 16px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:var(--fs-title);font-weight:var(--fw-heavy);letter-spacing:-.03em;line-height:1.1}
+.tag{color:var(--muted);font-size:var(--fs-2xs);font-weight:var(--fw-semibold);letter-spacing:.12em;text-transform:uppercase}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:24px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+.facts div{padding:14px 16px;border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts b{display:block;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--text)}
+.facts span{display:block;margin-top:2px;color:var(--muted);font-size:var(--fs-xs)}
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;margin-top:32px}
+.toc{position:sticky;top:24px;align-self:start}
+.toc p{margin:0 0 8px;color:var(--signal);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.12em;text-transform:uppercase}
+.toc a{display:block;padding:6px 0;color:var(--muted);font-size:var(--fs-sm);text-decoration:none}
+.toc a:hover{color:var(--text)}
+.updated{margin-top:16px;color:var(--faint);font-size:var(--fs-xs)}
+section{padding:0 0 32px;margin:0 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+section:last-of-type{border-bottom:0;margin-bottom:0}
+.label{margin:0 0 6px;color:var(--signal);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.12em;text-transform:uppercase}
+h2{margin:0 0 16px;font-size:var(--fs-title);font-weight:var(--fw-heavy);letter-spacing:-.03em;line-height:1.15}
+h3{margin:24px 0 6px;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--text)}
+p,li{color:var(--body)}
+p{margin:0 0 12px;max-width:68ch}
+ul{margin:0 0 12px;padding-left:18px;max-width:68ch}
+li{margin:4px 0}
+strong{color:var(--text);font-weight:var(--fw-semibold)}
+.sources{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:var(--fs-md)}
+.sources th{padding:0 12px 8px 0;text-align:left;color:var(--muted);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line2)}
+.sources td{padding:12px 12px 12px 0;vertical-align:top;border-bottom:1px solid var(--line);color:var(--body)}
+.sources td:first-child{color:var(--text);font-weight:var(--fw-semibold);white-space:nowrap}
+.sources td:last-child{color:var(--muted);font-size:var(--fs-sm)}
+.contact{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:0;list-style:none}
+.contact a{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;color:var(--text);font-size:var(--fs-sm);font-weight:var(--fw-medium);text-decoration:none}
+.contact a:hover{border-color:var(--signal);color:var(--signal)}
+.plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--line);max-width:68ch}
+.plan b{color:var(--text);font-weight:var(--fw-semibold)}
+.plan span{color:var(--muted);font-size:var(--fs-sm)}
+.foot{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:var(--fs-xs)}
+@media(max-width:860px){.layout{grid-template-columns:1fr;gap:24px}.toc{position:static;display:flex;flex-wrap:wrap;gap:6px}.toc p,.updated{width:100%;margin:0}.toc a{padding:6px 12px;border:1px solid var(--line2);border-radius:999px}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:560px){.plan{grid-template-columns:1fr}.sources thead{display:none}.sources tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}.sources td{display:block;padding:0;border:0}.sources td:first-child{white-space:normal}.sources td+td{margin-top:4px}}
 </style>
 <script type="application/ld+json">
 {
@@ -187,115 +213,86 @@ html{font-size:16px}body.qaPage{height:auto;overflow:auto;background:var(--bg);l
 }
 </script>
 </head>
-<body class="qaPage">
-<a class="skip" href="#questions">Skip to questions</a>
+<body>
 <main class="wrap">
-  <a class="back" href="index.html"><img src="icon-192.png" alt="">Matchday Terminal / Q&amp;A</a>
-  <p class="eyebrow">MATCHDAY TERMINAL · FIELD GUIDE</p>
-  <h1 class="brand">The game. The model.<br>The questions.</h1>
-  <p class="lead">Plain answers about where the picks come from, what the ratings and probabilities mean, how the record is kept honest, and where the data comes from.</p>
-  <div class="meta"><span>Free · one-person project</span><span>No account required</span><span>Updated October 2026</span></div>
+  <a class="back" href="index.html">← Back to Matchday Terminal</a>
+  <header class="head">
+    <h1>Q&amp;A &amp; methodology</h1>
+    <span class="tag">The model · The record · The data</span>
+  </header>
+  <div class="facts" aria-label="At a glance">
+    <div><b>Two sports</b><span>College football and men's hoops</span></div>
+    <div><b>Own models</b><span>Ratings, probabilities and projections</span></div>
+    <div><b>Public record</b><span>Frozen cards, graded after the final</span></div>
+    <div><b>Free to use</b><span>No account needed to browse</span></div>
+  </div>
   <div class="layout">
-  <nav aria-label="Q&amp;A sections"><a href="#basics">The basics</a><a href="#model">The model</a><a href="#record">Picks and the record</a><a href="#rankings">Rankings</a><a href="#data">Data and privacy</a></nav>
-<div id="questions">
-
-  <section id="basics">
-    <h2>The basics</h2>
-    <div class="qa">
-      <div class="q">
+    <nav class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <a href="#basics">The basics</a>
+      <a href="#model">The model</a>
+      <a href="#record">Picks and the record</a>
+      <a href="#rankings">Rankings</a>
+      <a href="#data">Data and privacy</a>
+      <div class="updated">Updated October 25, 2026</div>
+    </nav>
+    <div>
+      <section id="basics">
+        <p class="label">The basics</p>
+        <h2>A research desk for college sports</h2>
+        <p>Plain answers about Matchday Terminal: what the ratings mean, how forecasts and results are presented, and where the data comes from.</p>
         <h3>What is Matchday?</h3>
         <p>A free research site for college football and men&#x27;s college basketball: power ratings, win probabilities, projected scores, rankings and a pick record graded in public. It&#x27;s built for fans who want to understand a game, not to sell anything.</p>
-      </div>
-      <div class="q">
         <h3>Who builds and runs Matchday?</h3>
         <p>One person, as a passion project rather than a company. It makes no money and has no plans to: no ads, no subscriptions, no affiliate links, no paid placements. It is not affiliated with the NCAA, its conferences or schools, or any bookmaker.</p>
-      </div>
-      <div class="q">
         <h3>How can I use it?</h3>
         <p>However works for you: settle an argument, follow a team, check how the model has really done, or compare it with the betting market. Nothing here is betting advice, and nobody with a stake in what you decide pays for the site.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="model">
-    <h2>The model</h2>
-    <div class="qa">
-      <div class="q">
+      </section>
+      <section id="model">
+        <p class="label">The model</p>
+        <h2>How the numbers take shape</h2>
         <h3>Where do the picks come from?</h3>
         <p>Matchday Terminal publishes forecasts from its own sports models. At a high level, they use team performance, opponent strength and game context to estimate a matchup. Where available, market information also informs the published forecast. The model-only and market numbers are identified separately where shown. Exact weights, formulas and tuning rules are kept private.</p>
-      </div>
-      <div class="q">
         <h3>What is a power rating?</h3>
         <p>A power rating estimates team strength against an average opponent on a neutral field. It adjusts performance for the opposition faced, rather than ranking teams by wins alone. Offense, defense and schedule strength provide additional context where available. A rating describes strength; a résumé describes what a team has earned.</p>
-      </div>
-      <div class="q">
         <h3>How does the model rate teams before they&#x27;ve played?</h3>
         <p>Preseason estimates use prior performance and available roster information. As current-season evidence grows, the model updates its view. Football and basketball use sport-specific approaches; the detailed construction and adjustment rules remain private. Check the season and update notes beside a rating, especially before a new season begins.</p>
-      </div>
-      <div class="q">
         <h3>What does a win probability mean?</h3>
         <p>It is an estimated chance of winning, not a certainty or an accuracy score. A team given a 60% chance can still lose: across many comparable games, that estimate implies roughly four losses in ten. Whether the estimates match actual results must be checked against the graded sample, with its dates and size.</p>
-      </div>
-      <div class="q">
         <h3>How is the projected score made?</h3>
         <p>The model estimates the expected scoring margin and total, allowing for the sport&#x27;s scoring patterns and game-to-game variation. The displayed score is a representative projection, not an exact-score promise. The simulation settings and score-adjustment rules remain private.</p>
-      </div>
-      <div class="q">
         <h3>Why does the model sometimes disagree with the market?</h3>
         <p>The model and the market use different information and can respond at different times. The displayed gap compares the model&#x27;s probability with the market-implied probability for the same outcome. A larger gap does not establish an advantage: check the disagreement record and its sample rather than assuming the market is wrong.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="record">
-    <h2>Picks and the record</h2>
-    <div class="qa">
-      <div class="q">
+      </section>
+      <section id="record">
+        <p class="label">Picks and the record</p>
+        <h2>How the work is checked</h2>
         <h3>When are picks locked?</h3>
         <p>The engine&#x27;s graded record uses forecast cards frozen an hour before kickoff. Upcoming matchup forecasts are live reads and can change before kickoff; they are not themselves frozen official picks. Read the labels beside each number, and use the public record for the frozen-card results.</p>
-      </div>
-      <div class="q">
         <h3>How is the record graded?</h3>
         <p>Frozen cards are assessed against final results. The public record concerns who wins, not a claim of beating the spread or making a profit. Read its sample size, time period and caveats alongside the hit rate. Model-market disagreements are examined separately because agreeing with the favourite can make an overall win rate look stronger than the model&#x27;s independent contribution.</p>
-      </div>
-      <div class="q">
         <h3>What are the Upsets of the week?</h3>
         <p>A weekly selection of market underdogs the model considers more competitive than their prices suggest. The list can be short or empty when there are no qualifying games. An underdog watch is not a guarantee or an automatic official pick. Judge the results against the market&#x27;s expected win rate, not against the expectation that most underdogs should win.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="rankings">
-    <h2>Rankings</h2>
-    <div class="qa">
-      <div class="q">
+      </section>
+      <section id="rankings">
+        <p class="label">Rankings</p>
+        <h2>Three rankings, different purposes</h2>
         <h3>What is the difference between the Top 25s?</h3>
         <p>The power rating Top 25 is the model&#x27;s own ranking from its ratings. The AP Top 25 is the official national media poll, shown with the date it was released. The Personal Ballot is one person&#x27;s weekly Top 25, checked against each team&#x27;s record and résumé before it is published. It&#x27;s an opinion, and it is labelled as one.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="data">
-    <h2>Data and privacy</h2>
-    <div class="qa">
-      <div class="q">
+      </section>
+      <section id="data">
+        <p class="label">Data and privacy</p>
+        <h2>Where the information comes from</h2>
         <h3>Where does the data come from?</h3>
-        <p>Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the Legal page.</p>
-      </div>
-      <div class="q">
+        <p>Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the <a href="legal.html#sources">Legal page</a>.</p>
         <h3>Do I need an account, and is my data private?</h3>
-        <p>You can browse without an account. Preferences such as your favourite team are stored in your browser. Community picks and their associated identifiers are sent to the leaderboard; optional sign-in lets you keep those picks across devices. The Legal page explains storage, retention and deletion choices.</p>
-      </div>
-      <div class="q">
+        <p>You can browse without an account. Preferences such as your favourite team are stored in your browser. Community picks and their associated identifiers are sent to the leaderboard; optional sign-in lets you keep those picks across devices. The <a href="legal.html#privacy">Legal page</a> explains storage, retention and deletion choices.</p>
         <h3>How often does it update?</h3>
         <p>The site checks scores and odds on an hourly schedule, subject to provider availability and caching. Ratings, rankings and the coming week&#x27;s forecasts follow the weekly publishing cycle; the dates shown on each section identify its edition. Matchday Terminal is not a live-score service. In-progress games remain pending until a confirmed final result arrives.</p>
-      </div>
+      </section>
     </div>
-  </section>
-
-</div>
-</div>
-  <p class="foot">© 2026 Matchday Terminal · Volunteer-run and unpaid · No sponsors, ads or affiliate links. This page explains how the product works; see the <a href="legal.html">Legal page</a> for terms, privacy, and data-source notices.</p>
+  </div>
+  <p class="foot">© 2026 Matchday Terminal · Volunteer-run and unpaid · No sponsors, ads or affiliate links · <a href="legal.html">Terms, privacy and data sources</a>.</p>
 </main>
 </body>
 </html>
