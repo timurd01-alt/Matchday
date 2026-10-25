@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Q&amp;A · How the Model Works · Matchday Terminal</title>
-<meta name="description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, the public record and where the data comes from.">
+<meta name="description" content="How to read Matchday Terminal power ratings, matchup probabilities, projected scores, market gaps, rankings and performance comparisons.">
 <link rel="canonical" href="https://matchdayterminal.com/qa.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Matchday Terminal">
 <meta property="og:url" content="https://matchdayterminal.com/qa.html">
 <meta property="og:title" content="Q&amp;A · How the Model Works · Matchday Terminal">
-<meta property="og:description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, the public record and where the data comes from.">
+<meta property="og:description" content="How to read Matchday Terminal power ratings, matchup probabilities, projected scores, market gaps, rankings and performance comparisons.">
 <meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:image:alt" content="Matchday Terminal logo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Q&amp;A · How the Model Works · Matchday Terminal">
-<meta name="twitter:description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, the public record and where the data comes from.">
+<meta name="twitter:description" content="How to read Matchday Terminal power ratings, matchup probabilities, projected scores, market gaps, rankings and performance comparisons.">
 <meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
 <meta name="twitter:image:alt" content="Matchday Terminal logo">
 <meta name="theme-color" content="#070a0f">
@@ -83,34 +83,10 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is Matchday?",
+      "name": "What goes into a matchup forecast?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A free research site for college football and men's college basketball: power ratings, win probabilities, projected scores, rankings and a pick record graded in public. It's built for fans who want to understand a game, not to sell anything."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Who builds and runs Matchday?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "One person, as a passion project rather than a company. It makes no money and has no plans to: no ads, no subscriptions, no affiliate links, no paid placements. It is not affiliated with the NCAA, its conferences or schools, or any bookmaker."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How can I use it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "However works for you: settle an argument, follow a team, check how the model has really done, or compare it with the betting market. Nothing here is betting advice, and nobody with a stake in what you decide pays for the site."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where do the picks come from?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Matchday Terminal publishes forecasts from its own sports models. At a high level, they use team performance, opponent strength and game context to estimate a matchup. Where available, market information also informs the published forecast. The model-only and market numbers are identified separately where shown. Exact weights, formulas and tuning rules are kept private."
+        "text": "Team performance, opponent strength and game context inform the matchup estimate. Where available, market information also informs the published forecast. Model-only and market probabilities are identified separately where shown."
       }
     },
     {
@@ -126,7 +102,7 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
       "name": "How does the model rate teams before they've played?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Preseason estimates use prior performance and available roster information. As current-season evidence grows, the model updates its view. Football and basketball use sport-specific approaches; the detailed construction and adjustment rules remain private. Check the season and update notes beside a rating, especially before a new season begins."
+        "text": "Preseason estimates use prior performance and available roster information. As current-season evidence grows, the model updates its view. Football and basketball use sport-specific approaches."
       }
     },
     {
@@ -142,7 +118,7 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
       "name": "How is the projected score made?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The model estimates the expected scoring margin and total, allowing for the sport's scoring patterns and game-to-game variation. The displayed score is a representative projection, not an exact-score promise. The simulation settings and score-adjustment rules remain private."
+        "text": "The model estimates an expected scoring margin and total, allowing for the sport's scoring patterns and game-to-game variation. The displayed score is a representative outcome around that estimate."
       }
     },
     {
@@ -155,18 +131,10 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
     },
     {
       "@type": "Question",
-      "name": "When are picks locked?",
+      "name": "How should I read the performance record?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The engine's graded record uses forecast cards frozen an hour before kickoff. Upcoming matchup forecasts are live reads and can change before kickoff; they are not themselves frozen official picks. Read the labels beside each number, and use the public record for the frozen-card results."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How is the record graded?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Frozen cards are assessed against final results. The public record concerns who wins, not a claim of beating the spread or making a profit. Read its sample size, time period and caveats alongside the hit rate. Model-market disagreements are examined separately because agreeing with the favourite can make an overall win rate look stronger than the model's independent contribution."
+        "text": "Read the sample size, time period and caveats alongside the hit rate. The record measures who wins; it does not measure returns or spread performance. Results on games where the model disagrees with the market help distinguish its contribution from simply backing the favourite."
       }
     },
     {
@@ -182,31 +150,7 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
       "name": "What is the difference between the Top 25s?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The power rating Top 25 is the model's own ranking from its ratings. The AP Top 25 is the official national media poll, shown with the date it was released. The Personal Ballot is one person's weekly Top 25, checked against each team's record and résumé before it is published. It's an opinion, and it is labelled as one."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where does the data come from?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the Legal page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need an account, and is my data private?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can browse without an account. Preferences such as your favourite team are stored in your browser. Community picks and their associated identifiers are sent to the leaderboard; optional sign-in lets you keep those picks across devices. The Legal page explains storage, retention and deletion choices."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How often does it update?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The site checks scores and odds on an hourly schedule, subject to provider availability and caching. Ratings, rankings and the coming week's forecasts follow the weekly publishing cycle; the dates shown on each section identify its edition. Matchday Terminal is not a live-score service. In-progress games remain pending until a confirmed final result arrives."
+        "text": "The power rating Top 25 orders teams by estimated strength. The AP Top 25 reflects the national media vote. The Personal Ballot weighs what teams have earned through their records and resumes. They answer different questions, so their orders can differ."
       }
     }
   ]
@@ -218,81 +162,57 @@ strong{color:var(--text);font-weight:var(--fw-semibold)}
   <a class="back" href="index.html">← Back to Matchday Terminal</a>
   <header class="head">
     <h1>Q&amp;A &amp; methodology</h1>
-    <span class="tag">The model · The record · The data</span>
+    <span class="tag">Ratings · Forecasts · Interpretation</span>
   </header>
-  <div class="facts" aria-label="At a glance">
-    <div><b>Two sports</b><span>College football and men's hoops</span></div>
-    <div><b>Own models</b><span>Ratings, probabilities and projections</span></div>
-    <div><b>Public record</b><span>Frozen cards, graded after the final</span></div>
-    <div><b>Free to use</b><span>No account needed to browse</span></div>
-  </div>
   <div class="layout">
     <nav class="toc" aria-label="On this page">
       <p>On this page</p>
-      <a href="#basics">The basics</a>
       <a href="#model">The model</a>
-      <a href="#record">Picks and the record</a>
+      <a href="#record">Reading the record</a>
       <a href="#rankings">Rankings</a>
-      <a href="#data">Data and privacy</a>
       <div class="updated">Updated October 25, 2026</div>
+      <p style="margin-top:24px">Elsewhere</p>
+      <a href="legal.html#privacy">Privacy</a>
+      <a href="legal.html#terms">Terms &amp; pick-lock rules</a>
+      <a href="legal.html#sources">Data sources</a>
+      <a href="roadmap.html#limits">Limits &amp; update schedule</a>
+      <a href="roadmap.html#next">What's next</a>
     </nav>
     <div>
-      <section id="basics">
-        <p class="label">The basics</p>
-        <h2>A research desk for college sports</h2>
-        <p>Plain answers about Matchday Terminal: what the ratings mean, how forecasts and results are presented, and where the data comes from.</p>
-        <h3>What is Matchday?</h3>
-        <p>A free research site for college football and men&#x27;s college basketball: power ratings, win probabilities, projected scores, rankings and a pick record graded in public. It&#x27;s built for fans who want to understand a game, not to sell anything.</p>
-        <h3>Who builds and runs Matchday?</h3>
-        <p>One person, as a passion project rather than a company. It makes no money and has no plans to: no ads, no subscriptions, no affiliate links, no paid placements. It is not affiliated with the NCAA, its conferences or schools, or any bookmaker.</p>
-        <h3>How can I use it?</h3>
-        <p>However works for you: settle an argument, follow a team, check how the model has really done, or compare it with the betting market. Nothing here is betting advice, and nobody with a stake in what you decide pays for the site.</p>
-      </section>
       <section id="model">
         <p class="label">The model</p>
-        <h2>How the numbers take shape</h2>
-        <h3>Where do the picks come from?</h3>
-        <p>Matchday Terminal publishes forecasts from its own sports models. At a high level, they use team performance, opponent strength and game context to estimate a matchup. Where available, market information also informs the published forecast. The model-only and market numbers are identified separately where shown. Exact weights, formulas and tuning rules are kept private.</p>
+        <h2>How to read the numbers</h2>
+        <p>A high-level guide to the numbers shown on Matchday Terminal. Exact formulas, weights and tuning settings remain private.</p>
+        <h3>What goes into a matchup forecast?</h3>
+        <p>Team performance, opponent strength and game context inform the matchup estimate. Where available, market information also informs the published forecast. Model-only and market probabilities are identified separately where shown.</p>
         <h3>What is a power rating?</h3>
         <p>A power rating estimates team strength against an average opponent on a neutral field. It adjusts performance for the opposition faced, rather than ranking teams by wins alone. Offense, defense and schedule strength provide additional context where available. A rating describes strength; a résumé describes what a team has earned.</p>
         <h3>How does the model rate teams before they&#x27;ve played?</h3>
-        <p>Preseason estimates use prior performance and available roster information. As current-season evidence grows, the model updates its view. Football and basketball use sport-specific approaches; the detailed construction and adjustment rules remain private. Check the season and update notes beside a rating, especially before a new season begins.</p>
+        <p>Preseason estimates use prior performance and available roster information. As current-season evidence grows, the model updates its view. Football and basketball use sport-specific approaches.</p>
         <h3>What does a win probability mean?</h3>
         <p>It is an estimated chance of winning, not a certainty or an accuracy score. A team given a 60% chance can still lose: across many comparable games, that estimate implies roughly four losses in ten. Whether the estimates match actual results must be checked against the graded sample, with its dates and size.</p>
         <h3>How is the projected score made?</h3>
-        <p>The model estimates the expected scoring margin and total, allowing for the sport&#x27;s scoring patterns and game-to-game variation. The displayed score is a representative projection, not an exact-score promise. The simulation settings and score-adjustment rules remain private.</p>
+        <p>The model estimates an expected scoring margin and total, allowing for the sport&#x27;s scoring patterns and game-to-game variation. The displayed score is a representative outcome around that estimate.</p>
         <h3>Why does the model sometimes disagree with the market?</h3>
         <p>The model and the market use different information and can respond at different times. The displayed gap compares the model&#x27;s probability with the market-implied probability for the same outcome. A larger gap does not establish an advantage: check the disagreement record and its sample rather than assuming the market is wrong.</p>
       </section>
       <section id="record">
-        <p class="label">Picks and the record</p>
-        <h2>How the work is checked</h2>
-        <h3>When are picks locked?</h3>
-        <p>The engine&#x27;s graded record uses forecast cards frozen an hour before kickoff. Upcoming matchup forecasts are live reads and can change before kickoff; they are not themselves frozen official picks. Read the labels beside each number, and use the public record for the frozen-card results.</p>
-        <h3>How is the record graded?</h3>
-        <p>Frozen cards are assessed against final results. The public record concerns who wins, not a claim of beating the spread or making a profit. Read its sample size, time period and caveats alongside the hit rate. Model-market disagreements are examined separately because agreeing with the favourite can make an overall win rate look stronger than the model&#x27;s independent contribution.</p>
+        <p class="label">Reading the record</p>
+        <h2>What the results tell you</h2>
+        <h3>How should I read the performance record?</h3>
+        <p>Read the sample size, time period and caveats alongside the hit rate. The record measures who wins; it does not measure returns or spread performance. Results on games where the model disagrees with the market help distinguish its contribution from simply backing the favourite.</p>
         <h3>What are the Upsets of the week?</h3>
         <p>A weekly selection of market underdogs the model considers more competitive than their prices suggest. The list can be short or empty when there are no qualifying games. An underdog watch is not a guarantee or an automatic official pick. Judge the results against the market&#x27;s expected win rate, not against the expectation that most underdogs should win.</p>
       </section>
       <section id="rankings">
         <p class="label">Rankings</p>
-        <h2>Three rankings, different purposes</h2>
+        <h2>Why the Top 25s differ</h2>
         <h3>What is the difference between the Top 25s?</h3>
-        <p>The power rating Top 25 is the model&#x27;s own ranking from its ratings. The AP Top 25 is the official national media poll, shown with the date it was released. The Personal Ballot is one person&#x27;s weekly Top 25, checked against each team&#x27;s record and résumé before it is published. It&#x27;s an opinion, and it is labelled as one.</p>
-      </section>
-      <section id="data">
-        <p class="label">Data and privacy</p>
-        <h2>Where the information comes from</h2>
-        <h3>Where does the data come from?</h3>
-        <p>Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the <a href="legal.html#sources">Legal page</a>.</p>
-        <h3>Do I need an account, and is my data private?</h3>
-        <p>You can browse without an account. Preferences such as your favourite team are stored in your browser. Community picks and their associated identifiers are sent to the leaderboard; optional sign-in lets you keep those picks across devices. The <a href="legal.html#privacy">Legal page</a> explains storage, retention and deletion choices.</p>
-        <h3>How often does it update?</h3>
-        <p>The site checks scores and odds on an hourly schedule, subject to provider availability and caching. Ratings, rankings and the coming week&#x27;s forecasts follow the weekly publishing cycle; the dates shown on each section identify its edition. Matchday Terminal is not a live-score service. In-progress games remain pending until a confirmed final result arrives.</p>
+        <p>The power rating Top 25 orders teams by estimated strength. The AP Top 25 reflects the national media vote. The Personal Ballot weighs what teams have earned through their records and resumes. They answer different questions, so their orders can differ.</p>
       </section>
     </div>
   </div>
-  <p class="foot">© 2026 Matchday Terminal · Volunteer-run and unpaid · No sponsors, ads or affiliate links · <a href="legal.html">Terms, privacy and data sources</a>.</p>
+  <p class="foot">© 2026 Matchday Terminal · <a href="legal.html">Legal &amp; data</a> · <a href="roadmap.html">Roadmap &amp; limits</a></p>
 </main>
 </body>
 </html>

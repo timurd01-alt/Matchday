@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025G",
+  "tag": "Content",
+  "title": "Q&A focused on interpreting the model",
+  "items": [
+   "Removed seven Q&A entries duplicating Legal and Roadmap, including the outdated sign-in explanation.",
+   "Linked privacy, terms, sources, update cadence and plans to their existing pages.",
+   "Removed the repeated summary strip and kept nine model, record and ranking questions with matching structured data."
+  ]
+ },
+ {
   "date": "Build 1025F",
   "tag": "Fix",
   "title": "Remove availability display from matchups",
