@@ -219,6 +219,12 @@ jobs:
         continue-on-error: true
         run: python data_freshness.py --output data_freshness_report.json --github
 
+      # Conference availability is context only. It never enters Sigma Lab's
+      # frozen source or changes a probability. Failures retain last-good facts.
+      - name: Collect official quarterback availability reports
+        continue-on-error: true
+        run: python qb_availability.py
+
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
 
@@ -291,6 +297,9 @@ jobs:
           if [ -f archive/conflicts.jsonl ]; then
             git add -- archive/conflicts.jsonl
           fi
+          if [ -f archive/availability/ncaaf.jsonl ]; then
+            git add -- archive/availability/ncaaf.jsonl qb_availability_snapshot.json qb-availability.js
+          fi
           ledgers=$(ls market_snapshot_ledger.jsonl 2>/dev/null || true)
           if [ -n "$ledgers" ]; then
             git add -- $ledgers
@@ -328,7 +337,7 @@ jobs:
           cp robots.txt sitemap.xml _site/
           # Bet Better owns this handoff. Missing data stays visibly unavailable.
           if [ -f bracketology_ncaam.json ]; then cp bracketology_ncaam.json _site/; fi
-          cp app-bracketology.js app-1-core.js app-2-views.js app-3-panels.js app-4-features.js research-signals.js app-learn.js matchday-cfb-snapshot.js _site/
+          cp app-bracketology.js app-1-core.js app-2-views.js app-3-panels.js app-4-features.js app-qb-availability.js qb-availability.js research-signals.js app-learn.js matchday-cfb-snapshot.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png _site/
           mkdir -p _site/assets/welcome _site/assets/fonts

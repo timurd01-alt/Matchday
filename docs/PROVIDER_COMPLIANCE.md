@@ -1,5 +1,16 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-10-25 (official SEC, Big Ten, ACC and Big 12 football
+availability facts from their publicly embedded HD Intelligence viewer,
+`/api/get-publish-public`, with no authentication or staff endpoints. The
+owner requested collection and display. Retain only QB names, jersey numbers,
+reported status, teams, matchup date, report publication time, collection time
+and official source link. Do not retain or redistribute report images, logos,
+fonts, medical explanations, diagnoses, raw responses or full roster content.
+Four bounded public reads per site refresh, failures preserve last-good facts.
+Availability is public participation status, not proof of an injury or its
+reason. No forecast input or change to the frozen Sigma Lab package.)
+
 Reviewed: 2026-10-25 (AP refresh now preserves published tied ranks instead of
 rejecting a complete tied Top 25. Same approved ESPN public-facts endpoint;
 only team names, ranks, records and movement are retained. No sourcing change

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025E",
+  "tag": "New",
+  "title": "Official quarterback availability beside matchups",
+  "items": [
+   "Collect official SEC, Big Ten, ACC and Big 12 quarterback availability with source links, publication times and first-seen timestamps.",
+   "Expanded matchups show the reported QB group, unknown coverage and stale-source warnings. No starting lineup or injury diagnosis is inferred.",
+   "Availability reports are context only and do not alter the frozen model or its probabilities."
+  ]
+ },
+ {
   "date": "Build 1025D",
   "tag": "Fix",
   "title": "Larger logos in weekly movers",
