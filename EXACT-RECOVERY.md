@@ -1,5 +1,9 @@
 # Recover the same Matchday and Sigma Lab data
 
+This is an optional full-database procedure. The owner's current routine plan
+preserves the engine and recollects fixtures; see
+[Backup plan notes](BACKUP-PLAN-NOTES.md) and `scripts/backup_engine.py`.
+
 Recovery uses saved database contents, not a fresh provider download. APIs can
 change or remove history, so refetching is not an exact recovery method.
 

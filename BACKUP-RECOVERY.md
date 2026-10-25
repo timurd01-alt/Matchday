@@ -1,5 +1,11 @@
 # Matchday and Sigma Lab recovery
 
+**Current routine policy: engine-only recovery.** Read
+[Backup plan notes](BACKUP-PLAN-NOTES.md) and use `scripts/backup_engine.py`.
+Keep code, fitted parameters and manual choices; recollect public fixture data.
+The full-database tools below are optional and are not scheduled or uploaded
+automatically.
+
 For exact database recovery, use [EXACT-RECOVERY.md](EXACT-RECOVERY.md) and
 `scripts/exact_database_backup.py`. Native archives preserve internal row IDs
 and database settings and are verified by byte-identical decompression.

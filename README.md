@@ -72,3 +72,8 @@ Provider keys live in `config_keys.py`, which is gitignored. See `docs/SETUP.md`
 `AGENTS.md` documents the repository's working rules. `docs/PROVIDER_COMPLIANCE.md` records
 data licensing decisions. `legal.html` carries the privacy policy, terms and data-source
 credits.
+
+
+## Backup plan notes
+
+Preserve the engine, fitted weights, calibration and manual ballots; recollect public fixtures and history after a damaged or deleted database. See [BACKUP-PLAN-NOTES.md](BACKUP-PLAN-NOTES.md) for the recovery checklist and the engine-only backup command. Provider credentials are restored separately.
