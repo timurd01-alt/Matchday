@@ -1,5 +1,10 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-10-25 (AP refresh now preserves published tied ranks instead of
+rejecting a complete tied Top 25. Same approved ESPN public-facts endpoint;
+only team names, ranks, records and movement are retained. No sourcing change
+or raw provider payload redistribution.)
+
 Reviewed: 2026-10-21 (cleanup only, no sourcing change. Review entries and
 provider checks that applied only to retired sports or retired providers
 (football-data.org, API-Football, BALLDONTLIE, Big Balls, nflverse,

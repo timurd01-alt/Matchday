@@ -97,8 +97,16 @@ def extract_poll(payload: dict) -> list[dict]:
             "record": str(entry.get("recordSummary") or "") or None,
         })
     rows.sort(key=lambda r: r["rank"])
-    if {r["rank"] for r in rows} != set(range(1, 26)):
+    # AP uses competition ranks: a tie at 20 is followed by 22, and a
+    # tie at 25 can put 26 teams in the Top 25. Missing rows must still fail
+    # closed; only a repeat of the preceding rank can explain a skipped slot.
+    if len(rows) < 25 or len({r["name"] for r in rows}) != len(rows):
         return []
+    previous_rank = None
+    for position, row in enumerate(rows, start=1):
+        if row["rank"] != position and row["rank"] != previous_rank:
+            return []
+        previous_rank = row["rank"]
     return rows
 
 

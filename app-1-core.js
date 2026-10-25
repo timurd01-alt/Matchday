@@ -72,6 +72,7 @@ let DATA_FILE=DEFAULT_SPORT_FILE;try{const saved=localStorage.getItem('matchday.
 const SPORT_LABELS={ncaaf:'College Football',ncaam:"Men's College Basketball"};
 // The only sports Matchday covers.
 const ALL_SPORT_KEYS=['ncaaf','ncaam'];
+const TWO_WAY_COMPETITIONS=new Set(ALL_SPORT_KEYS);
 const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
 // full slate). Same pager the fixture list already uses, smaller page: a pick
@@ -440,8 +441,7 @@ const TOUR_STEPS=[
   {target:'#sportSel',title:'Start here',body:'Switch between College Football and Men’s College Basketball. Each has its own predictions, accuracy tracking and playoff picture.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
-  {target:'.navbtn[data-v="sandbox"]',title:'Sandbox',body:'Build a hypothetical matchup between any two teams and see what the model thinks, on the spot.'},
-  {target:'.navbtn[data-v="bracket"]',title:'Bracket',body:'Simulate an entire knockout bracket round by round, using the model’s own predictions.'},
+  {target:'.navbtn[data-v="bracket"]',title:'Bracket',body:'Explore the playoff field and follow each team’s path through the bracket.'},
   {target:'.navbtn[data-v="community"]',title:"Pick 'Em",body:'Set a handle, make your own picks, and see how you stack up against the model on the leaderboard.'},
   {target:'.navbtn[data-v="customize"]',title:'Customize',body:'Tune the accent color, layout density, language, and your favorite team here. You can replay this tour anytime from this tab.'}
 ];

@@ -1,182 +1,182 @@
 {
   "poll_name": "AP Top 25",
   "source": "ESPN scoreboard published AP rank",
-  "fetched_on": "2026-10-18",
+  "fetched_on": "2026-10-25",
   "rankings": [
     {
       "rank": 1,
       "name": "Miami Hurricanes",
-      "previous_rank": 3,
-      "movement": 2,
-      "record": "6-0"
+      "previous_rank": 1,
+      "movement": 0,
+      "record": "7-0"
     },
     {
       "rank": 2,
-      "name": "BYU Cougars",
-      "previous_rank": 8,
-      "movement": 6,
-      "record": "6-0"
+      "name": "Ohio State Buckeyes",
+      "previous_rank": 3,
+      "movement": 1,
+      "record": "6-1"
     },
     {
       "rank": 3,
-      "name": "Ohio State Buckeyes",
-      "previous_rank": 4,
-      "movement": 1,
+      "name": "Georgia Bulldogs",
+      "previous_rank": 5,
+      "movement": 2,
       "record": "6-1"
     },
     {
       "rank": 4,
-      "name": "Notre Dame Fighting Irish",
-      "previous_rank": 2,
-      "movement": -2,
-      "record": "6-1"
+      "name": "Indiana Hoosiers",
+      "previous_rank": 6,
+      "movement": 2,
+      "record": "7-1"
     },
     {
       "rank": 5,
-      "name": "Georgia Bulldogs",
-      "previous_rank": 1,
-      "movement": -4,
-      "record": "6-1"
-    },
-    {
-      "rank": 6,
-      "name": "Indiana Hoosiers",
-      "previous_rank": 5,
+      "name": "Notre Dame Fighting Irish",
+      "previous_rank": 4,
       "movement": -1,
       "record": "6-1"
     },
     {
+      "rank": 6,
+      "name": "Utah Utes",
+      "previous_rank": 10,
+      "movement": 4,
+      "record": "7-0"
+    },
+    {
       "rank": 7,
-      "name": "Ole Miss Rebels",
+      "name": "UCLA Bruins",
       "previous_rank": 9,
       "movement": 2,
-      "record": "5-1"
+      "record": "7-0"
     },
     {
       "rank": 8,
-      "name": "Texas Tech Red Raiders",
-      "previous_rank": 10,
-      "movement": 2,
-      "record": "6-0"
+      "name": "BYU Cougars",
+      "previous_rank": 2,
+      "movement": -6,
+      "record": "6-1"
     },
     {
       "rank": 9,
-      "name": "UCLA Bruins",
+      "name": "Kentucky Wildcats",
       "previous_rank": 12,
       "movement": 3,
-      "record": "6-0"
+      "record": "7-1"
     },
     {
       "rank": 10,
-      "name": "Utah Utes",
-      "previous_rank": 11,
-      "movement": 1,
-      "record": "6-0"
+      "name": "Alabama Crimson Tide",
+      "previous_rank": 13,
+      "movement": 3,
+      "record": "6-2"
     },
     {
       "rank": 11,
-      "name": "Tennessee Volunteers",
-      "previous_rank": 14,
-      "movement": 3,
-      "record": "6-1"
-    },
-    {
-      "rank": 12,
-      "name": "Kentucky Wildcats",
-      "previous_rank": 15,
-      "movement": 3,
-      "record": "6-1"
-    },
-    {
-      "rank": 13,
-      "name": "Alabama Crimson Tide",
-      "previous_rank": 6,
-      "movement": -7,
+      "name": "Texas Longhorns",
+      "previous_rank": 19,
+      "movement": 8,
       "record": "5-2"
     },
     {
+      "rank": 12,
+      "name": "Ole Miss Rebels",
+      "previous_rank": 7,
+      "movement": -5,
+      "record": "5-2"
+    },
+    {
+      "rank": 13,
+      "name": "Texas Tech Red Raiders",
+      "previous_rank": 8,
+      "movement": -5,
+      "record": "6-1"
+    },
+    {
       "rank": 14,
-      "name": "Houston Cougars",
-      "previous_rank": 20,
-      "movement": 6,
+      "name": "Wake Forest Demon Deacons",
+      "previous_rank": 17,
+      "movement": 3,
       "record": "6-1"
     },
     {
       "rank": 15,
-      "name": "Iowa Hawkeyes",
-      "previous_rank": 17,
-      "movement": 2,
-      "record": "5-1"
+      "name": "LSU Tigers",
+      "previous_rank": 18,
+      "movement": 3,
+      "record": "6-2"
     },
     {
       "rank": 16,
-      "name": "USC Trojans",
-      "previous_rank": 19,
+      "name": "Tennessee Volunteers",
+      "previous_rank": 11,
+      "movement": -5,
+      "record": "6-2"
+    },
+    {
+      "rank": 17,
+      "name": "Florida Gators",
+      "previous_rank": 20,
+      "movement": 3,
+      "record": "5-2"
+    },
+    {
+      "rank": 18,
+      "name": "Houston Cougars",
+      "previous_rank": 14,
+      "movement": -4,
+      "record": "6-2"
+    },
+    {
+      "rank": 19,
+      "name": "SMU Mustangs",
+      "previous_rank": 23,
+      "movement": 4,
+      "record": "6-1"
+    },
+    {
+      "rank": 20,
+      "name": "Boise State Broncos",
+      "previous_rank": 21,
+      "movement": 1,
+      "record": "6-1"
+    },
+    {
+      "rank": 20,
+      "name": "Northwestern Wildcats",
+      "previous_rank": 24,
+      "movement": 4,
+      "record": "6-1"
+    },
+    {
+      "rank": 22,
+      "name": "Arizona Wildcats",
+      "previous_rank": 25,
       "movement": 3,
       "record": "6-1"
     },
     {
-      "rank": 17,
-      "name": "Wake Forest Demon Deacons",
-      "previous_rank": 21,
-      "movement": 4,
-      "record": "6-1"
-    },
-    {
-      "rank": 18,
-      "name": "LSU Tigers",
-      "previous_rank": 22,
-      "movement": 4,
-      "record": "5-2"
-    },
-    {
-      "rank": 19,
-      "name": "Texas Longhorns",
-      "previous_rank": 7,
-      "movement": -12,
-      "record": "4-2"
-    },
-    {
-      "rank": 20,
-      "name": "Florida Gators",
-      "previous_rank": null,
-      "movement": null,
-      "record": "5-2"
-    },
-    {
-      "rank": 21,
-      "name": "Boise State Broncos",
-      "previous_rank": 23,
-      "movement": 2,
-      "record": "5-1"
-    },
-    {
-      "rank": 22,
-      "name": "Missouri Tigers",
-      "previous_rank": 13,
-      "movement": -9,
-      "record": "5-2"
-    },
-    {
       "rank": 23,
-      "name": "SMU Mustangs",
-      "previous_rank": 24,
-      "movement": 1,
-      "record": "5-1"
+      "name": "Missouri Tigers",
+      "previous_rank": 22,
+      "movement": -1,
+      "record": "5-2"
     },
     {
       "rank": 24,
-      "name": "Northwestern Wildcats",
-      "previous_rank": 25,
-      "movement": 1,
-      "record": "5-1"
+      "name": "Oklahoma State Cowboys",
+      "previous_rank": null,
+      "movement": null,
+      "record": "5-2"
     },
     {
       "rank": 25,
-      "name": "Arizona Wildcats",
+      "name": "Wisconsin Badgers",
       "previous_rank": null,
       "movement": null,
-      "record": "5-1"
+      "record": "5-2"
     }
   ]
 }

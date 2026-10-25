@@ -3446,7 +3446,6 @@ body{font-variant-numeric:tabular-nums}
 .scRangeTrack{position:relative;height:10px;border-radius:999px;background:var(--bg2);border:1px solid var(--line)}
 .scRangeBand{position:absolute;top:0;bottom:0;border-radius:999px;background:color-mix(in srgb,var(--win) 28%,transparent)}
 .scRangeRef{position:absolute;top:-7px;bottom:-7px;width:2px;background:var(--text);transform:translateX(-50%)}
-.scRangeRef em{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);font-style:normal;font-size:var(--fs-2xs);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:var(--fw-bold);white-space:nowrap}
 .scRangeDot{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--win);border:3px solid var(--panel);transform:translate(-50%,-50%);box-shadow:0 0 0 1px var(--win)}
 .scRangeAxis{display:flex;justify-content:space-between;margin-top:8px;font-size:var(--fs-xs);color:var(--faint)}
 .scRangeKey{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:var(--fs-xs);color:var(--muted)}.scRangeKey span{display:flex;align-items:center;gap:6px}

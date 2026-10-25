@@ -86,6 +86,30 @@ class RankingsEndpointTests(unittest.TestCase):
     def test_an_incomplete_poll_is_still_refused(self):
         self.assertEqual(ap_poll.extract_poll(self._payload(missing={7})), [])
 
+    def test_a_published_tie_replaces_last_weeks_poll(self):
+        payload = self._payload()
+        payload["rankings"][0]["ranks"][20]["current"] = 20
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "poll.json"
+            path.write_text(json.dumps({"fetched_on": "2026-10-18", "rankings": []}))
+            result = ap_poll.refresh(path, dt.date(2026, 10, 25),
+                                     fetch_rankings=lambda: payload)
+            self.assertEqual(result["fetched_on"], "2026-10-25")
+            self.assertEqual([r["rank"] for r in result["rankings"]][19:22], [20, 20, 22])
+
+    def test_a_tie_at_25_keeps_both_teams(self):
+        payload = self._payload()
+        payload["rankings"][0]["ranks"].append(
+            {"current": 25, "team": {"displayName": "Extra team"}})
+        rows = ap_poll.extract_poll(payload)
+        self.assertEqual(len(rows), 26)
+        self.assertEqual([r["rank"] for r in rows][-2:], [25, 25])
+
+    def test_a_duplicate_team_cannot_fill_a_missing_slot(self):
+        payload = self._payload()
+        payload["rankings"][0]["ranks"][20] = payload["rankings"][0]["ranks"][19]
+        self.assertEqual(ap_poll.extract_poll(payload), [])
+
     def test_another_poll_is_not_mistaken_for_the_ap(self):
         self.assertEqual(ap_poll.extract_poll(self._payload(poll_type="usa")), [])
 

@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025B",
+  "tag": "Fix",
+  "title": "Update Top 25 ballot and AP poll; clear scorecard labels",
+  "items": [
+   "Remove the duplicate Expected label above scorecard range markers so it no longer crowds the numbers in a narrow window.",
+   "Remove the retired matchup calculator, its bracket simulator and unused old scorecard panels. Sigma Lab remains the only prediction engine.",
+   "Publish the October 25 owner ballot in its supplied order.",
+   "Refresh the AP Top 25, preserving the published tie at No. 20 instead of keeping last week’s poll."
+  ]
+ },
+ {
   "date": "Build 1025A",
   "tag": "Fix",
   "title": "Compact cards when fewer rows are available",
