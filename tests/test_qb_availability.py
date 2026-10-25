@@ -74,34 +74,5 @@ class AvailabilityCollectionTests(unittest.TestCase):
         self.assertFalse(row["observed_before_kickoff"])
 
 
-@unittest.skipUnless(shutil.which("node"), "Node.js is unavailable")
-class AvailabilityDisplayTests(unittest.TestCase):
-    def test_match_identity_missing_stale_and_html_escaping(self):
-        script = r"""
-const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
-const ctx={DATA:{comp_key:'NCAAF'},teamKey:s=>String(s).toLowerCase().replace(/[^a-z0-9 ]/g,'').trim(),esc:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;')};
-vm.createContext(ctx);
-const base=fs.readFileSync('app-3-panels.js','utf8');
-vm.runInContext(base.slice(0,base.indexOf('function _bbShiftDay')),ctx);
-vm.runInContext(fs.readFileSync('app-qb-availability.js','utf8'),ctx);
-const now=Date.parse('2026-10-24T15:00:00Z'),m={home:{name:'Michigan Wolverines'},away:{name:'Ohio State Buckeyes'},kickoff:'2026-10-24T16:00:00Z'};
-const report={conference:'B10',report_id:'one',kickoff:m.kickoff,published_at:'2026-10-24T14:00:00Z',first_observed_at:'2026-10-24T14:30:00Z',source_url:'https://bigten.org/',teams:[{name:'Michigan',quarterbacks:[{name:'<img src=x>',status:'Out'}]},{name:'Ohio State',quarterbacks:[]}]};
-ctx.MATCHDAY_QB_AVAILABILITY={sources:{B10:{state:'ok',checked_at:'2026-10-24T14:30:00Z',source_url:'https://bigten.org/'}},reports:[report]};
-assert.equal(ctx.qbAvailabilityFor(m,now).state,'reported');
-assert.equal(ctx.qbAvailabilityFor({...m,home:{name:'Michigan State Spartans'}},now).state,'unknown');
-assert.equal(ctx.qbAvailabilityFor({...m,kickoff:'2026-10-31T16:00:00Z'},now).state,'unknown');
-assert.equal(ctx.qbAvailabilityFor(m,now+5*3600e3).state,'stale');
-assert.equal(ctx.qbAvailabilityFor({...m,_comp:'NCAAM'},now),null);
-assert.equal(ctx.qbReportName('Miami (FL)'),'Miami');
-assert.ok(ctx.qbAvailabilityPanel(m).includes('&lt;img'));
-assert.ok(ctx.qbAvailabilityPanel(m).includes('No QB status listed'));
-assert.ok(ctx.qbAvailabilityPanel(m).includes('These reports do not change the forecast.'));
-ctx.MATCHDAY_QB_AVAILABILITY.reports.push({...report,report_id:'two'});
-assert.equal(ctx.qbAvailabilityFor(m,now).state,'unknown');
-"""
-        result = subprocess.run(["node", "-e", script], cwd=ROOT, capture_output=True, text=True)
-        self.assertEqual(result.returncode, 0, result.stderr)
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

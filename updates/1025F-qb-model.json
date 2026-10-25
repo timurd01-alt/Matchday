@@ -1,0 +1,9 @@
+{
+  "rank": 528,
+  "date": "Build 1025F",
+  "tag": "Fix",
+  "title": "Remove availability display from matchups",
+  "items": [
+    "Removed the quarterback availability panel and its external report links. Report collection remains available for model research."
+  ]
+}

@@ -4274,20 +4274,6 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-community .commGameName small{padding-left:58px;font-family:var(--sans);font-size:var(--fs-xs);line-height:1.3;color:var(--muted)}
 /* Projected score: scores sit beside the names instead of at the far edge of a wide panel. */
 .projectedScore>b{max-width:340px}
-.qbAvailability{margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--panel);min-width:0}
-.qbAvailability>header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-.qbAvailability>header>b{font:var(--fw-bold) var(--fs-lg)/1.2 var(--display)}
-.qbAvailability>header>span,.qbReportMeta,.qbReportNote{font-size:var(--fs-xs);color:var(--muted)}
-.qbAvailability>p{font-size:var(--fs-sm);color:var(--muted);line-height:1.5;margin:8px 0}
-.qbReportTeams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.qbReportTeam{display:grid;gap:6px;align-content:start;min-width:0;font-size:var(--fs-sm)}
-.qbReportTeam>span{color:var(--muted)}.qbReportTeam .qbReportAlert{color:var(--signal)}
-.qbReportTeam details{font-size:var(--fs-xs)}.qbReportTeam summary{cursor:pointer;padding:6px 0;color:var(--muted)}
-.qbReportTeam ul{list-style:none;margin:6px 0 0;padding:0}.qbReportTeam li{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:7px 0}
-.qbReportTeam li>span{min-width:0;overflow-wrap:anywhere}.qbReportTeam li>b{text-align:right;flex-shrink:0;font-weight:var(--fw-semibold)}
-.qbReportMeta{display:flex;flex-wrap:wrap;gap:6px 14px;line-height:1.5;margin-top:12px}.qbReportMeta a{color:var(--signal)}
-.qbReportNote{margin:10px 0 0}.qbReportStale{border-style:dashed}
-@media(max-width:600px){.qbReportTeams{grid-template-columns:minmax(0,1fr)}.qbAvailability{padding:12px}.qbReportTeam+.qbReportTeam{border-top:1px solid var(--line);padding-top:12px}}
 .bkAwaiting{display:grid;gap:6px;justify-items:start;padding:28px 22px}
 .bkAwaiting b{font-family:var(--display);font-size:var(--fs-2xl);font-weight:var(--fw-bold);color:var(--text)}
 .bkAwaiting span{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted)}

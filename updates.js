@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025F",
+  "tag": "Fix",
+  "title": "Remove availability display from matchups",
+  "items": [
+   "Removed the quarterback availability panel and its external report links. Report collection remains available for model research."
+  ]
+ },
+ {
   "date": "Build 1025E",
   "tag": "UI",
   "title": "Q&A matches the Roadmap page",
