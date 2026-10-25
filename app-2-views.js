@@ -1377,10 +1377,12 @@ function rsStat(){
   const lists=(up.length||down.length)
     ?`<div class="rsMovers"><div><span class="rsKicker">This week · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
       +`<div><span class="rsKicker">This week · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
-  return `<section class="rsBlock rsMove rsSpan4">${rsTop('Risers &amp; fallers','blend')}`
+  const hasPrevious=all.some(r=>r.previous_rank!=null&&Number.isFinite(Number(r.previous_rank)));
+  const note=lists?'':`<p class="rsMovementNote">${!played?'Weekly movement appears after games are played.':!hasPrevious?'Weekly movement appears after a previous edition is recorded.':'No weekly rank changes recorded in this edition.'}</p>`;
+  return `<section class="rsBlock rsMove rsSpan4${lists?'':' rsMoveCompact'}">${rsTop('Risers &amp; fallers','blend')}`
     +`<span class="rsKicker rsMoveLabel">Biggest move since the preseason</span>`
     +`<div class="rsMoveHead"><b class="rsMoveTeam rsLogoName">${(typeof teamMark==='function'?teamMark(riser.name):'')}${esc(rsShortName(riser.name))}</b><span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span></div>`
-    +`<div class="rsPath">${path}</div>${lists}</section>`;
+    +`<div class="rsPath">${path}</div>${lists}${note}</section>`;
 }
 // Small tick numbers on both chart axes: "nice" steps (1, 2 or 5 x 10^n)
 // that land inside the data range, drawn faint so the dots stay the subject.

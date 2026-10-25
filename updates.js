@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025A",
+  "tag": "Fix",
+  "title": "Compact cards when fewer rows are available",
+  "items": [
+   "Short model/market lists keep normal row heights instead of stretching one matchup across the column.",
+   "Risers & fallers explains when no weekly movement is recorded and sizes the card to its content."
+  ]
+ },
+ {
   "date": "Build 1022A",
   "tag": "Ops",
   "title": "Data-usage reporting",

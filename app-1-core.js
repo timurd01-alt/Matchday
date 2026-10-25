@@ -952,7 +952,7 @@ function gamesDifferencesHTML(reads){
     const content=`<i class="gdMarks">${mk(m.home?.name)}${mk(m.away?.name)}</i><span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(typeof rsShortName==='function'?rsShortName(read.pick):read.pick)} ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
-  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
+  return `<section class="gamesDifferences${reads.length<4?' gamesDifferencesCompact':''}"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
 }
 /* The projected playoff field's top four seeds, from the same bracket data
    the Bracket tab draws, as a way into that tab from the home page. */
