@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025D",
+  "tag": "Fix",
+  "title": "Larger logos in weekly movers",
+  "items": [
+   "Enlarged team crests within the white Risers & fallers tiles while preserving their proportions and centering."
+  ]
+ },
+ {
   "date": "Build 1025C",
   "tag": "UI",
   "title": "Q&A aligned with Matchday Terminal",
