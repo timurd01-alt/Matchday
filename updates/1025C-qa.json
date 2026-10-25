@@ -1,0 +1,11 @@
+{
+  "rank": 525,
+  "date": "Build 1025C",
+  "tag": "UI",
+  "title": "Q&A aligned with Matchday Terminal",
+  "items": [
+    "Matched the Q&A to the terminal palette, typography, compact panels and responsive navigation.",
+    "Clarified live forecasts versus frozen-card results and removed unsupported accuracy claims.",
+    "Kept methodology explanations high level without publishing model weights, thresholds or tuning settings."
+  ]
+}

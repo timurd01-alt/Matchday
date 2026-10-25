@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1025C",
+  "tag": "UI",
+  "title": "Q&A aligned with Matchday Terminal",
+  "items": [
+   "Matched the Q&A to the terminal palette, typography, compact panels and responsive navigation.",
+   "Clarified live forecasts versus frozen-card results and removed unsupported accuracy claims.",
+   "Kept methodology explanations high level without publishing model weights, thresholds or tuning settings."
+  ]
+ },
+ {
   "date": "Build 1025B",
   "tag": "Fix",
   "title": "Update Top 25 ballot and AP poll; clear scorecard labels",
