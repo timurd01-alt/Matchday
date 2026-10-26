@@ -1,0 +1,478 @@
+{
+  "generated_at": "2026-10-26T00:49:50Z",
+  "handoff_generated_at": "2026-10-25T18:19:53.725826+00:00",
+  "week": {
+    "from": "2026-10-26T00:49Z",
+    "to": "2026-11-02T23:59Z",
+    "games_in_window": 140,
+    "picks_in_handoff": 423
+  },
+  "basis": "Opponent-adjusted scoring margin",
+  "ranking_published_on": "2026-10-25",
+  "season": 2026,
+  "top25": [
+    {
+      "rank": 1,
+      "team": "Ohio State Buckeyes",
+      "rating": 42.25,
+      "conference": "Big Ten",
+      "sos": 21.45,
+      "record": "6-1"
+    },
+    {
+      "rank": 2,
+      "team": "Miami Hurricanes",
+      "rating": 41.71,
+      "conference": "ACC",
+      "sos": 17.17,
+      "record": "7-0"
+    },
+    {
+      "rank": 3,
+      "team": "Notre Dame Fighting Irish",
+      "rating": 41.3,
+      "conference": "FBS Independents",
+      "sos": 17.95,
+      "record": "6-1"
+    },
+    {
+      "rank": 4,
+      "team": "Indiana Hoosiers",
+      "rating": 40.48,
+      "conference": "Big Ten",
+      "sos": 21.18,
+      "record": "7-1"
+    },
+    {
+      "rank": 5,
+      "team": "Georgia Bulldogs",
+      "rating": 38.02,
+      "conference": "SEC",
+      "sos": 19.51,
+      "record": "6-1"
+    },
+    {
+      "rank": 6,
+      "team": "Alabama Crimson Tide",
+      "rating": 37.16,
+      "conference": "SEC",
+      "sos": 26.52,
+      "record": "6-2"
+    },
+    {
+      "rank": 7,
+      "team": "LSU Tigers",
+      "rating": 36.55,
+      "conference": "SEC",
+      "sos": 21.13,
+      "record": "6-2"
+    },
+    {
+      "rank": 8,
+      "team": "Texas Longhorns",
+      "rating": 34.25,
+      "conference": "SEC",
+      "sos": 27.69,
+      "record": "5-2"
+    },
+    {
+      "rank": 9,
+      "team": "Utah Utes",
+      "rating": 34.16,
+      "conference": "Big 12",
+      "sos": 16.62,
+      "record": "7-0"
+    },
+    {
+      "rank": 10,
+      "team": "Ole Miss Rebels",
+      "rating": 33.8,
+      "conference": "SEC",
+      "sos": 24.37,
+      "record": "5-2"
+    },
+    {
+      "rank": 11,
+      "team": "Oregon Ducks",
+      "rating": 32.76,
+      "conference": "Big Ten",
+      "sos": 21.64,
+      "record": "4-3"
+    },
+    {
+      "rank": 12,
+      "team": "Texas Tech Red Raiders",
+      "rating": 31.97,
+      "conference": "Big 12",
+      "sos": 16.85,
+      "record": "6-1"
+    },
+    {
+      "rank": 13,
+      "team": "Tennessee Volunteers",
+      "rating": 31.57,
+      "conference": "SEC",
+      "sos": 20.07,
+      "record": "6-2"
+    },
+    {
+      "rank": 14,
+      "team": "Wake Forest Demon Deacons",
+      "rating": 30.42,
+      "conference": "ACC",
+      "sos": 17.57,
+      "record": "6-1"
+    },
+    {
+      "rank": 15,
+      "team": "Arizona Wildcats",
+      "rating": 30.03,
+      "conference": "Big 12",
+      "sos": 15.43,
+      "record": "6-1"
+    },
+    {
+      "rank": 16,
+      "team": "Houston Cougars",
+      "rating": 29.64,
+      "conference": "Big 12",
+      "sos": 20.54,
+      "record": "6-2"
+    },
+    {
+      "rank": 17,
+      "team": "Nebraska Cornhuskers",
+      "rating": 29.62,
+      "conference": "Big Ten",
+      "sos": 18.92,
+      "record": "5-2"
+    },
+    {
+      "rank": 18,
+      "team": "BYU Cougars",
+      "rating": 29.12,
+      "conference": "Big 12",
+      "sos": 18.99,
+      "record": "6-1"
+    },
+    {
+      "rank": 19,
+      "team": "Iowa Hawkeyes",
+      "rating": 28.7,
+      "conference": "Big Ten",
+      "sos": 18.59,
+      "record": "5-2"
+    },
+    {
+      "rank": 20,
+      "team": "Northwestern Wildcats",
+      "rating": 28.37,
+      "conference": "Big Ten",
+      "sos": 17.07,
+      "record": "6-1"
+    },
+    {
+      "rank": 21,
+      "team": "Texas A&M Aggies",
+      "rating": 28.08,
+      "conference": "SEC",
+      "sos": 20.44,
+      "record": "4-4"
+    },
+    {
+      "rank": 22,
+      "team": "Louisville Cardinals",
+      "rating": 27.9,
+      "conference": "ACC",
+      "sos": 20.11,
+      "record": "4-3"
+    },
+    {
+      "rank": 23,
+      "team": "Oklahoma Sooners",
+      "rating": 27.69,
+      "conference": "SEC",
+      "sos": 25.2,
+      "record": "4-3"
+    },
+    {
+      "rank": 24,
+      "team": "Florida Gators",
+      "rating": 27.67,
+      "conference": "SEC",
+      "sos": 23.07,
+      "record": "5-2"
+    },
+    {
+      "rank": 25,
+      "team": "Missouri Tigers",
+      "rating": 27.62,
+      "conference": "SEC",
+      "sos": 19.69,
+      "record": "5-2"
+    }
+  ],
+  "slate": [
+    {
+      "kickoff": "2026-11-02T05:00:00Z",
+      "day": "Mon",
+      "home": "BYU Cougars",
+      "away": "Ohio State Buckeyes",
+      "home_rank": 18,
+      "away_rank": 1,
+      "pick": "BYU Cougars",
+      "model_pct": 71.1,
+      "market_pct": null,
+      "edge_points": null,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "BYU Cougars",
+          "is_home": true,
+          "model_pct": 71.1
+        },
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": false,
+          "model_pct": 28.9
+        }
+      ],
+      "fan_score": 100
+    },
+    {
+      "kickoff": "2026-10-31T16:00:00Z",
+      "day": "Sat",
+      "home": "Texas Tech Red Raiders",
+      "away": "Arizona Wildcats",
+      "home_rank": 12,
+      "away_rank": 15,
+      "pick": "Texas Tech Red Raiders",
+      "model_pct": 59.6,
+      "market_pct": 61.0,
+      "edge_points": -1.4,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Texas Tech Red Raiders",
+          "is_home": true,
+          "model_pct": 59.6
+        },
+        {
+          "selection": "Arizona Wildcats",
+          "is_home": false,
+          "model_pct": 40.4
+        }
+      ],
+      "fan_score": 90
+    },
+    {
+      "kickoff": "2026-11-02T05:00:00Z",
+      "day": "Mon",
+      "home": "Florida Gators",
+      "away": "Miami Hurricanes",
+      "home_rank": 24,
+      "away_rank": 2,
+      "pick": "Florida Gators",
+      "model_pct": 90.1,
+      "market_pct": null,
+      "edge_points": null,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Florida Gators",
+          "is_home": true,
+          "model_pct": 90.1
+        },
+        {
+          "selection": "Miami Hurricanes",
+          "is_home": false,
+          "model_pct": 9.9
+        }
+      ],
+      "fan_score": 74
+    },
+    {
+      "kickoff": "2026-10-31T19:30:00Z",
+      "day": "Sat",
+      "home": "Oregon Ducks",
+      "away": "Northwestern Wildcats",
+      "home_rank": 11,
+      "away_rank": 20,
+      "pick": "Oregon Ducks",
+      "model_pct": 61.2,
+      "market_pct": 59.0,
+      "edge_points": 2.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Oregon Ducks",
+          "is_home": true,
+          "model_pct": 61.2
+        },
+        {
+          "selection": "Northwestern Wildcats",
+          "is_home": false,
+          "model_pct": 38.8
+        }
+      ],
+      "fan_score": 72
+    },
+    {
+      "kickoff": "2026-10-31T19:30:00Z",
+      "day": "Sat",
+      "home": "Georgia Bulldogs",
+      "away": "Florida Gators",
+      "home_rank": 5,
+      "away_rank": 24,
+      "pick": "Georgia Bulldogs",
+      "model_pct": 79.6,
+      "market_pct": 76.6,
+      "edge_points": 3.0,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Georgia Bulldogs",
+          "is_home": true,
+          "model_pct": 79.6
+        },
+        {
+          "selection": "Florida Gators",
+          "is_home": false,
+          "model_pct": 20.4
+        }
+      ],
+      "fan_score": 68
+    },
+    {
+      "kickoff": "2026-10-31T23:30:00Z",
+      "day": "Sat",
+      "home": "USC Trojans",
+      "away": "Ohio State Buckeyes",
+      "home_rank": null,
+      "away_rank": 1,
+      "pick": "Ohio State Buckeyes",
+      "model_pct": 66.9,
+      "market_pct": 67.7,
+      "edge_points": -0.8,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "USC Trojans",
+          "is_home": true,
+          "model_pct": 33.1
+        },
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": false,
+          "model_pct": 66.9
+        }
+      ],
+      "fan_score": 68
+    },
+    {
+      "kickoff": "2026-10-31T23:30:00Z",
+      "day": "Sat",
+      "home": "North Carolina Tar Heels",
+      "away": "Miami Hurricanes",
+      "home_rank": null,
+      "away_rank": 2,
+      "pick": "Miami Hurricanes",
+      "model_pct": 82.9,
+      "market_pct": 85.7,
+      "edge_points": -2.8,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "North Carolina Tar Heels",
+          "is_home": true,
+          "model_pct": 17.1
+        },
+        {
+          "selection": "Miami Hurricanes",
+          "is_home": false,
+          "model_pct": 82.9
+        }
+      ],
+      "fan_score": 66
+    },
+    {
+      "kickoff": "2026-10-31T19:30:00Z",
+      "day": "Sat",
+      "home": "Indiana Hoosiers",
+      "away": "Minnesota Golden Gophers",
+      "home_rank": 4,
+      "away_rank": null,
+      "pick": "Indiana Hoosiers",
+      "model_pct": 92.1,
+      "market_pct": 91.0,
+      "edge_points": 1.1,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Indiana Hoosiers",
+          "is_home": true,
+          "model_pct": 92.1
+        },
+        {
+          "selection": "Minnesota Golden Gophers",
+          "is_home": false,
+          "model_pct": 7.9
+        }
+      ],
+      "fan_score": 62
+    },
+    {
+      "kickoff": "2026-10-31T16:00:00Z",
+      "day": "Sat",
+      "home": "Navy Midshipmen",
+      "away": "Notre Dame Fighting Irish",
+      "home_rank": null,
+      "away_rank": 3,
+      "pick": "Notre Dame Fighting Irish",
+      "model_pct": 95.9,
+      "market_pct": 96.4,
+      "edge_points": -0.5,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Navy Midshipmen",
+          "is_home": true,
+          "model_pct": 4.1
+        },
+        {
+          "selection": "Notre Dame Fighting Irish",
+          "is_home": false,
+          "model_pct": 95.9
+        }
+      ],
+      "fan_score": 56
+    },
+    {
+      "kickoff": "2026-10-31T23:30:00Z",
+      "day": "Sat",
+      "home": "Texas Longhorns",
+      "away": "Mississippi State Bulldogs",
+      "home_rank": 8,
+      "away_rank": null,
+      "pick": "Texas Longhorns",
+      "model_pct": 82.1,
+      "market_pct": 89.5,
+      "edge_points": -7.4,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Texas Longhorns",
+          "is_home": true,
+          "model_pct": 82.1
+        },
+        {
+          "selection": "Mississippi State Bulldogs",
+          "is_home": false,
+          "model_pct": 17.9
+        }
+      ],
+      "fan_score": 54
+    }
+  ],
+  "upsets": []
+}
