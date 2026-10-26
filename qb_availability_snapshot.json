@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-26T00:22:56.251114+00:00",
+  "generated_at": "2026-10-26T06:13:16.135582+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-10-26T00:22:56.251114+00:00",
-      "state": "ok",
+      "checked_at": "2026-10-26T06:13:16.135582+00:00",
+      "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
-      "current_reports": 6,
-      "error_kind": null,
+      "current_reports": 0,
+      "error_kind": "ValueError",
       "rejected_reports": 0
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-10-26T00:22:56.251114+00:00",
-      "state": "ok",
+      "checked_at": "2026-10-26T06:13:16.135582+00:00",
+      "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
-      "current_reports": 6,
-      "error_kind": null,
+      "current_reports": 0,
+      "error_kind": "ValueError",
       "rejected_reports": 0
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-10-26T00:22:56.251114+00:00",
-      "state": "ok",
+      "checked_at": "2026-10-26T06:13:16.135582+00:00",
+      "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
-      "current_reports": 7,
-      "error_kind": null,
+      "current_reports": 0,
+      "error_kind": "ValueError",
       "rejected_reports": 0
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-10-26T00:22:56.251114+00:00",
-      "state": "ok",
+      "checked_at": "2026-10-26T06:13:16.135582+00:00",
+      "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
-      "current_reports": 8,
-      "error_kind": null,
+      "current_reports": 0,
+      "error_kind": "ValueError",
       "rejected_reports": 0
     }
   },
