@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF OCT 26",
+  "week": "WEEK OF OCT 27",
   "season": "2026 SEASON",
   "published": "2026-10-25",
-  "generated_at": "2026-10-26T00:49:50Z",
+  "generated_at": "2026-10-27T18:31:32Z",
   "logos": {
     "Ohio State Buckeyes": "logos/ohioState.png",
     "OHIO STATE": "logos/ohioState.png",
@@ -39,7 +39,7 @@ window.MATCHDAY_SOCIAL = {
     "Oregon Ducks": "logos/oregon.png",
     "OREGON": "logos/oregon.png",
     "Oregon": "logos/oregon.png",
-    "Texas Tech Red Raiders": "logos/texasTech.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
     "Tennessee Volunteers": "logos/tennessee.png",
@@ -64,7 +64,7 @@ window.MATCHDAY_SOCIAL = {
     "Northwestern Wildcats": "logos/northwestern.png",
     "NORTHWESTERN": "logos/northwestern.png",
     "Northwestern": "logos/northwestern.png",
-    "Texas A&M Aggies": "logos/texasAM.png",
+    "Texas A&M Aggies": "logos/texas.png",
     "TEXAS A&M": "logos/texasAM.png",
     "Texas A&M": "logos/texasAM.png",
     "Louisville Cardinals": "logos/louisville.png",
