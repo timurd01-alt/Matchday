@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-28T06:52:24.349044+00:00",
+  "generated_at": "2026-10-28T14:01:47.790572+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-10-28T06:52:24.349044+00:00",
+      "checked_at": "2026-10-28T14:01:47.790572+00:00",
       "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
       "current_reports": 0,
@@ -14,7 +14,7 @@
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-10-28T06:52:24.349044+00:00",
+      "checked_at": "2026-10-28T14:01:47.790572+00:00",
       "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
       "current_reports": 0,
@@ -23,7 +23,7 @@
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-10-28T06:52:24.349044+00:00",
+      "checked_at": "2026-10-28T14:01:47.790572+00:00",
       "state": "unavailable",
       "last_success_at": "2026-10-26T00:22:56.251114+00:00",
       "current_reports": 0,
@@ -32,9 +32,9 @@
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-10-28T06:52:24.349044+00:00",
+      "checked_at": "2026-10-28T14:01:47.790572+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-28T06:52:24.349044+00:00",
+      "last_success_at": "2026-10-28T14:01:47.790572+00:00",
       "current_reports": 1,
       "error_kind": null,
       "rejected_reports": 6
@@ -2287,43 +2287,46 @@
     },
     {
       "conference": "B12",
-      "report_id": "3405",
-      "source_url": "https://big12sports.com/FBReporting",
-      "report_type": "Initial",
-      "published_at": "2026-10-28T02:00:00+00:00",
+      "content_sha256": "8105304039e602c3867ef319a853abbcf57fb920a9135703530bf18af2621ae4",
+      "first_observed_at": "2026-10-28T06:52:24.349044+00:00",
       "kickoff": "2026-10-30T23:30:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-28T02:00:00+00:00",
       "published_local": "2026-10-27 21:00:00 CT",
+      "report_id": "3405",
+      "report_type": "Initial",
+      "source_url": "https://big12sports.com/FBReporting",
       "teams": [
         {
           "name": "Baylor",
           "quarterbacks": [
             {
-              "name": "DJ Lagway",
               "jersey": "2",
+              "name": "DJ Lagway",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Nate Bennett",
               "jersey": "12",
+              "name": "Nate Bennett",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Quinn Murphy",
               "jersey": "13",
+              "name": "Quinn Murphy",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Edward Griffin",
               "jersey": "14",
+              "name": "Edward Griffin",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Cade Tessier",
               "jersey": "17",
+              "name": "Cade Tessier",
               "position": "QB",
               "status": "Available"
             }
@@ -2333,41 +2336,38 @@
           "name": "UCF",
           "quarterbacks": [
             {
-              "name": "Rocco Marriott",
               "jersey": "8",
+              "name": "Rocco Marriott",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Kaleb Annett",
               "jersey": "10",
+              "name": "Kaleb Annett",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Keyone Jenkins",
               "jersey": "12",
+              "name": "Keyone Jenkins",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Alonza Barnett III",
               "jersey": "14",
+              "name": "Alonza Barnett III",
               "position": "QB",
               "status": "Questionable"
             },
             {
-              "name": "Dante Carr",
               "jersey": "16",
+              "name": "Dante Carr",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "8105304039e602c3867ef319a853abbcf57fb920a9135703530bf18af2621ae4",
-      "first_observed_at": "2026-10-28T06:52:24.349044+00:00",
-      "observed_before_kickoff": true
+      ]
     }
   ]
 }
