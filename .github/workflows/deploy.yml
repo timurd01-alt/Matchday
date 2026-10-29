@@ -359,6 +359,9 @@ jobs:
           # Failure tracebacks stay in the private Actions cache/log. Publishing
           # internal paths and provider error bodies to the public site creates
           # avoidable information disclosure even after credential scrubbing.
+          # Builds reactions-data.js and only explicitly published article HTML.
+          python build_reactions.py --output _site
+          cp reactions.css app-reactions.js _site/
           mkdir -p _site/posts
           python - <<'EOF'
           import json, pathlib, shutil

@@ -882,7 +882,7 @@ function tagPageHead(){
   head.classList.add('pageHead');
   head.insertAdjacentHTML('beforeend',`<small class="pageTag">${esc(tag)}</small>`);
 }
-function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
+function renderCurrent(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';

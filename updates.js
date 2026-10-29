@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029R",
+  "tag": "New",
+  "title": "Matchday Reactions",
+  "items": [
+   "A new Reactions tab under Home for weekly personal reflections, planned for Mondays.",
+   "A dedicated article archive and shareable reading pages, with a text import workflow for publishing new reactions."
+  ]
+ },
+ {
   "date": "Build 1025G",
   "tag": "Content",
   "title": "Q&A focused on interpreting the model",

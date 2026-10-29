@@ -38,7 +38,7 @@ class MobileNavigationTests(unittest.TestCase):
         )
         self.assertEqual(
             primary,
-            [("home", "Home"), ("matches", "Games"), ("groups", "Rankings"),
+            [("home", "Home"), ("reactions", "Reactions"), ("matches", "Games"), ("groups", "Rankings"),
              ("results", "Results"), ("news", "Research"), ("learn", "Learn")],
         )
         self.assertEqual(html.count('class="navbtn navMore"'), 1)

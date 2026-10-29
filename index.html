@@ -39,6 +39,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css?v=__BUILD__">
+<link rel="stylesheet" href="reactions.css?v=__BUILD__">
 <link rel="stylesheet" href="research-signals.css?v=__BUILD__">
 <link rel="stylesheet" href="bracketology.css?v=__BUILD__" media="print" onload="this.media='all'">
 <script type="application/ld+json">
@@ -107,7 +108,8 @@ window.matchdayEnterNow=function(targetView){
   var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
   // Show only the view being entered. Forcing #view-home visible here while
   // the app re-rendered the last-used view left both on screen at once.
-  var target=targetView||(typeof VIEW!=='undefined'&&VIEW)||'home';
+  var reactionLink=new URLSearchParams(window.location.search).get('view')==='reactions';
+  var target=targetView||(reactionLink?'reactions':null)||(typeof VIEW!=='undefined'&&VIEW)||'home';
   document.querySelectorAll('.view').forEach(function(el){el.style.display=el.id==='view-'+target?'block':'none'});
   try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
   if(typeof window.startMatchdayApp==='function')window.startMatchdayApp();
@@ -203,6 +205,7 @@ document.addEventListener('click',function(event){
   <nav class="sidebar" id="nav">
     <div class="navGroup" data-group="home">
     <button class="navbtn" data-primary data-mobile-primary data-v="home" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span class="lbl">Home</span></button>
+    <button class="navbtn" data-primary data-v="reactions" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4V4z"/><path d="M9 8h6M9 12h4"/></svg><span class="lbl">Reactions</span></button>
     </div>
     <div class="navGroup" data-group="games">
     <button class="navbtn" data-primary data-mobile-primary data-v="matches" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Games</span></button>
@@ -225,14 +228,14 @@ document.addEventListener('click',function(event){
     <button class="navbtn navMore" type="button" onclick="toggleNavSheet()" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lbl">More</span></button>
   </nav>
   <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-home"><div class="empty">Loading…</div></div><div class="view" id="view-matches"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
-<div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-learn"></div><div class="view" id="view-community"></div></main>
+<div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-reactions"></div><div class="view" id="view-learn"></div><div class="view" id="view-community"></div></main>
 </div>
 <script>
 // Keep the welcome page interactive. The large data/application bundles used
 // to execute as soon as parsing finished, monopolizing the main thread before
 // a visitor's click could be dispatched. Start them only after entry (or
 // immediately for a visitor who already entered during this browser session).
-var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-bracketology.js','app-4-features.js','research-signals.js','app-learn.js'];
+var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-bracketology.js','app-4-features.js','research-signals.js','reactions-data.js','app-reactions.js','app-learn.js'];
 function matchdayAsset(file){return file+'?v=__BUILD__'}
 window.startMatchdayApp=function(){
   if(window.MATCHDAY_APP_STARTING)return window.MATCHDAY_APP_STARTING;
