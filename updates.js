@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029U",
+  "tag": "Design",
+  "title": "A tighter Reactions page",
+  "items": [
+   "Reduced oversized header spacing and widened the reading area.",
+   "Combined the unpublished first-edition message into a compact responsive panel."
+  ]
+ },
+ {
   "date": "Build 1029T",
   "tag": "Update",
   "title": "TRDLab engine naming",
