@@ -132,7 +132,7 @@ function insightModelBlock(m){
     ||'<div class="seclbl">Model read</div><div class="nomk">No model read on this fixture yet.</div>';
 }
 // Same lookup the expanded view uses, so the row on the card and the panel it
-// opens onto cannot name different sides. It used to read m.betbetter_pick
+// opens onto cannot name different sides. It used to read m.trdlab_pick
 // alone, which only a scheduled build writes -- on a push deploy the card
 // therefore carried no pick at all while the expanded view still showed one.
 /* How much the model expects the pick to win by, in whole points: "by 5".
@@ -146,7 +146,7 @@ function pickMarginHTML(p){
   const by=Math.round(p.pick==='a'?-mg:mg);
   return by>=1?`<span class="pmargin">by ${by}</span>`:'';
 }
-function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
+function matchdayLivePickHTML(m){const p=trdlabReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
 // Game cards give each name about 83px at their narrowest (a 360px card).
 // These schools have one word wider than that, so the card uses a short form
 // the school itself goes by instead of splitting the word ("Tennesse / e").
@@ -168,8 +168,8 @@ function cardHTML(m,opts){
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">${esc(oddsEtaLabel(m)||'No market snapshot yet')}</div></div>`;
   // One pick per card, and it is the model's. The card used to stack two rows
-  // from two different prediction systems: the Bet Better model out of
-  // betbetter_picks.json, and `m.prediction` out of the data payload. They are
+  // from two different prediction systems: the TRDLab model out of
+  // trdlab_picks.json, and `m.prediction` out of the data payload. They are
   // not the same model and they disagree -- Florida State v SMU read "Florida
   // State 60.4%" above "SMU 53%" on the same card -- so a reader had no way to
   // know which one the site actually stands behind. `m.prediction` is no longer
@@ -185,9 +185,9 @@ function cardHTML(m,opts){
 // prediction-driven "Model read" card; it now shows the same engine read the
 // real expanded view does, so a render error cannot resurrect the other model.
 function simpleMatchFallbackPanel(m){
-  const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  const bb=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
   const played=(typeof howItPlayedPanel==='function'?howItPlayedPanel(m):'')||(typeof finalSummaryPanel==='function'?finalSummaryPanel(m):'');
-  const read=bb?betbetterModelRead(m,bb):(played||betbetterNoReadPanel());
+  const read=bb?trdlabModelRead(m,bb):(played||trdlabNoReadPanel());
   return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div>${rosterPanel(m)}</div>`;
 }
 

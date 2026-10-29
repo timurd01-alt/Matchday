@@ -10,9 +10,9 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
     def setUpClass(cls):
         cls.source = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
 
-    def test_probabilities_come_from_bet_better_sides_not_market(self):
+    def test_probabilities_come_from_trdlab_sides_not_market(self):
         self.assertIn("function communityPickProbs(m)", self.source)
-        self.assertIn("betbetterReadFor(m)", self.source)
+        self.assertIn("trdlabReadFor(m)", self.source)
         self.assertIn("home?.model_pct!=null&&away?.model_pct!=null", self.source)
         self.assertNotIn("function communityMarketProbs", self.source)
 
@@ -26,11 +26,11 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
             self.source.index("sides.find(s=>s.is_home===false)"),
         )
 
-    def test_latest_bet_better_read_wins_over_stale_fixture_attachment(self):
+    def test_latest_trdlab_read_wins_over_stale_fixture_attachment(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("if(m.betbetter_pick)candidates.push(m.betbetter_pick)", panels)
+        self.assertIn("if(m.trdlab_pick)candidates.push(m.trdlab_pick)", panels)
         self.assertIn("Date.parse(b.generated_at||'')", panels)
-        self.assertNotIn("if(m.betbetter_pick)return m.betbetter_pick;", panels)
+        self.assertNotIn("if(m.trdlab_pick)return m.trdlab_pick;", panels)
 
     def test_open_picks_do_not_require_a_market(self):
         eligible_filter = next(
@@ -57,22 +57,22 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         # The engine's name is gone from every string a visitor can read. Asserted
         # on the old labels rather than the bare name, which still appears in
         # developer comments explaining where the handoff comes from.
-        self.assertNotIn("Bet Better live model", self.source)
-        self.assertNotIn("Bet Better probabilities pending", self.source)
-        self.assertNotIn("Bet Better picks locked alongside yours", self.source)
+        self.assertNotIn("TRDLab live model", self.source)
+        self.assertNotIn("TRDLab probabilities pending", self.source)
+        self.assertNotIn("TRDLab picks locked alongside yours", self.source)
 
     def test_todays_call_is_removed(self):
         self.assertNotIn("Today's call", self.source)
         self.assertNotIn("btmChallenge", self.source)
 
-    def test_new_pick_snapshots_bet_better_side(self):
+    def test_new_pick_snapshots_trdlab_side(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         self.assertIn("modelPick:read?.pick||null", core)
         self.assertIn("Math.min(99.9,n)", core)
 
     def test_research_top_pick_stays_in_current_week(self):
         self.assertIn("const thisWeek=kickoff=>", self.source)
-        self.assertIn("m.betbetter_pick&&thisWeek(m.kickoff)", self.source)
+        self.assertIn("m.trdlab_pick&&thisWeek(m.kickoff)", self.source)
         self.assertIn(".filter(p=>thisWeek(p.kickoff))", self.source)
 
     def test_community_pick_rows_show_school_marks(self):
@@ -94,5 +94,5 @@ class RolledOffPicksAreGradedTests(unittest.TestCase):
     def test_grading_falls_back_to_season_results(self):
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         grade = views[views.index("function btmGrade("):views.index("function btmStats(")]
-        self.assertIn("MATCHDAY_BETBETTER_RESULTS", grade)
+        self.assertIn("MATCHDAY_TRDLAB_RESULTS", grade)
         self.assertIn("same(r.home,p.away)&&same(r.away,p.home)", grade)

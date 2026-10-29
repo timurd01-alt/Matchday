@@ -1,19 +1,19 @@
 # CFB 2026: patterns behind game outcomes
 
-Date: 2026-10-21 · Question: what patterns from this season influence outcomes, beyond what Sigma Lab already rates?
+Date: 2026-10-21 · Question: what patterns from this season influence outcomes, beyond what TRDLab already rates?
 
 ## Data: where it actually lives (corrected)
 The first pass of this note wrongly said the season record was thin. It had looked in places retired or never persisted:
 
 | Source | State | Why |
 |---|---|---|
-| `picks_log_ncaaf.json` | Dead since 2026-09-25 (20 graded) | Commit `814d5cf` retired the in-house model and its pick lock/grading. Sigma Lab is the only pick source now. |
+| `picks_log_ncaaf.json` | Dead since 2026-09-25 (20 graded) | Commit `814d5cf` retired the in-house model and its pick lock/grading. TRDLab is the only pick source now. |
 | `archive/games/ncaaf/` | Never written to git | `fetch_data` still calls `game_archive.record_build()` hourly, but `deploy.yml`'s commit-back step never `git add`s `archive/`, so each run's archive is discarded. |
-| `data/betbetter.sqlite3` (both copies) | Empty | Not the DB Sigma Lab runs from, or reset. |
+| `data/trdlab.sqlite3` (both copies) | Empty | Not the DB TRDLab runs from, or reset. |
 | Live `data_ncaaf.json` | Display window only (~40 finals) | Holds *current* team stats, so testing finished games against it leaks. |
-| **`betbetter_picks.json` → `results`** | **510 CFB finals, 2026-08-29 → 10-17, with EPA/play and success rate** | The real record. Committed by Sunday ship. |
+| **`trdlab_picks.json` → `results`** | **510 CFB finals, 2026-08-29 → 10-17, with EPA/play and success rate** | The real record. Committed by Sunday ship. |
 
-**Correction:** past picks *are* locked and graded. `betbetter_picks.json` → `scorecard.sports.ncaaf.recent` holds 410 graded CFB picks (307–101, 75.2% vs 74.5% expected) — the live Scorecard page. An earlier draft of this note missed it and wrongly called picks ungraded.
+**Correction:** past picks *are* locked and graded. `trdlab_picks.json` → `scorecard.sports.ncaaf.recent` holds 410 graded CFB picks (307–101, 75.2% vs 74.5% expected) — the live Scorecard page. An earlier draft of this note missed it and wrongly called picks ungraded.
 
 Real gap found and fixed (Build 1021D): `deploy.yml` never committed `archive/games/`, so the hourly game archive was discarded each run.
 
@@ -44,7 +44,7 @@ Walk-forward: each game is judged using only the two teams' *earlier* games (bot
 
 ## Graded-record check (scorecard, n=410)
 - Agreed with market: 255–75 (77.3% vs 75.0% expected). Disagreed: 14–21 (40.0% vs 61.7% expected, −21.7).
-- So Sigma Lab's edge is calibration, not disagreement: when it leaves the market it loses. Consistent with finding 1 — its disagreements don't carry an extra signal the market lacks.
+- So TRDLab's edge is calibration, not disagreement: when it leaves the market it loses. Consistent with finding 1 — its disagreements don't carry an extra signal the market lacks.
 
 ## Next
 - Test rest/travel/weather inside the sub-7-point band, where the misses live.

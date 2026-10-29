@@ -3,7 +3,7 @@
 The checked-in/runtime payload remains untouched.  The Pages artifact does not
 need the scorecard's reproducibility snapshots (the UI reads the compact Bet
 Better scorecard in matchday-cfb-snapshot.js), and NCAAF's per-match
-``betbetter_pick`` is the same handoff already published in that snapshot.
+``trdlab_pick`` is the same handoff already published in that snapshot.
 Removing those duplicate copies and writing compact JSON materially reduces
 mobile download and parse time.
 """
@@ -19,12 +19,12 @@ def public_payload(payload: dict, competition: str) -> dict:
     if isinstance(scorecard, dict):
         scorecard.pop("picks", None)
 
-    # The shared snapshot currently carries NCAAF Bet Better picks. NCAAM must
+    # The shared snapshot currently carries NCAAF TRDLab picks. NCAAM must
     # retain any attached picks until its handoff is added to that snapshot.
     if competition.lower() == "ncaaf":
         for match in payload.get("matches") or []:
             if isinstance(match, dict):
-                match.pop("betbetter_pick", None)
+                match.pop("trdlab_pick", None)
     return payload
 
 

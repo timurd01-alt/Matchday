@@ -59,9 +59,9 @@ The production workflow runs hourly. The scheduler may use longer caches for dis
 
 ## Prediction lifecycle
 
-1. The engine writes `betbetter_picks.json` (picks, results, scorecard, ratings). `betbetter_handoff.py` validates it and attaches each pick to its fixture; `build_cfb_snapshot.py` builds `matchday-cfb-snapshot.js` for the browser.
+1. The engine writes `trdlab_picks.json` (picks, results, scorecard, ratings). `trdlab_handoff.py` validates it and attaches each pick to its fixture; `build_cfb_snapshot.py` builds `matchday-cfb-snapshot.js` for the browser.
 2. Each pick locks before kickoff. The Scorecard page states the lock lead.
-3. After the game is final the engine grades the locked pick. The graded record is `betbetter_picks.json` → `scorecard.sports.<sport>.recent`. A locked pick is never rewritten.
+3. After the game is final the engine grades the locked pick. The graded record is `trdlab_picks.json` → `scorecard.sports.<sport>.recent`. A locked pick is never rewritten.
 4. In-progress games are shown as result pending, not as a live scoreboard.
 
 The Odds API is queried only for upcoming fixtures close to kickoff and the response is cached to protect quota. A missing market does not prevent the model from locking its independent prediction.

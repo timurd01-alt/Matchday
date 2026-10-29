@@ -22,7 +22,7 @@ Three separate things can be stale, and they fail independently:
                 sees as wrong: a played game displayed as though it had not
                 started.
   patch      -- `matchday-cfb-snapshot.js` is the browser-side repair layer
-                built from the Bet Better handoff, which settles finished games
+                built from the TRDLab handoff, which settles finished games
                 the fixture feed could not afford to fetch. If the handoff is
                 newer than the snapshot, the repair itself has gone stale and
                 the site is patching from data older than what is on disk.
@@ -47,7 +47,7 @@ from typing import Any
 
 SCHEMA_VERSION = 1
 
-HANDOFF_PATH = pathlib.Path("betbetter_picks.json")
+HANDOFF_PATH = pathlib.Path("trdlab_picks.json")
 SNAPSHOT_PATH = pathlib.Path("matchday-cfb-snapshot.js")
 
 # The hourly cron is `17 * * * *`, so a healthy payload is under an hour old
@@ -229,7 +229,7 @@ def _shift_day(day: str, delta: int) -> str:
 
 
 def load_handoff_results(path: pathlib.Path = HANDOFF_PATH) -> tuple[list[dict], datetime.datetime | None]:
-    """Finished games from the Bet Better handoff, indexed by nothing yet.
+    """Finished games from the TRDLab handoff, indexed by nothing yet.
 
     A missing handoff is normal rather than an error -- the engine is external
     and may simply not have run -- so this returns an empty list and lets the
@@ -241,7 +241,7 @@ def load_handoff_results(path: pathlib.Path = HANDOFF_PATH) -> tuple[list[dict],
         document = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return [], None
-    if document.get("source") not in ("betbetter", "sigmalab"):
+    if document.get("source") not in ("trdlab", "sigmalab", "betbetter"):
         return [], None
     results = [r for r in (document.get("results") or []) if isinstance(r, dict)]
     return results, _parse_iso(document.get("generated_at"))
@@ -367,7 +367,7 @@ def inspect_payload(
     elif hold:
         finding["problems"].append(
             f"payload is {age:.1f}h old because the fetcher is pacing its quota "
-            f"({hold}); settled scores remain current through the Bet Better handoff"
+            f"({hold}); settled scores remain current through the TRDLab handoff"
         )
         finding["state"] = "paced"
     elif age >= fail_at:
@@ -411,7 +411,7 @@ def inspect_patch_layer(
     finding["handoff_age_hours"] = _hours_since(handoff_generated, now)
 
     if not handoff.exists():
-        finding.update(state="missing", problems=["betbetter_picks.json is absent; nothing to patch from"])
+        finding.update(state="missing", problems=["trdlab_picks.json is absent; nothing to patch from"])
         return finding
     if not snapshot.exists():
         finding.update(state="missing", problems=["matchday-cfb-snapshot.js is absent; the browser has no repair layer"])

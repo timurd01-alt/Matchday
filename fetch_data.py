@@ -9,7 +9,7 @@ matchday fetcher  (v5)
 College football and men's college basketball are the only competitions.
 
 The product is intentionally pregame/postgame rather than a live-score feed:
-  * picks come from the Bet Better handoff (betbetter_handoff.py), not from here;
+  * picks come from the TRDLab handoff (trdlab_handoff.py), not from here;
   * results are fetched after kickoff;
   * odds are requested only for near-kickoff upcoming games and cached on disk.
 
@@ -23,7 +23,7 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import game_archive
-import betbetter_handoff
+import trdlab_handoff
 import market_snapshots
 import pregame_context
 import provider_quota
@@ -2266,9 +2266,9 @@ def build():
     if season_context["suppressed_views"]:
         DIAG.append("season context: suppressed stale " + ", ".join(
             season_context["suppressed_views"]))
-    _betbetter = betbetter_handoff.attach_from_file(matches)
-    if _betbetter["attached"]:
-        DIAG.append(f"matchday live picks: attached {_betbetter['attached']}")
+    _trdlab = trdlab_handoff.attach_from_file(matches)
+    if _trdlab["attached"]:
+        DIAG.append(f"matchday live picks: attached {_trdlab['attached']}")
     scorers = []
     leaders = {}
     if sports_adapter:
@@ -2316,7 +2316,7 @@ def build():
                "markets_quota_out": MARKET_STATE["quota_out"],
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
-    payload["betbetter_handoff"] = _betbetter
+    payload["trdlab_handoff"] = _trdlab
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

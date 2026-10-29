@@ -38,7 +38,7 @@ advanced_metrics_*.json
 # Retired 2026-09-13 / 2026-09-25 (other sports; the in-house model, its
 # ratings, pick ledgers, challengers and research reports). Nothing reads
 # these any more. Kept ignored so a stale local copy is never committed or
-# mistaken for live data -- the graded record lives in betbetter_picks.json.
+# mistaken for live data -- the graded record lives in trdlab_picks.json.
 ratings*.json
 picks_log*.json
 forecast_ledger_*.jsonl

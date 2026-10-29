@@ -2174,7 +2174,7 @@ html{color-scheme:dark}
 .ntKey{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .notableList b{font-family:var(--sans);font-size:var(--fs-lg);line-height:1.15}
 .ntDetail{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
-/* Bet Better matchup panel inside the expanded view. */
+/* TRDLab matchup panel inside the expanded view. */
 .bbMatchupCard .readHead{display:flex;flex-direction:column;gap:2px;margin-bottom:9px}
 .bbMatchupCard .readHead span{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
 .bbMatchupCard .readHead b{font-family:var(--sans);font-size:var(--fs-lg)}

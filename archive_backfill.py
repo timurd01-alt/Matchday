@@ -6,7 +6,7 @@ already on disk or freely downloadable without a key:
 
   college        college_ncaa{m,f}_bundle_v*_cache.json  NCAAM / NCAAF seasons
   data           data_*.json                             the current build payloads
-  handoff        betbetter_picks.json -> results         every final this season
+  handoff        trdlab_picks.json -> results         every final this season
 
 Every one of those files was already paid for by a previous run. Re-reading them costs
 nothing, which matters because the providers that hold this history are exactly
@@ -132,7 +132,7 @@ def _short_names(comp: str) -> list[str]:
 
 
 def source_handoff() -> list[dict[str, Any]]:
-    """Season finals from the engine's handoff (`betbetter_picks.json` -> results).
+    """Season finals from the engine's handoff (`trdlab_picks.json` -> results).
 
     The handoff carries every final of the season, while `data_*.json` only
     holds the display window, so this is what covers the weeks before the
@@ -143,7 +143,7 @@ def source_handoff() -> list[dict[str, Any]]:
     (so "Michigan State Spartans" is not taken as "Michigan"), and kept as-is
     when no pipeline name matches.
     """
-    import betbetter_handoff as handoff
+    import trdlab_handoff as handoff
 
     document = _load_json(Path(handoff.DEFAULT_HANDOFF_PATH))
     if not isinstance(document, dict):

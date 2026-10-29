@@ -61,7 +61,7 @@ def match(short: str, full_names: list[str]) -> str | None:
 
 
 def fbs_names() -> list[str]:
-    handoff = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+    handoff = json.loads((ROOT / "trdlab_picks.json").read_text(encoding="utf-8"))
     rows = ((handoff.get("rankings") or {}).get("ncaaf") or {}).get("rankings") or []
     return [row["team_name"] for row in rows if row.get("team_name")]
 
@@ -93,7 +93,7 @@ def refresh(season: int | None = None, adapter=None, scores: dict | None = None,
 
     `scores` seeds the tiers from an already-licensed saved copy of the
     composite instead of a request (used 2026-09-27, when CFBD's month was
-    spent and Bet Better held the 2025 composite from 2026-09-06).
+    spent and TRDLab held the 2025 composite from 2026-09-06).
     """
     season = season or dt.date.today().year
     current = load()

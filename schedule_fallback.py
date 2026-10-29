@@ -53,7 +53,7 @@ def _core(match: dict[str, Any]) -> dict[str, Any]:
 
 
 def _known_names(matches: Iterable[dict[str, Any]]) -> dict[str, str]:
-    from betbetter_handoff import _normalize
+    from trdlab_handoff import _normalize
     names = {}
     for match in matches:
         for side in ("home", "away"):
@@ -65,7 +65,7 @@ def _known_names(matches: Iterable[dict[str, Any]]) -> dict[str, str]:
 
 def _schedule_name(engine_name: str, known: dict[str, str]) -> str | None:
     """The schedule's own spelling of an engine team name, when exactly one fits."""
-    from betbetter_handoff import _compatible, _normalize
+    from trdlab_handoff import _compatible, _normalize
     key = _normalize(engine_name)
     if key in known:
         return known[key]
@@ -98,13 +98,13 @@ def history_from_handoff(document: dict[str, Any] | None, comp: str,
             "status": "FINISHED", "minute": None,
             "score": normalized_score(home_score, away_score, True),
             "home": {"name": home}, "away": {"name": away},
-            "neutral": bool(result.get("neutral")), "data_source": "Bet Better results",
+            "neutral": bool(result.get("neutral")), "data_source": "TRDLab results",
         })
     return rows
 
 
 def last_good_bundle(comp: str, data_path: str | None = None,
-                     handoff_path: str = "betbetter_picks.json") -> dict[str, Any] | None:
+                     handoff_path: str = "trdlab_picks.json") -> dict[str, Any] | None:
     """A college bundle rebuilt from the last published payload, or None."""
     data_path = data_path or f"data_{comp.lower()}.json"
     try:
@@ -119,8 +119,8 @@ def last_good_bundle(comp: str, data_path: str | None = None,
     document = None
     if os.path.exists(handoff_path):
         try:
-            import betbetter_handoff
-            document = betbetter_handoff.load(handoff_path)
+            import trdlab_handoff
+            document = trdlab_handoff.load(handoff_path)
         except Exception:
             document = None
     history = history_from_handoff(document, comp, _known_names(matches))

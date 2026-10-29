@@ -7,7 +7,7 @@
 // and no played game ever settled.
 const _BB_NAME_KEY_CACHE=new Map();
 function bbNameKey(name){
-  // CFBD calls the school Massachusetts; Bet Better and its poll use UMass.
+  // CFBD calls the school Massachusetts; TRDLab and its poll use UMass.
   // Normalize that one established school alias before matching fixtures.
   const label=String(name||'');
   const hit=_BB_NAME_KEY_CACHE.get(label);
@@ -158,7 +158,7 @@ function makeCfbFixtureIndex(){
   };
 }
 function bbFindByName(list,name){return (list||[]).find(r=>bbNameMatches(r.name||r.team_name,name))||null;}
-// The snapshots are rebuilt only when a new Bet Better handoff is taken in;
+// The snapshots are rebuilt only when a new TRDLab handoff is taken in;
 // data_*.json is refetched hourly. Stamping the snapshot's date over the
 // payload's therefore reported the whole board as stale whenever the handoff
 // was older than the last fetch -- on 2026-09-03 the strip read "data 4 days
@@ -203,7 +203,7 @@ function applyCurrentCfbSnapshot(payload){
   // games are added.
   // The engine's list carries both sports; only football belongs on this board,
   // or basketball games appear among the football fixtures with no profile.
-  const upcoming=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined'?MATCHDAY_BETBETTER_FIXTURES:[]).filter(f=>String(f.sport||'ncaaf').toLowerCase()==='ncaaf');
+  const upcoming=(typeof MATCHDAY_TRDLAB_FIXTURES!=='undefined'?MATCHDAY_TRDLAB_FIXTURES:[]).filter(f=>String(f.sport||'ncaaf').toLowerCase()==='ncaaf');
   if(upcoming.length){
     const have=new Set((payload.matches||[]).map(m=>
       `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
@@ -218,7 +218,7 @@ function applyCurrentCfbSnapshot(payload){
       const hit=known.match(f),held=hit&&hit.value;
       if(held&&held!==f&&held.home){
         if(held.status==='UPCOMING'&&f.kickoff&&kickoffTimeTbd(held)&&!kickoffTimeTbd(f)){
-          held.kickoff=f.kickoff;held._kickoff_from='betbetter_fixtures';
+          held.kickoff=f.kickoff;held._kickoff_from='trdlab_fixtures';
         }
         return;
       }
@@ -232,7 +232,7 @@ function applyCurrentCfbSnapshot(payload){
       known.add({kickoff:f.kickoff,home:{name:f.home},away:{name:f.away}});
       added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
         kickoff:f.kickoff,status:'UPCOMING',
-        home:{name:f.home},away:{name:f.away},score:{},_from:'betbetter_fixtures'});
+        home:{name:f.home},away:{name:f.away},score:{},_from:'trdlab_fixtures'});
     });
     if(added.length)payload.matches=(payload.matches||[]).concat(added);
   }
@@ -247,7 +247,7 @@ function applyCurrentCfbSnapshot(payload){
   //
   // Matched on both team names and the calendar day, and only ever applied to a
   // fixture that is not already FINISHED -- a settled score is never rewritten.
-  const settled=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[]);
+  const settled=(typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'?MATCHDAY_TRDLAB_RESULTS:[]);
   if(settled.length){
     const byDay=new Map();
     settled.forEach(r=>{const d=String(r.played_on||'').slice(0,10);(byDay.get(d)||byDay.set(d,[]).get(d)).push(r)});
@@ -261,7 +261,7 @@ function applyCurrentCfbSnapshot(payload){
       if(!hit)return;
       m.status='FINISHED';
       m.score={...(m.score||{}),home:Number(hit.home_score),away:Number(hit.away_score)};
-      m._settled_from='betbetter_results';
+      m._settled_from='trdlab_results';
       hit._merged=true;
     });
     // Played games the fixture feed never carried at all.
@@ -309,7 +309,7 @@ function applyCurrentCfbSnapshot(payload){
         recovered.push({id:`bb-result-${r.event_id||key}`,_comp:'NCAAF',competition:r.competition||'NCAAF',
           kickoff:r.kickoff||`${day}T00:00:00Z`,status:'FINISHED',
           home:{name:r.home},away:{name:r.away},
-          score:{home:Number(r.home_score),away:Number(r.away_score)},_from:'betbetter_results'});
+          score:{home:Number(r.home_score),away:Number(r.away_score)},_from:'trdlab_results'});
       });
       if(recovered.length)payload.matches=(payload.matches||[]).concat(recovered);
     }
@@ -337,7 +337,7 @@ function applyCurrentCfbSnapshot(payload){
   // This season's advanced profile on every fixture, from the engine's own
   // play-by-play. It replaces a previous-season CFBD file that stopped
   // refreshing, which is why the expanded view mostly said "unavailable".
-  const profiles=(typeof MATCHDAY_BETBETTER_TEAM_PROFILES!=='undefined'&&MATCHDAY_BETBETTER_TEAM_PROFILES)||{};
+  const profiles=(typeof MATCHDAY_TRDLAB_TEAM_PROFILES!=='undefined'&&MATCHDAY_TRDLAB_TEAM_PROFILES)||{};
   const profileTeams=profiles.teams||{};
   const profileNames=Object.keys(profileTeams);
   if(profileNames.length){
@@ -402,7 +402,7 @@ function applyCurrentCfbSnapshot(payload){
   // The published result ledger can be newer than the derived rating rows.
   // Count every completed game, including non-conference opponents, once.
   const resultRecords=new Map(),seenResults=new Set(),gameLog=[];
-  (typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[])
+  (typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'?MATCHDAY_TRDLAB_RESULTS:[])
     .filter(g=>String(g.sport||'').toLowerCase()==='ncaaf'&&Number(g.season)===Number(MATCHDAY_CFB_RANKINGS?.season))
     .sort((a,b)=>String(a.kickoff||a.played_on||'').localeCompare(String(b.kickoff||b.played_on||'')))
     .forEach(g=>{
@@ -594,7 +594,7 @@ function applyCurrentNcaamSnapshot(payload){
   // Each team's basketball profile on every fixture, matched the same way as
   // football's: exact key first, then the prefix matcher with other schools
   // that share the prefix ruled out.
-  const hoops=(typeof MATCHDAY_BETBETTER_NCAAM_PROFILES!=='undefined'&&MATCHDAY_BETBETTER_NCAAM_PROFILES)||{};
+  const hoops=(typeof MATCHDAY_TRDLAB_NCAAM_PROFILES!=='undefined'&&MATCHDAY_TRDLAB_NCAAM_PROFILES)||{};
   const hoopsTeams=hoops.teams||{},hoopsNames=Object.keys(hoopsTeams);
   if(hoopsNames.length){
     const byKey=new Map(hoopsNames.map(n=>[teamKey(n),n])),cache=new Map();
@@ -649,8 +649,8 @@ function applyCurrentNcaamSnapshot(payload){
    and what it expected to hit, and whether it beat the price. Expected sits
    beside actual in the same tile, and the engine's own caveat is printed
    underneath. */
-function betbetterScorecard(){
-  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+function trdlabScorecard(){
+  const all=(typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined')?MATCHDAY_TRDLAB_SCORECARD:null;
   if(!all)return null;
   const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
   const sport=key?(all.sports||{})[key]:null;
@@ -798,7 +798,7 @@ function _scRecent(rows){
     +(list.length>4?rsMoreBtn(list.length,'View all','Recent results'):'')+`</section>`;
 }
 function renderScore(){
-  const host=$('#view-score'),sc=betbetterScorecard();
+  const host=$('#view-score'),sc=trdlabScorecard();
   if(!sc||sc.available===false){
     // The engine states its own reason ("no locked cards stored for ncaam"),
     // which is the honest one -- but it is a field value, not a sentence.
@@ -886,7 +886,7 @@ function renderCurrent(){captureSignalsIfFresh();({home:renderHome,reactions:()=
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
-const syncedAt=typeof MATCHDAY_BETBETTER_GENERATED_AT!=='undefined'?MATCHDAY_BETBETTER_GENERATED_AT:'';
+const syncedAt=typeof MATCHDAY_TRDLAB_GENERATED_AT!=='undefined'?MATCHDAY_TRDLAB_GENERATED_AT:'';
 if(isSample)parts.push(`<span class="ls-badge sample">${t("sample data")}</span>`);
 const streakStats=btmStats(btmGrade());
 if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Model: ${streakStats.streak} correct in a row" onclick="setView('community')">\u{1F525} ${streakStats.streak}</span>`);
@@ -1324,7 +1324,7 @@ function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'
 /* dedup */
 function _v15RenderLeagueTable(st,host){const seen=new Set(),teams=[];(st||[]).forEach(g=>(g.teams||[]).forEach(t=>{const key=String(t.name||t.code||'').toLowerCase();if(key&&!seen.has(key)){seen.add(key);teams.push(t)}}));teams.sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999)||(Number(b.pts)||0)-(Number(a.pts)||0)||(Number(b.gd)||0)-(Number(a.gd)||0));host.innerHTML=`<div class="vhead">Table</div><div class="tablewrap leagueTableWrap"><div class="groupHead">${esc(DATA.competition||'League table')}<span>${teams.length} clubs · full table</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||t.qual.note||'')}</span>`:'';return `<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||i+1}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(String(t.form||'').slice(-5))}</td></tr>`}).join('')}</tbody></table></div>`}
 function renderStandings(){renderGroups()}
-function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isPollTable),st=_tables.filter(g=>!isPollTable(g)),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length&&!polls.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}const groupsTwoWay=TWO_WAY_COMPETITIONS.has(String(DATA.comp_key||'').toLowerCase());const americanSport=['us_sport','college','college_basketball'].includes(navProfile());const ratingSorted=false;const US_SCORE_UNIT={ncaaf:['PF','PA'],ncaam:['PF','PA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conference record, then head-to-head':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="Power rating from Sigma Lab">Power</th>':''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?'<th title="Conference record: games against teams in this table only">Conf</th><th title="Non-conference record: every other game">Non-con</th><th title="Overall record">Overall</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?`<td><b>${esc(t.conf_record||'0-0')}</b></td><td>${Math.max(0,(Number(t.w)||0)-(t.cw||0))}-${Math.max(0,(Number(t.l)||0)-(t.cl||0))}</td><td>${Number(t.w)||0}-${Number(t.l)||0}</td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
+function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isPollTable),st=_tables.filter(g=>!isPollTable(g)),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length&&!polls.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}const groupsTwoWay=TWO_WAY_COMPETITIONS.has(String(DATA.comp_key||'').toLowerCase());const americanSport=['us_sport','college','college_basketball'].includes(navProfile());const ratingSorted=false;const US_SCORE_UNIT={ncaaf:['PF','PA'],ncaam:['PF','PA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conference record, then head-to-head':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="Power rating from TRDLab">Power</th>':''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?'<th title="Conference record: games against teams in this table only">Conf</th><th title="Non-conference record: every other game">Non-con</th><th title="Overall record">Overall</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?`<td><b>${esc(t.conf_record||'0-0')}</b></td><td>${Math.max(0,(Number(t.w)||0)-(t.cw||0))}-${Math.max(0,(Number(t.l)||0)-(t.cl||0))}</td><td>${Number(t.w)||0}-${Number(t.l)||0}</td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
 
 /* The published power rating, on the Conferences tab.
    The tab previously held conference tables only, so the ranking that the whole
@@ -1513,7 +1513,7 @@ function sportClassMeta(pr,m){
   return {label:labels[comp]||'Squad edge',coverage:'partial'};
 }
 
-/* Bet Better's own read on one fixture.
+/* TRDLab's own read on one fixture.
    The expanded view previously showed provider stats and a market price and
    nothing from the model that the rest of this site is built on. These are the
    same rated rows the Top 25 and the scatter draw, looked up per team, so the
@@ -1522,7 +1522,7 @@ function sportClassMeta(pr,m){
    Strength of schedule sits next to every rating here for the same reason it
    does everywhere else: a rating without the schedule behind it flatters
    whoever played nobody. */
-function betbetterTeamRow(name){
+function trdlabTeamRow(name){
   const key=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
     ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
     :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
@@ -1532,8 +1532,8 @@ function betbetterTeamRow(name){
     return rk===want||rk.startsWith(want+' ')||want.startsWith(rk+' ');
   })||null;
 }
-function betbetterMatchupPanel(m){
-  const h=betbetterTeamRow(m?.home?.name||m?.home),a=betbetterTeamRow(m?.away?.name||m?.away);
+function trdlabMatchupPanel(m){
+  const h=trdlabTeamRow(m?.home?.name||m?.home),a=trdlabTeamRow(m?.away?.name||m?.away);
   if(!h&&!a)return '';
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
   const rows=[
@@ -1561,7 +1561,7 @@ ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
    the rating scatter and the top-pick module -- so a card reading "Florida
    State 54.5%" opened onto a panel reading "TCU 55%": two different models
    under one name, and no way for a reader to tell which one the site stands
-   behind. The heading now resolves to the Bet Better read, and `m.prediction`
+   behind. The heading now resolves to the TRDLab read, and `m.prediction`
    is not shown beside it as a second opinion, for the same reason the card
    stopped stacking two pick rows.
 
@@ -1569,16 +1569,16 @@ ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
    engine covers both, so there is no sport left for a second forecast to serve.
    A fixture it has not modeled gets an empty state rather than another model's
    number under the engine's heading. */
-function betbetterReadFor(m){
+function trdlabReadFor(m){
   // Only UPCOMING, matching what the handoff itself will attach: a live
   // forecast on a played game reads as a call that was made in advance.
   if(!m||String(m.status||'').toUpperCase()!=='UPCOMING')return null;
   // Two sources on purpose, as in modTopPick(): a scheduled build attaches the
   // pick to the fixture, a push build does not run the fetch that does, and the
   // handoff is committed either way.
-  const list=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined')?MATCHDAY_BETBETTER_PICKS:null;
+  const list=(typeof MATCHDAY_TRDLAB_PICKS!=='undefined')?MATCHDAY_TRDLAB_PICKS:null;
   const day=String(m.kickoff||'').slice(0,10);
-  if(!list||!list.length||!day)return m.betbetter_pick||null;
+  if(!list||!list.length||!day)return m.trdlab_pick||null;
   const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
   // A day either side, for the same reason the results settling allows it: a
   // late kickoff and its listed date land on opposite sides of midnight UTC.
@@ -1587,7 +1587,7 @@ function betbetterReadFor(m){
     &&days.includes(String(p.kickoff||'').slice(0,10))
     &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
       ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))));
-  if(m.betbetter_pick)candidates.push(m.betbetter_pick);
+  if(m.trdlab_pick)candidates.push(m.trdlab_pick);
   return candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null;
 }
 /* How it played. A finished game has no live read to show, so the space goes
@@ -1595,7 +1595,7 @@ function betbetterReadFor(m){
    rate from the engine's own play-by-play (result.play_metrics), and whether
    the scoreboard winner also won on efficiency. Nothing here is a forecast. */
 function playedResultFor(m){
-  const list=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined')?MATCHDAY_BETBETTER_RESULTS:[];
+  const list=(typeof MATCHDAY_TRDLAB_RESULTS!=='undefined')?MATCHDAY_TRDLAB_RESULTS:[];
   const day=String(m?.kickoff||'').slice(0,10);if(!day||!list.length)return null;
   const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
   const home=m.home?.name||m.home,away=m.away?.name||m.away;
@@ -1648,10 +1648,10 @@ function howItPlayedPanel(m){
 /* Final summary. Play-by-play reaches the results feed a few days late and
    never for some games, and a finished game must not fall back to a "model
    read" panel. What is always known after the whistle: the score, the pick
-   Bet Better locked, and both teams' ratings. The ratings imply a margin
+   TRDLab locked, and both teams' ratings. The ratings imply a margin
    (no home-field term); the summary states how far the result landed from it. */
 function bbLockedPickFor(m){
-  const sc=typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined'?MATCHDAY_BETBETTER_SCORECARD:null;
+  const sc=typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined'?MATCHDAY_TRDLAB_SCORECARD:null;
   const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
   const recent=sc?.sports?.[sport]?.recent||[];
   const day=String(m.kickoff||'').slice(0,10);if(!day)return null;
@@ -1674,7 +1674,7 @@ function finalSummaryPanel(m){
   const rs=n=>typeof rsShortName==='function'?rsShortName(n):n;
   const short=n=>rs(home)===rs(away)?n:rs(n);
   const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
-  // The pick is Bet Better's locked one from its scorecard. m.prediction is
+  // The pick is TRDLab's locked one from its scorecard. m.prediction is
   // the retired in-house model and is never shown as Matchday's call.
   const winner=hs>as?'h':as>hs?'a':null;
   const bb=bbLockedPickFor(m);
@@ -1718,7 +1718,7 @@ function finishedPanel(m){
     ?`<p class="hipVerdict">Final: ${esc(m.home?.name||'Home')} ${Number(m.score?.home)}, ${esc(m.away?.name||'Away')} ${Number(m.score?.away)}. Games against ${String(m._comp||DATA.comp_key||'').toUpperCase()==='NCAAM'?'non-Division I':'FCS'} opponents are not graded, so there is no locked pick or play-by-play for this one.</p>`:'';
   return body+empty+(rows?`<div class="fsPlayed"><span class="fsPlayedLabel">How it played</span>${rows}</div>`:'')+`</section>`;
 }
-function betbetterNoReadPanel(){
+function trdlabNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
     +`<div class="analystBadge">not modeled</div></div>`
     +`<div class="emptyForecast">No model prediction is available for this fixture yet; `
@@ -1727,7 +1727,7 @@ function betbetterNoReadPanel(){
 function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
 function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':Math.min(99.9,n).toFixed(d)+'%';}
 function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
-function betbetterModelRead(m,p){
+function trdlabModelRead(m,p){
   const model=_bbNum(p.model_pct);
   const engine=p.model_name||'Matchday model';
   const when=_bbStamp(p.generated_at);
@@ -1746,7 +1746,7 @@ function betbetterModelRead(m,p){
     +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
     +(projectedScoreLine(m,p)||`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details>`)+`</section>`;
 }
-/* Bet Better's projected final, oriented to this fixture by team name (the
+/* TRDLab's projected final, oriented to this fixture by team name (the
    handoff's home/away can be the reverse of the board's). Replaces the
    both-teams'-chances dropdown when present. */
 function projectedScoreLine(m,p){
@@ -1772,9 +1772,9 @@ function matchupEvidence(label,note,html,open=false){
   return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
 }
 function details(m){
-  const bb=betbetterReadFor(m);
-  const read=bb?betbetterModelRead(m,bb):(finishedPanel(m)||betbetterNoReadPanel());
-  const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
+  const bb=trdlabReadFor(m);
+  const read=bb?trdlabModelRead(m,bb):(finishedPanel(m)||trdlabNoReadPanel());
+  const comparison=trdlabMatchupPanel(m)||matchProfilePanel(m);
   return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */

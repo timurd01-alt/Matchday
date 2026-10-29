@@ -7,10 +7,10 @@
 (function(){
   const g=n=>{try{return (typeof window[n]!=='undefined'&&window[n])||eval(n)}catch(e){return null}};
   const cfb=()=>g('MATCHDAY_CFB_RANKINGS')?.rankings||[];
-  const hoopsTeams=()=>g('MATCHDAY_BETBETTER_NCAAM_PROFILES')?.teams||{};
-  const picks=()=>(g('MATCHDAY_BETBETTER_PICKS')||[]).filter(p=>p.sport==='ncaaf'&&p.model_pct!=null&&Date.parse(p.kickoff||'')>Date.now());
-  const card=()=>g('MATCHDAY_BETBETTER_SCORECARD')?.sports?.ncaaf||null;
-  const results=()=>(g('MATCHDAY_BETBETTER_RESULTS')||[]).filter(r=>r.play_metrics&&r.play_metrics.home&&r.play_metrics.away&&r.sport==='ncaaf');
+  const hoopsTeams=()=>g('MATCHDAY_TRDLAB_NCAAM_PROFILES')?.teams||{};
+  const picks=()=>(g('MATCHDAY_TRDLAB_PICKS')||[]).filter(p=>p.sport==='ncaaf'&&p.model_pct!=null&&Date.parse(p.kickoff||'')>Date.now());
+  const card=()=>g('MATCHDAY_TRDLAB_SCORECARD')?.sports?.ncaaf||null;
+  const results=()=>(g('MATCHDAY_TRDLAB_RESULTS')||[]).filter(r=>r.play_metrics&&r.play_metrics.home&&r.play_metrics.away&&r.sport==='ncaaf');
   const short=n=>typeof rsShortName==='function'?rsShortName(n):String(n||'');
   const mark=n=>typeof teamMark==='function'?teamMark(n):'';
   const f1=v=>Number(v).toFixed(1);

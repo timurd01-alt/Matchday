@@ -74,7 +74,7 @@ def database_path(project):
             if '=' in line and not line.lstrip().startswith('#'):
                 key, value = line.split('=', 1)
                 values.setdefault(key.strip(), value.strip().strip('\"\''))
-    raw = values.get('SIGMALAB_DB', values.get('BETBETTER_DB'))
+    raw = values.get('TRDLAB_DB', values.get('TRDLAB_DB'))
     return (project / raw).resolve() if raw else None
 
 
@@ -92,7 +92,7 @@ def main():
         return
     if not args.destination:
         parser.error('--destination is required; choose a private cloud-synced folder')
-    projects = [args.desktop / 'matchday', args.desktop / 'Sigma Lab']
+    projects = [args.desktop / 'matchday', args.desktop / 'TRDLab']
     for project in projects:
         if not (project / '.git').exists():
             raise FileNotFoundError(project)
@@ -113,7 +113,7 @@ def main():
             subprocess.run(['git', '-C', str(project), 'bundle', 'create', str(bundle), '--all'], check=True)
             subprocess.run(['git', '-C', str(project), 'bundle', 'verify', str(bundle)], check=True,
                            stdout=subprocess.DEVNULL)
-            configured = database_path(project) if project.name == 'Sigma Lab' else None
+            configured = database_path(project) if project.name == 'TRDLab' else None
             databases = set()
             excluded = {'.git', 'node_modules', '__pycache__', '.browser-profile', '.worktrees',
                         '.matchday-status-worktree', 'dist', '.venv', 'venv'}

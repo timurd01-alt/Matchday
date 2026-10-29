@@ -3,7 +3,7 @@
 2026-09-28: a feed re-keyed a week of games, their forecasts no longer
 attached, and the site went from about 90 picks this week to 17 with nothing
 failing. This compares the picks kicking off in the next seven days in the new
-betbetter_picks.json against the copy already on main, and exits non-zero --
+trdlab_picks.json against the copy already on main, and exits non-zero --
 stopping the Sunday ship before the push -- if the new one lost a large share.
 """
 from __future__ import annotations
@@ -47,10 +47,10 @@ def check(new: dict, live: dict | None, now: dt.datetime) -> tuple[bool, str]:
 
 
 def main() -> int:
-    new = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+    new = json.loads((ROOT / "trdlab_picks.json").read_text(encoding="utf-8"))
     try:
         live = json.loads(subprocess.check_output(
-            ["git", "show", "HEAD:betbetter_picks.json"], cwd=ROOT).decode("utf-8-sig"))
+            ["git", "show", "HEAD:trdlab_picks.json"], cwd=ROOT).decode("utf-8-sig"))
     except (subprocess.CalledProcessError, ValueError):
         live = None
     ok, message = check(new, live, dt.datetime.now(dt.timezone.utc))

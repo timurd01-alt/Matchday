@@ -1,6 +1,6 @@
 {
   "handoff_version": 11,
-  "source": "sigmalab",
+  "source": "trdlab",
   "generated_at": "2026-10-25T18:19:53.725826+00:00",
   "sports": [
     "ncaaf",
@@ -31602,13 +31602,13 @@
           "movement_since_preseason": -1
         }
       ],
-      "note": "Power rating by adjusted efficiency margin, opponent-adjusted efficiency fitted by `sigmalab hoops rate`. Season 2027 has not started. This is a preseason projection: last season's opponent-adjusted ratings regressed 12% toward the mean, which is the measured amount a rating fails to carry between seasons, then adjusted for 365 teams by returning minutes and production, incoming transfers, NBA draft departures and the 247Sports recruiting class. Players who leave without entering the transfer portal or the draft are not yet visible.",
+      "note": "Power rating by adjusted efficiency margin, opponent-adjusted efficiency fitted by `trdlab hoops rate`. Season 2027 has not started. This is a preseason projection: last season's opponent-adjusted ratings regressed 12% toward the mean, which is the measured amount a rating fails to carry between seasons, then adjusted for 365 teams by returning minutes and production, incoming transfers, NBA draft departures and the 247Sports recruiting class. Players who leave without entering the transfer portal or the draft are not yet visible.",
       "carryover": true,
       "season_in_progress": false,
       "basis": {
         "rating": "adj_em",
         "label": "Adjusted efficiency margin",
-        "computed_from": "opponent-adjusted efficiency fitted by `sigmalab hoops rate`",
+        "computed_from": "opponent-adjusted efficiency fitted by `trdlab hoops rate`",
         "not_used": "no external poll or rating contributes"
       },
       "coverage": {

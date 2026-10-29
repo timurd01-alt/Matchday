@@ -1,4 +1,4 @@
-# Recover the same Matchday and Sigma Lab data
+# Recover the same Matchday and TRDLab data
 
 This is an optional full-database procedure. The owner's current routine plan
 preserves the engine and recollects fixtures; see
@@ -26,16 +26,16 @@ the project-file archives and different databases are not a single transaction.
 
 1. Install Python 3.12. Extract `project-files/matchday-files.zip` and move its
    `matchday` directory to `Desktop\matchday`. Extract
-   `project-files/Sigma-Lab-files.zip`, then move/rename its `Sigma-Lab`
-   directory to `Desktop\Sigma Lab`. Keep its separate
-   `Sigma-Lab-external-data` directory for step 4.
+   `project-files/TRDLab-files.zip`, then move/rename its `TRDLab`
+   directory to `Desktop\TRDLab`. Keep its separate
+   `TRDLab-external-data` directory for step 4.
    Recover Git history from the corresponding `.bundle` if needed; overlay the
    saved project files so uncommitted work and ignored input files are restored.
 2. Keep both apps and their scheduled collectors stopped during restoration.
-   For Sigma Lab's main database, run this using the actual recovery folder:
+   For TRDLab's main database, run this using the actual recovery folder:
 
    ```powershell
-   python tools/exact_database_backup.py restore --archive "sigma-main/sigmalab.sqlite3.gz" --output "C:/SigmaLabData/sigmalab.sqlite3"
+   python tools/exact_database_backup.py restore --archive "sigma-main/trdlab.sqlite3.gz" --output "C:/TRDLabData/trdlab.sqlite3"
    ```
 
    Run it from the recovery package directory. If using the script saved in a
@@ -45,21 +45,21 @@ the project-file archives and different databases are not a single transaction.
    It refuses to overwrite an existing file. A failed/interrupted restore must
    be retried with a new output filename. NTFS compression keeps the large
    restored file compressed on disk transparently; SQLite reads it normally.
-3. Keep `SIGMALAB_DB` in Sigma Lab's restored `.env` set to
-   `C:/SigmaLabData/sigmalab.sqlite3`. Restore the original directory layout:
+3. Keep `TRDLAB_DB` in TRDLab's restored `.env` set to
+   `C:/TRDLabData/trdlab.sqlite3`. Restore the original directory layout:
    the basketball impact model also explicitly reads its supplementary files
-   from `C:/SigmaLabData/sdv`, independently of the database setting.
+   from `C:/TRDLabData/sdv`, independently of the database setting.
 4. Restore the two smaller databases with the same tool:
 
    ```powershell
-   python tools/exact_database_backup.py restore --archive "matchday/betbetter.sqlite3.gz" --output "$env:USERPROFILE/Desktop/matchday/data/betbetter.sqlite3"
-   python tools/exact_database_backup.py restore --archive "sigma-local/betbetter.sqlite3.gz" --output "$env:USERPROFILE/Desktop/Sigma Lab/data/betbetter.sqlite3"
+   python tools/exact_database_backup.py restore --archive "matchday/trdlab.sqlite3.gz" --output "$env:USERPROFILE/Desktop/matchday/data/trdlab.sqlite3"
+   python tools/exact_database_backup.py restore --archive "sigma-local/trdlab.sqlite3.gz" --output "$env:USERPROFILE/Desktop/TRDLab/data/trdlab.sqlite3"
    ```
 
    Use new empty destinations. Never combine recovered databases with WAL/SHM
-   files left by another copy. Restore `Sigma-Lab-external-data` from the saved
-   project ZIP into `C:/SigmaLabData`, including its `sdv` directory. Copy the
-   contents of `Sigma-Lab-external-data`, not that enclosing directory itself.
+   files left by another copy. Restore `TRDLab-external-data` from the saved
+   project ZIP into `C:/TRDLabData`, including its `sdv` directory. Copy the
+   contents of `TRDLab-external-data`, not that enclosing directory itself.
 5. Restore the same code, model settings, ballots and dependency versions
    before running ratings. Use the saved lockfiles. Check the rating workflow
    with collection disabled/offline first; then resume normal collection.

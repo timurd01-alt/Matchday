@@ -22,7 +22,7 @@ python scripts/backup_engine.py create --destination "PRIVATE-BACKUP-FOLDER"
 ```
 
 This saves both repositories and reads only selected model-state tables from
-the databases. The main database defaults to `C:/SigmaLabData/sigmalab.sqlite3`;
+the databases. The main database defaults to `C:/TRDLabData/trdlab.sqlite3`;
 pass `--main-db PATH` if its setting changes. It does not call providers.
 
 Keep the resulting dated `engine-recovery-*` folder together. Its manifest must
@@ -40,29 +40,29 @@ The earlier full-database backup tools are optional, not the routine plan.
 
 ## If the fixture database is damaged or deleted
 
-1. Stop Sigma Lab, its collector and any scheduled poll/refresh tasks. Stop
+1. Stop TRDLab, its collector and any scheduled poll/refresh tasks. Stop
    Matchday's automated shipping/refresh jobs. Do not keep writing to a damaged
    database. If the file still exists, preserve it and any WAL/SHM files together
    under a different name/location for diagnosis. Do not overwrite that copy.
 2. Restore the saved engine ZIPs. Their top-level folders are `matchday` and
-   `Sigma Lab`; recover those project directories and use the saved lockfiles.
+   `TRDLab`; recover those project directories and use the saved lockfiles.
    Git bundles retain committed history; the ZIPs retain the working code and
    configuration at backup time. Reinstall dependencies according to each
    project's README. Check `.env` paths and provider-key availability.
 3. From the engine recovery package, seed a NEW database with saved math:
 
    ```powershell
-   python backup_engine.py restore --state "state/sigma-main.sqlite3" --output "C:/SigmaLabData/recovered.sqlite3"
+   python backup_engine.py restore --state "state/sigma-main.sqlite3" --output "C:/TRDLabData/recovered.sqlite3"
    ```
 
    The tool refuses an existing destination and checks the package checksum and
-   restored model-state integrity. Point `SIGMALAB_DB` in Sigma Lab's `.env` at
-   `C:/SigmaLabData/recovered.sqlite3`. Keep the package's `learned-rapm` JSON
-   files at `C:/SigmaLabData/sdv/`; those are saved learned effects, not raw games.
-4. In the Sigma Lab project directory run:
+   restored model-state integrity. Point `TRDLAB_DB` in TRDLab's `.env` at
+   `C:/TRDLabData/recovered.sqlite3`. Keep the package's `learned-rapm` JSON
+   files at `C:/TRDLabData/sdv/`; those are saved learned effects, not raw games.
+4. In the TRDLab project directory run:
 
    ```powershell
-   python -m sigmalab doctor
+   python -m trdlab doctor
    ```
 
    This initializes the remaining base schema and reports health/configuration.
@@ -73,24 +73,24 @@ The earlier full-database backup tools are optional, not the routine plan.
    seasons. They make real provider requests, so respect keys, quota and pacing:
 
    ```powershell
-   python -m sigmalab history backfill --sport ncaaf --season 2025 --season 2026
-   python -m sigmalab history boxes --sport ncaaf --season 2025 --season 2026 --limit 500
-   python -m sigmalab hoops backfill --league ncaam --season 2025 --season 2026
-   python -m sigmalab hoops boxes --season 2025 --season 2026 --limit 500
-   python -m sigmalab once
+   python -m trdlab history backfill --sport ncaaf --season 2025 --season 2026
+   python -m trdlab history boxes --sport ncaaf --season 2025 --season 2026 --limit 500
+   python -m trdlab hoops backfill --league ncaam --season 2025 --season 2026
+   python -m trdlab hoops boxes --season 2025 --season 2026 --limit 500
+   python -m trdlab once
    ```
 
    Box collection is resumable; repeat limited batches until coverage is adequate.
    Reacquire public supplementary inputs too: the basketball impact reader
-   expects `C:/SigmaLabData/sdv/ncaa_mbb_matchup_stints_<season>.csv.gz`.
+   expects `C:/TRDLabData/sdv/ncaa_mbb_matchup_stints_<season>.csv.gz`.
    Those CSVs are intentionally not in the small backup. Check the source and
    coverage before enabling that part of the model; the code does not promise
    that `once` downloads every historical/supplementary dataset automatically.
 6. Check coverage and freshness before publishing:
 
    ```powershell
-   python -m sigmalab hoops coverage
-   python -m sigmalab refresh check --sport ncaaf --sport ncaam --season 2026
+   python -m trdlab hoops coverage
+   python -m trdlab refresh check --sport ncaaf --sport ncaam --season 2026
    ```
 
    Rebuild derived ratings with the saved model/settings once inputs are complete.

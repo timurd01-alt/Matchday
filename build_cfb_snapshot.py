@@ -7,8 +7,8 @@ only through money games -- looked like they played the hardest schedules in
 the country. Those numbers cannot be repaired by editing them; they have to be
 replaced by the engine's own.
 
-So this script is the only writer of those two arrays. It reads the Bet Better
-handoff through `betbetter_handoff`, which is the one place Matchday validates
+So this script is the only writer of those two arrays. It reads the TRDLab
+handoff through `trdlab_handoff`, which is the one place Matchday validates
 anything from that engine, and rewrites the marked regions in place. Everything
 else in the snapshot -- news, records, the bracket -- is left untouched.
 
@@ -26,7 +26,7 @@ import pathlib
 import re
 import sys
 
-import betbetter_handoff
+import trdlab_handoff
 import ap_poll
 import roster_talent
 
@@ -242,21 +242,21 @@ def cfp_bracket(entry: dict) -> list[dict]:
 
 
 def build(path: pathlib.Path = SNAPSHOT) -> str:
-    document = betbetter_handoff.load()
+    document = trdlab_handoff.load()
     if not document:
-        raise SystemExit("no Bet Better handoff found; nothing regenerated")
+        raise SystemExit("no TRDLab handoff found; nothing regenerated")
 
     blocks = []
-    # The browser can distinguish a current Bet Better repair layer from the
+    # The browser can distinguish a current TRDLab repair layer from the
     # older quota-limited fixture payload. Without this timestamp the header
     # permanently advertised "fallback snapshot" even immediately after a
     # fresh prediction handoff had repaired the slate.
-    blocks.append("  const MATCHDAY_BETBETTER_GENERATED_AT="
+    blocks.append("  const MATCHDAY_TRDLAB_GENERATED_AT="
                   + json.dumps(document.get("generated_at") or "",
                                ensure_ascii=False) + ";")
     for sport, const in (("ncaaf", "MATCHDAY_CFB_RANKINGS"),
                          ("ncaam", "MATCHDAY_NCAAM_RANKINGS")):
-        entry = betbetter_handoff.rankings(document, sport)
+        entry = trdlab_handoff.rankings(document, sport)
         rows = _dedupe(_rows(entry), entry)
         payload = {**_meta(entry), "rankings": rows,
                    # The published poll is the first 25 of the same table.
@@ -270,7 +270,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # is incomplete, ap_poll keeps the last complete 1-25 snapshot.
     poll = ap_poll.refresh()
     poll_rows = poll.get("rankings") or []
-    rating_entry = betbetter_handoff.rankings(document, "ncaaf")
+    rating_entry = trdlab_handoff.rankings(document, "ncaaf")
     raw_rating_rows = rating_entry.get("rankings") or []
     rating_rows = _dedupe(_rows(rating_entry), rating_entry)
     by_name = {_team_key(r.get("name")): r for r in rating_rows}
@@ -319,7 +319,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     ncaam_poll = ap_poll.refresh(ap_poll.NCAAM_SNAPSHOT,
                                  fetch_rankings=ap_poll._download_ncaam_rankings,
                                  sport="ncaam")
-    ncaam_entry = betbetter_handoff.rankings(document, "ncaam")
+    ncaam_entry = trdlab_handoff.rankings(document, "ncaam")
     ncaam_by_name = {_team_key(r.get("name")): r
                      for r in _dedupe(_rows(ncaam_entry), ncaam_entry)}
     ncaam_payload = {**ncaam_poll, "rankings": []}
@@ -338,7 +338,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     results = [r for r in (document.get("results") or [])
                if r.get("home") and r.get("away")
                and r.get("home_score") is not None and r.get("away_score") is not None]
-    blocks.append("  const MATCHDAY_BETBETTER_RESULTS="
+    blocks.append("  const MATCHDAY_TRDLAB_RESULTS="
                   + json.dumps(results, ensure_ascii=False) + ";")
 
     # The editorial underdog call and the owner's own picks. Both ship whole --
@@ -347,7 +347,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # record may be described.
     fixtures = [f for f in (document.get("fixtures") or [])
                 if f.get("home") and f.get("away") and f.get("kickoff")]
-    blocks.append("  const MATCHDAY_BETBETTER_FIXTURES="
+    blocks.append("  const MATCHDAY_TRDLAB_FIXTURES="
                   + json.dumps(fixtures, ensure_ascii=False) + ";")
 
     # The marquee game. Distinct from the upset: that one is the model's most
@@ -359,7 +359,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_ROSTER_TIERS="
                   + json.dumps({k: talent.get(k) for k in ("season", "composite_season", "source", "tiers")},
                                ensure_ascii=False) + ";")
-    blocks.append("  const MATCHDAY_BETBETTER_GAME_OF_THE_WEEK="
+    blocks.append("  const MATCHDAY_TRDLAB_GAME_OF_THE_WEEK="
                   + json.dumps(document.get("game_of_the_week") or {},
                                ensure_ascii=False) + ";")
 
@@ -368,49 +368,49 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # that never refreshed; these move every week with the ratings.
     # The basketball counterpart: four factors both ways, plus the adjusted
     # ratings the game picks read.
-    blocks.append("  const MATCHDAY_BETBETTER_NCAAM_PROFILES="
+    blocks.append("  const MATCHDAY_TRDLAB_NCAAM_PROFILES="
                   + json.dumps((document.get("team_profiles") or {}).get("ncaam") or {},
                                ensure_ascii=False) + ";")
-    blocks.append("  const MATCHDAY_BETBETTER_TEAM_PROFILES="
+    blocks.append("  const MATCHDAY_TRDLAB_TEAM_PROFILES="
                   + json.dumps((document.get("team_profiles") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
 
     # The season's biggest upsets, judged against the closing price, for the
     # board card that used to list the most recent finals.
-    blocks.append("  const MATCHDAY_BETBETTER_UPSETS="
+    blocks.append("  const MATCHDAY_TRDLAB_UPSETS="
                   + json.dumps((document.get("upsets") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
 
     # The owner's own Top 25 ballot, with each team's résumé frozen on the day
     # it was cast. Kept apart from the power rating on purpose: that table is
     # the model's, this one is a person's judgement. {} until the first ballot.
-    blocks.append("  const MATCHDAY_BETBETTER_BALLOT="
+    blocks.append("  const MATCHDAY_TRDLAB_BALLOT="
                   + json.dumps((document.get("ballots") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
 
-    blocks.append("  const MATCHDAY_BETBETTER_UPSET="
+    blocks.append("  const MATCHDAY_TRDLAB_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
-    blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="
+    blocks.append("  const MATCHDAY_TRDLAB_USER_PICKS="
                   + json.dumps(document.get("user_picks") or {}, ensure_ascii=False) + ";")
 
     # The engine's graded record. The block this replaces was eight games typed
     # into the snapshot by hand on the day the site went college-only, sitting
     # outside the generated region so nothing ever refreshed it -- it still
     # described the 29 August slate weeks later. Generated now, so it moves.
-    blocks.append("  const MATCHDAY_BETBETTER_SCORECARD="
+    blocks.append("  const MATCHDAY_TRDLAB_SCORECARD="
                   + json.dumps(document.get("scorecard") or {},
                                ensure_ascii=False) + ";")
 
     picks = [p for p in (document.get("picks") or [])
-             if str(p.get("basis") or "") == betbetter_handoff.LIVE_BASIS
+             if str(p.get("basis") or "") == trdlab_handoff.LIVE_BASIS
              and not p.get("official_pick")]
-    blocks.append("  const MATCHDAY_BETBETTER_PICKS="
+    blocks.append("  const MATCHDAY_TRDLAB_PICKS="
                   + json.dumps(picks, ensure_ascii=False) + ";")
 
     # Which sports the engine actually covers. The expanded view needs it to
-    # tell "Bet Better has not priced this fixture" apart from "this sport has
-    # no Bet Better read at all, so Matchday's own forecast is the model read".
-    blocks.append("  const MATCHDAY_BETBETTER_SPORTS="
+    # tell "TRDLab has not priced this fixture" apart from "this sport has
+    # no TRDLab read at all, so Matchday's own forecast is the model read".
+    blocks.append("  const MATCHDAY_TRDLAB_SPORTS="
                   + json.dumps(document.get("sports") or [],
                                ensure_ascii=False) + ";")
 
@@ -418,7 +418,7 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # arrives without it -- `_display_block` only copies it onto picks the fetch
     # attaches. The expanded view renders the gap either way, so the warning
     # that must travel with it is baked once here rather than retyped in JS.
-    blocks.append("  const MATCHDAY_BETBETTER_EDGE_WARNING="
+    blocks.append("  const MATCHDAY_TRDLAB_EDGE_WARNING="
                   + json.dumps(document.get("edge_warning") or "",
                                ensure_ascii=False) + ";")
 

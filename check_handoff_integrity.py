@@ -15,7 +15,7 @@ Each check is a failure that reached the site without anything stopping it:
   was conditioned on the favourite winning while the model's own line said
   6.4. A shown score must stay close to the model line it is drawn from.
 
-Run with no arguments it checks betbetter_picks.json next to it and exits
+Run with no arguments it checks trdlab_picks.json next to it and exits
 non-zero on a failure, which stops the Sunday ship before the push.
 """
 from __future__ import annotations
@@ -108,7 +108,7 @@ def check(doc: dict, now: dt.datetime) -> tuple[bool, list[str]]:
 
 
 def main() -> int:
-    doc = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+    doc = json.loads((ROOT / "trdlab_picks.json").read_text(encoding="utf-8"))
     ok, lines = check(doc, dt.datetime.now(dt.timezone.utc))
     for line in lines:
         print(("REFUSING TO SHIP: " if not ok else "") + line)

@@ -154,7 +154,7 @@ jobs:
         run: |
           echo "::warning::One or more providers failed after retry. Deploying the structurally validated last-good fixture snapshots recovered before refresh."
 
-      # The browser repairs a quota-starved NCAAF board from the Bet Better
+      # The browser repairs a quota-starved NCAAF board from the TRDLab
       # handoff (see applyCurrentCfbSnapshot in app-3-panels.js), but only as
       # far as whatever `matchday-cfb-snapshot.js` happens to contain -- and
       # nothing in this workflow ever rebuilt it. The snapshot was therefore
@@ -162,14 +162,14 @@ jobs:
       # mechanism that covers for a dead fixture feed went stale in exactly the
       # circumstances it exists for. Rebuilding it here costs no provider quota:
       # the handoff is a committed file, not a fetch.
-      - name: Rebuild the Bet Better repair layer from the committed handoff
+      - name: Rebuild the TRDLab repair layer from the committed handoff
         if: github.event_name != 'push'
         continue-on-error: true
         run: |
-          if [ -f betbetter_picks.json ]; then
+          if [ -f trdlab_picks.json ]; then
             python build_cfb_snapshot.py
           else
-            echo "::warning::betbetter_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
+            echo "::warning::trdlab_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
           fi
 
       # Both product loops run before next_task.py so their reports are on
@@ -208,7 +208,7 @@ jobs:
       #
       # So this reports, and it is allowed to go red. It reads only what is on
       # disk -- no provider calls, no quota -- and it judges results *after* the
-      # Bet Better repair layer, because that is what a reader actually sees. It
+      # TRDLab repair layer, because that is what a reader actually sees. It
       # runs before the deploy but does not gate it: the site still ships, and
       # `continue-on-error` here keeps the result on the job while the final
       # step below is what turns a sustained stall into a failed run someone
@@ -219,7 +219,7 @@ jobs:
         continue-on-error: true
         run: python data_freshness.py --output data_freshness_report.json --github
 
-      # Conference availability is context only. It never enters Sigma Lab's
+      # Conference availability is context only. It never enters TRDLab's
       # frozen source or changes a probability. Failures retain last-good facts.
       - name: Collect official quarterback availability reports
         continue-on-error: true
@@ -335,7 +335,7 @@ jobs:
           mkdir -p _site
           cp index.html styles.css bracketology.css research-signals.css article-links.js translations.js updates.js legal.html qa.html roadmap.html manifest.json _site/
           cp robots.txt sitemap.xml _site/
-          # Bet Better owns this handoff. Missing data stays visibly unavailable.
+          # TRDLab owns this handoff. Missing data stays visibly unavailable.
           if [ -f bracketology_ncaam.json ]; then cp bracketology_ncaam.json _site/; fi
           cp app-bracketology.js app-1-core.js app-2-views.js app-3-panels.js app-4-features.js research-signals.js app-learn.js matchday-cfb-snapshot.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/

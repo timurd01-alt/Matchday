@@ -9,7 +9,7 @@ and official source link. Do not retain or redistribute report images, logos,
 fonts, medical explanations, diagnoses, raw responses or full roster content.
 Four bounded public reads per site refresh, failures preserve last-good facts.
 Availability is public participation status, not proof of an injury or its
-reason. No forecast input or change to the frozen Sigma Lab package.)
+reason. No forecast input or change to the frozen TRDLab package.)
 
 Reviewed: 2026-10-25 (AP refresh now preserves published tied ranks instead of
 rejecting a complete tied Top 25. Same approved ESPN public-facts endpoint;
@@ -27,7 +27,7 @@ Reviewed: 2026-10-10 (the NCAAM preseason rating now uses each team's posted
 2026-27 roster from ESPN's public team-roster endpoint -- who is on a team is a
 common-knowledge fact under the ESPN rule -- in place of the transfer-portal
 guess where a roster is posted. Only the derived per-team rating is published.
-Also downloaded for research inside Bet Better, not used by the published model
+Also downloaded for research inside TRDLab, not used by the published model
 and never displayed or redistributed: sportsdataverse's `ncaa_mbb_matchup_stints`
 release (lineup stints built from stats.ncaa.org official play-by-play), from
 which a lineup-based player impact was computed and backtested; it did not
@@ -39,7 +39,7 @@ non-commercial hobby project: no ads, subscriptions, affiliate links, paid
 placements or sponsorships, and no plans to add any. This is a statement of fact
 about the site, not a license: as recorded below, no source is enabled because
 the site is noncommercial, and every provider keeps its own review. Also
-recorded: the NCAAM preseason rating (computed in Bet Better, published here as
+recorded: the NCAAM preseason rating (computed in TRDLab, published here as
 team ratings only) now uses CBBD `/recruiting/portal`, `/recruiting/players`
 (247Sports composite ratings, licensed through CBBD) and `/stats/player/season`
 on the existing key, and ESPN's public NBA draft board for which college players
@@ -59,12 +59,12 @@ CollegeFootballData `/talent` endpoint, at most one request per season and none
 once `roster_talent.json` holds the season. Only a derived tier label per FBS
 team (Elite / Strong / Average / Below average / Weak, by rank among FBS teams)
 is stored or displayed -- never the raw composite score. The first edition was
-built from Bet Better's already-licensed 2025 composite snapshot (CFBD's monthly
+built from TRDLab's already-licensed 2025 composite snapshot (CFBD's monthly
 quota was exhausted), so it made no request; the card cites the source and the
 composite season.)
 
 Reviewed: 2026-09-26 (NCAAM bracketology presentation consumes only the owner-
-authorized Bet Better derived handoff. No new provider calls, raw statistics
+authorized TRDLab derived handoff. No new provider calls, raw statistics
 feed, sportsbook content or new logos. Explicit local mock data is excluded
 from the public site. Missing/stale handoffs never fall back to UI formulas.)
 
@@ -77,7 +77,7 @@ endpoint or display is added. Three fetches stop: CFBD team talent, CBBD
 recruiting ratings, and The Odds API championship outrights -- each existed
 only to feed the removed model. The Matchday Terminal X publisher is removed,
 so nothing is posted to X. Every pick, probability and rating on the site now
-comes from the Bet Better handoff under its existing review; fixtures, scores,
+comes from the TRDLab handoff under its existing review; fixtures, scores,
 game odds, weather, injuries, news and standings are fetched and displayed as
 before.)
 
@@ -100,10 +100,10 @@ content, logos, images and raw payloads.)
 
 Reviewed: 2026-09-23 (ESPN sourcing rule rewritten: public facts only -- final
 scores, AP Top 25 rank/team, news headline+link -- never ESPN statistics or
-content. Bet Better's private play-by-play use recorded as an owner decision:
+content. TRDLab's private play-by-play use recorded as an owner decision:
 only its derived figures reach the site.)
 
-Reviewed: 2026-09-22 (the existing AP-poll and Bet Better display now applies
+Reviewed: 2026-09-22 (the existing AP-poll and TRDLab display now applies
 the CFP's published 2026-27 qualification and seeding rules, uses already-held
 ratings only to project unranked conference champions, and resolves the
 Massachusetts/UMass school alias. No new feed, endpoint, or raw redistribution.)
@@ -111,7 +111,7 @@ Massachusetts/UMass school alias. No new feed, endpoint, or raw redistribution.)
 Reviewed: 2026-09-22 (the existing Odds API game-odds fetch begins within
 24 hours of kickoff instead of three, without changing its endpoint, cache,
 quota reserve, or output fields. The expanded view may also show the already-
-published Bet Better market probability, labeled as a dated snapshot rather
+published TRDLab market probability, labeled as a dated snapshot rather
 than a live bookmaker quote. No raw provider feed is redistributed.)
 
 Reviewed: 2026-09-22 (the expanded matchup removes a repetitive generated
@@ -124,24 +124,24 @@ market, calibration, and lock-policy fields without adding a provider,
 endpoint, redistributed field, restricted payload, or ESPN content.)
 
 Reviewed: 2026-09-22 (the Pages artifact now omits duplicate scorecard evidence
-snapshots and duplicate NCAAF Bet Better match attachments that the browser
+snapshots and duplicate NCAAF TRDLab match attachments that the browser
 does not read, while retaining the displayed summaries and shared handoff.
 No provider, endpoint, visible data claim, license, or ESPN content changed.)
 
 Reviewed: 2026-09-22 (conference cards now explain already-published ratings
 with top and bottom team names; the matchup "Why" panel summarizes existing
 team metrics without introducing new data. Community chooses the latest
-already-published Bet Better read. No new provider, endpoint, restricted
+already-published TRDLab read. No new provider, endpoint, restricted
 payload, redistribution field, or ESPN content was added.)
 
 Reviewed: 2026-09-21 (Community now displays the two model probabilities
-already present in the Bet Better handoff and snapshots its pick when a user
+already present in the TRDLab handoff and snapshots its pick when a user
 locks theirs. Fixture alias deduplication and two corrected local school-logo
 mappings add no provider, endpoint, raw payload, redistribution field, or ESPN
 content.)
 
 Reviewed: 2026-09-21 (conference and power-rating records now reconcile
-completed games already present in the published Bet Better handoff, including
+completed games already present in the published TRDLab handoff, including
 non-conference results. This adds no provider, endpoint, raw payload, new
 redistribution field, or ESPN content.)
 
@@ -155,7 +155,7 @@ matching only. The marks still come from the previously reviewed local
 another school's mark. No new asset source, sports-data endpoint, restricted
 field, raw payload, quota policy, or ESPN content was added.)
 
-Reviewed: 2026-09-21 (Bet Better handoff v11 publishes only the selected
+Reviewed: 2026-09-21 (TRDLab handoff v11 publishes only the selected
 side's aggregate no-vig market probability and its model-minus-market
 probability-point difference alongside the existing forecast. It adds no
 provider, endpoint, raw bookmaker quote, price, book identity, credentials,
@@ -231,10 +231,10 @@ feeds; no new provider, endpoint family, raw-feed display, or redistribution beh
 
   | Allowed from ESPN (public facts) | Fields kept |
   |---|---|
-  | Final scores | home score, away score, finished status -- only for a fixture already on Matchday's own schedule whose kickoff has passed (`score_fallback.py`, and the Bet Better handoff's `results`) |
+  | Final scores | home score, away score, finished status -- only for a fixture already on Matchday's own schedule whose kickoff has passed (`score_fallback.py`, and the TRDLab handoff's `results`) |
   | AP Top 25 | rank and team name only; the poll belongs to the AP, ESPN is only the carrier (`ap_poll.py`) |
   | College news | headline and link only, ESPN credited on every item (public RSS feeds) |
-  | Fixture schedule | teams, date, announced kickoff time -- public knowledge, allowed by the owner's 2026-09-23 decision; used to fix kickoff times on Matchday's own schedule (`schedule_fallback.py`) and to fill fixtures from the Bet Better handoff's `fixtures` |
+  | Fixture schedule | teams, date, announced kickoff time -- public knowledge, allowed by the owner's 2026-09-23 decision; used to fix kickoff times on Matchday's own schedule (`schedule_fallback.py`) and to fill fixtures from the TRDLab handoff's `fixtures` |
 
   Everything else stays excluded from ESPN: statistics, box scores,
   play-by-play, odds (ESPN BET quotes are dropped in `provider_adapters.py`),
@@ -248,7 +248,7 @@ feeds; no new provider, endpoint family, raw-feed display, or redistribution beh
   still govern the request itself even though the facts it returns are not
   ESPN's. Keep request volume minimal (a handful of scoreboard calls per run).
 
-  **Bet Better play-by-play (owner decision 2026-09-23).** Bet Better is the
+  **TRDLab play-by-play (owner decision 2026-09-23).** TRDLab is the
   owner's personal, non-commercial engine. It reads ESPN game summaries
   privately as an input to its own calculations; nothing from them is sold,
   and the raw play-by-play never leaves the owner's machine. Matchday may show

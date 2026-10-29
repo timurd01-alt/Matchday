@@ -1,13 +1,13 @@
-"""Reads the pick handoff written by the Bet Better engine.
+"""Reads the pick handoff written by the TRDLab engine.
 
-Bet Better writes one JSON document (`betbetter_picks.json`) holding its live
+TRDLab writes one JSON document (`trdlab_picks.json`) holding its live
 model read on upcoming games. This module loads that document, checks it, and
 attaches each pick to the matching fixture. It is the only place Matchday
 trusts anything from that engine, so every guard lives here.
 
 Where the pick is attached
 --------------------------
-A Bet Better pick lands on `match["betbetter_pick"]`. Removing the engine is
+A TRDLab pick lands on `match["trdlab_pick"]`. Removing the engine is
 deleting one key.
 
 What is refused
@@ -62,17 +62,17 @@ from typing import Any
 # still readable -- it simply carries no rankings -- so both are accepted.
 SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
 
-DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
-# The engine was renamed Sigma Lab on 2026-10-13; files written before that say "betbetter".
-ENGINE_SOURCES = ("betbetter", "sigmalab")
+DEFAULT_HANDOFF_PATH = "trdlab_picks.json"
+# Accept previously exported documents while new exports use TRDLab.
+ENGINE_SOURCES = ("trdlab", "sigmalab", "betbetter")
 
 # Reads the owner has reviewed and withheld from display. Each entry names one
-# fixture and why; a withheld game shows no Bet Better read at all rather than
+# fixture and why; a withheld game shows no TRDLab read at all rather than
 # a number Matchday believes is wrong. Nothing here edits a probability: the
 # engine's number is either shown as the engine produced it or not shown.
-DEFAULT_WITHHELD_PATH = "betbetter_withheld.json"
+DEFAULT_WITHHELD_PATH = "trdlab_withheld.json"
 
-# The one basis this reader accepts. If Bet Better ever sends frozen cards they
+# The one basis this reader accepts. If TRDLab ever sends frozen cards they
 # will arrive under a different basis, and that path has to be written
 # deliberately rather than inherited by a string that happens to match.
 LIVE_BASIS = "live_shadow_forecast"
@@ -94,7 +94,7 @@ def _team_name(value: object) -> str:
     """The team's name, whichever shape the feed uses.
 
     Matchday carries a team as an object (`{"name": "TCU", "code": "T", ...}`);
-    Bet Better carries a plain string. Reading `str()` of the object would
+    TRDLab carries a plain string. Reading `str()` of the object would
     normalize a whole dict into the key and match nothing, which is exactly
     what happened before this existed.
     """
@@ -129,7 +129,7 @@ def _kickoff_day(value: object) -> str:
 def _compatible(one: str, other: str) -> bool:
     """Whether two normalized names plausibly denote the same team.
 
-    Matchday names a team the short way and Bet Better appends the mascot —
+    Matchday names a team the short way and TRDLab appends the mascot —
     "tcu" against "tcuhornedfrogs", "ncstate" against "ncstatewolfpack" — so
     equality never fires and one name being a prefix of the other is the real
     relationship. The length floor stops a stub like "nc" from matching
@@ -191,7 +191,7 @@ def load(path: str = DEFAULT_HANDOFF_PATH,
          withheld_path: str = DEFAULT_WITHHELD_PATH) -> dict[str, Any] | None:
     """The validated handoff, or None when there is simply no file.
 
-    A missing file is normal — Bet Better may not have run — and returns None.
+    A missing file is normal — TRDLab may not have run — and returns None.
     A file that exists but is malformed raises, because silently continuing
     with no picks would look identical to the engine having nothing to say.
     """
@@ -211,7 +211,7 @@ def load(path: str = DEFAULT_HANDOFF_PATH,
             f"{path} declares handoff_version {version!r}; this reader "
             f"understands {sorted(SUPPORTED_VERSIONS)}")
     if document.get("source") not in ENGINE_SOURCES:
-        raise HandoffError(f"{path} is not a Bet Better handoff")
+        raise HandoffError(f"{path} is not a TRDLab handoff")
     picks = document.get("picks")
     if not isinstance(picks, list):
         raise HandoffError(f"{path} has no picks list")
@@ -240,7 +240,7 @@ def load(path: str = DEFAULT_HANDOFF_PATH,
 def rankings(document: dict[str, Any] | None, sport: str) -> dict[str, Any]:
     """The published Top 25 for one sport, or why there is none.
 
-    The ranking is computed by the Bet Better engine and only rendered here.
+    The ranking is computed by the TRDLab engine and only rendered here.
     It is an *edition* with a date on it, so it is read as published rather
     than recomputed -- a table that changed between two page loads would not
     be a poll.
@@ -298,7 +298,7 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "model_pct": pick.get("model_pct"),
         "market_pct": pick.get("market_pct"),
         "edge_points": pick.get("edge_points"),
-        # Bet Better's projected final (median of simulated games), football only.
+        # TRDLab's projected final (median of simulated games), football only.
         "projected_score": ({**pick["projected_score"], "home_name": pick.get("home"),
                              "away_name": pick.get("away")}
                             if isinstance(pick.get("projected_score"), dict) else None),
@@ -314,7 +314,7 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         # Repeated on every block rather than kept once at the top of the file,
         # because a match card is rendered on its own and whatever travels with
         # it is all the renderer can check.
-        "engine": "betbetter",
+        "engine": "trdlab",
         "basis": LIVE_BASIS,
         "official_pick": False,
         "official_publication_eligible": False,
@@ -347,7 +347,7 @@ def attach(matches: list[dict[str, Any]] | None,
                     match.get("kickoff"))
         if pick is None:
             continue
-        match["betbetter_pick"] = _display_block(pick, document)
+        match["trdlab_pick"] = _display_block(pick, document)
         attached += 1
     return attached
 

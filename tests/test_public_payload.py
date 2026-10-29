@@ -12,16 +12,16 @@ class PublicPayloadTests(unittest.TestCase):
             "competition": "NCAAF",
             "scorecard": {"graded": 12, "picks": [{"input_snapshot": {"large": True}}]},
             "matches": [{"id": "one", "prediction": {"pick": "h"},
-                         "betbetter_pick": {"model_pct": 60.0}}],
+                         "trdlab_pick": {"model_pct": 60.0}}],
         }
         out = build_public_payload.public_payload(payload, "ncaaf")
         self.assertEqual(out["scorecard"], {"graded": 12})
         self.assertEqual(out["matches"][0], {"id": "one", "prediction": {"pick": "h"}})
 
     def test_ncaam_keeps_attached_pick_until_snapshot_carries_it(self):
-        payload = {"matches": [{"betbetter_pick": {"model_pct": 55.0}}]}
+        payload = {"matches": [{"trdlab_pick": {"model_pct": 55.0}}]}
         out = build_public_payload.public_payload(payload, "ncaam")
-        self.assertIn("betbetter_pick", out["matches"][0])
+        self.assertIn("trdlab_pick", out["matches"][0])
 
     def test_writer_uses_compact_json(self):
         with tempfile.TemporaryDirectory() as folder:

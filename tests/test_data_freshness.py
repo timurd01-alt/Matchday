@@ -39,8 +39,8 @@ def _write(root: pathlib.Path, key: str, updated: str, matches: list[dict]) -> N
 
 
 def _handoff(root: pathlib.Path, results: list[dict], generated: str = "2026-09-05T06:00:00+00:00") -> None:
-    (root / "betbetter_picks.json").write_text(
-        json.dumps({"source": "betbetter", "generated_at": generated, "results": results}),
+    (root / "trdlab_picks.json").write_text(
+        json.dumps({"source": "trdlab", "generated_at": generated, "results": results}),
         encoding="utf-8",
     )
 
@@ -250,7 +250,7 @@ class ReportTests(unittest.TestCase):
         _handoff(self.root, [])
         snapshot = self.root / "matchday-cfb-snapshot.js"
         snapshot.write_text("// snapshot", encoding="utf-8")
-        handoff = self.root / "betbetter_picks.json"
+        handoff = self.root / "trdlab_picks.json"
         import os
 
         old = NOW.timestamp() - 6 * 3600

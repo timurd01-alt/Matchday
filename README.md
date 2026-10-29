@@ -43,7 +43,7 @@ python build_cfb_snapshot.py
 - **Nothing is rewritten.** A settled score is never revised; a graded pick is never
   rescored. `archive/games/` is the raw record and refuses revisions.
 - **Only locked picks are graded.** The graded record comes from the engine's
-  handoff (`betbetter_picks.json` → `scorecard`); a pick shown after its lock can
+  handoff (`trdlab_picks.json` → `scorecard`); a pick shown after its lock can
   never be graded as though it had been an official call.
 - **Model-market disagreement is reported, not endorsed.** On graded college samples a
   wider gap predicted *worse* results — the sign is inverted — so nothing here ranks,

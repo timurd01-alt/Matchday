@@ -1,9 +1,10 @@
+. (Join-Path $PSScriptRoot 'engine_paths.ps1')
 # Open this week's ballot in Notepad. If it does not exist yet, start it from
 # the most recent earlier ballot so only the changes need typing. The next
 # "Update Matchday" run (button or the Sunday schedule) checks and publishes it.
 # One team per line, best first, 25 lines.
-$SigmaLab = Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'
-$dir = Join-Path $SigmaLab 'ballots\ncaaf'
+$TRDLab = Resolve-TRDLabRoot
+$dir = Join-Path $TRDLab 'ballots\ncaaf'
 New-Item -ItemType Directory -Force $dir | Out-Null
 $sunday = (Get-Date).Date.AddDays(-[int](Get-Date).DayOfWeek).ToString('yyyy-MM-dd')
 $file = Join-Path $dir "$sunday.txt"
@@ -17,6 +18,6 @@ Write-Host "Editing $file"
 Write-Host 'One team per line, best first, 25 teams. Save and close Notepad, then press Update Matchday.'
 Start-Process notepad.exe -ArgumentList "`"$file`"" -Wait
 $py = Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'
-Push-Location $SigmaLab
-& $py -m sigmalab ballot check $file
+Push-Location $TRDLab
+& $py -m trdlab ballot check $file
 Pop-Location

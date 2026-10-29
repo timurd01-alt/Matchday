@@ -104,7 +104,7 @@ def create(destination, desktop, main_db):
         manifest.write_text(json.dumps(report, indent=2), encoding='utf-8')
     save()
     try:
-        for name in ('matchday', 'Sigma Lab'):
+        for name in ('matchday', 'TRDLab'):
             project = desktop / name
             label = name.replace(' ', '-')
             bundle = root / (label + '.bundle')
@@ -121,8 +121,8 @@ def create(destination, desktop, main_db):
             with zipfile.ZipFile(archive) as z:
                 if z.testzip() is not None:
                     raise ValueError('Engine archive CRC failed')
-        for label, database in [('sigma-main', main_db), ('sigma-local', desktop/'Sigma Lab/data/betbetter.sqlite3'),
-                                ('matchday', desktop/'matchday/data/betbetter.sqlite3')]:
+        for label, database in [('sigma-main', main_db), ('sigma-local', desktop/'TRDLab/data/trdlab.sqlite3'),
+                                ('matchday', desktop/'matchday/data/trdlab.sqlite3')]:
             if database.is_file():
                 report['model_state'][label] = export_state(database, root/'state'/(label+'.sqlite3'))
         learned = root / 'learned-rapm'
@@ -133,7 +133,7 @@ def create(destination, desktop, main_db):
         for name in ('BACKUP-PLAN-NOTES.md',):
             guide = Path(__file__).parent/name
             if not guide.exists():
-                guide = desktop/'Sigma Lab'/name
+                guide = desktop/'TRDLab'/name
             if guide.exists():
                 shutil.copy2(guide, root/name)
         for path in sorted(root.rglob('*')):
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     make = commands.add_parser('create')
     make.add_argument('--destination', type=Path, required=True)
     make.add_argument('--desktop', type=Path, default=Path.home()/'Desktop')
-    make.add_argument('--main-db', type=Path, default=Path('C:/SigmaLabData/sigmalab.sqlite3'))
+    make.add_argument('--main-db', type=Path, default=Path('C:/TRDLabData/trdlab.sqlite3'))
     recover = commands.add_parser('restore')
     recover.add_argument('--state', type=Path, required=True)
     recover.add_argument('--output', type=Path, required=True)

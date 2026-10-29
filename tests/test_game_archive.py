@@ -298,7 +298,7 @@ class HandoffBackfillTest(ArchiveTestCase):
         cwd = os.getcwd()
         work = Path(self._tmp.name) / "cwd"
         work.mkdir()
-        (work / "betbetter_picks.json").write_text(json.dumps({"results": results}), encoding="utf-8")
+        (work / "trdlab_picks.json").write_text(json.dumps({"results": results}), encoding="utf-8")
         (work / "data_ncaaf.json").write_text(json.dumps({"matches": [
             {"home": {"name": n}, "away": {"name": "Filler"}} for n in short_names]}), encoding="utf-8")
         os.chdir(work)
@@ -320,7 +320,7 @@ class HandoffBackfillTest(ArchiveTestCase):
                            "home": "Texas A&M Aggies", "away": "Robert Morris Colonials",
                            "home_score": 56.0, "away_score": 0.0}], ["Texas A&M"])
         self.assertEqual((rows[0]["home_name"], rows[0]["away_name"]), ("Texas A&M", "Robert Morris Colonials"))
-        Path("betbetter_picks.json").unlink()
+        Path("trdlab_picks.json").unlink()
         self.assertEqual(archive_backfill.source_handoff(), [])
 
 

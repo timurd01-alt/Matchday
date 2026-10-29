@@ -2,8 +2,8 @@
 
 Sports-prediction analytics site covering college football and men's college
 basketball only. **Every pick, probability, power rating and scorecard comes from
-the Sigma Lab engine** (formerly Bet Better; its Python package is still
-`betbetter` and the handoff file `betbetter_picks.json`) through `betbetter_picks.json` (see below); Matchday
+the TRDLab engine** (Python package `trdlab`) through
+`trdlab_picks.json` (see below); Matchday
 itself no longer forecasts. Soccer, NFL, NBA, MLB and NHL were removed
 entirely on 2026-09-13; do not reintroduce them. Static JS/HTML/CSS
 frontend on GitHub Pages, a small Vercel API (`api/`) for community picks, and
@@ -19,18 +19,18 @@ feature branch.
 Before merging, update from the current remote `main` and preserve its bot-owned
 generated files. Never force-push production.
 
-## Picks come from Bet Better, and only from Bet Better
+## Picks come from TRDLab, and only from TRDLab
 
 Matchday's own in-house model (`predict()`, Elo/H2H ratings, the pick lock,
 `picks_log_*.json`, the forecast ledgers, the old scorecard, recaps, promotion
 gates, challengers, the NCAAM pre-registration and the X bot) was removed on
-2026-09-25. Bet Better never read any of it. Do not reintroduce a second
+2026-09-25. TRDLab never read any of it. Do not reintroduce a second
 forecast: the site previously showed two prediction systems that disagreed on
 the same fixture.
 
-The pipeline is one-way. The Bet Better engine writes `betbetter_picks.json`;
-`betbetter_handoff.py` validates it and attaches each pick to its fixture as
-`match["betbetter_pick"]`; `build_cfb_snapshot.py` builds the picks, scorecard,
+The pipeline is one-way. The TRDLab engine writes `trdlab_picks.json`;
+`trdlab_handoff.py` validates it and attaches each pick to its fixture as
+`match["trdlab_pick"]`; `build_cfb_snapshot.py` builds the picks, scorecard,
 ratings and results the browser shows (`matchday-cfb-snapshot.js`).
 `fetch_data.py` still owns everything that is not a forecast: fixtures, scores,
 market odds, weather, injuries, news, standings and the game archive.
@@ -39,16 +39,16 @@ market odds, weather, injuries, news, standings and the game archive.
 
 | Need | Source |
 |---|---|
-| Graded pick record (what the Scorecard page shows) | `betbetter_picks.json` → `scorecard.sports.<sport>.recent` (also in `matchday-cfb-snapshot.js` as `MATCHDAY_BETBETTER_SCORECARD`) |
-| Every final score this season, with EPA/success rate | `betbetter_picks.json` → `results` |
-| Upcoming picks | `betbetter_picks.json` → `picks` (upcoming only) |
+| Graded pick record (what the Scorecard page shows) | `trdlab_picks.json` → `scorecard.sports.<sport>.recent` (also in `matchday-cfb-snapshot.js` as `MATCHDAY_TRDLAB_SCORECARD`) |
+| Every final score this season, with EPA/success rate | `trdlab_picks.json` → `results` |
+| Upcoming picks | `trdlab_picks.json` → `picks` (upcoming only) |
 | Raw game record across seasons | `archive/games/<comp>/<season>.csv` |
 | What production is serving right now | `https://matchdayterminal.com/data_<comp>.json` and `/matchday-cfb-snapshot.js` |
 
 Do **not** research from: `picks_log_*.json` or `ratings_elo*/ratings_h2h*`
 (retired 2026-09-25; stale copies linger in old checkouts), local
 `data_<comp>.json` (gitignored, only as fresh as your last local fetch, and
-its team stats include the games you'd be testing), or `data/betbetter.sqlite3`
+its team stats include the games you'd be testing), or `data/trdlab.sqlite3`
 in this repo (empty — the engine's working DB lives with the engine). A
 research pass that finds "too little data" has almost certainly read one of
 these; check the table above first.
@@ -287,7 +287,7 @@ ran thirty, and the thirty themselves left 26 modules on disk gating nothing.
 
 The suites most worth knowing by name when something fails:
 
-- `test_betbetter_handoff.py` — the Bet Better handoff: validation and attachment
+- `test_trdlab_handoff.py` — the TRDLab handoff: validation and attachment
 - `test_cfb_snapshot.py` — the snapshot the browser shows picks, ratings and results from
 - `test_provider_adapters.py` — provider normalization and adapters
 - `test_generate_posts.py` — post pages and the sitemap

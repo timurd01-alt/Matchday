@@ -1,4 +1,4 @@
-# Matchday and Sigma Lab recovery
+# Matchday and TRDLab recovery
 
 **Current routine policy: engine-only recovery.** Read
 [Backup plan notes](BACKUP-PLAN-NOTES.md) and use `scripts/backup_engine.py`.
@@ -11,9 +11,9 @@ For exact database recovery, use [EXACT-RECOVERY.md](EXACT-RECOVERY.md) and
 and database settings and are verified by byte-identical decompression.
 The SQL exports described below are an additional logical recovery option.
 
-The irreplaceable input is Sigma Lab's configured database, currently
-`C:\SigmaLabData\sigmalab.sqlite3` (approximately 92 GB on 2026-10-24).
-Cloning GitHub alone does not restore it. Sigma Lab ignores `data/`; Matchday
+The irreplaceable input is TRDLab's configured database, currently
+`C:\TRDLabData\trdlab.sqlite3` (approximately 92 GB on 2026-10-24).
+Cloning GitHub alone does not restore it. TRDLab ignores `data/`; Matchday
 also ignores many provider caches. Preserve raw data, ballots, model artifacts,
 ledgers, and local configuration together with the source code.
 
@@ -22,10 +22,10 @@ ledgers, and local configuration together with the source code.
 Use Python 3.11 or later. From either repository, run:
 
 ```powershell
-python scripts/backup_projects.py --destination 'YOUR-PRIVATE-CLOUD-FOLDER\Matchday-SigmaLab-Recovery'
+python scripts/backup_projects.py --destination 'YOUR-PRIVATE-CLOUD-FOLDER\Matchday-TRDLab-Recovery'
 ```
 
-The tool backs up both Desktop repositories and resolves Sigma Lab's external
+The tool backs up both Desktop repositories and resolves TRDLab's external
 database from `.env`. Set `--desktop PATH` if the repositories move.
 It creates a unique dated folder, never deletes older copies, and writes:
 
@@ -41,7 +41,7 @@ worktrees and their changes are excluded. Original Git reflog-only commits and
 Git LFS objects are not included in Git bundles. Keep separate copies of any
 unique work in excluded worktrees. This is a project backup, not a disk image.
 
-Sigma Lab's large database is streamed into compressed SQL because the SSD
+TRDLab's large database is streamed into compressed SQL because the SSD
 does not have space for a second uncompressed copy. The initial run can take
 hours. It holds a database read snapshot; concurrent writes can grow the WAL.
 The database export stops if destination free space drops below 5 GiB.
@@ -66,7 +66,7 @@ deleting synced folders deletes the cloud copy too.
 3. Restore each compressed database to a NEW filename:
 
    ```powershell
-   python scripts/backup_projects.py --restore 'BACKUP\Sigma-Lab-0-sigmalab.sqlite3.sql.gz' --output 'C:\RecoveredData\sigmalab.sqlite3'
+   python scripts/backup_projects.py --restore 'BACKUP\TRDLab-0-trdlab.sqlite3.sql.gz' --output 'C:\RecoveredData\trdlab.sqlite3'
    ```
 
    Use the actual filename in the manifest. The tool refuses overwrites and
@@ -74,11 +74,11 @@ deleting synced folders deletes the cloud copy too.
    partial database; retry with a fresh filename. Restoring needs enough disk
    space for the entire uncompressed database, plus operating headroom.
 4. Restore the external-data ZIP contents alongside the recovered database.
-   Update `SIGMALAB_DB` in Sigma Lab's `.env` to its new path. Restore the smaller
+   Update `TRDLAB_DB` in TRDLab's `.env` to its new path. Restore the smaller
    project databases to the paths listed in the manifest. Stop services before
    replacing live database files; never mix old WAL/SHM sidecars with a restore.
 5. Reinstall Python/frontend dependencies from the repository documentation.
-   Run Sigma Lab's `python -m sigmalab doctor`, check historical data and ratings,
+   Run TRDLab's `python -m trdlab doctor`, check historical data and ratings,
    then start both applications and verify Matchday's rating handoff.
 
 ## Backup routine

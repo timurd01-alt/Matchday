@@ -12,7 +12,7 @@ function btmGrade(){ // fold finished results into the record
   // The board only holds the current slate, so a pick whose game has rolled
   // off it was never graded. Settle those from the season's results by team
   // names, taking the first finished meeting on or after the day of the pick.
-  const results=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'&&MATCHDAY_BETBETTER_RESULTS)||[];
+  const results=(typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&MATCHDAY_TRDLAB_RESULTS)||[];
   const same=(a,b)=>typeof bbNameMatches==='function'?bbNameMatches(a||'',b||''):String(a)===String(b);
   if(results.length)Object.values(db.picks).forEach(p=>{
     if(p.result||!p.home||!p.away)return;
@@ -61,19 +61,19 @@ function btmBadges(s,db){const out=[];
   return out;}
 function communityModelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function communityPickProbs(m){
-  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
+  const read=typeof trdlabReadFor==='function'?trdlabReadFor(m):m.trdlab_pick;
   const sides=read?.sides||[];
   // Match by team identity first: the fixture can be shown in the reverse
   // orientation from the model handoff, making is_home misleading here.
   const home=sides.find(s=>bbNameMatches(s.selection,m.home?.name))||sides.find(s=>s.is_home===true);
   const away=sides.find(s=>bbNameMatches(s.selection,m.away?.name))||sides.find(s=>s.is_home===false);
-  if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
+  if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'trdlab',read};
   // Some picks carry no per-side breakdown, only the pick and its chance; the
   // other side is the remainder, so the row still shows the model's call.
   const pct=Number(read?.model_pct);
   if(read&&Number.isFinite(pct)&&read.pick_name){
     const homePick=bbNameMatches(read.pick_name,m.home?.name);
-    return {h:homePick?pct:100-pct,d:0,a:homePick?100-pct:pct,source:'betbetter',read};
+    return {h:homePick?pct:100-pct,d:0,a:homePick?100-pct:pct,source:'trdlab',read};
   }
   return {h:null,d:null,a:null,source:'none',read:null};
 }
@@ -225,7 +225,7 @@ function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH=
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const firstKick=eligible.length?kickMs(eligible[0]):0;
   // A missing market can expose an entire season at once; show the next slate.
-  const open=eligible.filter(m=>communityPickProbs(m).source==='betbetter'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
+  const open=eligible.filter(m=>communityPickProbs(m).source==='trdlab'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
   const picks=db.picks||{};
   const draft=btmDraft();Object.keys(draft).forEach(id=>{if(picks[id]?.pick===draft[id]||!open.some(m=>String(m.id)===String(id)))delete draft[id]});
   const nDraft=Object.keys(draft).length;
@@ -374,7 +374,7 @@ renderCustomize=function(){
 
 /* ---- College board modules -------------------------------------------------
    Four cards above the fixture board. Everything numeric here is read from the
-   Bet Better handoff baked into matchday-cfb-snapshot.js by
+   TRDLab handoff baked into matchday-cfb-snapshot.js by
    build_cfb_snapshot.py; nothing on this page recomputes a rating.
 
    Two rules shape what these may say:
@@ -480,7 +480,7 @@ const MATCHDAY_PERSONAL_CFB_BALLOT={
   rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
 };
 function collegeBallot(){
-  const b=typeof MATCHDAY_BETBETTER_BALLOT!=='undefined'?MATCHDAY_BETBETTER_BALLOT:null;
+  const b=typeof MATCHDAY_TRDLAB_BALLOT!=='undefined'?MATCHDAY_TRDLAB_BALLOT:null;
   if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF')return null;
   if(b?.available&&(b.rankings||[]).length)return b;
   return MATCHDAY_PERSONAL_CFB_BALLOT;
@@ -518,7 +518,7 @@ function modBallot(){
    published before kickoff. Falls back to recent finals only when the handoff
    carries no upset board. */
 function modUpsets(){
-  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
+  const board=(typeof MATCHDAY_TRDLAB_UPSETS!=='undefined'&&MATCHDAY_TRDLAB_UPSETS)||{};
   const rows=(board.upsets||[]).slice(0,8);
   if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF'||!rows.length)return modTopScores();
   const ranked=(rank,name)=>`${rank?`<i class="upRank">${Number(rank)}</i>`:''}<span class="upName" title="${esc(name)}">${esc(name)}</span>`;
@@ -539,8 +539,8 @@ function modTopScores(){
     &&Number.isFinite(Number(m.score?.home))&&Number.isFinite(Number(m.score?.away)));
   // If the fixture feed carries no finals -- which it does not while the
   // provider quota is spent -- read the handoff's own results instead.
-  if(!done.length&&typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'){
-    done=bbSportRows(MATCHDAY_BETBETTER_RESULTS).slice()
+  if(!done.length&&typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'){
+    done=bbSportRows(MATCHDAY_TRDLAB_RESULTS).slice()
       .sort((a,b)=>String(b.played_on||'').localeCompare(String(a.played_on||'')))
       .map(r=>({home:{name:r.home},away:{name:r.away},kickoff:r.kickoff||r.played_on,
                 status:'FINISHED',score:{home:Number(r.home_score),away:Number(r.away_score)}}));
@@ -569,9 +569,9 @@ function featuredPick(){
   const now=new Date(),weekStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7));
   const weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+7);
   const thisWeek=kickoff=>{const date=new Date(kickoff);return date>now&&date<weekEnd};
-  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick&&thisWeek(m.kickoff))
-    .map(m=>({m,p:m.betbetter_pick}));
-  const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
+  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.trdlab_pick&&thisWeek(m.kickoff))
+    .map(m=>({m,p:m.trdlab_pick}));
+  const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_TRDLAB_PICKS!=='undefined'?MATCHDAY_TRDLAB_PICKS:[])
     .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
   const poll=currentSportKey()==='ncaaf'
@@ -871,7 +871,7 @@ window.addEventListener('scroll',hideBoardTip,{capture:true,passive:true});
    that it must never be published as a recommended bet. That text is rendered
    as written -- paraphrasing a warning is how warnings get softened. */
 function modUpsetOfWeek(){
-  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const u=(typeof MATCHDAY_TRDLAB_UPSET!=='undefined')?MATCHDAY_TRDLAB_UPSET:null;
   // Up to three calls a week since 2026-09-15. `picks` is the list; an older
   // handoff carries only `pick`, which still renders as one.
   const picks=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
@@ -901,7 +901,7 @@ ${picks.map(one).join('')}
    listed rather than dropped so nothing disappears silently; and `note` says
    these are predictions with no stake, price or balance attached. */
 function modMyPicks(){
-  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
+  const u=(typeof MATCHDAY_TRDLAB_USER_PICKS!=='undefined')?MATCHDAY_TRDLAB_USER_PICKS:null;
   // Every recorded pick is listed and every recorded pick counts. The engine
   // stamps recorded_at from when a pick reached it, which is not always when it
   // was made, so its own `record` field -- which totals only the rows it read as
@@ -1152,7 +1152,7 @@ function rsFeatured(){
    Framed as research on purpose -- these are calls to watch and grade, and
    the engine's own caveat says disagreement of this kind has graded worse. */
 function rsModelMarketWatch(){
-  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const u=(typeof MATCHDAY_TRDLAB_UPSET!=='undefined')?MATCHDAY_TRDLAB_UPSET:null;
   // The featured read already covers its game, so that game never repeats here.
   const fp=typeof featuredPick==='function'?featuredPick():null;
   const featured=fp?[fp.m?.home?.name||fp.p?.home,fp.m?.away?.name||fp.p?.away].filter(Boolean):[];
@@ -1163,7 +1163,7 @@ function rsModelMarketWatch(){
   // rates above the market -- by the size of that gap.
   const WATCH=3;
   if(calls.length<WATCH){
-    const picks=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?bbSportRows(MATCHDAY_BETBETTER_PICKS):[])||[];
+    const picks=(typeof MATCHDAY_TRDLAB_PICKS!=='undefined'?bbSportRows(MATCHDAY_TRDLAB_PICKS):[])||[];
     const now=Date.now(),week=now+7*86400000,have=new Set(calls.map(c=>teamKey(c.selection)));
     const tier={};((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[]).forEach(r=>{tier[teamKey(r.name)]=String(r.tier||'')});
     const extra=picks.map(p=>{
@@ -1204,7 +1204,7 @@ function rsModelMarketWatch(){
   }).join('');
   // How disagreement has actually graded, so the live list is read against
   // the record rather than as a tip sheet.
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   const vm=sc?.versus_market||{},od=sc?.conviction?.outright_disagreements;
   const bar=(l,b)=>`<div class="rsSplitBar"><div><span class="rsKicker">${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b></div><i><b style="width:${Math.max(0,Math.min(100,Number(b.hit_rate_pct)))}%"></b></i><em>${Math.round(Number(b.hit_rate_pct))}%</em></div>`;
   const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
@@ -1217,7 +1217,7 @@ function rsModelMarketWatch(){
     +`</div></div></section>`;
 }
 function rsLongshots(){
-  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
+  const board=(typeof MATCHDAY_TRDLAB_UPSETS!=='undefined'&&MATCHDAY_TRDLAB_UPSETS)||{};
   const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
   if(!shots.length)return '';
   const card=(x,i)=>`<li class="rsShot${i>=8?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
@@ -1549,12 +1549,12 @@ function rsSchedules(){
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
-/* Team play-by-play profiles (MATCHDAY_BETBETTER_TEAM_PROFILES), FBS only:
+/* Team play-by-play profiles (MATCHDAY_TRDLAB_TEAM_PROFILES), FBS only:
    a team must be in the power rating table, which is FBS-only and supplies
    tier, conference and rank. Two games minimum so one result is not a
    profile. */
 function rsProfiles(){
-  const P=typeof MATCHDAY_BETBETTER_TEAM_PROFILES!=='undefined'?MATCHDAY_BETBETTER_TEAM_PROFILES:null;
+  const P=typeof MATCHDAY_TRDLAB_TEAM_PROFILES!=='undefined'?MATCHDAY_TRDLAB_TEAM_PROFILES:null;
   if(!P||!P.teams)return [];
   const table=collegeRankingTable()?.rankings||[];
   const byName=new Map(table.map(r=>[r.name,r]));

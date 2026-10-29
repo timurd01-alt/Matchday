@@ -5,7 +5,7 @@ Matchday is primarily a Python data pipeline and static web application, with sm
 ## Repository map
 
 - `fetch_data.py` builds normalized competition data: fixtures, scores, market odds, weather, news, standings and the game archive. It does not forecast.
-- `betbetter_handoff.py` validates the engine's `betbetter_picks.json` and attaches each pick to its fixture; `build_cfb_snapshot.py` builds `matchday-cfb-snapshot.js` (picks, scorecard, ratings, results)
+- `trdlab_handoff.py` validates the engine's `trdlab_picks.json` and attaches each pick to its fixture; `build_cfb_snapshot.py` builds `matchday-cfb-snapshot.js` (picks, scorecard, ratings, results)
 - `multi_fetch.py` schedules adaptive pregame and result-pending fetches
 - `provider_adapters.py` translates provider responses into Matchday contracts
 - `game_archive.py` / `archive_backfill.py` keep the raw record of every finished game

@@ -1,6 +1,6 @@
-# Sunday ship: refresh Sigma Lab, then publish its handoff to Matchday.
+# Sunday ship: refresh TRDLab, then publish its handoff to Matchday.
 #
-# Runs on the owner's machine because Sigma Lab (and its SQLite database)
+# Runs on the owner's machine because TRDLab (and its SQLite database)
 # lives here, not in GitHub. Order matters and is fixed:
 #
 #   1. refresh run     results, play-by-play, EPA, ratings, settle, power poll
@@ -9,7 +9,7 @@
 #   3. upset settle    grade last week's upset card
 #   4. upset publish   record the coming week's card (--as-of next Monday,
 #                      because Sunday is still the outgoing ISO week)
-#   5. matchday export write sigmalab_picks.json (copied to Matchday as betbetter_picks.json)
+#   5. matchday export write trdlab_picks.json (copied to Matchday as trdlab_picks.json)
 #   6. ship            validate + rebuild the snapshot + full test suite in a
 #                      private worktree off origin/main, then push to main.
 #                      The push triggers deploy.yml, which publishes the site.
@@ -18,17 +18,19 @@
 # .worktrees/sunday-ship, reset to origin/main each run. If anything fails
 # before the push, nothing is published and the last good site stays up.
 # The owner's ballot is published here only when the owner has written this
-# week's file (Desktop button "Edit My Ballot"): Sigma Lab/ballots/ncaaf/<Sunday>.txt.
+# week's file (Desktop button "Edit My Ballot"): TRDLab/ballots/ncaaf/<Sunday>.txt.
 # No file means last week's ballot stays up; nothing is ever invented.
 param(
-    [string]$SigmaLab = (Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'),
+    [string]$TRDLab = '',
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [switch]$NoPush,
-    # Ship the handoff already on disk; skip the Sigma Lab refresh.
+    # Ship the handoff already on disk; skip the TRDLab refresh.
     [switch]$SkipRefresh,
     # Run even if this week was already shipped (the desktop button uses this).
     [switch]$Force
 )
+. (Join-Path $PSScriptRoot 'engine_paths.ps1')
+$TRDLab = Resolve-TRDLabRoot -Root $TRDLab
 $ErrorActionPreference = 'Stop'
 $matchday = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $logDir = Join-Path $matchday 'automation\logs'
@@ -62,7 +64,7 @@ if (-not $Force -and -not $SkipRefresh -and (Test-Path $marker) -and ((Get-Conte
     exit 0
 }
 
-$poller = 'Sigma Lab Personal Data Refresh'
+$poller = Resolve-TRDLabRefreshTask
 $pollerPaused = $false
 try {
     if (-not $SkipRefresh -and (Get-ScheduledTask -TaskName $poller -ErrorAction SilentlyContinue)) {
@@ -72,55 +74,55 @@ try {
         Start-Sleep -Seconds 5
     }
 
-    if ($SkipRefresh) { Say 'skipping Sigma Lab refresh (-SkipRefresh)' } else {
+    if ($SkipRefresh) { Say 'skipping TRDLab refresh (-SkipRefresh)' } else {
         # refresh exits 1 when a backlog remains (e.g. a late game with no
         # play-by-play yet); that is reported, not fatal.
         # The five-minute poller is paused for the run, and it is what fetches
         # final scores -- so fetch them here first, or late Saturday games are
         # still unfinished when the refresh grades the week.
-        Run 'fetch finals' $SigmaLab $PythonPath @('-m','sigmalab','once','--force') -Soft
-        Run 'refresh run' $SigmaLab $PythonPath @('-m','sigmalab','refresh','run','--handoff=') -Soft
+        Run 'fetch finals' $TRDLab $PythonPath @('-m','trdlab','once','--force') -Soft
+        Run 'refresh run' $TRDLab $PythonPath @('-m','trdlab','refresh','run','--handoff=') -Soft
         # Every game of the past week must be graded before the scorecard ships.
         foreach ($attempt in 1..3) {
-            Push-Location $SigmaLab
-            & $PythonPath -m sigmalab forecast pending *> $null
+            Push-Location $TRDLab
+            & $PythonPath -m trdlab forecast pending *> $null
             $pending = $LASTEXITCODE
             Pop-Location
             if ($pending -eq 0) { Say '   every game of the past week is graded'; break }
             Say "   ungraded games remain (attempt $attempt); fetching finals and grading again"
-            Run 'fetch finals' $SigmaLab $PythonPath @('-m','sigmalab','once','--force') -Soft
-            Run 'grade' $SigmaLab $PythonPath @('-m','sigmalab','forecast','settle') -Soft
+            Run 'fetch finals' $TRDLab $PythonPath @('-m','trdlab','once','--force') -Soft
+            Run 'grade' $TRDLab $PythonPath @('-m','trdlab','forecast','settle') -Soft
         }
-        Run 'pending check' $SigmaLab $PythonPath @('-m','sigmalab','forecast','pending') -Soft
+        Run 'pending check' $TRDLab $PythonPath @('-m','trdlab','forecast','pending') -Soft
         # The coming week only: the publish is what has to be fresh. The rest
         # of the season (about 560 games, nearly an hour) is a separate job.
-        Run 'forecast slate' $SigmaLab $PythonPath @('-m','sigmalab','forecast','slate','--sport','ncaaf','--days','8') -Soft
+        Run 'forecast slate' $TRDLab $PythonPath @('-m','trdlab','forecast','slate','--sport','ncaaf','--days','8') -Soft
         # Basketball: posted rosters first (a late transfer or a new posting
         # changes the preseason), then the season rated against its prior, the
         # Top 25, and the picks read from those ratings.
         $hoopsSeason = if ((Get-Date).Month -ge 7) { (Get-Date).Year + 1 } else { (Get-Date).Year }
-        Run 'basketball rosters' $SigmaLab $PythonPath @('-m','sigmalab','hoops','rosters') -Soft
-        Run 'basketball ratings' $SigmaLab $PythonPath @('-m','sigmalab','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
-        Run 'basketball Top 25' $SigmaLab $PythonPath @('-m','sigmalab','poll','publish','--sport','ncaam') -Soft
-        Run 'basketball forecast slate' $SigmaLab $PythonPath @('-m','sigmalab','forecast','slate','--sport','ncaam','--days','8') -Soft
+        Run 'basketball rosters' $TRDLab $PythonPath @('-m','trdlab','hoops','rosters') -Soft
+        Run 'basketball ratings' $TRDLab $PythonPath @('-m','trdlab','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
+        Run 'basketball Top 25' $TRDLab $PythonPath @('-m','trdlab','poll','publish','--sport','ncaam') -Soft
+        Run 'basketball forecast slate' $TRDLab $PythonPath @('-m','trdlab','forecast','slate','--sport','ncaam','--days','8') -Soft
         # Bracketology: the season's schedule topped up, then the field projected
         # with last week's file kept for movement arrows.
-        Run 'basketball schedule' $SigmaLab $PythonPath @('-m','sigmalab','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
-        $bkOut = Join-Path $SigmaLab 'output\bracketology_ncaam.json'
-        $bkPrev = Join-Path $SigmaLab 'output\bracketology_ncaam.previous.json'
+        Run 'basketball schedule' $TRDLab $PythonPath @('-m','trdlab','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
+        $bkOut = Join-Path $TRDLab 'output\bracketology_ncaam.json'
+        $bkPrev = Join-Path $TRDLab 'output\bracketology_ncaam.previous.json'
         if (Test-Path $bkOut) { Copy-Item -Force $bkOut $bkPrev }
-        $bkArgs = @('-m','sigmalab','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
+        $bkArgs = @('-m','trdlab','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
         if (Test-Path $bkPrev) { $bkArgs += @('--previous',$bkPrev) }
-        Run 'basketball bracketology' $SigmaLab $PythonPath $bkArgs -Soft
-        Run 'upset settle' $SigmaLab $PythonPath @('-m','sigmalab','upset','settle') -Soft
-        Run "upset publish (as of $asOf)" $SigmaLab $PythonPath @('-m','sigmalab','upset','publish','--as-of',$asOf) -Soft
+        Run 'basketball bracketology' $TRDLab $PythonPath $bkArgs -Soft
+        Run 'upset settle' $TRDLab $PythonPath @('-m','trdlab','upset','settle') -Soft
+        Run "upset publish (as of $asOf)" $TRDLab $PythonPath @('-m','trdlab','upset','publish','--as-of',$asOf) -Soft
         # The owner's ballot, dated this week's Sunday, if one has been written.
         $ballotDay = (Get-Date).Date.AddDays(-[int](Get-Date).DayOfWeek).ToString('yyyy-MM-dd')
-        $ballotFile = Join-Path $SigmaLab (Join-Path 'ballots' (Join-Path 'ncaaf' "$ballotDay.txt"))
+        $ballotFile = Join-Path $TRDLab (Join-Path 'ballots' (Join-Path 'ncaaf' "$ballotDay.txt"))
         if (Test-Path $ballotFile) {
-            Run "ballot publish ($ballotDay)" $SigmaLab $PythonPath @('-m','sigmalab','ballot','publish',$ballotFile,'--date',$ballotDay) -Soft
+            Run "ballot publish ($ballotDay)" $TRDLab $PythonPath @('-m','trdlab','ballot','publish',$ballotFile,'--date',$ballotDay) -Soft
         } else { Say "   no ballot file for $ballotDay; last week's ballot stays up" }
-        Run 'matchday export' $SigmaLab $PythonPath @('-m','sigmalab','matchday','export','--out','sigmalab_picks.json')
+        Run 'matchday export' $TRDLab $PythonPath @('-m','trdlab','matchday','export','--out','trdlab_picks.json')
     }
 } finally {
     if ($pollerPaused) { Enable-ScheduledTask -TaskName $poller | Out-Null }
@@ -137,11 +139,11 @@ Push-Location $tree
 try {
     git checkout -q --detach origin/main
     git reset -q --hard origin/main
-    Copy-Item -Force (Join-Path $SigmaLab 'sigmalab_picks.json') (Join-Path $tree 'betbetter_picks.json')
-    $bk = Join-Path $SigmaLab 'output\bracketology_ncaam.json'
+    Copy-Item -Force (Join-Path $TRDLab 'trdlab_picks.json') (Join-Path $tree 'trdlab_picks.json')
+    $bk = Join-Path $TRDLab 'output\bracketology_ncaam.json'
     if (Test-Path $bk) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
 
-    Run 'validate handoff' $tree $PythonPath @('-c', "import betbetter_handoff as h, json, sys; d=json.load(open('betbetter_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
+    Run 'validate handoff' $tree $PythonPath @('-c', "import trdlab_handoff as h, json, sys; d=json.load(open('trdlab_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
     # Stop before publishing if this week's picks fell sharply against what is live.
     Run 'check pick coverage' $tree $PythonPath @('check_pick_coverage.py')
     # Stop before publishing on missing results, wrong records, or projected
@@ -150,7 +152,7 @@ try {
     Run 'rebuild snapshot + AP poll' $tree $PythonPath @('build_cfb_snapshot.py')
     Run 'test suite' $tree $PythonPath @('-m','unittest','discover','-p','test_*.py')
 
-    git add -- betbetter_picks.json matchday-cfb-snapshot.js
+    git add -- trdlab_picks.json matchday-cfb-snapshot.js
     if (Test-Path ap_poll_snapshot.json) { git add -- ap_poll_snapshot.json }
     if (Test-Path bracketology_ncaam.json) { git add -- bracketology_ncaam.json }
     git diff --cached --quiet

@@ -14,7 +14,7 @@ Signals are ranked, not merged. Each candidate carries a fixed priority, and
 only the highest-priority live candidate becomes the task; the rest are
 reported as context so the agent can see what it is deliberately not doing.
 
-Picks come from the Bet Better engine; this repository no longer forecasts,
+Picks come from the TRDLab engine; this repository no longer forecasts,
 so model research and promotion signals are not sources here.
 """
 

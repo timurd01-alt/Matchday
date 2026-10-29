@@ -17,5 +17,5 @@ $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances 
     -ExecutionTimeLimit (New-TimeSpan -Hours 2)
 Register-ScheduledTask -TaskName 'Matchday Sunday Ship' -Action $action -Trigger $triggers `
     -Settings $settings -Force `
-    -Description 'Refreshes Bet Better and ships ratings, AP poll and next week''s picks to Matchday.' | Out-Null
+    -Description 'Refreshes TRDLab and ships ratings, AP poll and next week''s picks to Matchday.' | Out-Null
 Write-Host "Installed 'Matchday Sunday Ship' (Sundays $At, catch-up Mondays $CatchUpAt)"

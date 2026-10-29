@@ -33,7 +33,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('.powerTable.hasMove th:nth-child(3),.powerTable.hasMove td:nth-child(3){display:table-cell', styles)
 
     def test_completed_nonconference_results_reconcile_records(self):
-        handoff = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+        handoff = json.loads((ROOT / "trdlab_picks.json").read_text(encoding="utf-8"))
         msu = [r for r in handoff["results"] if r.get("season") == 2026 and
                "Michigan State Spartans" in (r.get("home"), r.get("away"))]
         self.assertGreaterEqual(len(msu), 3)
@@ -57,7 +57,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_fallback_header_uses_the_fresh_prediction_sync(self):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("MATCHDAY_BETBETTER_GENERATED_AT", builder)
+        self.assertIn("MATCHDAY_TRDLAB_GENERATED_AT", builder)
         self.assertIn("Predictions synced ${ago(syncedAt)}", panels)
         self.assertNotIn("fallback snapshot ${ago", panels)
 
@@ -108,7 +108,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn('const MATCHDAY_BETBETTER_BALLOT="', builder)
+        self.assertIn('const MATCHDAY_TRDLAB_BALLOT="', builder)
         self.assertIn('document.get("ballots")', builder)
         self.assertIn("modBallot(),modTop25()", views)
         self.assertIn("if(b?.available&&(b.rankings||[]).length)return b", views)
@@ -185,7 +185,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         read = core[core.index("function gamesBoardRead("):
                     core.index("function gamesSummaryHTML(")]
-        self.assertIn("betbetterReadFor", read)
+        self.assertIn("trdlabReadFor", read)
         self.assertIn("v==null||v===''?null", read)
         self.assertIn("market==null?null", read)
         for banned in ("m.prediction", "_v10OfficialPick", "officialPrediction"):
@@ -211,8 +211,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
                           "rsConferences()"):
             self.assertIn(preserved, research)
         self.assertNotIn("rsMyPicks()", research)
-        for source in ("MATCHDAY_BETBETTER_UPSET", "MATCHDAY_BETBETTER_UPSETS",
-                       "MATCHDAY_BETBETTER_USER_PICKS", "Most balanced"):
+        for source in ("MATCHDAY_TRDLAB_UPSET", "MATCHDAY_TRDLAB_UPSETS",
+                       "MATCHDAY_TRDLAB_USER_PICKS", "Most balanced"):
             self.assertIn(source, views)
         self.assertIn("host.querySelector('.diagList')?.remove()", panels)
         self.assertIn("host.querySelector('.newsTools')?.remove()", panels)
@@ -226,7 +226,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("const week=active.filter", summary)
         self.assertIn("week.map(gamesBoardRead)", summary)
         self.assertIn("featuredMatchupRead(reads)", summary)
-        self.assertIn("MATCHDAY_BETBETTER_GAME_OF_THE_WEEK", core)
+        self.assertIn("MATCHDAY_TRDLAB_GAME_OF_THE_WEEK", core)
         self.assertIn("teamMark(m.home?.name)", core)
         self.assertIn("teamMark(m.away?.name)", core)
         self.assertIn("return teamMark(team?.name,extra)", core)
@@ -309,7 +309,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('class="pollTeamInner"', section)
         self.assertIn("(cell.querySelector('.pollTeamInner')||cell)", panels)
 
-    def test_the_welcome_cards_model_read_is_bet_betters(self):
+    def test_the_welcome_cards_model_read_is_trdlabs(self):
         """The gate quotes one model, the same one every other screen quotes.
 
         The IN FOCUS card read m.prediction through _v10OfficialPick -- that is
@@ -322,7 +322,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         start = core.index("function _welcomeCardHTML(m){")
         body = core[start:core.index(chr(10) + "function ", start + 1)]
-        self.assertIn("betbetterReadFor", body,
+        self.assertIn("trdlabReadFor", body,
                       "the welcome card must resolve its read through the engine")
         for banned in ("_v10OfficialPick", "officialPrediction", "m.prediction"):
             self.assertNotIn(banned, body,
@@ -334,7 +334,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         # fixture on screen with no number beside it.
         render = core[core.index("function renderWelcome()"):]
         render = render[:render.index(chr(10) + "}")]
-        self.assertIn("betbetterReadFor", render,
+        self.assertIn("trdlabReadFor", render,
                       "renderWelcome must filter the card's pool to priced fixtures")
         self.assertIn("welcomeFallback", render,
                       "with nothing priced the gate needs its standing panel")
@@ -361,7 +361,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        # The rankings are generated from the Bet Better handoff now, not typed
+        # The rankings are generated from the TRDLab handoff now, not typed
         # into the file, so the marker and the reference are what to assert on.
         self.assertIn("BEGIN GENERATED RANKINGS", snapshot)
         self.assertIn("rankings:MATCHDAY_CFB_RANKINGS.rankings", snapshot)
@@ -509,7 +509,7 @@ class TeamNameKeyTests(unittest.TestCase):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         # ESPN files "Hawai'i Rainbow Warriors", the odds feed "Hawaii Rainbow
         # Warriors". Spacing the apostrophe gives "hawai i", which matches the
-        # other spelling on no test at all, so Bet Better's card sat unattached
+        # other spelling on no test at all, so TRDLab's card sat unattached
         # and the fixture fell through to a preseason model with no games behind
         # it. The record and ratings lookups missed for the same reason.
         self.assertIn("""replace(/['\u2018\u2019\u02bb\u02bc]/g,'')""", core)

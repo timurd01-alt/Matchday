@@ -1,4 +1,4 @@
-"""What the Bet Better handoff is allowed to put on a match card.
+"""What the TRDLab handoff is allowed to put on a match card.
 
 The engine's picks are live forecasts, not frozen cards. These tests pin the
 boundary that keeps them from drifting into the published, graded record:
@@ -11,7 +11,7 @@ import os
 import tempfile
 import unittest
 
-import betbetter_handoff
+import trdlab_handoff
 
 
 def pick(**overrides):
@@ -46,7 +46,7 @@ def pick(**overrides):
 def document(**overrides):
     doc = {
         "handoff_version": 1,
-        "source": "betbetter",
+        "source": "trdlab",
         "generated_at": "2026-08-30T23:35:50Z",
         "sports": ["ncaaf", "ncaam"],
         "picks": [pick()],
@@ -76,48 +76,48 @@ class LoadTests(unittest.TestCase):
         return path
 
     def test_a_missing_file_is_not_an_error(self):
-        # Bet Better may simply not have run. That is different from broken.
-        self.assertIsNone(betbetter_handoff.load("no_such_handoff.json"))
+        # TRDLab may simply not have run. That is different from broken.
+        self.assertIsNone(trdlab_handoff.load("no_such_handoff.json"))
 
     def test_the_renamed_engine_source_loads(self):
-        # The engine became Sigma Lab on 2026-10-13; both names are accepted.
-        self.assertIsNotNone(betbetter_handoff.load(self.write(document(source="sigmalab"))))
+        # The engine became TRDLab on 2026-10-13; both names are accepted.
+        self.assertIsNotNone(trdlab_handoff.load(self.write(document(source="trdlab"))))
 
     def test_an_unknown_source_is_refused(self):
-        with self.assertRaises(betbetter_handoff.HandoffError):
-            betbetter_handoff.load(self.write(document(source="someone_else")))
+        with self.assertRaises(trdlab_handoff.HandoffError):
+            trdlab_handoff.load(self.write(document(source="someone_else")))
 
     def test_a_known_version_loads(self):
-        loaded = betbetter_handoff.load(self.write(document()))
+        loaded = trdlab_handoff.load(self.write(document()))
         self.assertEqual(len(loaded["picks"]), 1)
 
     def test_prediction_only_version_loads(self):
-        loaded = betbetter_handoff.load(self.write(document(handoff_version=10)))
+        loaded = trdlab_handoff.load(self.write(document(handoff_version=10)))
         self.assertEqual(len(loaded["picks"]), 1)
 
     def test_market_comparison_version_loads(self):
-        loaded = betbetter_handoff.load(self.write(document(handoff_version=11)))
+        loaded = trdlab_handoff.load(self.write(document(handoff_version=11)))
         self.assertEqual(len(loaded["picks"]), 1)
 
     def test_an_unknown_version_is_refused_whole(self):
-        with self.assertRaises(betbetter_handoff.HandoffError):
-            betbetter_handoff.load(self.write(document(handoff_version=99)))
+        with self.assertRaises(trdlab_handoff.HandoffError):
+            trdlab_handoff.load(self.write(document(handoff_version=99)))
 
     def test_a_document_from_somewhere_else_is_refused(self):
-        with self.assertRaises(betbetter_handoff.HandoffError):
-            betbetter_handoff.load(self.write(document(source="somebody_else")))
+        with self.assertRaises(trdlab_handoff.HandoffError):
+            trdlab_handoff.load(self.write(document(source="somebody_else")))
 
     def test_a_pick_claiming_an_official_receipt_is_refused(self):
         # Not trimmed — refused. A handoff that tries to mint an official pick
         # means something upstream is wrong about what it may say.
-        with self.assertRaises(betbetter_handoff.HandoffError) as raised:
-            betbetter_handoff.load(
+        with self.assertRaises(trdlab_handoff.HandoffError) as raised:
+            trdlab_handoff.load(
                 self.write(document(picks=[pick(official_pick=True)])))
         self.assertIn("official_pick", str(raised.exception))
 
     def test_an_unexpected_basis_is_refused(self):
-        with self.assertRaises(betbetter_handoff.HandoffError):
-            betbetter_handoff.load(
+        with self.assertRaises(trdlab_handoff.HandoffError):
+            trdlab_handoff.load(
                 self.write(document(picks=[pick(basis="locked_card")])))
 
     def test_malformed_json_is_reported_rather_than_treated_as_empty(self):
@@ -125,45 +125,45 @@ class LoadTests(unittest.TestCase):
         with os.fdopen(handle, "w", encoding="utf-8") as file:
             file.write("{not json")
         self.addCleanup(os.unlink, path)
-        with self.assertRaises(betbetter_handoff.HandoffError):
-            betbetter_handoff.load(path)
+        with self.assertRaises(trdlab_handoff.HandoffError):
+            trdlab_handoff.load(path)
 
 
 class AttachTests(unittest.TestCase):
     def test_a_pick_lands_on_its_own_key(self):
         matches = [match()]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
-        self.assertIn("betbetter_pick", matches[0])
+        self.assertEqual(trdlab_handoff.attach(matches, document()), 1)
+        self.assertIn("trdlab_pick", matches[0])
 
     def test_an_ungraded_pick_says_so_on_the_card(self):
         # FBS vs FCS: the engine prices it for reference and never grades it.
         matches = [match()]
         doc = document(picks=[pick(graded=False, grading_note="FBS vs FCS: not graded")])
-        betbetter_handoff.attach(matches, doc)
-        self.assertIs(matches[0]["betbetter_pick"]["graded"], False)
+        trdlab_handoff.attach(matches, doc)
+        self.assertIs(matches[0]["trdlab_pick"]["graded"], False)
         plain = [match()]
-        betbetter_handoff.attach(plain, document())
-        self.assertIs(plain[0]["betbetter_pick"]["graded"], True)
+        trdlab_handoff.attach(plain, document())
+        self.assertIs(plain[0]["trdlab_pick"]["graded"], True)
 
     def test_a_team_is_an_object_on_the_matchday_side(self):
         # Matchday carries {"name": ..., "code": ...}; reading str() of that
         # matched nothing at all, which is how this was found.
         matches = [match(home={"name": "Rutgers", "code": "RUT"},
                          away={"name": "UMass", "code": "MASS"})]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
+        self.assertEqual(trdlab_handoff.attach(matches, document()), 1)
 
     def test_short_names_match_the_engine_full_names(self):
-        # Matchday says "TCU"; Bet Better says "TCU Horned Frogs".
+        # Matchday says "TCU"; TRDLab says "TCU Horned Frogs".
         matches = [match(home={"name": "TCU"}, away={"name": "North Carolina"})]
         doc = document(picks=[pick(home="TCU Horned Frogs",
                                    away="North Carolina Tar Heels")])
-        self.assertEqual(betbetter_handoff.attach(matches, doc), 1)
+        self.assertEqual(trdlab_handoff.attach(matches, doc), 1)
 
     def test_accents_and_punctuation_are_not_a_difference(self):
         matches = [match(home={"name": "San José State"}, away={"name": "U-Mass"})]
         doc = document(picks=[pick(home="San Jose State Spartans",
                                    away="UMass Minutemen")])
-        self.assertEqual(betbetter_handoff.attach(matches, doc), 1)
+        self.assertEqual(trdlab_handoff.attach(matches, doc), 1)
 
     def test_a_prefix_shared_by_two_schools_yields_no_pick(self):
         # "Miami" prefixes both. Showing the wrong team's number is worse than
@@ -173,47 +173,47 @@ class AttachTests(unittest.TestCase):
             pick(home="Miami Hurricanes", away="Florida State Seminoles"),
             pick(home="Miami OH RedHawks", away="Florida State Seminoles"),
         ])
-        self.assertEqual(betbetter_handoff.attach(matches, doc), 0)
-        self.assertNotIn("betbetter_pick", matches[0])
+        self.assertEqual(trdlab_handoff.attach(matches, doc), 0)
+        self.assertNotIn("trdlab_pick", matches[0])
 
     def test_a_two_letter_stub_does_not_match_everything(self):
         matches = [match(home={"name": "NC"}, away={"name": "UMass Minutemen"})]
         doc = document(picks=[pick(home="NC State Wolfpack",
                                    away="UMass Minutemen")])
-        self.assertEqual(betbetter_handoff.attach(matches, doc), 0)
+        self.assertEqual(trdlab_handoff.attach(matches, doc), 0)
 
     def test_provider_home_and_away_disagreement_still_matches(self):
         # Providers sometimes reverse the venue designation for the same pair
         # and kickoff. The team pair and date still identify one fixture.
         matches = [match(home={"name": "UMass Minutemen"},
                          away={"name": "Rutgers Scarlet Knights"})]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
+        self.assertEqual(trdlab_handoff.attach(matches, document()), 1)
 
     def test_kickoff_minutes_may_differ_between_feeds(self):
         matches = [match(kickoff="2026-09-03T21:30:00Z")]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
+        self.assertEqual(trdlab_handoff.attach(matches, document()), 1)
 
     def test_a_played_game_never_receives_a_live_pick(self):
         # Attaching a live number to a finished game would read as a call made
         # in advance. Every non-UPCOMING status is refused.
         for status in ("FINISHED", "IN_PLAY", "PAUSED", ""):
             matches = [match(status=status)]
-            self.assertEqual(betbetter_handoff.attach(matches, document()), 0,
+            self.assertEqual(trdlab_handoff.attach(matches, document()), 0,
                              f"status {status!r} should not receive a pick")
-            self.assertNotIn("betbetter_pick", matches[0])
+            self.assertNotIn("trdlab_pick", matches[0])
 
     def test_an_unrelated_fixture_is_left_alone(self):
         matches = [match(home="Ohio State Buckeyes", away="Michigan Wolverines")]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 0)
+        self.assertEqual(trdlab_handoff.attach(matches, document()), 0)
 
     def test_the_attached_block_refuses_publication_on_its_face(self):
         matches = [match()]
-        betbetter_handoff.attach(matches, document())
-        block = matches[0]["betbetter_pick"]
+        trdlab_handoff.attach(matches, document())
+        block = matches[0]["trdlab_pick"]
         self.assertIs(block["official_pick"], False)
         self.assertIs(block["official_publication_eligible"], False)
         self.assertEqual(block["basis"], "live_shadow_forecast")
-        self.assertEqual(block["engine"], "betbetter")
+        self.assertEqual(block["engine"], "trdlab")
         self.assertEqual(block["market_pct"], 94.5)
         self.assertEqual(block["edge_points"], 4.4)
         private = {"best_price", "best_american", "book_count", "edge_warning"}
@@ -225,13 +225,13 @@ class FileLevelTests(unittest.TestCase):
         with os.fdopen(handle, "w", encoding="utf-8") as file:
             file.write("{not json")
         self.addCleanup(os.unlink, path)
-        report = betbetter_handoff.attach_from_file([match()], path)
+        report = trdlab_handoff.attach_from_file([match()], path)
         self.assertEqual(report["attached"], 0)
         self.assertFalse(report["available"])
         self.assertTrue(report["reason"])
 
     def test_a_missing_handoff_reports_rather_than_raises(self):
-        report = betbetter_handoff.attach_from_file([match()], "nope.json")
+        report = trdlab_handoff.attach_from_file([match()], "nope.json")
         self.assertEqual(report["attached"], 0)
         self.assertFalse(report["available"])
 
@@ -239,9 +239,9 @@ class FileLevelTests(unittest.TestCase):
 class PublicationTests(unittest.TestCase):
     def test_an_attached_pick_is_never_an_official_publication(self):
         matches = [match()]
-        betbetter_handoff.attach(matches, document())
+        trdlab_handoff.attach(matches, document())
         self.assertIs(
-            matches[0]["betbetter_pick"]["official_publication_eligible"], False)
+            matches[0]["trdlab_pick"]["official_publication_eligible"], False)
 
 
 if __name__ == "__main__":
@@ -268,7 +268,7 @@ class WithheldReadsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             handoff = self._write(directory, "picks.json", document(picks=[pick(), other]))
             withheld = self._write(directory, "withheld.json", {"withheld": [self._entry()]})
-            loaded = betbetter_handoff.load(handoff, withheld)
+            loaded = trdlab_handoff.load(handoff, withheld)
         self.assertEqual([p["event_id"] for p in loaded["picks"]], ["x2"])
         self.assertEqual(loaded["withheld_count"], 1)
 
@@ -277,19 +277,19 @@ class WithheldReadsTest(unittest.TestCase):
             handoff = self._write(directory, "picks.json", document())
             withheld = self._write(directory, "withheld.json", {"withheld": [
                 self._entry(home="UMass", away="Rutgers")]})
-            self.assertEqual(betbetter_handoff.load(handoff, withheld)["picks"], [])
+            self.assertEqual(trdlab_handoff.load(handoff, withheld)["picks"], [])
 
     def test_other_day_is_not_withheld(self):
         with tempfile.TemporaryDirectory() as directory:
             handoff = self._write(directory, "picks.json", document())
             withheld = self._write(directory, "withheld.json", {"withheld": [
                 self._entry(kickoff_day="2026-09-04")]})
-            self.assertEqual(len(betbetter_handoff.load(handoff, withheld)["picks"]), 1)
+            self.assertEqual(len(trdlab_handoff.load(handoff, withheld)["picks"]), 1)
 
     def test_missing_file_withholds_nothing(self):
         with tempfile.TemporaryDirectory() as directory:
             handoff = self._write(directory, "picks.json", document())
-            loaded = betbetter_handoff.load(handoff, os.path.join(directory, "none.json"))
+            loaded = trdlab_handoff.load(handoff, os.path.join(directory, "none.json"))
         self.assertEqual(len(loaded["picks"]), 1)
         self.assertNotIn("withheld_count", loaded)
 
@@ -298,11 +298,11 @@ class WithheldReadsTest(unittest.TestCase):
             handoff = self._write(directory, "picks.json", document())
             withheld = self._write(directory, "withheld.json", {"withheld": [
                 self._entry(reason="")]})
-            with self.assertRaises(betbetter_handoff.HandoffError):
-                betbetter_handoff.load(handoff, withheld)
+            with self.assertRaises(trdlab_handoff.HandoffError):
+                trdlab_handoff.load(handoff, withheld)
 
     def test_committed_list_is_valid(self):
         # The repository's own list must always load; a typo would otherwise
         # fail the deploy's snapshot build instead of this test.
-        entries = betbetter_handoff.load_withheld()
+        entries = trdlab_handoff.load_withheld()
         self.assertTrue(all(entry["reason"] for entry in entries))

@@ -1,6 +1,6 @@
 """The board's "data N days ago" must describe the data, not the handoff.
 
-`applyCurrentCfbSnapshot` used to stamp the Bet Better snapshot's own date over
+`applyCurrentCfbSnapshot` used to stamp the TRDLab snapshot's own date over
 the payload's. The snapshot is rebuilt only when a new handoff is taken in,
 while data_*.json is refetched hourly, so whenever the handoff was the older of
 the two the board advertised itself as stale while its fixtures and scores were

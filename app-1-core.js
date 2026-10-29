@@ -207,11 +207,11 @@ const _TEAM_KEY_CACHE=new Map();
    "Hawaii Rainbow Warriors". Replacing the apostrophe with a space gives
    "hawai i rainbow warriors", which matches "hawaii rainbow warriors" on no
    test at all -- not the exact key, and not the prefix rule either, since
-   "hawai" is not a word in the other name. So Bet Better's card for Hawai'i at
+   "hawai" is not a word in the other name. So TRDLab's card for Hawai'i at
    Wyoming sat in the payload unattached, and the fixture fell through to
    Matchday's own preseason model, which had zero games of evidence for either
    side. The same miss empties Hawai'i's record and its ratings lookup.
-   Bet Better's `comparison._fold` deletes them for exactly this reason. */
+   TRDLab's `comparison._fold` deletes them for exactly this reason. */
 function teamKey(name){
   const label=String(name||'');
   const hit=_TEAM_KEY_CACHE.get(label);
@@ -390,7 +390,7 @@ function marketPanel(m){
       h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
     }
   }else{
-    const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const read=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
     const price=read?.market_pct==null?NaN:Number(read.market_pct);
     if(Number.isFinite(price)&&price>=0&&price<=100){
       const stamp=Date.parse(read.generated_at||read.handoff_generated_at||'');
@@ -510,13 +510,13 @@ function tourPositionCard(target,card){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('tourOpen'))tourEnd();});
 // The gate's IN FOCUS card is a model read like any other on the site, so it
-// comes from the same engine as every other one: Bet Better's. It used to read
+// comes from the same engine as every other one: TRDLab's. It used to read
 // m.prediction through _v10OfficialPick -- Matchday's own forecast -- so the
 // front door quoted one model and every screen behind it quoted another, under
 // the same word, "MODEL". A fixture the engine has not priced now shows the
 // fixture with no number, rather than another model's number in its place.
 function _welcomeCardHTML(m){
-  const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  const bb=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
   const pick=bb?.pick_name||'';
   // Number(null) is 0, and the handoff writes null for a fixture it never got
   // a price on -- straight through Number.isFinite, that renders "market 0.0%"
@@ -552,7 +552,7 @@ function _welcomeCardHTML(m){
 // static script carrying all of them, so this costs nothing -- and the gate is
 // the front door for the whole site, where a per-sport figure understates it.
 function scorecardTotals(){
-  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+  const all=(typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined')?MATCHDAY_TRDLAB_SCORECARD:null;
   const sports=Object.values(all?.sports||{}).filter(s=>s?.available);
   return {picks:sports.reduce((n,s)=>n+(Number(s.record?.picks)||0),0),
           lockMinutes:sports.map(s=>Number(s.lock_policy?.lead_minutes)).find(Number.isFinite)??null};
@@ -605,7 +605,7 @@ function upsetStatusText(p,selectionIsAway){
 }
 function renderWelcomeUpset(){
   const host=$('#welcomeUpset');if(!host)return;
-  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const u=(typeof MATCHDAY_TRDLAB_UPSET!=='undefined')?MATCHDAY_TRDLAB_UPSET:null;
   const p=u&&u.available?u.pick:null;
   const sport=(typeof currentSportKey==='function'?currentSportKey():'')||'';
   // Scoped to the board being shown: an NCAAF upset above an NCAAM board would
@@ -636,7 +636,7 @@ function renderWelcomeUpset(){
 // totals. Absent data hides it -- the gate never states a number it cannot source.
 function renderWelcomeRecord(){
   const host=$('#welcomeRecord');if(!host)return;
-  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+  const all=(typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined')?MATCHDAY_TRDLAB_SCORECARD:null;
   const sports=Object.values(all?.sports||{}).filter(s=>s?.available);
   const w=sports.reduce((n,s)=>n+(Number(s.record?.wins)||0),0),l=sports.reduce((n,s)=>n+(Number(s.record?.losses)||0),0);
   if(!(w+l)){host.hidden=true;host.innerHTML='';return}
@@ -673,7 +673,7 @@ function renderWelcome(){
   // read, so a game without one has nothing to say here -- an out-of-season
   // board (nothing 55 days out is priced) gets the standing panel below rather
   // than a fixture with an empty number beside it.
-  const priced=(DATA.matches||[]).filter(m=>isVisibleUpcoming(m)&&(typeof betbetterReadFor==='function'&&betbetterReadFor(m)));
+  const priced=(DATA.matches||[]).filter(m=>isVisibleUpcoming(m)&&(typeof trdlabReadFor==='function'&&trdlabReadFor(m)));
   const soonest=[...priced].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host)return;
   if(!soonest){
@@ -691,7 +691,7 @@ function renderWelcome(){
 }
 function landingHero(){
   // The engine's graded record, not the hand-typed block this used to read.
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   const gradedPicks=Number(sc?.record?.picks)||0;
   const slim=heroSeen();
   // What leads here is the property that is true regardless of how the model is
@@ -725,7 +725,7 @@ function enhanceMatchCards(host){
     if(m)head.setAttribute('aria-label',`Open ${m.home?.name||'home'} versus ${m.away?.name||'away'}`);
     // This used to relabel the card's first `.pick` row as "Model" and rewrite
     // its note with `m.prediction`'s market and edge. Once a card carried both
-    // prediction systems, the first row was the Bet Better pick, so the site
+    // prediction systems, the first row was the TRDLab pick, so the site
     // model's label and market numbers were stamped onto a different model's
     // pick -- which is how "MODEL Florida State 60.4%" came to sit above
     // "PICK SMU 53%". cardHTML now renders one pick row that labels and
@@ -792,12 +792,12 @@ function groupedBoardHTML(list){
   }).join('');
 }
 
-// The games-first summary deliberately reads the same Bet Better handoff as
+// The games-first summary deliberately reads the same TRDLab handoff as
 // the fixture card and expanded view. Do not fill its gaps from m.prediction:
 // that is a different forecast system and previously produced contradictory
 // picks on the same fixture.
 function gamesBoardRead(m){
-  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  const read=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
   if(!read)return null;
   const number=v=>v==null||v===''?null:(Number.isFinite(Number(v))?Number(v):null);
   const model=number(read.model_pct),market=number(read.market_pct);
@@ -807,10 +807,10 @@ function gamesBoardRead(m){
     difference:market==null?null:(supplied==null?model-market:supplied)};
 }
 function featuredMatchupRead(reads){
-  // Bet Better's game of the week is selected for two strong, closely rated
+  // TRDLab's game of the week is selected for two strong, closely rated
   // teams, not for the largest edge or simply the earliest kickoff.
-  const game=(typeof MATCHDAY_BETBETTER_GAME_OF_THE_WEEK!=='undefined'
-    &&MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.available)?MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.game:null;
+  const game=(typeof MATCHDAY_TRDLAB_GAME_OF_THE_WEEK!=='undefined'
+    &&MATCHDAY_TRDLAB_GAME_OF_THE_WEEK.available)?MATCHDAY_TRDLAB_GAME_OF_THE_WEEK.game:null;
   if(!game)return null;
   return reads.find(read=>{
     const m=read.match;
@@ -931,7 +931,7 @@ function renderHome(){
   const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
   const reads=week.map(gamesBoardRead).filter(Boolean),priced=reads.filter(r=>r.market!=null&&r.difference!=null);
   const edges=priced.filter(r=>Math.abs(r.difference)>=5).length;
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
     +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +homeLatestReactionHTML()
@@ -981,7 +981,7 @@ function gamesBracketHTML(){
 // and the loss it was most confident in (toughest miss). Both come from the
 // same locked, graded rows as the Scorecard; nothing is recomputed here.
 function gamesNotableHTML(){
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   const graded=(sc?.recent||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase())).slice(0,10);
   if(!graded.length)return '';
   const num=v=>Number.isFinite(Number(v))?Number(v):null;
@@ -1012,7 +1012,7 @@ function gamesNotableHTML(){
   return `<section class="gamesRecord gamesNotable"><div><span>Latest calls</span><ul>${body}</ul></div></section>`;
 }
 function gamesRecordHTML(){
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   const r=sc?.record;
   if(!sc?.available||!r?.picks)return `<section class="gamesRecord"><div><span>Public record</span><strong>Record begins after picks are graded.</strong></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
   const expected=Number(r.expected_hit_rate_pct),actual=Number(r.hit_rate_pct),gap=Number(r.calibration_gap_points);
@@ -1189,7 +1189,7 @@ function captureMatchSignals(matches){
   const previous=_alertReadJSON('matchday.signalSnapshot',{}),next={},history=_alertReadJSON('matchday.modelHistory',{}),now=Date.now();
   MATCH_SIGNAL_CHANGES={};SCORE_SIGNAL_CHANGES={};LIVE_ENTRY_CHANGES={};
   (matches||[]).filter(m=>m&&m.status!=='FINISHED').slice(0,220).forEach(m=>{
-    const id=_signalId(m),bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const id=_signalId(m),bb=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
     const confidence=Number(bb?.model_pct),market=Number(bb?.market_pct);
     const score=`${m.score?.home??''}-${m.score?.away??''}`;
     next[id]={confidence:Number.isFinite(confidence)?confidence:null,market:Number.isFinite(market)?market:null,status:m.status,score,at:now};
@@ -1207,7 +1207,7 @@ function captureMatchSignals(matches){
   MODEL_HISTORY=history;
   try{localStorage.setItem('matchday.signalSnapshot',JSON.stringify(next));localStorage.setItem('matchday.modelHistory',JSON.stringify(history))}catch(e){}
 }
-function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.betbetter_pick?.model_pct??''}:${m.status}:${m.score?.home??''}-${m.score?.away??''}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
+function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.trdlab_pick?.model_pct??''}:${m.status}:${m.score?.home??''}-${m.score?.away??''}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
 function probabilityMovement(m){return MATCH_SIGNAL_CHANGES[_signalId(m)]||null}
 function probabilitySparkline(m){
   const points=MODEL_HISTORY[_signalId(m)]||[];if(points.length<2)return '';
@@ -1238,7 +1238,7 @@ function _alertPct(v){const n=Number(v);return Number.isFinite(n)?n.toFixed(1)+'
 function _collegeAlerts(){
   const out=[];
   if(/ncaam/.test(String(typeof DATA_FILE!=='undefined'?DATA_FILE:'')))return out;
-  const upset=_alertGlobal('MATCHDAY_BETBETTER_UPSET');
+  const upset=_alertGlobal('MATCHDAY_TRDLAB_UPSET');
   if(upset?.available&&upset.recorded){
     (upset.picks&&upset.picks.length?upset.picks:[upset.pick]).filter(Boolean).forEach(p=>{
       const id=_alertMatchId(p.home,p.away),slot=p.slot||1,other=p.selection===p.home?p.away:p.home;
@@ -1246,7 +1246,7 @@ function _collegeAlerts(){
       else out.push({t:'pick',key:`pick:${upset.week}:${slot}`,id,view:'home',txt:`${p.selection} over ${other} (${_alertDay(p.kickoff)}). Model ${_alertPct(p.model_pct)} vs market ${_alertPct(p.market_pct)}.`});
     });
   }
-  const gotw=_alertGlobal('MATCHDAY_BETBETTER_GAME_OF_THE_WEEK');
+  const gotw=_alertGlobal('MATCHDAY_TRDLAB_GAME_OF_THE_WEEK');
   if(gotw?.available&&gotw.game&&Date.parse(gotw.game.kickoff)>Date.now()){const g=gotw.game,rk=t=>t?.rank?` (#${t.rank})`:'';out.push({t:'gotw',key:`gotw:${g.event_id}`,id:_alertMatchId(g.home?.team,g.away?.team),view:'home',txt:`${g.away?.team}${rk(g.away)} at ${g.home?.team}${rk(g.home)}, ${_alertDay(g.kickoff)}.`})}
   const ratings=_alertGlobal('MATCHDAY_CFB_RANKINGS');
   if(ratings?.available&&ratings.published_on&&ratings.rankings?.length)out.push({t:'ratings',key:`ratings:${ratings.published_on}`,view:'groups',txt:`New edition, ${_alertDay(ratings.published_on)}. Top three: ${ratings.rankings.slice(0,3).map(r=>r.name).join(', ')}.`});
@@ -1260,7 +1260,7 @@ function _collegeAlerts(){
     if(newcomers.length)txt+=` New: ${newcomers.slice(0,3).map(r=>r.name).join(', ')}.`;
     out.push({t:'poll',key:`poll:${ap.rankings.map(r=>r.name).join('|')}`,view:'groups',txt});
   }
-  const ballot=_alertGlobal('MATCHDAY_BETBETTER_BALLOT');
+  const ballot=_alertGlobal('MATCHDAY_TRDLAB_BALLOT');
   if(ballot?.available&&ballot.published_on)out.push({t:'ballot',key:`ballot:${ballot.published_on}`,view:'groups',txt:`New ballot, ${_alertDay(ballot.published_on)}.`});
   return out;
 }
@@ -1269,7 +1269,7 @@ function computeSignalAlerts(){
   // Freshness is the newer of the provider fetch and the engine handoff. The
   // college board is driven by the handoff, so a CFBD fetch frozen by its
   // monthly quota is not "stale data" while the handoff keeps arriving.
-  const synced=_alertGlobal('MATCHDAY_BETBETTER_GENERATED_AT'),updatedIso=[DATA.updated,synced].filter(Boolean).sort((a,b)=>Date.parse(b)-Date.parse(a))[0]||'',updated=Date.parse(updatedIso);
+  const synced=_alertGlobal('MATCHDAY_TRDLAB_GENERATED_AT'),updatedIso=[DATA.updated,synced].filter(Boolean).sort((a,b)=>Date.parse(b)-Date.parse(a))[0]||'',updated=Date.parse(updatedIso);
   // Only a genuinely stale site is worth a reader's attention. Keyed by the
   // update it describes, so it is read once rather than once per refresh.
   if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>24*3600000)out.push({t:'data',key:`data:stale:${updatedIso}`,txt:`Game data has not refreshed since ${_alertDay(updatedIso)}. Predictions shown may be out of date.`});
@@ -1281,7 +1281,7 @@ function computeSignalAlerts(){
     // Both alerts describe the engine's read, because that is the only read the
     // site publishes. The gap alert states the two numbers rather than ranking
     // on the gap: a wider gap has predicted worse results, so it is context.
-    const change=probabilityMovement(m),bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const change=probabilityMovement(m),bb=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
     if(_alertEnabled('model')&&change&&bb)out.push({t:'model',key:`model:${m.id}:${bb.pick_name}:${change.delta}`,id:m.id,txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`});
     if(_alertEnabled('market')&&bb){const gap=Number(bb.edge_points);if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',key:`market:${m.id}:${bb.pick_name}`,id:m.id,txt:`Model ${modelPctLabel(bb.model_pct)} and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`});}
   });
@@ -1526,7 +1526,7 @@ function submitPick(matchId,pick,render=true,lock=true){
   // A feed can still say UPCOMING after the clock has passed kickoff. The
   // timestamp is therefore a second, mandatory lock check.
   if(!isCommunityPickOpen(m))return false;
-  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
+  const read=typeof trdlabReadFor==='function'?trdlabReadFor(m):m.trdlab_pick;
   db.picks[matchId]={pick,ts:Date.now(),
     home:m.home.name,away:m.away.name,code:{h:m.home.code,a:m.away.code},
     comp:m._comp||DATA.comp_key||'',
