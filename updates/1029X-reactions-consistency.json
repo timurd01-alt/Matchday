@@ -1,0 +1,10 @@
+{
+  "rank": 537,
+  "date": "Build 1029X",
+  "tag": "Design",
+  "title": "Reactions matches the rest of Matchday",
+  "items": [
+    "Applied the shared tab header, typography and spacing to Reactions.",
+    "Kept the full-width layout and grouped the first-edition message into a single readable block."
+  ]
+}

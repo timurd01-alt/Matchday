@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029X",
+  "tag": "Design",
+  "title": "Reactions matches the rest of Matchday",
+  "items": [
+   "Applied the shared tab header, typography and spacing to Reactions.",
+   "Kept the full-width layout and grouped the first-edition message into a single readable block."
+  ]
+ },
+ {
   "date": "Build 1029W",
   "tag": "Design",
   "title": "Reactions fills the page width",
