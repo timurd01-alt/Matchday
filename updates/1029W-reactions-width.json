@@ -1,0 +1,9 @@
+{
+  "rank": 536,
+  "date": "Build 1029W",
+  "tag": "Design",
+  "title": "Reactions fills the page width",
+  "items": [
+    "Removed the centered width limit so Reactions uses the available screen width with small edge gutters."
+  ]
+}

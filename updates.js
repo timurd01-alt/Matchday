@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029W",
+  "tag": "Design",
+  "title": "Reactions fills the page width",
+  "items": [
+   "Removed the centered width limit so Reactions uses the available screen width with small edge gutters."
+  ]
+ },
+ {
   "date": "Build 1029V",
   "tag": "Update",
   "title": "Find Matchday on X",
