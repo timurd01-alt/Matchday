@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029V",
+  "tag": "Update",
+  "title": "Find Matchday on X",
+  "items": [
+   "Updated the X profile and contact links to @MatchdayTRM."
+  ]
+ },
+ {
   "date": "Build 1029U",
   "tag": "Design",
   "title": "A tighter Reactions page",

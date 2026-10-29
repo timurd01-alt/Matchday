@@ -475,7 +475,7 @@ function modTop25(){
    remains the fallback until the richer data-backed ballot exists. */
 const MATCHDAY_PERSONAL_CFB_BALLOT={
   available:true,source:'x',published_on:'2026-09-20',
-  source_url:'https://x.com/timursports/status/2101747002237210721',
+  source_url:'https://x.com/MatchdayTRM/status/2101747002237210721',
   note:'My first personal ranking after watching three weeks of college football.',
   rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
 };
@@ -894,7 +894,7 @@ ${picks.map(one).join('')}
 </section>`;
 }
 
-/* @timursports's picks, against the model and the market.
+/* @MatchdayTRM's picks, against the model and the market.
    Three honesty constraints ship with this data and all three are obeyed:
    `reportable` false means the sample is too small to state a record as though
    it meant something; `excluded` counts picks recorded after kickoff, which are
