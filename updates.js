@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1029S",
+  "tag": "New",
+  "title": "Latest Reaction on Home",
+  "items": [
+   "Home highlights the newest published Reaction with its title, date, summary and reading link.",
+   "The card stays hidden until the first article is published and updates automatically with new posts."
+  ]
+ },
+ {
   "date": "Build 1029R",
   "tag": "New",
   "title": "Matchday Reactions",

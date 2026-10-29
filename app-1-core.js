@@ -918,6 +918,14 @@ function gamesSummaryHTML(active){
     +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
+function homeLatestReactionHTML(){
+  // The builder orders published entries newest first; drafts never enter this feed.
+  const post=(window.MATCHDAY_REACTIONS||[])[0];
+  if(!post)return '';
+  const date=new Date(post.date+'T12:00:00').toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'});
+  const href='reactions/'+encodeURIComponent(post.slug)+'.html';
+  return `<section class="homeLatestReaction reactionCard" aria-labelledby="homeReactionTitle"><div class="reactionKicker">LATEST REACTION · <time datetime="${esc(post.date)}">${esc(date)}</time></div><h2 id="homeReactionTitle"><a href="${esc(href)}">${esc(post.title)}</a></h2><p>${esc(post.summary)}</p><div class="homeReactionLinks"><a class="reactionRead" href="${esc(href)}" aria-label="Read reaction: ${esc(post.title)}">Read reaction <span aria-hidden="true">↗</span></a><a class="reactionRead" href="?view=reactions">All reactions <span aria-hidden="true">→</span></a></div></section>`;
+}
 function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
@@ -926,6 +934,7 @@ function renderHome(){
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
   host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
     +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +homeLatestReactionHTML()
     +gamesSummaryHTML(active);
 }
 function gamesFeaturedHTML(read){

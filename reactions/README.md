@@ -32,3 +32,6 @@ the public site. Every card opens a permanent /reactions/<slug>.html article URL
 
 No personal reactions have been invented as sample content. Until the first
 publication, visitors see the first-edition message.
+
+Home automatically highlights the newest published reaction with its title, date,
+summary and article link. No homepage card is shown while the published feed is empty.
