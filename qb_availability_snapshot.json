@@ -1,40 +1,40 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T10:00:47.598791+00:00",
+  "generated_at": "2026-10-30T16:43:45.672526+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-10-30T10:00:47.598791+00:00",
+      "checked_at": "2026-10-30T16:43:45.672526+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-30T10:00:47.598791+00:00",
+      "last_success_at": "2026-10-30T16:43:45.672526+00:00",
       "current_reports": 5,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-10-30T10:00:47.598791+00:00",
+      "checked_at": "2026-10-30T16:43:45.672526+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-30T10:00:47.598791+00:00",
+      "last_success_at": "2026-10-30T16:43:45.672526+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-10-30T10:00:47.598791+00:00",
+      "checked_at": "2026-10-30T16:43:45.672526+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-30T10:00:47.598791+00:00",
+      "last_success_at": "2026-10-30T16:43:45.672526+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-10-30T10:00:47.598791+00:00",
+      "checked_at": "2026-10-30T16:43:45.672526+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-30T10:00:47.598791+00:00",
+      "last_success_at": "2026-10-30T16:43:45.672526+00:00",
       "current_reports": 7,
       "error_kind": null,
       "rejected_reports": 0
@@ -4009,40 +4009,37 @@
     },
     {
       "conference": "B12",
-      "content_sha256": "68d8adc4ebc5c59789eee014114d479c4f12cafd3fae82749ea47afc5e31f734",
-      "first_observed_at": "2026-10-30T02:40:36.202096+00:00",
-      "kickoff": "2026-10-31T18:00:00+00:00",
-      "observed_before_kickoff": true,
-      "published_at": "2026-10-30T02:00:00+00:00",
-      "published_local": "2026-10-29 21:00:00 CT",
       "report_id": "3446",
-      "report_type": "Update 1",
       "source_url": "https://big12sports.com/FBReporting",
+      "report_type": "Update 1",
+      "published_at": "2026-10-30T02:00:00+00:00",
+      "kickoff": "2026-10-31T18:00:00+00:00",
+      "published_local": "2026-10-29 21:00:00 CT",
       "teams": [
         {
           "name": "Kansas St.",
           "quarterbacks": [
             {
-              "jersey": "2",
               "name": "Avery Johnson",
+              "jersey": "2",
               "position": "QB",
               "status": "Out"
             },
             {
-              "jersey": "3",
               "name": "Blake Barnett",
+              "jersey": "3",
               "position": "QB",
               "status": "Available"
             },
             {
-              "jersey": "7",
               "name": "Jacob Knuth",
+              "jersey": "7",
               "position": "QB",
               "status": "Doubtful"
             },
             {
-              "jersey": "10",
               "name": "Dillon Duff",
+              "jersey": "10",
               "position": "QB",
               "status": "Available"
             }
@@ -4052,26 +4049,23 @@
           "name": "Colorado",
           "quarterbacks": [
             {
-              "jersey": "10",
-              "name": "Julian Lewis",
-              "position": "QB",
-              "status": "Out"
-            },
-            {
-              "jersey": "14",
               "name": "Kaneal Sweetwyne",
+              "jersey": "14",
               "position": "QB",
               "status": "Available"
             },
             {
-              "jersey": "16",
               "name": "Isaac Wilson",
+              "jersey": "16",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ]
+      ],
+      "content_sha256": "b1ced155e89e0dd89c802d344b74f8628a81776367dc6351c986c05ec7b5a7cf",
+      "first_observed_at": "2026-10-30T16:43:45.672526+00:00",
+      "observed_before_kickoff": true
     },
     {
       "conference": "ACC",
