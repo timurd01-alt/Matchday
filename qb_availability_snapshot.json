@@ -1,40 +1,40 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T15:22:36.207155+00:00",
+  "generated_at": "2026-10-31T20:00:13.762941+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-10-31T15:22:36.207155+00:00",
+      "checked_at": "2026-10-31T20:00:13.762941+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-31T15:22:36.207155+00:00",
+      "last_success_at": "2026-10-31T20:00:13.762941+00:00",
       "current_reports": 5,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-10-31T15:22:36.207155+00:00",
+      "checked_at": "2026-10-31T20:00:13.762941+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-31T15:22:36.207155+00:00",
+      "last_success_at": "2026-10-31T20:00:13.762941+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-10-31T15:22:36.207155+00:00",
+      "checked_at": "2026-10-31T20:00:13.762941+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-31T15:22:36.207155+00:00",
+      "last_success_at": "2026-10-31T20:00:13.762941+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-10-31T15:22:36.207155+00:00",
+      "checked_at": "2026-10-31T20:00:13.762941+00:00",
       "state": "ok",
-      "last_success_at": "2026-10-31T15:22:36.207155+00:00",
+      "last_success_at": "2026-10-31T20:00:13.762941+00:00",
       "current_reports": 7,
       "error_kind": null,
       "rejected_reports": 0
@@ -2911,43 +2911,46 @@
     },
     {
       "conference": "ACC",
-      "report_id": "3418",
-      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:00:00+00:00",
+      "content_sha256": "40cf03725fe7414858ff09aa7831713e5f2471db7a123b8ecf125e73598d0e19",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:00:00+00:00",
       "published_local": "2026-10-31 10:00:00 ET",
+      "report_id": "3418",
+      "report_type": "Game Day",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
       "teams": [
         {
           "name": "SMU",
           "quarterbacks": [
             {
-              "name": "Ty Hawkins",
               "jersey": "1",
+              "name": "Ty Hawkins",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Kevin Jennings",
               "jersey": "7",
+              "name": "Kevin Jennings",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Cole Leinart",
               "jersey": "12",
+              "name": "Cole Leinart",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Charlie Fiser",
               "jersey": "14",
+              "name": "Charlie Fiser",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Mabrey Mettauer",
               "jersey": "28",
+              "name": "Mabrey Mettauer",
               "position": "QB",
               "status": "Available"
             }
@@ -2957,53 +2960,50 @@
           "name": "Syracuse",
           "quarterbacks": [
             {
-              "name": "Steve Angeli",
               "jersey": "9",
+              "name": "Steve Angeli",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Zaid Lott",
               "jersey": "10",
+              "name": "Zaid Lott",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Amari Odom",
               "jersey": "12",
+              "name": "Amari Odom",
               "position": "QB",
               "status": "Out"
             },
             {
-              "name": "Joseph Filardi",
               "jersey": "13",
+              "name": "Joseph Filardi",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Malachi Nelson",
               "jersey": "16",
+              "name": "Malachi Nelson",
               "position": "QB",
               "status": "Out"
             },
             {
-              "name": "Rich Belin",
               "jersey": "17",
+              "name": "Rich Belin",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Danny Lauter",
               "jersey": "21",
+              "name": "Danny Lauter",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "40cf03725fe7414858ff09aa7831713e5f2471db7a123b8ecf125e73598d0e19",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "ACC",
@@ -3277,49 +3277,52 @@
     },
     {
       "conference": "ACC",
-      "report_id": "3426",
-      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:00:00+00:00",
+      "content_sha256": "d7e8ae0b5475f18bcd0d9f1d6f988c5a9fe5d8de352b17d5ef5cb52626435064",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:00:00+00:00",
       "published_local": "2026-10-31 10:00:00 ET",
+      "report_id": "3426",
+      "report_type": "Game Day",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
       "teams": [
         {
           "name": "California",
           "quarterbacks": [
             {
-              "name": "EJ Caminong",
               "jersey": "2",
+              "name": "EJ Caminong",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jaron-Keawe Sagapolutele",
               "jersey": "3",
+              "name": "Jaron-Keawe Sagapolutele",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jackson Brousseau",
               "jersey": "11",
+              "name": "Jackson Brousseau",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dominic Ingrassia",
               "jersey": "14",
+              "name": "Dominic Ingrassia",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Alonzo Esparza",
               "jersey": "17",
+              "name": "Alonzo Esparza",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Nainoa Lopes",
               "jersey": "18",
+              "name": "Nainoa Lopes",
               "position": "QB",
               "status": "Available"
             }
@@ -3329,41 +3332,38 @@
           "name": "NC State",
           "quarterbacks": [
             {
-              "name": "Will Wilson",
               "jersey": "10",
+              "name": "Will Wilson",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "CJ Bailey",
               "jersey": "11",
+              "name": "CJ Bailey",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Tad Hudson",
               "jersey": "12",
+              "name": "Tad Hudson",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Hudson Wilharm",
               "jersey": "15",
+              "name": "Hudson Wilharm",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Parker Thompson",
               "jersey": "16",
+              "name": "Parker Thompson",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "d7e8ae0b5475f18bcd0d9f1d6f988c5a9fe5d8de352b17d5ef5cb52626435064",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "ACC",
@@ -3655,49 +3655,52 @@
     },
     {
       "conference": "ACC",
-      "report_id": "3430",
-      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:00:00+00:00",
+      "content_sha256": "1212f8a89df84eb9041d4848afda610e84ee6f30ad7cd53d52b76d00ecf12992",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:00:00+00:00",
       "published_local": "2026-10-31 10:00:00 ET",
+      "report_id": "3430",
+      "report_type": "Game Day",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
       "teams": [
         {
           "name": "Boston College",
           "quarterbacks": [
             {
-              "name": "Jake Coniglio",
               "jersey": "7",
+              "name": "Jake Coniglio",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Mason McKenzie",
               "jersey": "10",
+              "name": "Mason McKenzie",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Femi Babalola",
               "jersey": "11",
+              "name": "Femi Babalola",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Enzo Arjona",
               "jersey": "13",
+              "name": "Enzo Arjona",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Grayson Wilson",
               "jersey": "15",
+              "name": "Grayson Wilson",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Anthony Coellner",
               "jersey": "18",
+              "name": "Anthony Coellner",
               "position": "QB",
               "status": "Available"
             }
@@ -3707,47 +3710,44 @@
           "name": "Duke",
           "quarterbacks": [
             {
-              "name": "Walker Eget",
               "jersey": "2",
+              "name": "Walker Eget",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dan Mahan",
               "jersey": "10",
+              "name": "Dan Mahan",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Ari Patu",
               "jersey": "11",
+              "name": "Ari Patu",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Blaine Hipa",
               "jersey": "12",
+              "name": "Blaine Hipa",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Terry Walker III",
               "jersey": "13",
+              "name": "Terry Walker III",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Lawrence Gardner",
               "jersey": "16",
+              "name": "Lawrence Gardner",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "1212f8a89df84eb9041d4848afda610e84ee6f30ad7cd53d52b76d00ecf12992",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "B10",
@@ -4003,43 +4003,46 @@
     },
     {
       "conference": "B10",
-      "report_id": "3422",
-      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:00:00+00:00",
+      "content_sha256": "a7df30d9d8792ef0de06bd07bdb5e074f3024ede8b6df080cd3e6ae040d430c6",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:00:00+00:00",
       "published_local": "2026-10-31 9:00:00 CT",
+      "report_id": "3422",
+      "report_type": "Game Day",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
       "teams": [
         {
           "name": "Wisconsin",
           "quarterbacks": [
             {
-              "name": "Colton Joseph",
               "jersey": "1",
+              "name": "Colton Joseph",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Carter Smith",
               "jersey": "5",
+              "name": "Carter Smith",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Deuce Adams",
               "jersey": "8",
+              "name": "Deuce Adams",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Ryan Hopkins",
               "jersey": "10",
+              "name": "Ryan Hopkins",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Danny O'Neil",
               "jersey": "18",
+              "name": "Danny O'Neil",
               "position": "QB",
               "status": "Available"
             }
@@ -4049,41 +4052,38 @@
           "name": "Iowa",
           "quarterbacks": [
             {
-              "name": "Jimmy Sullivan",
               "jersey": "3",
+              "name": "Jimmy Sullivan",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Tradon Bessinger",
               "jersey": "4",
+              "name": "Tradon Bessinger",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Hank Brown",
               "jersey": "9",
+              "name": "Hank Brown",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jeremy Hecklinski",
               "jersey": "10",
+              "name": "Jeremy Hecklinski",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Ryan Fitzgerald",
               "jersey": "16",
+              "name": "Ryan Fitzgerald",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "a7df30d9d8792ef0de06bd07bdb5e074f3024ede8b6df080cd3e6ae040d430c6",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "B10",
@@ -4321,37 +4321,40 @@
     },
     {
       "conference": "B10",
-      "report_id": "3434",
-      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:00:00+00:00",
+      "content_sha256": "7362ea386461f07c3c90d8d695d353011c01530ac2ac7cde7d8fb350f37aa1bc",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:00:00+00:00",
       "published_local": "2026-10-31 9:00:00 CT",
+      "report_id": "3434",
+      "report_type": "Game Day",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
       "teams": [
         {
           "name": "Illinois",
           "quarterbacks": [
             {
-              "name": "Carson Boyd",
               "jersey": "2",
+              "name": "Carson Boyd",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Katin Houser",
               "jersey": "4",
+              "name": "Katin Houser",
               "position": "QB",
               "status": "Game Time Decision"
             },
             {
-              "name": "Michael Clayton II",
               "jersey": "7",
+              "name": "Michael Clayton II",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dane Eisenmenger",
               "jersey": "12",
+              "name": "Dane Eisenmenger",
               "position": "QB",
               "status": "Available"
             }
@@ -4361,41 +4364,38 @@
           "name": "Maryland",
           "quarterbacks": [
             {
-              "name": "Cardell Williams",
               "jersey": "6",
+              "name": "Cardell Williams",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Malik Washington",
               "jersey": "7",
+              "name": "Malik Washington",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Nathan Bernhard",
               "jersey": "12",
+              "name": "Nathan Bernhard",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jack Capaldi",
               "jersey": "22",
+              "name": "Jack Capaldi",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Max Lawrence",
               "jersey": "23",
+              "name": "Max Lawrence",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "7362ea386461f07c3c90d8d695d353011c01530ac2ac7cde7d8fb350f37aa1bc",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "B12",
@@ -4669,43 +4669,46 @@
     },
     {
       "conference": "B12",
-      "report_id": "3414",
-      "source_url": "https://big12sports.com/FBReporting",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:30:00+00:00",
+      "content_sha256": "f4a0afdfec02ce04a19ac28082ff9a7708e2a41dd0d4008f4a2a0117d50bc9e0",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:00:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:30:00+00:00",
       "published_local": "2026-10-31 9:30:00 CT",
+      "report_id": "3414",
+      "report_type": "Game Day",
+      "source_url": "https://big12sports.com/FBReporting",
       "teams": [
         {
           "name": "Arizona",
           "quarterbacks": [
             {
-              "name": "Noah Fifita",
               "jersey": "1",
+              "name": "Noah Fifita",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Sawyer Anderson",
               "jersey": "7",
+              "name": "Sawyer Anderson",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Oscar Rios",
               "jersey": "9",
+              "name": "Oscar Rios",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Mason Bray",
               "jersey": "15",
+              "name": "Mason Bray",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Luke Haugo",
               "jersey": "16",
+              "name": "Luke Haugo",
               "position": "QB",
               "status": "Available"
             }
@@ -4715,47 +4718,44 @@
           "name": "Texas Tech",
           "quarterbacks": [
             {
-              "name": "Thomas Castellanos",
               "jersey": "4",
+              "name": "Thomas Castellanos",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Lloyd Jones III",
               "jersey": "10",
+              "name": "Lloyd Jones III",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Stephen Cannon",
               "jersey": "12",
+              "name": "Stephen Cannon",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Will Hammond",
               "jersey": "15",
+              "name": "Will Hammond",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Holden Phillips",
               "jersey": "16",
+              "name": "Holden Phillips",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Kirk Francis",
               "jersey": "18",
+              "name": "Kirk Francis",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "f4a0afdfec02ce04a19ac28082ff9a7708e2a41dd0d4008f4a2a0117d50bc9e0",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "B10",
@@ -5011,43 +5011,46 @@
     },
     {
       "conference": "B10",
-      "report_id": "3440",
-      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T14:30:00+00:00",
+      "content_sha256": "e3a8e8d5ad4b800298c00f87d84ce0e7dae1549b184ffbf84221470a0495f628",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:30:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T14:30:00+00:00",
       "published_local": "2026-10-31 9:30:00 CT",
+      "report_id": "3440",
+      "report_type": "Game Day",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
       "teams": [
         {
           "name": "Michigan",
           "quarterbacks": [
             {
-              "name": "Tommy Carr",
               "jersey": "14",
+              "name": "Tommy Carr",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Chase Herbstreit",
               "jersey": "15",
+              "name": "Chase Herbstreit",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Brayden Fowler-Nicolosi",
               "jersey": "16",
+              "name": "Brayden Fowler-Nicolosi",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Brady Smigiel",
               "jersey": "17",
+              "name": "Brady Smigiel",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Bryce Underwood",
               "jersey": "19",
+              "name": "Bryce Underwood",
               "position": "QB",
               "status": "Available"
             }
@@ -5057,41 +5060,38 @@
           "name": "Rutgers",
           "quarterbacks": [
             {
-              "name": "Sean Ashenfelder",
               "jersey": "6",
+              "name": "Sean Ashenfelder",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "AJ Surace",
               "jersey": "10",
+              "name": "AJ Surace",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dylan Lonergan",
               "jersey": "12",
+              "name": "Dylan Lonergan",
               "position": "QB",
               "status": "Out"
             },
             {
-              "name": "Rocco Rainone",
               "jersey": "15",
+              "name": "Rocco Rainone",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Xavier Stearn",
               "jersey": "17",
+              "name": "Xavier Stearn",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "e3a8e8d5ad4b800298c00f87d84ce0e7dae1549b184ffbf84221470a0495f628",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "SEC",
@@ -5347,37 +5347,40 @@
     },
     {
       "conference": "SEC",
-      "report_id": "2928",
-      "source_url": "https://www.secsports.com/fbreports",
-      "report_type": "Game Day",
-      "published_at": "2026-10-31T15:15:00+00:00",
+      "content_sha256": "4998bec92c1c52861c1d7aff9081bb4bd1486c4cbba0a396c612c0999e7543a6",
+      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
       "kickoff": "2026-10-31T16:45:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-10-31T15:15:00+00:00",
       "published_local": "2026-10-31 10:15:00 CT",
+      "report_id": "2928",
+      "report_type": "Game Day",
+      "source_url": "https://www.secsports.com/fbreports",
       "teams": [
         {
           "name": "Auburn",
           "quarterbacks": [
             {
-              "name": "Locklan Hewlett",
               "jersey": "3",
+              "name": "Locklan Hewlett",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Tristan Ti'a",
               "jersey": "10",
+              "name": "Tristan Ti'a",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Byrum Brown",
               "jersey": "17",
+              "name": "Byrum Brown",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Rhys Brush",
               "jersey": "19",
+              "name": "Rhys Brush",
               "position": "QB",
               "status": "Available"
             }
@@ -5387,47 +5390,44 @@
           "name": "Ole Miss",
           "quarterbacks": [
             {
-              "name": "Deuce Knight",
               "jersey": "2",
+              "name": "Deuce Knight",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Trinidad Chambliss",
               "jersey": "6",
+              "name": "Trinidad Chambliss",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "AJ Maddox",
               "jersey": "8",
+              "name": "AJ Maddox",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jack Patterson",
               "jersey": "13",
+              "name": "Jack Patterson",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Walker Howard",
               "jersey": "14",
+              "name": "Walker Howard",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Rees Wise",
               "jersey": "19",
+              "name": "Rees Wise",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "4998bec92c1c52861c1d7aff9081bb4bd1486c4cbba0a396c612c0999e7543a6",
-      "first_observed_at": "2026-10-31T15:22:36.207155+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "B12",
@@ -5614,6 +5614,66 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "B12",
+      "report_id": "3448",
+      "source_url": "https://big12sports.com/FBReporting",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T16:30:00+00:00",
+      "kickoff": "2026-10-31T18:00:00+00:00",
+      "published_local": "2026-10-31 11:30:00 CT",
+      "teams": [
+        {
+          "name": "Kansas St.",
+          "quarterbacks": [
+            {
+              "name": "Avery Johnson",
+              "jersey": "2",
+              "position": "QB",
+              "status": "Out"
+            },
+            {
+              "name": "Blake Barnett",
+              "jersey": "3",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jacob Knuth",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Out"
+            },
+            {
+              "name": "Dillon Duff",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Colorado",
+          "quarterbacks": [
+            {
+              "name": "Kaneal Sweetwyne",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Isaac Wilson",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "2ee498a9688f2925cc8c91df14929f01c22fe149afeb7c29a43ebad2da54826d",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
     },
     {
       "conference": "ACC",
@@ -5866,6 +5926,90 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "ACC",
+      "report_id": "3453",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T17:15:00+00:00",
+      "kickoff": "2026-10-31T19:15:00+00:00",
+      "published_local": "2026-10-31 13:15:00 ET",
+      "teams": [
+        {
+          "name": "Stanford",
+          "quarterbacks": [
+            {
+              "name": "Davis Warren",
+              "jersey": "8",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Michael Mitchell Jr.",
+              "jersey": "9",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Dylan Rizk",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Charlie Mirer",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Devin Mignery",
+              "jersey": "27",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Louisville",
+          "quarterbacks": [
+            {
+              "name": "Lincoln Kienholz",
+              "jersey": "3",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Briggs Cherry",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Davin Wydner",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ryan Zimmerman",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Mason Fields",
+              "jersey": "19",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "6e5d199d2c3479130fa5d0cd6edee1a59a16b9b619d05103ba0ee723282cd10d",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
     },
     {
       "conference": "B10",
@@ -6139,6 +6283,96 @@
     },
     {
       "conference": "B10",
+      "report_id": "3457",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T17:30:00+00:00",
+      "kickoff": "2026-10-31T19:30:00+00:00",
+      "published_local": "2026-10-31 12:30:00 CT",
+      "teams": [
+        {
+          "name": "Minnesota",
+          "quarterbacks": [
+            {
+              "name": "Drake Lindsey",
+              "jersey": "5",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Max Shikenjanski",
+              "jersey": "6",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Michael Merdinger",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Out"
+            },
+            {
+              "name": "Dylan Wittke",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Owen Lansu",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Brady Palmer",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Indiana",
+          "quarterbacks": [
+            {
+              "name": "Grant Wilson",
+              "jersey": "2",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Josh Hoover",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jacob Bell",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Maverick Geske",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Tyler Cherry",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "7deea6f5de3c7936361fc3ba95518f3c545e0d14145d51e8f924b6175b2d3b96",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
+    },
+    {
+      "conference": "B10",
       "content_sha256": "d42a02f89f5abaaf51d84a638adc1b83eff7665aa35e53dc1e0ea7ec52e07777",
       "first_observed_at": "2026-10-29T00:01:57.444522+00:00",
       "kickoff": "2026-10-31T19:30:00+00:00",
@@ -6408,6 +6642,96 @@
       ]
     },
     {
+      "conference": "B10",
+      "report_id": "3465",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T17:30:00+00:00",
+      "kickoff": "2026-10-31T19:30:00+00:00",
+      "published_local": "2026-10-31 12:30:00 CT",
+      "teams": [
+        {
+          "name": "Northwestern",
+          "quarterbacks": [
+            {
+              "name": "Aidan Chiles",
+              "jersey": "0",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ryan Boe",
+              "jersey": "2",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Nicco Marchiol",
+              "jersey": "4",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Johnny O’Brien",
+              "jersey": "9",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Aidan Gray",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Gavin Frakes",
+              "jersey": "13",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Sean Winton",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Oregon",
+          "quarterbacks": [
+            {
+              "name": "Dante Moore",
+              "jersey": "5",
+              "position": "QB",
+              "status": "Out"
+            },
+            {
+              "name": "Dylan Raiola",
+              "jersey": "8",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Akili Smith Jr.",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Brock Thomas",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "e23b82a3650aa5b21422b34248b28d51102e03e5b979d64e4951ce556f440e41",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
+    },
+    {
       "conference": "B12",
       "content_sha256": "9e0a063e10730cb400ca0ac149c535a14ad4c13639ee1fce3e6005d3e122eb1b",
       "first_observed_at": "2026-10-29T05:46:43.389964+00:00",
@@ -6640,6 +6964,84 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "B12",
+      "report_id": "3461",
+      "source_url": "https://big12sports.com/FBReporting",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:00:00+00:00",
+      "kickoff": "2026-10-31T19:30:00+00:00",
+      "published_local": "2026-10-31 13:00:00 CT",
+      "teams": [
+        {
+          "name": "Arizona St.",
+          "quarterbacks": [
+            {
+              "name": "Jake Fette",
+              "jersey": "2",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Cutter Boley",
+              "jersey": "8",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Mikey Keene",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Game Time Decision"
+            },
+            {
+              "name": "Cameron Dyer",
+              "jersey": "13",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "BYU",
+          "quarterbacks": [
+            {
+              "name": "Treyson Bourguet",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "John Sanders",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Owen Geilman",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Enoch Watson",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Bear Bachmeier",
+              "jersey": "47",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "7981fd9b911a98b2fa1db212fe48de0f0e43313833740edaa3487a81780e596a",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
     },
     {
       "conference": "B12",
@@ -6912,6 +7314,96 @@
       ]
     },
     {
+      "conference": "B12",
+      "report_id": "3469",
+      "source_url": "https://big12sports.com/FBReporting",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:00:00+00:00",
+      "kickoff": "2026-10-31T19:30:00+00:00",
+      "published_local": "2026-10-31 13:00:00 CT",
+      "teams": [
+        {
+          "name": "Kansas",
+          "quarterbacks": [
+            {
+              "name": "Isaiah Marshall",
+              "jersey": "8",
+              "position": "QB",
+              "status": "Game Time Decision"
+            },
+            {
+              "name": "Chase Jenkins",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Cole Ballard",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jaylen Mason",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Braylen Rooney",
+              "jersey": "18",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Connor Hanika",
+              "jersey": "20",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "TCU",
+          "quarterbacks": [
+            {
+              "name": "Jaden Craig",
+              "jersey": "1",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jayden Maples",
+              "jersey": "6",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jack Daulton",
+              "jersey": "9",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Adam Schobel",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "David Potter",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "a9239704c572ba97fbb0ec4a9a5dc5c4fa6da023448e8cacb02bc57c637b77b4",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
+    },
+    {
       "conference": "SEC",
       "content_sha256": "0281207e1908b095223d02fa29485fa7c44b71e4b159156f310e8ba7700d2f83",
       "first_observed_at": "2026-10-29T05:46:43.389964+00:00",
@@ -7144,6 +7636,84 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "SEC",
+      "report_id": "3444",
+      "source_url": "https://www.secsports.com/fbreports",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:00:00+00:00",
+      "kickoff": "2026-10-31T19:30:00+00:00",
+      "published_local": "2026-10-31 13:00:00 CT",
+      "teams": [
+        {
+          "name": "Florida",
+          "quarterbacks": [
+            {
+              "name": "Tramell Jones Jr.",
+              "jersey": "9",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Will Griffin",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Aaron Philo",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Georgia",
+          "quarterbacks": [
+            {
+              "name": "Ryan Puglisi",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Gunner Stockton",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ryan Montgomery",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Colter Ginn",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Bryson Beaver",
+              "jersey": "18",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Hezekiah Millender",
+              "jersey": "19",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "f16b97aa830c2c65bda65636e0a8815f26ec79263c7f02d8165ee1447d89dfad",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
     },
     {
       "conference": "ACC",
@@ -7396,6 +7966,90 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "ACC",
+      "report_id": "3477",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T17:45:00+00:00",
+      "kickoff": "2026-10-31T19:45:00+00:00",
+      "published_local": "2026-10-31 13:45:00 ET",
+      "teams": [
+        {
+          "name": "Virginia",
+          "quarterbacks": [
+            {
+              "name": "Cole Geer",
+              "jersey": "6",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Beau Pribula",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Eli Holstein",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Boone Lourd",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ely Hamrick",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Wake Forest",
+          "quarterbacks": [
+            {
+              "name": "Gio Lopez",
+              "jersey": "3",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Steele Pizzella",
+              "jersey": "6",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Billy Johnson",
+              "jersey": "13",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Gannon Jones",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Grant Lawless",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "a87510be81b99c158d0209f66ff15f54e138b9d723bc089e015aad6a09ca9432",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
     },
     {
       "conference": "B12",
@@ -7668,6 +8322,96 @@
       ]
     },
     {
+      "conference": "B12",
+      "report_id": "3473",
+      "source_url": "https://big12sports.com/FBReporting",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:15:00+00:00",
+      "kickoff": "2026-10-31T19:45:00+00:00",
+      "published_local": "2026-10-31 13:15:00 CT",
+      "teams": [
+        {
+          "name": "Utah",
+          "quarterbacks": [
+            {
+              "name": "Devon Dampier",
+              "jersey": "4",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Kane Archer",
+              "jersey": "9",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Michael Johnson",
+              "jersey": "13",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Brandon Rose",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Byrd Ficklin",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Cincinnati",
+          "quarterbacks": [
+            {
+              "name": "JC French IV",
+              "jersey": "4",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Samaj Jones",
+              "jersey": "5",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Liam O'Brien",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Brooks Goodman",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Will Kocher",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "JJ Miller",
+              "jersey": "22",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "ea342b740af1653bd7335b2e0c70cf87a2b36b54840e6f50299df9277716156b",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": false
+    },
+    {
       "conference": "B10",
       "content_sha256": "1f42d86156b65cbdacefdaaf90198bbbd2d5e309eb21fc0fde86314bb62ab499",
       "first_observed_at": "2026-10-29T00:01:57.444522+00:00",
@@ -7920,6 +8664,90 @@
       ]
     },
     {
+      "conference": "B10",
+      "report_id": "3485",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:15:00+00:00",
+      "kickoff": "2026-10-31T20:15:00+00:00",
+      "published_local": "2026-10-31 13:15:00 CT",
+      "teams": [
+        {
+          "name": "Purdue",
+          "quarterbacks": [
+            {
+              "name": "Evans Chuba",
+              "jersey": "1",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Garyt Odom",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Corin Berry",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ryan Browne",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Bennett Meredith",
+              "jersey": "18",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Penn St.",
+          "quarterbacks": [
+            {
+              "name": "Rocco Becht",
+              "jersey": "3",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Alex Manske",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Connor Barry",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Kase Evans",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Jack Lambert",
+              "jersey": "19",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "6566fe3a3eb6747ebbf232ec3cdd28e3156289621bc618605c1087af26ebb54f",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": true
+    },
+    {
       "conference": "SEC",
       "content_sha256": "e82dbc91d40eeb47fefbd13411f0d48fd543e80010ca93458a7fbbee34d14212",
       "first_observed_at": "2026-10-29T05:46:43.389964+00:00",
@@ -8116,6 +8944,72 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "SEC",
+      "report_id": "3481",
+      "source_url": "https://www.secsports.com/fbreports",
+      "report_type": "Game Day",
+      "published_at": "2026-10-31T18:45:00+00:00",
+      "kickoff": "2026-10-31T20:15:00+00:00",
+      "published_local": "2026-10-31 13:45:00 CT",
+      "teams": [
+        {
+          "name": "South Carolina",
+          "quarterbacks": [
+            {
+              "name": "Landon Duckworth",
+              "jersey": "11",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Cutter Woods",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Lucian Anderson III",
+              "jersey": "15",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "LaNorris Sellers",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Oklahoma",
+          "quarterbacks": [
+            {
+              "name": "Bowe Bentley",
+              "jersey": "8",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "John Mateer",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Whitt Newbauer",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "4d932f8343150c3f45dab750beeb40dc1c1f8fe7cb332588df47b2cb993cbf67",
+      "first_observed_at": "2026-10-31T20:00:13.762941+00:00",
+      "observed_before_kickoff": true
     },
     {
       "conference": "ACC",
