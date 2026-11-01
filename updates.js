@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1101B",
+  "tag": "Rankings",
+  "title": "November 1 personal Top 25",
+  "items": [
+   "Published the owner’s updated Top 25, led by Utah, Miami and Georgia."
+  ]
+ },
+ {
   "date": "Build 1101A",
   "tag": "Update",
   "title": "Reactions is paused",
