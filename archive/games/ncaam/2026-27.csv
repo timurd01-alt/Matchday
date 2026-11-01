@@ -1,0 +1,3 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+ncaam-377909,NCAAM,2026-27,2026-11-01T14:30:00Z,Regular,Palazzo dello Sport,Villanova,V,Notre Dame,ND,72,74,FINISHED,cbbd,2026-11-01T18:54:45+00:00
+ncaam-401920982,NCAAM,2026-27,2026-11-01T14:30Z,,,Villanova,,Notre Dame,,72,74,FINISHED,ncaam,2026-11-01T18:54:50+00:00
