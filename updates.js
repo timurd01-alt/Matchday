@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1101A",
+  "tag": "Update",
+  "title": "Reactions is paused",
+  "items": [
+   "Temporarily hid Reactions from navigation and the Home page."
+  ]
+ },
+ {
   "date": "Build 1029X",
   "tag": "Design",
   "title": "Reactions matches the rest of Matchday",

@@ -52,7 +52,7 @@ class HomepageReactionTests(unittest.TestCase):
         helper = core.split('function homeLatestReactionHTML(){', 1)[1].split('function renderHome(){', 1)[0]
         script = r'''
 const assert=require('node:assert/strict');
-const window={MATCHDAY_REACTIONS:[]};
+const window={MATCHDAY_REACTIONS:[],MATCHDAY_REACTIONS_ENABLED:true};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 ''' + 'function homeLatestReactionHTML(){' + helper + r'''
 assert.equal(homeLatestReactionHTML(),'');
@@ -64,6 +64,8 @@ assert.ok(card.includes('datetime="2026-11-09"'));
 assert.ok(card.includes('href="reactions/latest-week.html"'));
 assert.ok(card.includes('href="?view=reactions"'));
 assert.ok(!card.includes('Older article'));
+window.MATCHDAY_REACTIONS_ENABLED=false;
+assert.equal(homeLatestReactionHTML(),'');
 window.MATCHDAY_REACTIONS=[];
 assert.equal(homeLatestReactionHTML(),'');
 '''

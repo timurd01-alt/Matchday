@@ -1,3 +1,5 @@
+// Temporarily paused; keep the editorial code and drafts ready to restore.
+window.MATCHDAY_REACTIONS_ENABLED=false;
 
 const $=s=>document.querySelector(s);let DATA={matches:[],news:[],standings:[]},BYID={},VIEW='matches',LAST_OK=false,LAST_ERROR='',LOAD_TIMER=null,NEWS_FILTER='all';
 const CAROUSELS={};
@@ -119,14 +121,14 @@ const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
   // profile exposes the same destinations. The established route keys remain
   // in place so saved preferences and bookmarks continue to work.
-  college:           ['home','reactions','matches','groups','results','news','learn','score','bracket','community'],
-  college_basketball:['home','reactions','matches','groups','results','news','learn','score','bracket','community']
+  college:           ['home','reactions','matches','groups','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED),
+  college_basketball:['home','reactions','matches','groups','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED)
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['home','reactions','matches','results','groups','bracket','score','news','learn','community']);
+const VIEWS=new Set(['home','reactions','matches','results','groups','bracket','score','news','learn','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED));
 const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
 function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'home';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
@@ -919,6 +921,7 @@ function gamesSummaryHTML(active){
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function homeLatestReactionHTML(){
+  if(!window.MATCHDAY_REACTIONS_ENABLED)return "";
   // The builder orders published entries newest first; drafts never enter this feed.
   const post=(window.MATCHDAY_REACTIONS||[])[0];
   if(!post)return '';
