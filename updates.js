@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1101L",
+  "tag": "Update",
+  "title": "Predictions for fun",
+  "items": [
+   "Clarified that Matchday predicts college games for fun and that predictions, model analysis and personal Reactions are not gambling or betting advice."
+  ]
+ },
+ {
   "date": "Build 1101B",
   "tag": "Rankings",
   "title": "November 1 personal Top 25",
