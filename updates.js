@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1102F",
+  "tag": "Update",
+  "title": "Full-season team form",
+  "items": [
+   "Expanded team profiles show overall form across all available completed games this season, ordered oldest to newest.",
+   "Form badges wrap on smaller screens, with the number of available results shown."
+  ]
+ },
+ {
   "date": "Build 1101C",
   "tag": "New",
   "title": "Tuesday CFP rankings updates",

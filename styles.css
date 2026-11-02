@@ -1632,7 +1632,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .tpStat b{font-family:var(--display);font-size:var(--fs-2xl);letter-spacing:.02em}
 .tpFormRow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .tpFormLbl{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);min-width:88px}
-.tpFormDots{display:flex;gap:4px}
+.tpFormDots{display:flex;flex-wrap:wrap;gap:4px;min-width:0}.tpFormLbl{flex-shrink:0}.tpFormNote{margin:0 0 12px;font:var(--fs-xs) var(--mono)}
 .tpDot{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);color:var(--muted);background:var(--bg2);border:1px solid var(--line)}
 .tpDot.W{color:#07110b;background:var(--win);border-color:var(--win)}
 .tpDot.L{color:#07110b;background:var(--loss);border-color:var(--loss)}
