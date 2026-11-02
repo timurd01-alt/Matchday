@@ -1,3 +1,14 @@
 game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
 ncaam-377909,NCAAM,2026-27,2026-11-01T14:30:00Z,Regular,Palazzo dello Sport,Villanova,V,Notre Dame,ND,72,74,FINISHED,cbbd,2026-11-01T18:54:45+00:00
 ncaam-401920982,NCAAM,2026-27,2026-11-01T14:30Z,,,Villanova,,Notre Dame,,72,74,FINISHED,ncaam,2026-11-01T18:54:50+00:00
+ncaam-377910,NCAAM,2026-27,2026-11-02T04:59:00Z,Regular,Rock Hill Sports & Event Center,High Point,HP,Liberty,L,72,57,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374556,NCAAM,2026-27,2026-11-02T08:00:00Z,Regular,Rock Hill Sports & Event Center,Northern Illinois,NI,Grambling,G,87,89,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374557,NCAAM,2026-27,2026-11-02T11:00:00Z,Regular,Rock Hill Sports & Event Center,Merrimack,M,App State,APP,49,63,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374558,NCAAM,2026-27,2026-11-02T14:00:00Z,Regular,Rock Hill Sports & Event Center,Queens University,QU,Winthrop,W,103,98,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374559,NCAAM,2026-27,2026-11-02T16:00:00Z,Regular,James T. Morris Arena,IU Indianapolis,II,Miami (OH)-Middletown,M(M,113,76,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-377921,NCAAM,2026-27,2026-11-02T16:00:00Z,Regular,Hawkins Arena,Mercer,M,Reinhardt,R,90,53,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-372663,NCAAM,2026-27,2026-11-02T16:30:00Z,Regular,Sanford Pentagon,Tennessee State,TS,Murray State,MS,64,94,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-377916,NCAAM,2026-27,2026-11-02T16:30:00Z,Regular,Murphy Center,Middle Tennessee,MT,Fisk,F,117,73,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-377922,NCAAM,2026-27,2026-11-02T16:30:00Z,Regular,David S. Mack Sports and Exhibition Complex,Hofstra,H,Saint Joseph's Long Island,SJLI,97,51,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374496,NCAAM,2026-27,2026-11-02T17:00:00Z,Regular,Smith-Hammond-Middleton Memorial Center,South Carolina State,SCS,Morris College,MC,94,55,FINISHED,cbbd,2026-11-02T20:47:41+00:00
+ncaam-374560,NCAAM,2026-27,2026-11-02T17:00:00Z,Regular,David R. Stopher Gymnasium,Nicholls,N,North American,NA,110,56,FINISHED,cbbd,2026-11-02T20:47:41+00:00
