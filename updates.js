@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1101Q",
+  "tag": "Fix",
+  "title": "Page navigation at narrow widths",
+  "items": [
+   "Keep navigation headings and update dates on their own rows in Q&A, Legal and Roadmap at half-window and phone widths."
+  ]
+ },
+ {
   "date": "Build 1101L",
   "tag": "Update",
   "title": "Predictions for fun",

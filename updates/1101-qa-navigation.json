@@ -1,0 +1,9 @@
+{
+  "rank": 541,
+  "date": "Build 1101Q",
+  "tag": "Fix",
+  "title": "Page navigation at narrow widths",
+  "items": [
+    "Keep navigation headings and update dates on their own rows in Q&A, Legal and Roadmap at half-window and phone widths."
+  ]
+}
