@@ -27,6 +27,7 @@ import re
 import sys
 
 import trdlab_handoff
+import cfp_poll
 import ap_poll
 import roster_talent
 
@@ -275,8 +276,10 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     rating_rows = _dedupe(_rows(rating_entry), rating_entry)
     by_name = {_team_key(r.get("name")): r for r in rating_rows}
     raw_by_name = {_team_key(r.get("team_name")): r for r in raw_rating_rows}
+    committee = cfp_poll.refresh()
+    selection_rows = committee.get("rankings") or poll_rows
     bracket_rows = []
-    for item in poll_rows:
+    for item in selection_rows:
         rated = raw_by_name.get(_team_key(item.get("name")))
         if not rated:
             continue
@@ -310,6 +313,10 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
         })
     blocks.append("  const MATCHDAY_CFB_AP_POLL="
                   + json.dumps(poll_payload, ensure_ascii=False) + ";")
+    committee_payload = {**committee, "rankings": [
+        {**r, "pos": r["rank"], "code": ""} for r in committee.get("rankings", [])]}
+    blocks.append("  const MATCHDAY_CFB_CFP_POLL=" + json.dumps(committee_payload, ensure_ascii=False) + ";")
+    blocks.append("  const MATCHDAY_CFB_BRACKET_SOURCE=" + json.dumps("CFP committee rankings" if committee else "AP Poll") + ";")
     blocks.append("  const MATCHDAY_CFB_AP_BRACKET="
                   + json.dumps(bracket, ensure_ascii=False) + ";")
 

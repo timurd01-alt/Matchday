@@ -6,6 +6,9 @@ on:
     # scores. Hourly checks are enough to lock near-kickoff picks and collect
     # final results without spending scarce provider quota on scoreboard duty.
     - cron: '17 * * * *'
+    # Tuesday evenings, 7:47 / 8:47 / 9:47 PM Central standard time.
+    # Hourly refresh continues afterward if the show or feed is delayed.
+    - cron: '47 1-3 * 11,12 3'
   workflow_dispatch:
     inputs:
       quota_bootstrap:
@@ -275,6 +278,9 @@ jobs:
           fi
           # The AP poll's week-to-week movement is measured against the last
           # stored poll, so the stored poll has to move when the AP's does.
+          if [ -f cfp_poll_snapshot.json ]; then
+            git add -- cfp_poll_snapshot.json
+          fi
           if [ -f ap_poll_snapshot.json ]; then
             git add -- ap_poll_snapshot.json
           fi

@@ -75,7 +75,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("MATCHDAY_CFB_AP_BRACKET", builder)
         self.assertIn("table_type:'official_poll'", panels)
         self.assertIn("?MATCHDAY_CFB_AP_BRACKET", panels)
-        self.assertIn("Projected from the current AP Poll", features)
+        self.assertIn("MATCHDAY_CFB_BRACKET_SOURCE", features)
+        self.assertIn("committee.get(\"rankings\") or poll_rows", builder)
+        self.assertIn("MATCHDAY_CFB_CFP_POLL", panels)
         self.assertIn("!['PROJECTED','TBD'].includes", features)
 
     def test_ap_poll_table_shows_the_poll_only(self):

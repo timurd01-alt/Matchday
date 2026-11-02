@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-01 (CFP committee rankings use the existing ESPN public
+rankings endpoint under the owner-approved common-knowledge facts rule. Retain
+only team names, published ranks, movement, records, season and publication
+date. No raw payload, analysis, images or statistics are retained. Attribute
+the committee; distinguish the bracket projection from official matchups.)
+
 Reviewed: 2026-10-25 (official SEC, Big Ten, ACC and Big 12 football
 availability facts from their publicly embedded HD Intelligence viewer,
 `/api/get-publish-public`, with no authentication or staff endpoints. The
@@ -722,7 +728,7 @@ record the review date here before each public release.
 - **2026-09-18 (owner amendment):** Permitted a narrowly scoped AP Top 25
   refresh from ESPN's public college-football scoreboard response. Matchday
   retains only each team's displayed name and `curatedRank.current`, requests
-  a bounded seven-day game window, and accepts a refresh only when ranks 1–25
+  a bounded seven-day game window, and accepts a refresh only when ranks 1â€“25
   are complete and unambiguous. Raw responses, scores, prices, commentary, and
   other fields are not stored or republished through this path. The UI credits
   the result as the AP Top 25 sourced from ESPN; this permission does not

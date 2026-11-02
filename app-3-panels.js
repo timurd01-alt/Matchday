@@ -554,6 +554,8 @@ function applyCurrentCfbSnapshot(payload){
       source:MATCHDAY_CFB_AP_POLL.source||'',updated:MATCHDAY_CFB_AP_POLL.fetched_on||'',teams:ap};
     payload.standings=[apTable,...(payload.standings||[]).filter(g=>!isPollTable(g))];
   }
+  const cfp=typeof MATCHDAY_CFB_CFP_POLL!=='undefined'?MATCHDAY_CFB_CFP_POLL:null;
+  if(cfp?.rankings?.length===25)payload.standings=[{group:cfp.poll_name,table_type:'official_poll',note:'Released '+cfp.published_on+' · updated Tuesdays',source:cfp.source,updated:cfp.published_on,teams:cfp.rankings},...(payload.standings||[])];
   payload.bracket=(typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&MATCHDAY_CFB_AP_BRACKET.length)
     ?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[]);
   payload.bracketology=null;
@@ -1473,7 +1475,7 @@ renderGroups=function(){
   // When the poll was last released, so a Sunday-morning visitor can tell
   // last week's poll from this week's (the AP releases Sunday afternoon).
   const _apPollDate=()=>{const d=(typeof MATCHDAY_CFB_AP_POLL!=='undefined'&&MATCHDAY_CFB_AP_POLL.fetched_on)||'';const t=d&&new Date(d+'T12:00:00');return t&&!isNaN(t)?` Released ${t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}; updated Sundays.`:''};
-  const apTable=host.querySelector('.tablewrap.officialPoll:not(.ballotSection)');
+  const apTable=[...host.querySelectorAll('.tablewrap.officialPoll:not(.ballotSection)')].find(el=>!/CFP committee/i.test(el.textContent));
   if(apTable){
     const stray=apTable.previousElementSibling;
     if(stray?.classList.contains('vhead')&&stray.textContent.trim()==='Rankings')stray.remove();

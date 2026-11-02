@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1101C",
+  "tag": "New",
+  "title": "Tuesday CFP rankings updates",
+  "items": [
+   "Committee rankings refresh automatically on Tuesday evenings and hourly afterward.",
+   "The projected football bracket switches from AP to current-season committee rankings when available; AP remains separate."
+  ]
+ },
+ {
   "date": "Build 1101Q",
   "tag": "Fix",
   "title": "Page navigation at narrow widths",
