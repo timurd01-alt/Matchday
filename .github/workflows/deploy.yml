@@ -339,6 +339,8 @@ jobs:
         run: |
           rm -f config_keys.py
           mkdir -p _site
+          # team-form-history.js supplies all archived current-season finals.
+          python build_team_form.py _site
           cp index.html styles.css bracketology.css research-signals.css article-links.js translations.js updates.js legal.html qa.html roadmap.html manifest.json _site/
           cp robots.txt sitemap.xml _site/
           # TRDLab owns this handoff. Missing data stays visibly unavailable.

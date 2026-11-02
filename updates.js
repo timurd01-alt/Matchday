@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1102G",
+  "tag": "Fix",
+  "title": "Complete archived team form",
+  "items": [
+   "Use the durable game archive for expanded season form, including finals no longer present in the current fixture feed."
+  ]
+ },
+ {
   "date": "Build 1102F",
   "tag": "Update",
   "title": "Full-season team form",

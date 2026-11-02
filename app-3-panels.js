@@ -1041,7 +1041,11 @@ function computeTeamProfile(name){
   const matches=(DATA.matches||[]).filter(m=>bbNameMatches(m.home?.name,name)||bbNameMatches(m.away?.name,name));
   let side=null;
   for(const m of matches){side=bbNameMatches(m.home?.name,name)?m.home:(bbNameMatches(m.away?.name,name)?m.away:null);if(side)break;}
-  const overallForm=teamOverallForm(matches,name,competitionSeasonCutoff(DATA.comp_key).getTime());
+  const archived=(window.MATCHDAY_TEAM_FORM?.[String(DATA.comp_key||'').toLowerCase()]||[])
+    .filter(m=>bbNameMatches(m.home?.name,name)||bbNameMatches(m.away?.name,name));
+  // Archive is the durable record. Prefer it where both copies share an id.
+  const formMatches=[...new Map([...matches,...archived].map(m=>[String(m.id),m])).values()];
+  const overallForm=teamOverallForm(formMatches,name,competitionSeasonCutoff(DATA.comp_key).getTime());
   const rec=standRec||side||{name};
   const record=ranked?.record||rec.record||'';
   const recordParts=/^(\d+)\s*[-–]\s*(\d+)/.exec(record);
