@@ -1023,9 +1023,18 @@ function ensureMatchModal(){let modal=document.getElementById('matchModal');if(m
 function ensureTeamModal(){let modal=document.getElementById('teamModal');if(modal)return modal;modal=document.createElement('div');modal.id='teamModal';modal.className='matchModal teamModal';modal.addEventListener('click',e=>{if(e.target===modal)closeTeamModal()});document.body.appendChild(modal);return modal}
 function closeTeamModal(){const modal=document.getElementById('teamModal');if(modal)modal.classList.remove('show');document.body.classList.remove('modalOpen')}
 function teamOverallForm(matches,name,cutoff){
+  const unique=[];
   return matches.filter(m=>m.status==='FINISHED'&&Date.parse(m.kickoff)>=cutoff
     &&typeof m.score?.home==='number'&&Number.isFinite(m.score.home)
     &&typeof m.score?.away==='number'&&Number.isFinite(m.score.away))
+    .filter(m=>{
+      // Providers use different ids and occasionally different kickoff times for one game.
+      const duplicate=unique.some(g=>bbNameMatches(g.home?.name,m.home?.name)
+        &&bbNameMatches(g.away?.name,m.away?.name)
+        &&Math.abs(Date.parse(g.kickoff)-Date.parse(m.kickoff))<18*3600000);
+      if(!duplicate)unique.push(m);
+      return !duplicate;
+    })
     .slice().sort((a,b)=>String(a.kickoff).localeCompare(String(b.kickoff)))
     .map(m=>{const home=bbNameMatches(m.home?.name,name),own=home?m.score.home:m.score.away,opponent=home?m.score.away:m.score.home;return own>opponent?'W':own<opponent?'L':'D'}).join('');
 }
@@ -1043,8 +1052,8 @@ function computeTeamProfile(name){
   for(const m of matches){side=bbNameMatches(m.home?.name,name)?m.home:(bbNameMatches(m.away?.name,name)?m.away:null);if(side)break;}
   const archived=(window.MATCHDAY_TEAM_FORM?.[String(DATA.comp_key||'').toLowerCase()]||[])
     .filter(m=>bbNameMatches(m.home?.name,name)||bbNameMatches(m.away?.name,name));
-  // Archive is the durable record. Prefer it where both copies share an id.
-  const formMatches=[...new Map([...matches,...archived].map(m=>[String(m.id),m])).values()];
+  // Keep archived finals first; teamOverallForm also reconciles different provider ids.
+  const formMatches=[...archived,...matches];
   const overallForm=teamOverallForm(formMatches,name,competitionSeasonCutoff(DATA.comp_key).getTime());
   const rec=standRec||side||{name};
   const record=ranked?.record||rec.record||'';
@@ -1056,7 +1065,7 @@ function computeTeamProfile(name){
     pos: ranked?.rank??rec.pos??null, pld: recordParts?Number(recordParts[1])+Number(recordParts[2]):(rec.pld??side?.pld??null),
     w: recordParts?Number(recordParts[1]):rec.w??null, d: rec.d??null, l: recordParts?Number(recordParts[2]):rec.l??null,
     gf: rec.gf??side?.gf??null, ga: rec.ga??side?.ga??null, gd: rec.gd??side?.gd??null,
-    pts: rec.pts??side?.pts??null, form: overallForm||rec.form||side?.form||'', overallFormCount:overallForm.length,
+    pts: rec.pts??side?.pts??null, form: overallForm||rec.form||side?.form||'',
     formHome: side?.form_home||'', formAway: side?.form_away||'',
     rating: ranked?.rating??side?.rating??rec.rating??null,
     sos: ranked?.sos??null, offense: ranked?.adj_o??null, defense: ranked?.adj_d??null,
@@ -1090,7 +1099,6 @@ function teamProfileHTML(p){
         ${p.defense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted defense</span><b>${Number(p.defense).toFixed(1)}</b></div>`:''}
       </div>
       ${formRow('Overall form',p.form)}
-      ${p.overallFormCount?`<div class="tpFormNote tpFaint">${p.overallFormCount} completed games${p.pld>p.overallFormCount?` available of ${p.pld}`:''} · oldest to newest</div>`:''}
       ${formRow('Home form',p.formHome)}
       ${formRow('Away form',p.formAway)}
       ${nextLine}

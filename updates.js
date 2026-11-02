@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1102H",
+  "tag": "Fix",
+  "title": "One form badge per season game",
+  "items": [
+   "Remove the completed-game caption and prevent duplicate form badges when live and archived copies use different game identifiers."
+  ]
+ },
+ {
   "date": "Build 1102G",
   "tag": "Fix",
   "title": "Complete archived team form",
