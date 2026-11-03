@@ -697,10 +697,10 @@ function scorecardCaveat(text){
 }
 // Scorecard. One anchor (the record), then three short sections. Explanation
 // lives behind "Methodology" rather than as prose between the numbers.
-function _scNum(v,d=1){const n=Number(v);return Number.isFinite(n)?n.toFixed(d):null;}
-function _scPct(v){const n=Number(v);return Number.isFinite(n)?n.toFixed(1)+'%':'—';}
+function _scNum(v,d=1){const n=v==null?NaN:Number(v);return Number.isFinite(n)?n.toFixed(d):null;}
+function _scPct(v){const n=v==null?NaN:Number(v);return Number.isFinite(n)?n.toFixed(1)+'%':'—';}
 function _scGap(v,unit=' pts'){
-  const n=Number(v);
+  const n=v==null?NaN:Number(v);
   if(!Number.isFinite(n))return '<span class="scGap flat">—</span>';
   // Above expectation is not "good" and below is not "bad" -- a model that hits
   // exactly what it forecast is the calibrated one. Neutral colour, signed number.
@@ -722,9 +722,9 @@ function _scStat(value,label,sub){
    numbers the panel states, drawn so the range reads at a glance. */
 function _scRange({value,ref,lo,hi,min,max,refLabel,leftLabel,rightLabel}){
   const pos=v=>Math.max(0,Math.min(100,(Number(v)-min)/(max-min)*100));
-  const ok=Number.isFinite(Number(value));
+  const ok=value!=null&&Number.isFinite(Number(value));
   if(!ok)return '';
-  const band=Number.isFinite(Number(lo))&&Number.isFinite(Number(hi))?`<i class="scRangeBand" style="left:${pos(lo)}%;width:${Math.max(1,pos(hi)-pos(lo))}%"></i>`:'';
+  const band=lo!=null&&hi!=null&&Number.isFinite(Number(lo))&&Number.isFinite(Number(hi))?`<i class="scRangeBand" style="left:${pos(lo)}%;width:${Math.max(1,pos(hi)-pos(lo))}%"></i>`:'';
   return `<div class="scRange"><div class="scRangeTrack">${band}`
     +(Number.isFinite(Number(ref))?`<i class="scRangeRef" title="${esc(refLabel)}" style="left:${pos(ref)}%"></i>`:'')
     +`<i class="scRangeDot" style="left:${pos(value)}%"></i></div>`
@@ -811,10 +811,10 @@ function _scRecent(rows){
 }
 function renderScore(){
   const host=$('#view-score'),sc=trdlabScorecard();
-  if(!sc||sc.available===false){
+  if(!sc||sc.available===false||sc.record?.picks===0){
     // The engine states its own reason ("no locked cards stored for ncaam"),
     // which is the honest one -- but it is a field value, not a sentence.
-    const why=String(sc?.reason||'no graded record for this sport yet');
+    const why=String(sc?.record?.picks===0?'No graded picks for this sport yet':sc?.reason||'no graded record for this sport yet');
     host.innerHTML=`<div class="vhead">Scorecard</div><div class="empty">`
       +`<b>${esc(why.charAt(0).toUpperCase()+why.slice(1).replace(/\.$/,''))}.</b> `
       +`Cards freeze an hour before kickoff and are graded once the game is final.</div>`;
@@ -867,7 +867,7 @@ function renderScore(){
     +`<section class="collegeResearch scorecardPage">`
     +part('01','The record',grid(record,price))
     +part('02','Against the market',grid(_scMarket(vm,sc.conviction)))
-    +part('03','Calibration and results',grid(_scBands(sc.by_confidence),_scRecent((sc.recent||[]).slice(0,25))))
+    +part('03','Calibration and results',grid(_scBands(sc.by_confidence),_scRecent(sc.recent||[])))
     +`</section>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}

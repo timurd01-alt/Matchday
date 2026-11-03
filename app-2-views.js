@@ -1141,11 +1141,12 @@ function rsFeatured(){
     ?`Matchday is ${Math.abs(gap).toFixed(1)} points ${gap<0?'lower':'higher'} on ${esc(team)} than the market.`
     :`Matchday and the market price ${esc(team)} almost identically.`;
   const kick=p.kickoff||m.kickoff;
-  const when=kick?kickIn(kick):'';
+  const hoops=currentSportKey()==='ncaam';
+  const when=kick&&hoops?new Date(kick).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):kick?kickIn(kick):'';
   const side=(name,label)=>`<div class="rsFeatSide">${typeof teamMark==='function'?teamMark(name):''}<div><span class="rsKicker">${label}</span><b>${esc(rsShortName(name))}</b><span>${rsTeamRow(name)}</span></div></div>`;
   const open=m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
-    +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
+    +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,hoops&&m.neutral!==false?'':'Away')}<span class="rsAt">${hoops&&m.neutral!==false?'vs':'at'}</span>${side(home,hoops&&m.neutral!==false?'':'Home')}</div>`
     +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b>${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
     +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="${gap>0?'rsGapUp':gap<0?'rsGapDown':''}">${gap>0?'+':gap<0?'−':''}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
@@ -1671,12 +1672,13 @@ function collegeResearchModules(){
   // play-by-play measures; basketball has no downs or snaps, so those panels
   // are football-only rather than showing football teams on the NCAAM page.
   const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
+  const sc=football?null:trdlabScorecard();
   const parts=[
     ['This week',grid(rsFeatured(),rsModelMarketWatch())],
-    ['What the model is finding',football && grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
-      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
-    ['The bigger picture',football && grid(rsSchedules(),rsConferences())
-      +(football?grid(rsDefence(),rsDefenceNotes()):'')],
+    ['What the model is finding',football ? grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
+      +grid(rsEfficiency(),rsEfficiencyNotes()):grid(_scBands(sc?.by_confidence),_scRecent(sc?.recent))],
+    ['The bigger picture',football ? grid(rsSchedules(),rsConferences())
+      +grid(rsDefence(),rsDefenceNotes()):grid(_scMarket(sc?.versus_market,sc?.conviction))],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`

@@ -166,14 +166,7 @@ jobs:
       # circumstances it exists for. Rebuilding it here costs no provider quota:
       # the handoff is a committed file, not a fetch.
       - name: Rebuild the TRDLab repair layer from the committed handoff
-        if: github.event_name != 'push'
-        continue-on-error: true
-        run: |
-          if [ -f trdlab_picks.json ]; then
-            python build_cfb_snapshot.py
-          else
-            echo "::warning::trdlab_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
-          fi
+        run: python build_cfb_snapshot.py
 
       # Both product loops run before next_task.py so their reports are on
       # disk when it ranks. Neither can fail the build: an undersized tap
