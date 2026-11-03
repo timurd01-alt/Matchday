@@ -4148,6 +4148,13 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsBlock:has(.rsSchedRow){display:flex;flex-direction:column}
 #view-news .rsBlock:has(.rsSchedRow) :is(.rsScrollX,ul,ol):has(.rsSchedRow){display:flex;flex-direction:column;flex:1}
 #view-news .rsSchedRow:not(.rsExtra){flex:1}
+/* Keep schedule rows at the football card's desktop spacing, regardless of
+   how many conferences the adjacent sport lists. Stacked cards size naturally. */
+@media(min-width:1101px){
+  #view-news .rsSchedulesPanel{align-self:start}
+  #view-news .rsSchedulesPanel .rsSchedRow:not(.rsExtra){flex:none;min-height:63px;box-sizing:border-box}
+}
+
 .gamesNotable li.hit>b i{font-style:normal;color:var(--win)}.gamesNotable li.miss>b i{font-style:normal;color:var(--loss)}
 /* Empty-season blocks: the note sits in the middle instead of under the title. */
 #view-news .rsWaiting{display:flex;flex-direction:column}
