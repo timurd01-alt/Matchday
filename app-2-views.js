@@ -1125,7 +1125,9 @@ function rsTop(title,kind,aside,phoneTitle){
 }
 function rsTeamRow(name){
   const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
-  return t?`PR #${t.rank} · ${esc(t.record||`${t.wins}-${t.losses}`)}`:'';
+  if(!t)return '';
+  const standing=currentSportKey()==='ncaam'?(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]).find(r=>teamKey(r.name)===teamKey(name)):null;
+  return `PR #${t.rank} · ${esc(standing?.record||t.record||`${t.wins}-${t.losses}`)}`;
 }
 function rsFeatured(){
   const fp=typeof featuredPick==='function'?featuredPick():null;
@@ -1668,14 +1670,12 @@ function collegeResearchModules(){
   // play-by-play measures; basketball has no downs or snaps, so those panels
   // are football-only rather than showing football teams on the NCAAM page.
   const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
-  const wait=(...args)=>football?'':rsWaiting(...args);
-  const soon='Waiting for the season to start.',box='Waiting for the season to start. Needs basketball box scores, which Matchday does not collect yet.';
   const parts=[
-    ['This week',grid(rsFeatured()||wait('Featured read','live',12,soon),rsModelMarketWatch()||wait('Model–market watch','live',12,soon))],
-    ['What the model is finding',grid(rsStat()||wait('Risers &amp; fallers','blend',4,soon),rsLongshots()||wait('Longshots that won','current',8,soon))+grid(rsScatter(),rsScatterNotes())
-      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(wait('Offensive vs defensive efficiency','current',8,box),wait('Reading the chart','current',4,box)))],
+    ['This week',grid(rsFeatured(),rsModelMarketWatch())],
+    ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
+      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
     ['The bigger picture',grid(rsSchedules(),rsConferences())
-      +(football?grid(rsDefence(),rsDefenceNotes()):grid(wait('Pace','current',8,box),wait('Reading the chart','current',4,box)))],
+      +(football?grid(rsDefence(),rsDefenceNotes()):'')],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
