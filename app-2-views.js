@@ -1310,6 +1310,18 @@ function rsScatter(){
    redraws the chart around just that group, every team as its own logo.
    Each chart supplies its points, medians, axis formats and corner names. */
 const RS_ZOOM_CHARTS={
+  hoopsDefense(){
+    const teams=rsBasketballTeams().sort((a,b)=>a.allowed/a.poss-b.allowed/b.poss);
+    if(!teams.length)return null;
+    const pts=teams.map((t,i)=>{
+      const x=40*t.poss/t.minutes,y=100*t.allowed/t.poss;
+      return {name:t.name,row:{games:t.games,rank:i+1},x,y,
+        data:`data-m1l="Allowed per 100" data-m1="${y.toFixed(1)}" data-m2l="Pace (poss / 40)" data-m2="${x.toFixed(1)}"`};
+    });
+    return {pts,mx:rsMedian(pts.map(p=>p.x)),my:rsMedian(pts.map(p=>p.y)),
+      fx:v=>v.toFixed(0),fy:v=>v.toFixed(0),xl:'Possessions per 40 minutes',yl:'Points allowed per 100 possessions',
+      groups:{e:'Fast · more allowed',s:'Slow · more allowed',t:'Fast · fewer allowed',u:'Slow · fewer allowed'}};
+  },
   rating(){
     const rows=((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[])
       .filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
@@ -1690,8 +1702,8 @@ function rsPart(num,label,body){
 function rsWaiting(title,kind,span,note){
   return `<section class="rsBlock rsWaiting rsSpan${span}">${rsTop(title,kind)}<p class="rsWaitingNote">${esc(note)}</p></section>`;
 }
-function rsBasketballTempo(){
-  if(typeof MATCHDAY_BASKETBALL_BOX_TOTALS==='undefined')return '';
+function rsBasketballTeams(){
+  if(typeof MATCHDAY_BASKETBALL_BOX_TOTALS==='undefined')return [];
   const totals=new Map();
   for(const [minutes,sides] of Object.values(MATCHDAY_BASKETBALL_BOX_TOTALS.games||{})){
     const poss=(sides[0][2]+sides[1][2])/2;
@@ -1701,11 +1713,25 @@ function rsBasketballTempo(){
       totals.set(name,t);
     });
   }
-  const teams=[...totals.values()].sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
+  return [...totals.values()];
+}
+function rsBasketballTempo(){
+  const teams=rsBasketballTeams().sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
   if(!teams.length)return '';
   const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsSchedHead"><span></span><span>Team</span><span>${cols[0]}</span><span>${cols[1]}</span></div><ol class="rsSched">${items.map((t,i)=>`<li class="rsSchedRow${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`).join('')}</ol>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
   return list('Pace',teams,['Games','Poss / 40'],t=>[t.games,(40*t.poss/t.minutes).toFixed(1)],5)
     +list('Efficiency per 100 possessions',teams.slice().sort((a,b)=>(b.points-b.allowed)/b.poss-(a.points-a.allowed)/a.poss),['Offense','Defense'],t=>[(100*t.points/t.poss).toFixed(1),(100*t.allowed/t.poss).toFixed(1)],7);
+}
+function rsBasketballDefense(){
+  const c=RS_ZOOM_CHARTS.hoopsDefense();
+  if(!c)return '';
+  const groups=Object.entries(c.groups).map(([key,label])=>({
+    label,what:'Compared with the median pace and points allowed per 100 possessions.',
+    rows:c.pts.filter(p=>(p.y>=c.my?(p.x>=c.mx?'e':'s'):(p.x>=c.mx?'t':'u'))===key)
+      .sort((a,b)=>a.y-b.y).map(p=>({name:p.name,a:p.y.toFixed(1),b:p.row.games}))
+  }));
+  return rsZoomBlock('hoopsDefense',c,'Defense vs pace','current',c.pts.length+' teams')
+    +`<section class="rsBlock rsSpan4">${rsTop('Defense groups','current','Lower allowed is better')}${rsQuadTabs('hoopsDefense',groups,'Allowed / 100','Games')}</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
@@ -1721,7 +1747,7 @@ function collegeResearchModules(){
     ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
       +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(rsBasketballTempo()))],
     ['The bigger picture',grid(rsSchedules(),rsConferences())
-      +(football?grid(rsDefence(),rsDefenceNotes()):'')],
+      +(football?grid(rsDefence(),rsDefenceNotes()):grid(rsBasketballDefense()))],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
