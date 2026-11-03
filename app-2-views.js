@@ -1254,7 +1254,7 @@ function rsLongshots(){
   const card=(x,i)=>`<li class="rsShot${i>=8?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
     +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
-    +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
+    +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5,10).replace('-','/'))}</span></li>`;
   return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','current')}`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
     +`<div class="rsFoot">`
@@ -1275,12 +1275,16 @@ function rsStat(){
   // Weekly moves only once games are played; before that they are model changes.
   const played=all.some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
   const weekly=played?all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0):[];
-  const up=weekly.filter(r=>Number(r.movement)>0).sort((a,b)=>Number(b.movement)-Number(a.movement)).slice(0,3);
-  const down=weekly.filter(r=>Number(r.movement)<0).sort((a,b)=>Number(a.movement)-Number(b.movement)).slice(0,3);
-  const li=(r,cls,sign)=>`<li>${(typeof teamMark==='function'?teamMark(r.name):'')}<span class="rsMvName">${esc(rsShortName(r.name))}</span><small class="rsMvRank">PR #${r.rank}</small><b class="rsMvChg ${cls}">${sign}${Math.abs(Number(r.movement))}</b></li>`;
+  const usePreseason=currentSportKey()==='ncaam'&&!weekly.length;
+  const field=usePreseason?'movement_since_preseason':'movement';
+  const moves=usePreseason?rows:weekly;
+  const period=usePreseason?'Since preseason':'This week';
+  const up=moves.filter(r=>Number(r[field])>0).sort((a,b)=>Number(b[field])-Number(a[field])).slice(0,3);
+  const down=moves.filter(r=>Number(r[field])<0).sort((a,b)=>Number(a[field])-Number(b[field])).slice(0,3);
+  const li=(r,cls,sign)=>`<li>${(typeof teamMark==='function'?teamMark(r.name):'')}<span class="rsMvName">${esc(rsShortName(r.name))}</span><small class="rsMvRank">PR #${r.rank}</small><b class="rsMvChg ${cls}">${sign}${Math.abs(Number(r[field]))}</b></li>`;
   const lists=(up.length||down.length)
-    ?`<div class="rsMovers"><div><span class="rsKicker">This week · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
-      +`<div><span class="rsKicker">This week · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
+    ?`<div class="rsMovers"><div><span class="rsKicker">${period} · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
+      +`<div><span class="rsKicker">${period} · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
   const hasPrevious=all.some(r=>r.previous_rank!=null&&Number.isFinite(Number(r.previous_rank)));
   const note=lists?'':`<p class="rsMovementNote">${!played?'Weekly movement appears after games are played.':!hasPrevious?'Weekly movement appears after a previous edition is recorded.':'No weekly rank changes recorded in this edition.'}</p>`;
   return `<section class="rsBlock rsMove rsSpan4${lists?'':' rsMoveCompact'}">${rsTop('Risers &amp; fallers','blend')}`
