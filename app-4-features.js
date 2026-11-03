@@ -149,13 +149,16 @@ function pickMarginHTML(p){
 function matchdayLivePickHTML(m){
   const p=trdlabReadFor(m);
   const basketball=String(m._comp||DATA.comp_key||currentSportKey()).toLowerCase()==='ncaam';
+  const pastTip=basketball&&m.status==='UPCOMING'&&!kickoffTimeTbd(m)&&kickMs(m)>0&&kickMs(m)<=Date.now();
   if(!p){
     if(!basketball||m.status!=='UPCOMING')return '';
-    return '<div class="pick"><span class="pl">Model</span><span>No published pregame forecast</span></div>';
+    const graceOpener=m.away?.name==='Grace University'&&['2026-11-05','2026-11-06'].includes(String(m.kickoff).slice(0,10));
+    const note=graceOpener?'Grace (CA) entered the season without prior varsity results.':pastTip?'Tip time has passed. No archived pregame forecast on this card.':'No published pregame forecast';
+    return '<div class="pick"><span class="pl">Model</span><span>'+note+'</span></div>';
   }
   const score=basketball?projectedScoreLine(m,p):'';
   const model=Number(p.model_pct);
-  return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`+score;
+  return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:pastTip?'Pregame prediction':p.model_name==='NCAAM school-results margin model'?'Based on opponent-adjusted school results':'Live prediction · updates until kickoff'}</span></div>`+score;
 }
 // Game cards give each name about 83px at their narrowest (a 360px card).
 // These schools have one word wider than that, so the card uses a short form
@@ -173,7 +176,8 @@ function cardTeamName(name){return CARD_SHORT_NAMES[String(name||'').trim()]||na
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
-  const displayStatus=stale?'PAST / REFRESH':pending?'AWAITING FINAL':m.status;
+  const tipPassed=m.status==='UPCOMING'&&String(m._comp||DATA.comp_key||'').toLowerCase()==='ncaam'&&!kickoffTimeTbd(m)&&kickMs(m)>0&&kickMs(m)<=Date.now();
+  const displayStatus=stale?'PAST / REFRESH':pending?'AWAITING FINAL':tipPassed?'TIP TIME PASSED':m.status;
   const statusClass=stale?'PAST_REFRESH':pending?'RESULT_PENDING':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">${esc(oddsEtaLabel(m)||'No market snapshot yet')}</div></div>`;
@@ -188,7 +192,7 @@ function cardHTML(m,opts){
   const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
   const pick=livePick;
   const probChanged=!!probabilityMovement(m);
-  const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
+  const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':tipPassed?'awaiting status update':kickIn(m.kickoff);
   return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${Math.round(m.weather.temp_c*9/5+32)}&deg;F</b>${m.weather.wind_kph>=20?` ${Math.round(m.weather.wind_kph*0.621371)} mph`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText" title="${esc(m.home.name)}">${hfl}${esc(cardTeamName(m.home.name))}</span></div><div class="tsub"><span>${esc(m.home.code)}</span>${teamStandingsMeta(m.home,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText" title="${esc(m.away.name)}">${esc(cardTeamName(m.away.name))}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span>${teamStandingsMeta(m.away,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
 }
 // The panel details() falls back to if it throws. It carried its own copy of the

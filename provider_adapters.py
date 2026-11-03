@@ -1105,6 +1105,12 @@ class CollegeBasketballDataAdapter:
         for row in rows:
             home, away = row.get("homeTeam"), row.get("awayTeam")
             if not home or not away: continue
+            # Grambling lists Jarvis Christian on Dec 9 on its official 2026-27 schedule:
+            # https://gsutigers.com/sports/mens-basketball/schedule/2026-27
+            if (str(row.get("id")) == "377951" and home == "Grambling" and away == "Jarvis Christian"
+                    and str(row.get("startDate") or "")[:10] in {"2026-11-04", "2026-11-05"}
+                    and str(row.get("status") or "").lower() != "final"):
+                continue
             raw = str(row.get("status") or "").lower()
             status = "FINISHED" if raw == "final" else "LIVE" if raw in {"in_progress", "live", "halftime"} else "UPCOMING"
             matches.append({"id": f"cbbd-{row.get('id')}", "provider_id": row.get("id"), "stage": str(row.get("seasonType") or "Regular Season").replace("_", " ").title(),

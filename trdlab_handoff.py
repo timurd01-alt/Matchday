@@ -118,6 +118,7 @@ def _normalize(name: object) -> str:
 
 # Exact provider names for schools whose campus or mascot differs across feeds.
 _BASKETBALL_SCHOOLS = {
+    "Northwestern (OK) Rangers": "Northwestern Oklahoma State",
     "St. Thomas Tommies": "St. Thomas-Minnesota",
     "Midway Eagles": "Midway University",
     "Bridgewater Eagles": "Bridgewater College (VA)",
@@ -339,6 +340,15 @@ def find(buckets: dict[str, list[dict[str, Any]]], home: object, away: object,
                           and _compatible(_pick_team(pick, "away"), wanted_home)))]
     same_day = [pick for pick in candidates if _kickoff_day(pick.get('kickoff')) == day]
     candidates = same_day or candidates
+    if len(candidates) > 1 and all(p.get("sport") == "ncaam" for p in candidates):
+        # Neutral-site feeds can reverse the sides. Only prefer the card's
+        # orientation when the complete team names and game instant agree.
+        identities = {(frozenset((_normalize(p.get("home")), _normalize(p.get("away")))),
+                       str(p.get("kickoff"))[:16]) for p in candidates}
+        if len(identities) == 1:
+            candidates = [p for p in candidates
+                          if _compatible(_pick_team(p, "home"), wanted_home)
+                          and _compatible(_pick_team(p, "away"), wanted_away)]
     return candidates[0] if len(candidates) == 1 else None
 
 
