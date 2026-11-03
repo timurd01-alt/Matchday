@@ -148,7 +148,7 @@ function pickMarginHTML(p){
 }
 function matchdayLivePickHTML(m){
   const p=trdlabReadFor(m);
-  const basketball=(m._comp||DATA.comp_key||currentSportKey())==='ncaam';
+  const basketball=String(m._comp||DATA.comp_key||currentSportKey()).toLowerCase()==='ncaam';
   if(!p){
     if(!basketball||m.status!=='UPCOMING')return '';
     return '<div class="pick"><span class="pl">Model</span><span>No published pregame forecast</span></div>';
