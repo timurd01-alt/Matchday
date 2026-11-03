@@ -116,6 +116,43 @@ def _normalize(name: object) -> str:
     return re.sub(r"[^a-z0-9]+", "", text.lower())
 
 
+# Exact provider names for schools whose campus or mascot differs across feeds.
+_BASKETBALL_SCHOOLS = {
+    "St. Thomas Tommies": "St. Thomas-Minnesota",
+    "Midway Eagles": "Midway University",
+    "Bridgewater Eagles": "Bridgewater College (VA)",
+    "Lawrence Vikings": "Lawrence University",
+    "IU Kokomo Cougars": "Indiana-Kokomo",
+    "Crookston (MN) Golden Eagles": "Minnesota Crookston",
+    "Maryville (MO) Saints": "Maryville University (MO)",
+    "Jessup Warriors": "Jessup University",
+    "Cal State San Marcos Cougars": "CSU San Marcos",
+    "Cornell (IA) Rams": "Cornell College (IA)",
+    "LSU New Orleans Privateers": "New Orleans",
+    "Regis University REGIS UNIVERSITY": "Regis (CO)",
+    "Bethesda Flames": "Bethesda University",
+    "Randolph Wildcats": "Randolph College",
+    "Saint Mary of the Woods Pomeroys": "Saint Mary of the Woods College",
+    "King's Monarchs": "Kings (PA)",
+    "Mount St Mary Knights": "Mount Saint Mary (NY)",
+    "SUNY Old Westbury Panthers": "Old Westbury",
+    "Centre Colonels": "Centre College",
+    "East West Phantoms": "East-West University",
+    "Central State Marauders": "Central State (OH)",
+    "Calumet St. Joseph Crimson Wave": "Calumet College",
+    "New College Mighty Banyans": "New College (FL)",
+    "Mississippi U for Women Owls": "Mississippi University For Women",
+    "Lincoln (CA) Oaklanders": "Lincoln University (CA)",
+}
+
+
+def _pick_team(pick, side):
+    name = pick.get(side)
+    if pick.get('sport') == 'ncaam' and isinstance(name, str):
+        name = _BASKETBALL_SCHOOLS.get(name, name)
+    return _normalize(name)
+
+
 def _kickoff_day(value: object) -> str:
     """The UTC date portion, which is all the two feeds reliably share.
 
@@ -296,10 +333,10 @@ def find(buckets: dict[str, list[dict[str, Any]]], home: object, away: object,
                     if pick.get('sport') == 'ncaam'
                     and str(pick.get('kickoff'))[11:16] == '05:00')
     candidates = [pick for pick in pool
-                  if ((_compatible(_normalize(pick.get("home")), wanted_home)
-                       and _compatible(_normalize(pick.get("away")), wanted_away))
-                      or (_compatible(_normalize(pick.get("home")), wanted_away)
-                          and _compatible(_normalize(pick.get("away")), wanted_home)))]
+                  if ((_compatible(_pick_team(pick, "home"), wanted_home)
+                       and _compatible(_pick_team(pick, "away"), wanted_away))
+                      or (_compatible(_pick_team(pick, "home"), wanted_away)
+                          and _compatible(_pick_team(pick, "away"), wanted_home)))]
     same_day = [pick for pick in candidates if _kickoff_day(pick.get('kickoff')) == day]
     candidates = same_day or candidates
     return candidates[0] if len(candidates) == 1 else None
