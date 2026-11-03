@@ -30,6 +30,7 @@ import json
 import os
 import re
 import unicodedata
+from datetime import date, timedelta
 from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
@@ -282,11 +283,25 @@ def find(buckets: dict[str, list[dict[str, Any]]], home: object, away: object,
     wanted_home, wanted_away = _normalize(home), _normalize(away)
     if not wanted_home or not wanted_away:
         return None
-    candidates = [pick for pick in buckets.get(_kickoff_day(kickoff), [])
+    day = _kickoff_day(kickoff)
+    pool = list(buckets.get(day, []))
+    # Date-only basketball schedules use 05:00Z on the US game date.
+    # An evening tip on that date can fall after midnight UTC.
+    if str(kickoff)[11:13] in {'00', '01', '02', '03', '04', '05', '06', '07'}:
+        try:
+            previous_day = (date.fromisoformat(day) - timedelta(days=1)).isoformat()
+        except ValueError:
+            previous_day = None
+        pool.extend(pick for pick in buckets.get(previous_day, [])
+                    if pick.get('sport') == 'ncaam'
+                    and str(pick.get('kickoff'))[11:16] == '05:00')
+    candidates = [pick for pick in pool
                   if ((_compatible(_normalize(pick.get("home")), wanted_home)
                        and _compatible(_normalize(pick.get("away")), wanted_away))
                       or (_compatible(_normalize(pick.get("home")), wanted_away)
                           and _compatible(_normalize(pick.get("away")), wanted_home)))]
+    same_day = [pick for pick in candidates if _kickoff_day(pick.get('kickoff')) == day]
+    candidates = same_day or candidates
     return candidates[0] if len(candidates) == 1 else None
 
 
