@@ -165,6 +165,11 @@ jobs:
       # mechanism that covers for a dead fixture feed went stale in exactly the
       # circumstances it exists for. Rebuilding it here costs no provider quota:
       # the handoff is a committed file, not a fetch.
+      - name: Refresh basketball box scores
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python basketball_research.py
+
       - name: Rebuild the TRDLab repair layer from the committed handoff
         run: python build_cfb_snapshot.py
 
@@ -257,6 +262,7 @@ jobs:
           # the ledgers below because `git add` exits 128 on a pathspec that
           # matches nothing, which would fail the job -- and with it the
           # deploy -- on a run where nothing was wrong.
+          if [ -f basketball_box_totals.json ]; then git add -- basketball_box_totals.json; fi
           published=$(ls posts.json 2>/dev/null || true)
           if [ -n "$published" ]; then
             git add -- $published

@@ -736,8 +736,8 @@ function _scCompare(items){
 function _scBands(bands){
   if(!bands||!bands.length)return '';
   const n=bands.reduce((a,b)=>a+(Number(b.picks)||0),0);
-  // Track runs 50-100%: every pick is a favourite, so below 50 is empty space.
-  const pos=v=>Math.max(0,Math.min(100,(Number(v)-50)*2));
+  // Observed hit rates can fall anywhere on the 0–100% scale.
+  const pos=v=>Math.max(0,Math.min(100,currentSportKey()==='ncaam'?Number(v):(Number(v)-50)*2));
   const rows=bands.map(b=>{
     const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
     const ok=Number.isFinite(hit)&&Number.isFinite(exp);

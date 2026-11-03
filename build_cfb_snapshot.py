@@ -247,7 +247,8 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     if not document:
         raise SystemExit("no TRDLab handoff found; nothing regenerated")
 
-    blocks = []
+    boxes = pathlib.Path(__file__).with_name("basketball_box_totals.json")
+    blocks = ["  const MATCHDAY_BASKETBALL_BOX_TOTALS=" + (boxes.read_text(encoding="utf8") if boxes.exists() else "{}") + ";"]
     # The browser can distinguish a current TRDLab repair layer from the
     # older quota-limited fixture payload. Without this timestamp the header
     # permanently advertised "fallback snapshot" even immediately after a

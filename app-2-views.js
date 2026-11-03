@@ -561,7 +561,7 @@ function modTopScores(){
 /* The week's featured live read: the most competitive game between ranked
    teams, never ranked on the uncalibrated edge. Shared by the Home card and
    the Research lead. */
-function featuredPick(){
+function featuredPick(preferPriced=false){
   // Two sources on purpose. A scheduled build attaches the pick to the fixture;
   // a push build does not run the fetch that does so. The handoff is committed,
   // so fall back to it rather than let the card blink out of existence
@@ -571,7 +571,7 @@ function featuredPick(){
   const thisWeek=kickoff=>{const date=new Date(kickoff);return date>now&&date<weekEnd};
   const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.trdlab_pick&&thisWeek(m.kickoff))
     .map(m=>({m,p:m.trdlab_pick}));
-  const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_TRDLAB_PICKS!=='undefined'?MATCHDAY_TRDLAB_PICKS:[])
+  const baked=attached.length&&!preferPriced?[]:bbSportRows(typeof MATCHDAY_TRDLAB_PICKS!=='undefined'?MATCHDAY_TRDLAB_PICKS:[])
     .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
   const poll=currentSportKey()==='ncaaf'
@@ -585,7 +585,7 @@ function featuredPick(){
     .filter(x=>Number(x.p.model_pct)<90)
     // A real contest with two strong teams is more useful to feature than a
     // near-certain FBS/FCS mismatch. Never rank on the uncalibrated edge.
-    .sort((a,b)=>((b.homeRank<=25)+(b.awayRank<=25))-((a.homeRank<=25)+(a.awayRank<=25))
+    .sort((a,b)=>(preferPriced?(Number(b.p.market_pct>0&&b.p.market_pct<100)-Number(a.p.market_pct>0&&a.p.market_pct<100)):0)||((b.homeRank<=25)+(b.awayRank<=25))-((a.homeRank<=25)+(a.awayRank<=25))
       ||Math.max(a.homeRank,a.awayRank)-Math.max(b.homeRank,b.awayRank)
       ||Math.abs(Number(a.p.model_pct)-60)-Math.abs(Number(b.p.model_pct)-60));
   return picks[0]||null;
@@ -1131,7 +1131,7 @@ function rsTeamRow(name){
   return `PR #${t.rank} · ${esc(standing?.record||t.record||`${t.wins}-${t.losses}`)}`;
 }
 function rsFeatured(){
-  const fp=typeof featuredPick==='function'?featuredPick():null;
+  const fp=typeof featuredPick==='function'?featuredPick(currentSportKey()==='ncaam'):null;
   if(!fp)return '';
   const {m,p}=fp;
   const model=Number(p.model_pct),market=p.market_pct==null?NaN:Number(p.market_pct),gap=!Number.isFinite(market)||p.edge_points==null?NaN:Number(p.edge_points);
@@ -1142,11 +1142,11 @@ function rsFeatured(){
     :`Matchday and the market price ${esc(team)} almost identically.`;
   const kick=p.kickoff||m.kickoff;
   const hoops=currentSportKey()==='ncaam';
-  const when=kick&&hoops?new Date(kick).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):kick?kickIn(kick):'';
+  const when=kick?kickIn(kick):'';
   const side=(name,label)=>`<div class="rsFeatSide">${typeof teamMark==='function'?teamMark(name):''}<div><span class="rsKicker">${label}</span><b>${esc(rsShortName(name))}</b><span>${rsTeamRow(name)}</span></div></div>`;
-  const open=m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
+  const open=!hoops&&m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
-    +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,hoops&&m.neutral!==false?'':'Away')}<span class="rsAt">${hoops&&m.neutral!==false?'vs':'at'}</span>${side(home,hoops&&m.neutral!==false?'':'Home')}</div>`
+    +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">${hoops&&m.neutral===true?'vs':'at'}</span>${side(home,'Home')}</div>`
     +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b>${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:hoops?'<div><span class="rsKicker">Market</span><b>—</b><span>No price available</span></div>':'')
     +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="${gap>0?'rsGapUp':gap<0?'rsGapDown':''}">${gap>0?'+':gap<0?'−':''}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:hoops?'<div><span class="rsKicker">Difference</span><b>—</b><span>points</span></div>':'')+`</div>`
@@ -1158,7 +1158,7 @@ function rsFeatured(){
 function rsModelMarketWatch(){
   const u=(typeof MATCHDAY_TRDLAB_UPSET!=='undefined')?MATCHDAY_TRDLAB_UPSET:null;
   // The featured read already covers its game, so that game never repeats here.
-  const fp=typeof featuredPick==='function'?featuredPick():null;
+  const fp=typeof featuredPick==='function'?featuredPick(currentSportKey()==='ncaam'):null;
   const featured=fp?[fp.m?.home?.name||fp.p?.home,fp.m?.away?.name||fp.p?.away].filter(Boolean):[];
   const isFeatured=c=>featured.length===2&&featured.every(n=>bbNameMatches(n,c.home)||bbNameMatches(n,c.away));
   const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c)&&Date.parse(c.kickoff)>Date.now());
@@ -1186,11 +1186,29 @@ function rsModelMarketWatch(){
       .sort((a,b)=>b._p4-a._p4||b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
+  if(currentSportKey()==='ncaam'&&calls.length<WATCH){
+    const upcoming=bbSportRows(MATCHDAY_TRDLAB_PICKS).filter(p=>Date.parse(p.kickoff)>Date.now()&&p.model_pct!=null&&!isFeatured(p));
+    const key=p=>[teamKey(p.home),teamKey(p.away)].sort().join('|')+'|'+String(p.kickoff).slice(0,10);
+    const seen=new Set(calls.map(key));
+    const candidates=upcoming.map(p=>{
+      const priced=p.market_pct>0&&p.market_pct<100;
+      const flip=priced&&p.model_pct<p.market_pct;
+      const other=bbNameMatches(p.pick_name,p.home)?p.away:p.home;
+      return {...p,selection:flip?other:p.pick_name,model_pct:flip?100-p.model_pct:p.model_pct,
+        market_pct:priced?(flip?100-p.market_pct:p.market_pct):null,
+        disagreement_points:priced?Math.abs(p.model_pct-p.market_pct):null};
+    }).sort((a,b)=>Number(b.market_pct!=null)-Number(a.market_pct!=null)
+      ||b.disagreement_points-a.disagreement_points||Date.parse(a.kickoff)-Date.parse(b.kickoff));
+    for(const p of candidates){
+      if(!seen.has(key(p))){calls.push(p);seen.add(key(p));}
+      if(calls.length===WATCH)break;
+    }
+  }
   if(!calls.length&&currentSportKey()!=='ncaam')return '';
   const rows=calls.map(p=>{
-    const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
+    const model=Number(p.model_pct),market=p.market_pct==null?NaN:Number(p.market_pct),gap=p.disagreement_points==null?NaN:Number(p.disagreement_points);
     const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
-    const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
+    const status=p.market_pct==null?'Awaiting price':typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
     // Both teams: the underdog the model likes first, then its opponent.
     const opp=away?p.home:p.away,mark=n=>typeof teamMark==='function'?teamMark(n):'';
     return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}<span class="rsWN">${esc(rsShortName(p.selection))}</span></b>`
@@ -1672,6 +1690,23 @@ function rsPart(num,label,body){
 function rsWaiting(title,kind,span,note){
   return `<section class="rsBlock rsWaiting rsSpan${span}">${rsTop(title,kind)}<p class="rsWaitingNote">${esc(note)}</p></section>`;
 }
+function rsBasketballTempo(){
+  if(typeof MATCHDAY_BASKETBALL_BOX_TOTALS==='undefined')return '';
+  const totals=new Map();
+  for(const [minutes,sides] of Object.values(MATCHDAY_BASKETBALL_BOX_TOTALS.games||{})){
+    const poss=(sides[0][2]+sides[1][2])/2;
+    sides.forEach(([name,points],i)=>{
+      const t=totals.get(name)||{name,points:0,allowed:0,poss:0,minutes:0,games:0};
+      t.points+=points;t.allowed+=sides[1-i][1];t.poss+=poss;t.minutes+=minutes;t.games++;
+      totals.set(name,t);
+    });
+  }
+  const teams=[...totals.values()].sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
+  if(!teams.length)return '';
+  const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsSchedHead"><span></span><span>Team</span><span>${cols[0]}</span><span>${cols[1]}</span></div><ol class="rsSched">${items.map((t,i)=>`<li class="rsSchedRow${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`).join('')}</ol>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
+  return list('Pace',teams,['Games','Poss / 40'],t=>[t.games,(40*t.poss/t.minutes).toFixed(1)],5)
+    +list('Efficiency per 100 possessions',teams.slice().sort((a,b)=>(b.points-b.allowed)/b.poss-(a.points-a.allowed)/a.poss),['Offense','Defense'],t=>[(100*t.points/t.poss).toFixed(1),(100*t.allowed/t.poss).toFixed(1)],7);
+}
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
@@ -1684,7 +1719,7 @@ function collegeResearchModules(){
   const parts=[
     ['This week',grid(rsFeatured(),rsModelMarketWatch())],
     ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
-      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
+      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(rsBasketballTempo()))],
     ['The bigger picture',grid(rsSchedules(),rsConferences())
       +(football?grid(rsDefence(),rsDefenceNotes()):'')],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
