@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-02T01:57:45Z",
-  "handoff_generated_at": "2026-11-01T18:13:21.050550+00:00",
+  "generated_at": "2026-11-03T19:55:53Z",
+  "handoff_generated_at": "2026-11-03T02:50:43.061498+00:00",
   "week": {
-    "from": "2026-11-02T01:57Z",
-    "to": "2026-11-02T23:59Z",
-    "games_in_window": 77,
-    "picks_in_handoff": 458
+    "from": "2026-11-03T19:55Z",
+    "to": "2026-11-09T23:59Z",
+    "games_in_window": 359,
+    "picks_in_handoff": 612
   },
   "basis": "Opponent-adjusted scoring margin",
   "ranking_published_on": "2026-11-01",
@@ -214,40 +214,170 @@
   ],
   "slate": [
     {
-      "kickoff": "2026-11-02T23:00:00Z",
-      "day": "Mon",
-      "home": "Florida Gators",
+      "kickoff": "2026-11-08T00:30:00Z",
+      "day": "Sun",
+      "home": "Notre Dame Fighting Irish",
       "away": "Miami Hurricanes",
-      "home_rank": null,
+      "home_rank": 1,
       "away_rank": 2,
-      "pick": "Florida Gators",
-      "model_pct": 90.1,
-      "market_pct": 64.6,
-      "edge_points": 25.5,
+      "pick": "Notre Dame Fighting Irish",
+      "model_pct": 61.8,
+      "market_pct": 65.7,
+      "edge_points": -3.9,
       "best_price": null,
       "sides": [
         {
-          "selection": "Florida Gators",
+          "selection": "Notre Dame Fighting Irish",
           "is_home": true,
-          "model_pct": 90.1
+          "model_pct": 61.8
         },
         {
           "selection": "Miami Hurricanes",
           "is_home": false,
-          "model_pct": 9.9
+          "model_pct": 38.2
         }
       ],
-      "fan_score": 66
+      "fan_score": 164
     },
     {
-      "kickoff": "2026-11-02T05:00:00Z",
+      "kickoff": "2026-11-07T20:30:00Z",
+      "day": "Sat",
+      "home": "LSU Tigers",
+      "away": "Alabama Crimson Tide",
+      "home_rank": 7,
+      "away_rank": 6,
+      "pick": "LSU Tigers",
+      "model_pct": 60.7,
+      "market_pct": 66.5,
+      "edge_points": -5.8,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "LSU Tigers",
+          "is_home": true,
+          "model_pct": 60.7
+        },
+        {
+          "selection": "Alabama Crimson Tide",
+          "is_home": false,
+          "model_pct": 39.3
+        }
+      ],
+      "fan_score": 134
+    },
+    {
+      "kickoff": "2026-11-08T00:30:00Z",
+      "day": "Sun",
+      "home": "Ole Miss Rebels",
+      "away": "Georgia Bulldogs",
+      "home_rank": 8,
+      "away_rank": 5,
+      "pick": "Ole Miss Rebels",
+      "model_pct": 51.1,
+      "market_pct": 38.9,
+      "edge_points": 12.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Ole Miss Rebels",
+          "is_home": true,
+          "model_pct": 51.1
+        },
+        {
+          "selection": "Georgia Bulldogs",
+          "is_home": false,
+          "model_pct": 48.9
+        }
+      ],
+      "fan_score": 132
+    },
+    {
+      "kickoff": "2026-11-07T20:30:00Z",
+      "day": "Sat",
+      "home": "Ohio State Buckeyes",
+      "away": "Oregon Ducks",
+      "home_rank": 3,
+      "away_rank": 12,
+      "pick": "Ohio State Buckeyes",
+      "model_pct": 75.6,
+      "market_pct": 70.4,
+      "edge_points": 5.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": true,
+          "model_pct": 75.6
+        },
+        {
+          "selection": "Oregon Ducks",
+          "is_home": false,
+          "model_pct": 24.4
+        }
+      ],
+      "fan_score": 120
+    },
+    {
+      "kickoff": "2026-11-07T17:00:00Z",
+      "day": "Sat",
+      "home": "Missouri Tigers",
+      "away": "Texas Longhorns",
+      "home_rank": 18,
+      "away_rank": 10,
+      "pick": "Texas Longhorns",
+      "model_pct": 52.7,
+      "market_pct": 56.7,
+      "edge_points": -4.0,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Missouri Tigers",
+          "is_home": true,
+          "model_pct": 47.3
+        },
+        {
+          "selection": "Texas Longhorns",
+          "is_home": false,
+          "model_pct": 52.7
+        }
+      ],
+      "fan_score": 82
+    },
+    {
+      "kickoff": "2026-11-07T17:00:00Z",
+      "day": "Sat",
+      "home": "Utah Utes",
+      "away": "BYU Cougars",
+      "home_rank": 9,
+      "away_rank": 23,
+      "pick": "Utah Utes",
+      "model_pct": 69.4,
+      "market_pct": 64.5,
+      "edge_points": 4.9,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Utah Utes",
+          "is_home": true,
+          "model_pct": 69.4
+        },
+        {
+          "selection": "BYU Cougars",
+          "is_home": false,
+          "model_pct": 30.6
+        }
+      ],
+      "fan_score": 64
+    },
+    {
+      "kickoff": "2026-11-09T23:30:00Z",
       "day": "Mon",
       "home": "Indiana Hoosiers",
-      "away": "Eastern Illinois Panthers",
+      "away": "Syracuse Orange",
       "home_rank": 4,
       "away_rank": null,
       "pick": "Indiana Hoosiers",
-      "model_pct": 99.2,
+      "model_pct": 69.2,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
@@ -255,223 +385,93 @@
         {
           "selection": "Indiana Hoosiers",
           "is_home": true,
-          "model_pct": 99.2
+          "model_pct": 69.2
         },
         {
-          "selection": "Eastern Illinois Panthers",
+          "selection": "Syracuse Orange",
           "is_home": false,
-          "model_pct": 0.8
+          "model_pct": 30.8
         }
       ],
-      "fan_score": 50
+      "fan_score": 62
     },
     {
-      "kickoff": "2026-11-02T05:00:00Z",
-      "day": "Mon",
-      "home": "Georgia Bulldogs",
-      "away": "North Carolina Central Eagles",
-      "home_rank": 5,
+      "kickoff": "2026-11-06T00:00:00Z",
+      "day": "Fri",
+      "home": "Notre Dame Fighting Irish",
+      "away": "Mercyhurst Lakers",
+      "home_rank": 1,
       "away_rank": null,
-      "pick": "Georgia Bulldogs",
-      "model_pct": 99.7,
+      "pick": "Notre Dame Fighting Irish",
+      "model_pct": 96.1,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
       "sides": [
         {
-          "selection": "Georgia Bulldogs",
+          "selection": "Notre Dame Fighting Irish",
           "is_home": true,
-          "model_pct": 99.7
+          "model_pct": 96.1
         },
         {
-          "selection": "North Carolina Central Eagles",
+          "selection": "Mercyhurst Lakers",
           "is_home": false,
-          "model_pct": 0.3
+          "model_pct": 3.9
         }
       ],
-      "fan_score": 48
+      "fan_score": 56
     },
     {
-      "kickoff": "2026-11-02T05:00:00Z",
-      "day": "Mon",
-      "home": "Wake Forest Demon Deacons",
-      "away": "Maryland Eastern Shore Hawks",
-      "home_rank": 11,
-      "away_rank": null,
-      "pick": "Wake Forest Demon Deacons",
-      "model_pct": 99.1,
-      "market_pct": null,
-      "edge_points": null,
-      "best_price": null,
-      "sides": [
-        {
-          "selection": "Wake Forest Demon Deacons",
-          "is_home": true,
-          "model_pct": 99.1
-        },
-        {
-          "selection": "Maryland Eastern Shore Hawks",
-          "is_home": false,
-          "model_pct": 0.9
-        }
-      ],
-      "fan_score": 36
-    },
-    {
-      "kickoff": "2026-11-02T05:00:00Z",
-      "day": "Mon",
+      "kickoff": "2026-11-08T00:30:00Z",
+      "day": "Sun",
       "home": "Northwestern Wildcats",
-      "away": "Binghamton Bearcats",
+      "away": "Iowa Hawkeyes",
       "home_rank": 22,
-      "away_rank": null,
+      "away_rank": 15,
       "pick": "Northwestern Wildcats",
-      "model_pct": 97.2,
-      "market_pct": null,
-      "edge_points": null,
+      "model_pct": 56.3,
+      "market_pct": 54.4,
+      "edge_points": 1.9,
       "best_price": null,
       "sides": [
         {
           "selection": "Northwestern Wildcats",
           "is_home": true,
-          "model_pct": 97.2
+          "model_pct": 56.3
         },
         {
-          "selection": "Binghamton Bearcats",
+          "selection": "Iowa Hawkeyes",
           "is_home": false,
-          "model_pct": 2.8
+          "model_pct": 43.7
         }
       ],
-      "fan_score": 14
+      "fan_score": 56
     },
     {
-      "kickoff": "2026-11-02T05:00:00Z",
+      "kickoff": "2026-11-09T23:00:00Z",
       "day": "Mon",
-      "home": "Nebraska Cornhuskers",
-      "away": "Le Moyne Dolphins",
-      "home_rank": 24,
+      "home": "Ohio State Buckeyes",
+      "away": "Marshall Thundering Herd",
+      "home_rank": 3,
       "away_rank": null,
-      "pick": "Nebraska Cornhuskers",
-      "model_pct": 100.0,
+      "pick": "Ohio State Buckeyes",
+      "model_pct": 97.9,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
       "sides": [
         {
-          "selection": "Nebraska Cornhuskers",
+          "selection": "Ohio State Buckeyes",
           "is_home": true,
-          "model_pct": 100.0
+          "model_pct": 97.9
         },
         {
-          "selection": "Le Moyne Dolphins",
+          "selection": "Marshall Thundering Herd",
           "is_home": false,
-          "model_pct": 0.1
+          "model_pct": 2.1
         }
       ],
-      "fan_score": 10
-    },
-    {
-      "kickoff": "2026-11-02T23:00:00Z",
-      "day": "Mon",
-      "home": "Iowa State Cyclones",
-      "away": "Memphis Tigers",
-      "home_rank": null,
-      "away_rank": null,
-      "pick": "Iowa State Cyclones",
-      "model_pct": 97.2,
-      "market_pct": 86.8,
-      "edge_points": 10.4,
-      "best_price": null,
-      "sides": [
-        {
-          "selection": "Iowa State Cyclones",
-          "is_home": true,
-          "model_pct": 97.2
-        },
-        {
-          "selection": "Memphis Tigers",
-          "is_home": false,
-          "model_pct": 2.8
-        }
-      ],
-      "fan_score": 10
-    },
-    {
-      "kickoff": "2026-11-02T23:30:00Z",
-      "day": "Mon",
-      "home": "Duke Blue Devils",
-      "away": "Army Black Knights",
-      "home_rank": null,
-      "away_rank": null,
-      "pick": "Duke Blue Devils",
-      "model_pct": 100.0,
-      "market_pct": null,
-      "edge_points": null,
-      "best_price": null,
-      "sides": [
-        {
-          "selection": "Duke Blue Devils",
-          "is_home": true,
-          "model_pct": 100.0
-        },
-        {
-          "selection": "Army Black Knights",
-          "is_home": false,
-          "model_pct": 0.0
-        }
-      ],
-      "fan_score": 10
-    },
-    {
-      "kickoff": "2026-11-02T05:00:00Z",
-      "day": "Mon",
-      "home": "Mississippi State Bulldogs",
-      "away": "Tennessee Tech Golden Eagles",
-      "home_rank": null,
-      "away_rank": null,
-      "pick": "Mississippi State Bulldogs",
-      "model_pct": 94.4,
-      "market_pct": null,
-      "edge_points": null,
-      "best_price": null,
-      "sides": [
-        {
-          "selection": "Mississippi State Bulldogs",
-          "is_home": true,
-          "model_pct": 94.4
-        },
-        {
-          "selection": "Tennessee Tech Golden Eagles",
-          "is_home": false,
-          "model_pct": 5.6
-        }
-      ],
-      "fan_score": 6
-    },
-    {
-      "kickoff": "2026-11-02T05:00:00Z",
-      "day": "Mon",
-      "home": "Oklahoma Sooners",
-      "away": "East Texas A&M Lions",
-      "home_rank": null,
-      "away_rank": null,
-      "pick": "Oklahoma Sooners",
-      "model_pct": 99.8,
-      "market_pct": null,
-      "edge_points": null,
-      "best_price": null,
-      "sides": [
-        {
-          "selection": "Oklahoma Sooners",
-          "is_home": true,
-          "model_pct": 99.8
-        },
-        {
-          "selection": "East Texas A&M Lions",
-          "is_home": false,
-          "model_pct": 0.2
-        }
-      ],
-      "fan_score": 6
+      "fan_score": 56
     }
   ],
   "upsets": []

@@ -2,10 +2,10 @@
 // Every number here comes from trdlab_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF NOV 02",
+  "week": "WEEK OF NOV 03",
   "season": "2026 SEASON",
   "published": "2026-11-01",
-  "generated_at": "2026-11-02T01:57:45Z",
+  "generated_at": "2026-11-03T19:55:53Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
@@ -76,19 +76,7 @@ window.MATCHDAY_SOCIAL = {
     "Nebraska Cornhuskers": "logos/nebraska.png",
     "NEBRASKA CORNHUSKERS": "logos/nebraska.png",
     "UCLA Bruins": "logos/ucla.png",
-    "UCLA": "logos/ucla.png",
-    "Florida Gators": "logos/florida.png",
-    "FLORIDA GATORS": "logos/florida.png",
-    "Eastern Illinois Panthers": "logos/easternIllinois.png",
-    "EASTERN ILLINOIS": "logos/easternIllinois.png",
-    "Eastern Illinois": "logos/easternIllinois.png",
-    "North Carolina Central Eagles": "logos/northCarolinaCentral.png",
-    "NORTH CAROLINA CENTRAL": "logos/northCarolinaCentral.png",
-    "North Carolina Central": "logos/northCarolinaCentral.png",
-    "Maryland Eastern Shore Hawks": "logos/marylandEasternShore.png",
-    "MARYLAND EASTERN SHORE HAWKS": "logos/marylandEasternShore.png",
-    "Binghamton Bearcats": "logos/binghamton.png",
-    "BINGHAMTON BEARCATS": "logos/binghamton.png"
+    "UCLA": "logos/ucla.png"
   },
   "top25": [
     [
@@ -205,37 +193,37 @@ window.MATCHDAY_SOCIAL = {
     {
       "rank": 1,
       "away": "MIAMI",
-      "home": "FLORIDA GATORS",
-      "time": "MON · 6:00 PM ET",
-      "hook": "RANKED #2 ON THE ROAD"
+      "home": "NOTRE DAME",
+      "time": "SAT · 7:30 PM ET",
+      "hook": "#2 vs #1"
     },
     {
       "rank": 2,
-      "away": "EASTERN ILLINOIS",
-      "home": "INDIANA",
-      "time": "MON · 12:00 AM ET",
-      "hook": "RANKED #4 AT HOME"
+      "away": "ALABAMA",
+      "home": "LSU",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#6 vs #7"
     },
     {
       "rank": 3,
-      "away": "NORTH CAROLINA CENTRAL",
-      "home": "GEORGIA",
-      "time": "MON · 12:00 AM ET",
-      "hook": "RANKED #5 AT HOME"
+      "away": "GEORGIA",
+      "home": "OLE MISS",
+      "time": "SAT · 7:30 PM ET",
+      "hook": "#5 vs #8"
     },
     {
       "rank": 4,
-      "away": "MARYLAND EASTERN SHORE HAWKS",
-      "home": "WAKE FOREST",
-      "time": "MON · 12:00 AM ET",
-      "hook": "RANKED #11 AT HOME"
+      "away": "OREGON",
+      "home": "OHIO STATE",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#12 vs #3"
     },
     {
       "rank": 5,
-      "away": "BINGHAMTON BEARCATS",
-      "home": "NORTHWESTERN",
-      "time": "MON · 12:00 AM ET",
-      "hook": "RANKED #22 AT HOME"
+      "away": "TEXAS",
+      "home": "MISSOURI",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "#10 vs #18"
     }
   ]
 };

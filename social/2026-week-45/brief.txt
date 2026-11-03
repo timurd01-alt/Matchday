@@ -1,6 +1,6 @@
-COLLEGE MATCHDAY -- WEEK OF 2026-11-02
-Games from 2026-11-02T01:57Z to 2026-11-02T23:59Z (UTC).
-77 of 458 picks in the handoff fall in this window; the rest are later dates and are excluded.
+COLLEGE MATCHDAY -- WEEK OF 2026-11-03
+Games from 2026-11-03T19:55Z to 2026-11-09T23:59Z (UTC).
+359 of 612 picks in the handoff fall in this window; the rest are later dates and are excluded.
 Ratings published 2026-11-01 -- Opponent-adjusted scoring margin.
 
 == TOP 25 ==
@@ -33,16 +33,16 @@ Ratings published 2026-11-01 -- Opponent-adjusted scoring margin.
 
 == THIS WEEK'S GAMES ==
 DAY   HOME                             AWAY                             MODEL    MARKET   PICK
-Mon   Florida Gators                   #2 Miami Hurricanes              90.1%    64.6%    Florida Gators
-Mon   #4 Indiana Hoosiers              Eastern Illinois Panthers        99.2%    --       Indiana Hoosiers
-Mon   #5 Georgia Bulldogs              North Carolina Central Eagles    99.7%    --       Georgia Bulldogs
-Mon   #11 Wake Forest Demon Deacons    Maryland Eastern Shore Hawks     99.1%    --       Wake Forest Demon Deacons
-Mon   #22 Northwestern Wildcats        Binghamton Bearcats              97.2%    --       Northwestern Wildcats
-Mon   #24 Nebraska Cornhuskers         Le Moyne Dolphins                100.0%   --       Nebraska Cornhuskers
-Mon   Iowa State Cyclones              Memphis Tigers                   97.2%    86.8%    Iowa State Cyclones
-Mon   Duke Blue Devils                 Army Black Knights               100.0%   --       Duke Blue Devils
-Mon   Mississippi State Bulldogs       Tennessee Tech Golden Eagles     94.4%    --       Mississippi State Bulldogs
-Mon   Oklahoma Sooners                 East Texas A&M Lions             99.8%    --       Oklahoma Sooners
+Sun   #1 Notre Dame Fighting Irish     #2 Miami Hurricanes              61.8%    65.7%    Notre Dame Fighting Irish
+Sat   #7 LSU Tigers                    #6 Alabama Crimson Tide          60.7%    66.5%    LSU Tigers
+Sun   #8 Ole Miss Rebels               #5 Georgia Bulldogs              51.1%    38.9%    Ole Miss Rebels
+Sat   #3 Ohio State Buckeyes           #12 Oregon Ducks                 75.6%    70.4%    Ohio State Buckeyes
+Sat   #18 Missouri Tigers              #10 Texas Longhorns              52.7%    56.7%    Texas Longhorns
+Sat   #9 Utah Utes                     #23 BYU Cougars                  69.4%    64.5%    Utah Utes
+Mon   #4 Indiana Hoosiers              Syracuse Orange                  69.2%    --       Indiana Hoosiers
+Fri   #1 Notre Dame Fighting Irish     Mercyhurst Lakers                96.1%    --       Notre Dame Fighting Irish
+Sun   #22 Northwestern Wildcats        #15 Iowa Hawkeyes                56.3%    54.4%    Northwestern Wildcats
+Mon   #3 Ohio State Buckeyes           Marshall Thundering Herd         97.9%    --       Ohio State Buckeyes
 
 == UPSET WATCH ==
 No game this week has the model backing a side the market has as an underdog.
