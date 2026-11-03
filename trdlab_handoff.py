@@ -118,6 +118,7 @@ def _normalize(name: object) -> str:
 
 # Exact provider names for schools whose campus or mascot differs across feeds.
 _BASKETBALL_SCHOOLS = {
+    "Allen Yellow Jackets": "Allen University",
     "Northwestern (OK) Rangers": "Northwestern Oklahoma State",
     "St. Thomas Tommies": "St. Thomas-Minnesota",
     "Midway Eagles": "Midway University",

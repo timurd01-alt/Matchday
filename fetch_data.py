@@ -1524,6 +1524,13 @@ def fetch_college_bundle():
                             f"engine results as history)")
             bundle["_stale"] = True
     all_matches = bundle.get("matches") or []
+    if COMP_KEY == "NCAAM":
+        # Apply to fresh and cached schedules. Grambling moved this game to
+        # December 9: https://gsutigers.com/sports/mens-basketball/schedule/2026-27
+        all_matches = [m for m in all_matches if not (
+            m.get("id") == "cbbd-377951" and m.get("status") == "UPCOMING"
+            and str(m.get("kickoff"))[:10] in {"2026-11-04", "2026-11-05"})]
+
     normalize_match_results(all_matches)
     # A cached bundle never learns a result, and CFBD's quota can be spent for
     # weeks. Final scores only, for fixtures already on this schedule -- see

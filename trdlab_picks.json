@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "trdlab",
-  "generated_at": "2026-11-03T02:40:48.659882+00:00",
+  "generated_at": "2026-11-03T02:50:43.061498+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -17,8 +17,8 @@
       "pick_name": "Arizona Wildcats",
       "pick": "h",
       "model_pct": 85.7,
-      "market_pct": 64.5,
-      "edge_points": 21.2,
+      "market_pct": 64.6,
+      "edge_points": 21.1,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
       "generated_at": "2026-11-03T01:59:57.356693+00:00",
@@ -718,7 +718,7 @@
       "edge_points": 2.4,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-11-03T02:29:36.193372+00:00",
+      "generated_at": "2026-11-03T02:43:03.226738+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": false,
@@ -857,7 +857,16 @@
           "is_home": false,
           "model_pct": 0.2
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 92,
+        "away": 56,
+        "simulations": 0
+      },
+      "model_line": {
+        "home_margin": 36.2,
+        "total": 147.7
+      }
     },
     {
       "event_id": "a621e112c59b5b8369f80c2fb55e615d",
@@ -889,7 +898,16 @@
           "is_home": false,
           "model_pct": 16.2
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 79,
+        "away": 67,
+        "simulations": 0
+      },
+      "model_line": {
+        "home_margin": 12.2,
+        "total": 145.8
+      }
     },
     {
       "event_id": "c0ddb68355a79fb70194e95b75c037ca",
@@ -962,7 +980,16 @@
           "is_home": false,
           "model_pct": 0.1
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 97,
+        "away": 58,
+        "simulations": 0
+      },
+      "model_line": {
+        "home_margin": 39.1,
+        "total": 155.9
+      }
     },
     {
       "event_id": "schedule:401909551",
@@ -1281,7 +1308,16 @@
           "is_home": true,
           "model_pct": 98.9
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 83,
+        "away": 55,
+        "simulations": 0
+      },
+      "model_line": {
+        "home_margin": 28.1,
+        "total": 138.0
+      }
     },
     {
       "event_id": "schedule:401906757",
@@ -1846,7 +1882,16 @@
           "is_home": false,
           "model_pct": 6.0
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 86,
+        "away": 67,
+        "simulations": 0
+      },
+      "model_line": {
+        "home_margin": 19.2,
+        "total": 152.6
+      }
     },
     {
       "event_id": "schedule:401917511",
@@ -2104,8 +2149,8 @@
       "pick_name": "UMass Minutemen",
       "pick": "h",
       "model_pct": 63.1,
-      "market_pct": 58.6,
-      "edge_points": 4.5,
+      "market_pct": 58.7,
+      "edge_points": 4.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-9c494b27a36e",
       "generated_at": "2026-11-01T17:44:30.582667+00:00",
@@ -6245,8 +6290,8 @@
       "pick_name": "SMU Mustangs",
       "pick": "h",
       "model_pct": 69.7,
-      "market_pct": 66.4,
-      "edge_points": 3.3,
+      "market_pct": 66.5,
+      "edge_points": 3.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-9c494b27a36e",
       "generated_at": "2026-11-01T17:44:56.850224+00:00",
@@ -13258,8 +13303,8 @@
       "pick_name": "Texas Tech Red Raiders",
       "pick": "h",
       "model_pct": 81.0,
-      "market_pct": 86.1,
-      "edge_points": -5.1,
+      "market_pct": 85.9,
+      "edge_points": -4.9,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-9c494b27a36e",
       "generated_at": "2026-11-01T17:45:55.030459+00:00",
@@ -13340,8 +13385,8 @@
       "pick_name": "Hawaii Rainbow Warriors",
       "pick": "a",
       "model_pct": 70.6,
-      "market_pct": 74.7,
-      "edge_points": -4.1,
+      "market_pct": 74.8,
+      "edge_points": -4.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-9c494b27a36e",
       "generated_at": "2026-11-01T17:47:56.600389+00:00",
@@ -40513,6 +40558,1536 @@
   },
   "results": [
     {
+      "event_id": "401931655",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Charleston Cougars",
+      "away": "Southern Wesleyan Warriors",
+      "home_score": 111.0,
+      "away_score": 55.0,
+      "margin": 56.0,
+      "winner": "Charleston Cougars",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401929404",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "South Dakota Coyotes",
+      "away": "Mount Marty Lancers",
+      "home_score": 95.0,
+      "away_score": 57.0,
+      "margin": 38.0,
+      "winner": "South Dakota Coyotes",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401929384",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T16:00Z",
+      "home": "Mercer Bears",
+      "away": "Reinhardt Eagles",
+      "home_score": 90.0,
+      "away_score": 53.0,
+      "margin": 37.0,
+      "winner": "Mercer Bears",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401929383",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Eastern Kentucky Colonels",
+      "away": "Kentucky Christian Knights",
+      "home_score": 105.0,
+      "away_score": 54.0,
+      "margin": 51.0,
+      "winner": "Eastern Kentucky Colonels",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401928858",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T22:00Z",
+      "home": "UIC Flames",
+      "away": "St. Francis (IL) Fighting Saints",
+      "home_score": 96.0,
+      "away_score": 47.0,
+      "margin": 49.0,
+      "winner": "UIC Flames",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401928852",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Morgan State Bears",
+      "away": "Cheyney (PA) Wolves",
+      "home_score": 103.0,
+      "away_score": 52.0,
+      "margin": 51.0,
+      "winner": "Morgan State Bears",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401928806",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Green Bay Phoenix",
+      "away": "Lawrence Vikings",
+      "home_score": 94.0,
+      "away_score": 51.0,
+      "margin": 43.0,
+      "winner": "Green Bay Phoenix",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401928619",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T16:30Z",
+      "home": "Middle Tennessee Blue Raiders",
+      "away": "Fisk Bulldogs",
+      "home_score": 117.0,
+      "away_score": 73.0,
+      "margin": 44.0,
+      "winner": "Middle Tennessee Blue Raiders",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401928357",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Florida International Panthers",
+      "away": "New College Mighty Banyans",
+      "home_score": 101.0,
+      "away_score": 58.0,
+      "margin": 43.0,
+      "winner": "Florida International Panthers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401927341",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Delaware State Hornets",
+      "away": "Saint Vincent Bearcats",
+      "home_score": 86.0,
+      "away_score": 52.0,
+      "margin": 34.0,
+      "winner": "Delaware State Hornets",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926862",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "UNC Wilmington Seahawks",
+      "away": "Mount Olive Trojans",
+      "home_score": 101.0,
+      "away_score": 65.0,
+      "margin": 36.0,
+      "winner": "UNC Wilmington Seahawks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926833",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "Stony Brook Seawolves",
+      "away": "SUNY Old Westbury Panthers",
+      "home_score": 97.0,
+      "away_score": 47.0,
+      "margin": 50.0,
+      "winner": "Stony Brook Seawolves",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926830",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T16:30Z",
+      "home": "Hofstra Pride",
+      "away": "St. Joseph's Long Island Golden Eagles",
+      "home_score": 97.0,
+      "away_score": 51.0,
+      "margin": 46.0,
+      "winner": "Hofstra Pride",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926787",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Kennesaw State Owls",
+      "away": "Midway Eagles",
+      "home_score": 116.0,
+      "away_score": 57.0,
+      "margin": 59.0,
+      "winner": "Kennesaw State Owls",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926200",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "VMI Keydets",
+      "away": "Virginia Lynchburg Dragons",
+      "home_score": 115.0,
+      "away_score": 83.0,
+      "margin": 32.0,
+      "winner": "VMI Keydets",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926141",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "SIU Edwardsville Cougars",
+      "away": "Eureka Red Devils",
+      "home_score": 91.0,
+      "away_score": 39.0,
+      "margin": 52.0,
+      "winner": "SIU Edwardsville Cougars",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926116",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Samford Bulldogs",
+      "away": "Berry Vikings",
+      "home_score": 87.0,
+      "away_score": 58.0,
+      "margin": 29.0,
+      "winner": "Samford Bulldogs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401926077",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Prairie View A&M Panthers",
+      "away": "Paul Quinn Tigers",
+      "home_score": 86.0,
+      "away_score": 65.0,
+      "margin": 21.0,
+      "winner": "Prairie View A&M Panthers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925925",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T17:00Z",
+      "home": "South Carolina State Bulldogs",
+      "away": "Morris Hornets",
+      "home_score": 94.0,
+      "away_score": 55.0,
+      "margin": 39.0,
+      "winner": "South Carolina State Bulldogs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925857",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "Temple Owls",
+      "away": "Central Connecticut Blue Devils",
+      "home_score": 68.0,
+      "away_score": 56.0,
+      "margin": 12.0,
+      "winner": "Temple Owls",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925818",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Indiana State Sycamores",
+      "away": "Charlotte 49ers",
+      "home_score": 70.0,
+      "away_score": 78.0,
+      "margin": -8.0,
+      "winner": "Charlotte 49ers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925733",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "Michigan Wolverines",
+      "away": "Oakland Golden Grizzlies",
+      "home_score": 84.0,
+      "away_score": 68.0,
+      "margin": 16.0,
+      "winner": "Michigan Wolverines",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925088",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Stephen F. Austin Lumberjacks",
+      "away": "Lyon Scots",
+      "home_score": 120.0,
+      "away_score": 61.0,
+      "margin": 59.0,
+      "winner": "Stephen F. Austin Lumberjacks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401925062",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T17:00Z",
+      "home": "Nicholls Colonels",
+      "away": "North American Stallions",
+      "home_score": 110.0,
+      "away_score": 56.0,
+      "margin": 54.0,
+      "winner": "Nicholls Colonels",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401924875",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Sacred Heart Pioneers",
+      "away": "Coast Guard Bears",
+      "home_score": 111.0,
+      "away_score": 44.0,
+      "margin": 67.0,
+      "winner": "Sacred Heart Pioneers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401924856",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Michigan State Spartans",
+      "away": "Quinnipiac Bobcats",
+      "home_score": 96.0,
+      "away_score": 59.0,
+      "margin": 37.0,
+      "winner": "Michigan State Spartans",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401924743",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Yale Bulldogs",
+      "away": "Howard Bison",
+      "home_score": 72.0,
+      "away_score": 62.0,
+      "margin": 10.0,
+      "winner": "Yale Bulldogs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401924732",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T21:00Z",
+      "home": "Princeton Tigers",
+      "away": "Carnegie Mellon Tartans",
+      "home_score": 78.0,
+      "away_score": 46.0,
+      "margin": 32.0,
+      "winner": "Princeton Tigers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401924717",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "Cornell Big Red",
+      "away": "Pepperdine Waves",
+      "home_score": 86.0,
+      "away_score": 85.0,
+      "margin": 1.0,
+      "winner": "Cornell Big Red",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401923324",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "UMass Lowell River Hawks",
+      "away": "Rivier Raiders",
+      "home_score": 121.0,
+      "away_score": 57.0,
+      "margin": 64.0,
+      "winner": "UMass Lowell River Hawks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401923317",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "UAlbany Great Danes",
+      "away": "Rhode Island College Anchormen",
+      "home_score": 74.0,
+      "away_score": 67.0,
+      "margin": 7.0,
+      "winner": "UAlbany Great Danes",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401922247",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "West Florida Argonauts",
+      "away": "Southeastern Baptist Chargers",
+      "home_score": 127.0,
+      "away_score": 42.0,
+      "margin": 85.0,
+      "winner": "West Florida Argonauts",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921766",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "West Virginia Mountaineers",
+      "away": "Niagara Purple Eagles",
+      "home_score": 91.0,
+      "away_score": 46.0,
+      "margin": 45.0,
+      "winner": "West Virginia Mountaineers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921753",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "UCF Knights",
+      "away": "Florida Gulf Coast Eagles",
+      "home_score": 96.0,
+      "away_score": 95.0,
+      "margin": 1.0,
+      "winner": "UCF Knights",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921423",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T14:00Z",
+      "home": "Queens University Royals",
+      "away": "Winthrop Eagles",
+      "home_score": 103.0,
+      "away_score": 98.0,
+      "margin": 5.0,
+      "winner": "Queens University Royals",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921422",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T11:00Z",
+      "home": "App State Mountaineers",
+      "away": "Merrimack Warriors",
+      "home_score": 63.0,
+      "away_score": 49.0,
+      "margin": 14.0,
+      "winner": "App State Mountaineers",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921264",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "Georgetown Hoyas",
+      "away": "Loyola Maryland Greyhounds",
+      "home_score": 80.0,
+      "away_score": 58.0,
+      "margin": 22.0,
+      "winner": "Georgetown Hoyas",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921173",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T16:00Z",
+      "home": "IU Indianapolis Jaguars",
+      "away": "Miami (OH) Middletown ThunderHawks",
+      "home_score": 113.0,
+      "away_score": 76.0,
+      "margin": 37.0,
+      "winner": "IU Indianapolis Jaguars",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921139",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Columbia Lions",
+      "away": "Elon Phoenix",
+      "home_score": 71.0,
+      "away_score": 84.0,
+      "margin": -13.0,
+      "winner": "Elon Phoenix",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921104",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Vanderbilt Commodores",
+      "away": "Bellarmine Knights",
+      "home_score": 93.0,
+      "away_score": 47.0,
+      "margin": 46.0,
+      "winner": "Vanderbilt Commodores",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921093",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "Rice Owls",
+      "away": "Dallas Christian Crusaders",
+      "home_score": 100.0,
+      "away_score": 55.0,
+      "margin": 45.0,
+      "winner": "Rice Owls",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401921036",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Texas Tech Red Raiders",
+      "away": "Jackson State Tigers",
+      "home_score": 76.0,
+      "away_score": 42.0,
+      "margin": 34.0,
+      "winner": "Texas Tech Red Raiders",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920959",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Western Kentucky Hilltoppers",
+      "away": "Morehead State Eagles",
+      "home_score": 83.0,
+      "away_score": 58.0,
+      "margin": 25.0,
+      "winner": "Western Kentucky Hilltoppers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920912",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T08:00Z",
+      "home": "Grambling Tigers",
+      "away": "Northern Illinois Huskies",
+      "home_score": 89.0,
+      "away_score": 87.0,
+      "margin": 2.0,
+      "winner": "Grambling Tigers",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920902",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Delaware Blue Hens",
+      "away": "Notre Dame (MD) Gators",
+      "home_score": 105.0,
+      "away_score": 44.0,
+      "margin": 61.0,
+      "winner": "Delaware Blue Hens",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920893",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Wisconsin Badgers",
+      "away": "Denver Pioneers",
+      "home_score": 75.0,
+      "away_score": 68.0,
+      "margin": 7.0,
+      "winner": "Wisconsin Badgers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920876",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Jacksonville Dolphins",
+      "away": "Trinity College of Jacksonville Eagles",
+      "home_score": 105.0,
+      "away_score": 61.0,
+      "margin": 44.0,
+      "winner": "Jacksonville Dolphins",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920842",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Presbyterian Blue Hose",
+      "away": "St. Thomas Tommies",
+      "home_score": 78.0,
+      "away_score": 87.0,
+      "margin": -9.0,
+      "winner": "St. Thomas Tommies",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920746",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Boston University Terriers",
+      "away": "Northeastern Huskies",
+      "home_score": 93.0,
+      "away_score": 85.0,
+      "margin": 8.0,
+      "winner": "Boston University Terriers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920690",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Iona Gaels",
+      "away": "Vermont Catamounts",
+      "home_score": 56.0,
+      "away_score": 55.0,
+      "margin": 1.0,
+      "winner": "Iona Gaels",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920679",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "St. John's Red Storm",
+      "away": "Monmouth Hawks",
+      "home_score": 78.0,
+      "away_score": 63.0,
+      "margin": 15.0,
+      "winner": "St. John's Red Storm",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920354",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Harvard Crimson",
+      "away": "MIT Engineers",
+      "home_score": 73.0,
+      "away_score": 45.0,
+      "margin": 28.0,
+      "winner": "Harvard Crimson",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920231",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Marist Red Foxes",
+      "away": "Dartmouth Big Green",
+      "home_score": 62.0,
+      "away_score": 69.0,
+      "margin": -7.0,
+      "winner": "Dartmouth Big Green",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920071",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T21:00Z",
+      "home": "George Mason Patriots",
+      "away": "UMBC Retrievers",
+      "home_score": 82.0,
+      "away_score": 54.0,
+      "margin": 28.0,
+      "winner": "George Mason Patriots",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401919845",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Stonehill Skyhawks",
+      "away": "Curry Colonels",
+      "home_score": 84.0,
+      "away_score": 56.0,
+      "margin": 28.0,
+      "winner": "Stonehill Skyhawks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401919803",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Florida Atlantic Owls",
+      "away": "Long Island University Sharks",
+      "home_score": 74.0,
+      "away_score": 60.0,
+      "margin": 14.0,
+      "winner": "Florida Atlantic Owls",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401919780",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Nebraska Cornhuskers",
+      "away": "Le Moyne Dolphins",
+      "home_score": 106.0,
+      "away_score": 64.0,
+      "margin": 42.0,
+      "winner": "Nebraska Cornhuskers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401919014",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T22:30Z",
+      "home": "McNeese Cowboys",
+      "away": "UAB Blazers",
+      "home_score": 99.0,
+      "away_score": 78.0,
+      "margin": 21.0,
+      "winner": "McNeese Cowboys",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401918976",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "East Carolina Pirates",
+      "away": "South Carolina Upstate Spartans",
+      "home_score": 83.0,
+      "away_score": 70.0,
+      "margin": 13.0,
+      "winner": "East Carolina Pirates",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401918312",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "William & Mary Tribe",
+      "away": "Bridgewater Eagles",
+      "home_score": 80.0,
+      "away_score": 66.0,
+      "margin": 14.0,
+      "winner": "William & Mary Tribe",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401918073",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Clemson Tigers",
+      "away": "Stetson Hatters",
+      "home_score": 85.0,
+      "away_score": 72.0,
+      "margin": 13.0,
+      "winner": "Clemson Tigers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401916296",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Maryland Terrapins",
+      "away": "Bucknell Bison",
+      "home_score": 96.0,
+      "away_score": 67.0,
+      "margin": 29.0,
+      "winner": "Maryland Terrapins",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401916286",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Indiana Hoosiers",
+      "away": "Eastern Illinois Panthers",
+      "home_score": 91.0,
+      "away_score": 57.0,
+      "margin": 34.0,
+      "winner": "Indiana Hoosiers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401913099",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "North Carolina Tar Heels",
+      "away": "Western Carolina Catamounts",
+      "home_score": 80.0,
+      "away_score": 72.0,
+      "margin": 8.0,
+      "winner": "North Carolina Tar Heels",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401912207",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Cincinnati Bearcats",
+      "away": "American University Eagles",
+      "home_score": 79.0,
+      "away_score": 53.0,
+      "margin": 26.0,
+      "winner": "Cincinnati Bearcats",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911707",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T16:30Z",
+      "home": "Tennessee State Tigers",
+      "away": "Murray State Racers",
+      "home_score": 64.0,
+      "away_score": 94.0,
+      "margin": -30.0,
+      "winner": "Murray State Racers",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911532",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T19:30Z",
+      "home": "Northern Kentucky Norse",
+      "away": "UTEP Miners",
+      "home_score": 84.0,
+      "away_score": 76.0,
+      "margin": 8.0,
+      "winner": "Northern Kentucky Norse",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911469",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T20:00Z",
+      "home": "San José State Spartans",
+      "away": "UTSA Roadrunners",
+      "home_score": 95.0,
+      "away_score": 74.0,
+      "margin": 21.0,
+      "winner": "San José State Spartans",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911333",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Wright State Raiders",
+      "away": "Air Force Falcons",
+      "home_score": 102.0,
+      "away_score": 71.0,
+      "margin": 31.0,
+      "winner": "Wright State Raiders",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911304",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Brown Bears",
+      "away": "New Hampshire Wildcats",
+      "home_score": 55.0,
+      "away_score": 59.0,
+      "margin": -4.0,
+      "winner": "New Hampshire Wildcats",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911261",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "St. Bonaventure Bonnies",
+      "away": "Youngstown State Penguins",
+      "home_score": 71.0,
+      "away_score": 79.0,
+      "margin": -8.0,
+      "winner": "Youngstown State Penguins",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911237",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Richmond Spiders",
+      "away": "UNC Asheville Bulldogs",
+      "home_score": 100.0,
+      "away_score": 77.0,
+      "margin": 23.0,
+      "winner": "Richmond Spiders",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911208",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "George Washington Revolutionaries",
+      "away": "Navy Midshipmen",
+      "home_score": 91.0,
+      "away_score": 39.0,
+      "margin": 52.0,
+      "winner": "George Washington Revolutionaries",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911185",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Dayton Flyers",
+      "away": "NJIT Highlanders",
+      "home_score": 89.0,
+      "away_score": 58.0,
+      "margin": 31.0,
+      "winner": "Dayton Flyers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911004",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Georgia Southern Eagles",
+      "away": "Ball State Cardinals",
+      "home_score": 67.0,
+      "away_score": 55.0,
+      "margin": 12.0,
+      "winner": "Georgia Southern Eagles",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911002",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "James Madison Dukes",
+      "away": "Miami (OH) RedHawks",
+      "home_score": 77.0,
+      "away_score": 86.0,
+      "margin": -9.0,
+      "winner": "Miami (OH) RedHawks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401911001",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Troy Trojans",
+      "away": "Massachusetts Minutemen",
+      "home_score": 60.0,
+      "away_score": 71.0,
+      "margin": -11.0,
+      "winner": "Massachusetts Minutemen",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401910998",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Coastal Carolina Chanticleers",
+      "away": "Eastern Michigan Eagles",
+      "home_score": 70.0,
+      "away_score": 71.0,
+      "margin": -1.0,
+      "winner": "Eastern Michigan Eagles",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401910997",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Old Dominion Monarchs",
+      "away": "Western Michigan Broncos",
+      "home_score": 61.0,
+      "away_score": 49.0,
+      "margin": 12.0,
+      "winner": "Old Dominion Monarchs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401910995",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Marshall Thundering Herd",
+      "away": "Buffalo Bulls",
+      "home_score": 92.0,
+      "away_score": 65.0,
+      "margin": 27.0,
+      "winner": "Marshall Thundering Herd",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401910994",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "Georgia State Panthers",
+      "away": "Bowling Green Falcons",
+      "home_score": 73.0,
+      "away_score": 76.0,
+      "margin": -3.0,
+      "winner": "Bowling Green Falcons",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909771",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Iowa State Cyclones",
+      "away": "Memphis Tigers",
+      "home_score": 76.0,
+      "away_score": 80.0,
+      "margin": -4.0,
+      "winner": "Memphis Tigers",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909716",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Syracuse Orange",
+      "away": "New Haven Chargers",
+      "home_score": 74.0,
+      "away_score": 58.0,
+      "margin": 16.0,
+      "winner": "Syracuse Orange",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909705",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Pittsburgh Panthers",
+      "away": "Rider Broncs",
+      "home_score": 95.0,
+      "away_score": 57.0,
+      "margin": 38.0,
+      "winner": "Pittsburgh Panthers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909562",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:30Z",
+      "home": "Duke Blue Devils",
+      "away": "Army Black Knights",
+      "home_score": 84.0,
+      "away_score": 50.0,
+      "margin": 34.0,
+      "winner": "Duke Blue Devils",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909541",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Xavier Musketeers",
+      "away": "Mount St. Mary's Mountaineers",
+      "home_score": 97.0,
+      "away_score": 52.0,
+      "margin": 45.0,
+      "winner": "Xavier Musketeers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909531",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Providence Friars",
+      "away": "Maine Black Bears",
+      "home_score": 83.0,
+      "away_score": 56.0,
+      "margin": 27.0,
+      "winner": "Providence Friars",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401909522",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:30Z",
+      "home": "Marquette Golden Eagles",
+      "away": "Mercyhurst Lakers",
+      "home_score": 78.0,
+      "away_score": 43.0,
+      "margin": 35.0,
+      "winner": "Marquette Golden Eagles",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401906769",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-02T23:00Z",
+      "home": "Florida Gators",
+      "away": "Miami Hurricanes",
+      "home_score": 77.0,
+      "away_score": 67.0,
+      "margin": 10.0,
+      "winner": "Florida Gators",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401902275",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-02",
+      "kickoff": "2026-11-03T00:00Z",
+      "home": "Butler Bulldogs",
+      "away": "Lafayette Leopards",
+      "home_score": 96.0,
+      "away_score": 60.0,
+      "margin": 36.0,
+      "winner": "Butler Bulldogs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401920982",
       "sport": "ncaam",
       "competition": "NCAAM",
@@ -40525,6 +42100,23 @@
       "away_score": 74.0,
       "margin": -2.0,
       "winner": "Notre Dame Fighting Irish",
+      "neutral": true,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401920409",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "season": 2027,
+      "played_on": "2026-11-01",
+      "kickoff": "2026-11-02T04:59Z",
+      "home": "High Point Panthers",
+      "away": "Liberty Flames",
+      "home_score": 72.0,
+      "away_score": 57.0,
+      "margin": 15.0,
+      "winner": "High Point Panthers",
       "neutral": true,
       "conference_game": false,
       "postseason": false
@@ -75974,9 +77566,9 @@
         "market_pct": 19.7,
         "disagreement_points": 13.5,
         "best_price": 5.4,
-        "result": null,
-        "home_score": null,
-        "away_score": null
+        "result": "won",
+        "home_score": 71.0,
+        "away_score": 79.0
       }
     ],
     "considered": 18,
@@ -76031,7 +77623,7 @@
       "ncaaf",
       "ncaam"
     ],
-    "results": 601,
+    "results": 692,
     "fixtures": 627
   },
   "publication": {
@@ -81635,67 +83227,137 @@
           "duplicate_cards_not_counted": 0,
           "fbs_versus_fcs_not_counted": 0,
           "locked_selections": 350,
-          "graded_selections": 2,
-          "awaiting_result": 348
+          "graded_selections": 163,
+          "awaiting_result": 187
         },
         "record": {
-          "picks": 1,
-          "wins": 0,
-          "losses": 1,
-          "hit_rate_pct": 0.0,
-          "expected_hit_rate_pct": 85.5,
-          "calibration_gap_points": -85.5,
+          "picks": 82,
+          "wins": 62,
+          "losses": 20,
+          "hit_rate_pct": 75.6,
+          "expected_hit_rate_pct": 84.8,
+          "calibration_gap_points": -9.2,
           "confidence_interval_pct": [
-            0.0,
-            79.3
+            65.3,
+            83.6
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 0,
-          "beat_market_pct": null,
+          "graded_priced_selections": 68,
+          "beat_market_pct": 67.6,
           "beat_market": {
-            "picks": 0,
-            "wins": 0,
-            "losses": 0,
+            "picks": 68,
+            "wins": 46,
+            "losses": 22,
             "ties": 0,
-            "hit_rate_pct": null,
-            "expected_hit_rate_pct": null,
-            "calibration_gap_points": null,
-            "confidence_interval_pct": null,
+            "hit_rate_pct": 67.6,
+            "expected_hit_rate_pct": 50.0,
+            "calibration_gap_points": 17.6,
+            "confidence_interval_pct": [
+              55.8,
+              77.6
+            ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 0,
-            "wins": 0,
-            "losses": 0,
-            "hit_rate_pct": null,
-            "expected_hit_rate_pct": null,
-            "calibration_gap_points": null,
-            "confidence_interval_pct": null
+            "picks": 33,
+            "wins": 24,
+            "losses": 9,
+            "hit_rate_pct": 72.7,
+            "expected_hit_rate_pct": 85.6,
+            "calibration_gap_points": -12.9,
+            "confidence_interval_pct": [
+              55.8,
+              84.9
+            ]
           },
           "disagreed_with_market": {
-            "picks": 0,
-            "wins": 0,
+            "picks": 2,
+            "wins": 2,
             "losses": 0,
-            "hit_rate_pct": null,
-            "expected_hit_rate_pct": null,
-            "calibration_gap_points": null,
-            "confidence_interval_pct": null
+            "hit_rate_pct": 100.0,
+            "expected_hit_rate_pct": 71.6,
+            "calibration_gap_points": 28.4,
+            "confidence_interval_pct": [
+              34.2,
+              100.0
+            ]
           },
-          "disagreement_share_pct": null,
+          "disagreement_share_pct": 5.7,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
-          "available": false,
-          "reason": "No graded card carried a market price to compare against"
+          "available": true,
+          "underdog_lift_points": -4.9,
+          "contested_underdogs": 11,
+          "contested_band_pct": [
+            30.0,
+            50.0
+          ],
+          "mean_divergence_points": 6.7,
+          "outright_disagreements": {
+            "picks": 2,
+            "wins": 2,
+            "losses": 0,
+            "hit_rate_pct": 100.0
+          },
+          "boldest_calls": [
+            {
+              "event_name": "Pepperdine Waves at Cornell Big Red",
+              "selection": "Cornell Big Red",
+              "starts_at": "2026-11-02T23:00:00Z",
+              "model_pct": 81.7,
+              "market_pct": 40.3,
+              "divergence_points": 41.4,
+              "result": "win"
+            },
+            {
+              "event_name": "Miami (OH) RedHawks at James Madison Dukes",
+              "selection": "Miami (OH) RedHawks",
+              "starts_at": "2026-11-03T00:03:36Z",
+              "model_pct": 61.6,
+              "market_pct": 49.4,
+              "divergence_points": 12.2,
+              "result": "win"
+            }
+          ],
+          "basis": "no-vig consensus at the lock deadline, not the closing price"
         },
         "by_confidence": [
           {
+            "band": "50–60%",
+            "picks": 7,
+            "hit_rate_pct": 42.9,
+            "expected_hit_rate_pct": 55.9,
+            "calibration_gap_points": -13.0
+          },
+          {
+            "band": "60–70%",
+            "picks": 14,
+            "hit_rate_pct": 50.0,
+            "expected_hit_rate_pct": 63.5,
+            "calibration_gap_points": -13.5
+          },
+          {
+            "band": "70–80%",
+            "picks": 8,
+            "hit_rate_pct": 25.0,
+            "expected_hit_rate_pct": 76.2,
+            "calibration_gap_points": -51.2
+          },
+          {
             "band": "80–90%",
-            "picks": 1,
-            "hit_rate_pct": 0.0,
-            "expected_hit_rate_pct": 85.5,
-            "calibration_gap_points": -85.5
+            "picks": 8,
+            "hit_rate_pct": 75.0,
+            "expected_hit_rate_pct": 84.7,
+            "calibration_gap_points": -9.7
+          },
+          {
+            "band": "90–100%",
+            "picks": 45,
+            "hit_rate_pct": 97.8,
+            "expected_hit_rate_pct": 97.5,
+            "calibration_gap_points": 0.3
           }
         ],
         "recent": [
@@ -82226,8 +83888,8 @@
             "selection": "Marquette Golden Eagles",
             "probability_pct": 99.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–43"
           },
           {
             "event_name": "Le Moyne Dolphins at Nebraska Cornhuskers",
@@ -82236,8 +83898,8 @@
             "selection": "Nebraska Cornhuskers",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "106–64"
           },
           {
             "event_name": "Southern Indiana Screaming Eagles at Belmont Bruins",
@@ -82276,8 +83938,8 @@
             "selection": "Wisconsin Badgers",
             "probability_pct": 97.9,
             "market_probability_pct": 95.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "75–68"
           },
           {
             "event_name": "UNC Asheville Bulldogs at Richmond Spiders",
@@ -82286,8 +83948,8 @@
             "selection": "Richmond Spiders",
             "probability_pct": 84.5,
             "market_probability_pct": 85.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–77"
           },
           {
             "event_name": "Florida Gulf Coast Eagles at UCF Knights",
@@ -82296,8 +83958,8 @@
             "selection": "UCF Knights",
             "probability_pct": 96.0,
             "market_probability_pct": 95.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–95"
           },
           {
             "event_name": "NJIT Highlanders at Dayton Flyers",
@@ -82306,8 +83968,8 @@
             "selection": "Dayton Flyers",
             "probability_pct": 98.8,
             "market_probability_pct": 95.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "89–58"
           },
           {
             "event_name": "Ball State Cardinals at Georgia Southern Eagles",
@@ -82316,8 +83978,8 @@
             "selection": "Ball State Cardinals",
             "probability_pct": 64.6,
             "market_probability_pct": 56.8,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "67–55"
           },
           {
             "event_name": "Youngstown St Penguins at St. Bonaventure Bonnies",
@@ -82326,8 +83988,8 @@
             "selection": "St. Bonaventure Bonnies",
             "probability_pct": 66.8,
             "market_probability_pct": 81.8,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "71–79"
           },
           {
             "event_name": "Buffalo Bulls at Marshall Thundering Herd",
@@ -82336,8 +83998,8 @@
             "selection": "Marshall Thundering Herd",
             "probability_pct": 63.5,
             "market_probability_pct": 53.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "92–65"
           },
           {
             "event_name": "New Hampshire Wildcats at Brown Bears",
@@ -82346,8 +84008,8 @@
             "selection": "Brown Bears",
             "probability_pct": 85.4,
             "market_probability_pct": 79.3,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "55–59"
           },
           {
             "event_name": "Miami (OH) RedHawks at James Madison Dukes",
@@ -82356,8 +84018,8 @@
             "selection": "Miami (OH) RedHawks",
             "probability_pct": 61.6,
             "market_probability_pct": 49.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–86"
           },
           {
             "event_name": "Memphis Tigers at Iowa State Cyclones",
@@ -82366,8 +84028,8 @@
             "selection": "Iowa State Cyclones",
             "probability_pct": 97.2,
             "market_probability_pct": 87.7,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "76–80"
           },
           {
             "event_name": "Western Michigan Broncos at Old Dominion Monarchs",
@@ -82376,8 +84038,8 @@
             "selection": "Western Michigan Broncos",
             "probability_pct": 63.6,
             "market_probability_pct": 51.9,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "61–49"
           },
           {
             "event_name": "Howard Bison at Yale Bulldogs",
@@ -82386,8 +84048,8 @@
             "selection": "Yale Bulldogs",
             "probability_pct": 76.7,
             "market_probability_pct": 70.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "72–62"
           },
           {
             "event_name": "Vermont Catamounts at Iona Gaels",
@@ -82396,8 +84058,8 @@
             "selection": "Iona Gaels",
             "probability_pct": 53.1,
             "market_probability_pct": 51.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "56–55"
           },
           {
             "event_name": "Lafayette Leopards at Butler Bulldogs",
@@ -82406,8 +84068,8 @@
             "selection": "Butler Bulldogs",
             "probability_pct": 95.3,
             "market_probability_pct": 95.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–60"
           },
           {
             "event_name": "South Carolina Upstate Spartans at East Carolina Pirates",
@@ -82416,8 +84078,8 @@
             "selection": "East Carolina Pirates",
             "probability_pct": 76.8,
             "market_probability_pct": 86.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–70"
           },
           {
             "event_name": "Dartmouth Big Green at Marist Red Foxes",
@@ -82426,8 +84088,8 @@
             "selection": "Marist Red Foxes",
             "probability_pct": 72.0,
             "market_probability_pct": 70.3,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "62–69"
           },
           {
             "event_name": "LIU Sharks at Florida Atlantic Owls",
@@ -82436,8 +84098,8 @@
             "selection": "Florida Atlantic Owls",
             "probability_pct": 95.2,
             "market_probability_pct": 83.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–60"
           },
           {
             "event_name": "Eastern Michigan Eagles at Coastal Carolina Chanticleers",
@@ -82446,8 +84108,8 @@
             "selection": "Coastal Carolina Chanticleers",
             "probability_pct": 55.6,
             "market_probability_pct": 50.2,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "70–71"
           },
           {
             "event_name": "Elon Phoenix at Columbia Lions",
@@ -82456,8 +84118,8 @@
             "selection": "Columbia Lions",
             "probability_pct": 76.1,
             "market_probability_pct": 60.1,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "71–84"
           },
           {
             "event_name": "Massachusetts Minutemen at Troy Trojans",
@@ -82466,8 +84128,8 @@
             "selection": "Troy Trojans",
             "probability_pct": 78.9,
             "market_probability_pct": 59.0,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "60–71"
           },
           {
             "event_name": "Maine Black Bears at Providence Friars",
@@ -82476,8 +84138,8 @@
             "selection": "Providence Friars",
             "probability_pct": 98.3,
             "market_probability_pct": 97.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–56"
           },
           {
             "event_name": "New Haven Chargers at Syracuse Orange",
@@ -82486,8 +84148,8 @@
             "selection": "Syracuse Orange",
             "probability_pct": 98.5,
             "market_probability_pct": 97.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–58"
           },
           {
             "event_name": "Rider Broncs at Pittsburgh Panthers",
@@ -82496,8 +84158,8 @@
             "selection": "Pittsburgh Panthers",
             "probability_pct": 98.1,
             "market_probability_pct": 97.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "95–57"
           },
           {
             "event_name": "Stetson Hatters at Clemson Tigers",
@@ -82506,8 +84168,8 @@
             "selection": "Clemson Tigers",
             "probability_pct": 99.0,
             "market_probability_pct": 97.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–72"
           },
           {
             "event_name": "Bellarmine Knights at Vanderbilt Commodores",
@@ -82516,8 +84178,8 @@
             "selection": "Vanderbilt Commodores",
             "probability_pct": 99.6,
             "market_probability_pct": 97.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "93–47"
           },
           {
             "event_name": "Niagara Purple Eagles at West Virginia Mountaineers",
@@ -82526,8 +84188,8 @@
             "selection": "West Virginia Mountaineers",
             "probability_pct": 98.8,
             "market_probability_pct": 97.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "91–46"
           },
           {
             "event_name": "Bucknell Bison at Maryland Terrapins",
@@ -82536,8 +84198,8 @@
             "selection": "Maryland Terrapins",
             "probability_pct": 99.7,
             "market_probability_pct": 97.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–67"
           },
           {
             "event_name": "Eastern Illinois Panthers at Indiana Hoosiers",
@@ -82546,8 +84208,8 @@
             "selection": "Indiana Hoosiers",
             "probability_pct": 99.2,
             "market_probability_pct": 97.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "91–57"
           },
           {
             "event_name": "Western Carolina Catamounts at North Carolina Tar Heels",
@@ -82556,8 +84218,8 @@
             "selection": "North Carolina Tar Heels",
             "probability_pct": 95.8,
             "market_probability_pct": 95.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "80–72"
           },
           {
             "event_name": "Jackson State Tigers at Texas Tech Red Raiders",
@@ -82566,8 +84228,8 @@
             "selection": "Texas Tech Red Raiders",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "76–42"
           },
           {
             "event_name": "Quinnipiac Bobcats at Michigan State Spartans",
@@ -82576,8 +84238,8 @@
             "selection": "Michigan State Spartans",
             "probability_pct": 99.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–59"
           },
           {
             "event_name": "Notre Dame (MD) Gators at Delaware Blue Hens",
@@ -82586,8 +84248,8 @@
             "selection": "Delaware Blue Hens",
             "probability_pct": 93.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "105–44"
           },
           {
             "event_name": "MIT Engineers at Harvard Crimson",
@@ -82596,8 +84258,8 @@
             "selection": "Harvard Crimson",
             "probability_pct": 92.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "73–45"
           },
           {
             "event_name": "Little Rock Trojans at VCU Rams",
@@ -82616,8 +84278,8 @@
             "selection": "Stonehill Skyhawks",
             "probability_pct": 89.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "84–56"
           },
           {
             "event_name": "Army Black Knights at Duke Blue Devils",
@@ -82626,8 +84288,8 @@
             "selection": "Duke Blue Devils",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "84–50"
           },
           {
             "event_name": "Monmouth Hawks at St. John's Red Storm",
@@ -82636,8 +84298,8 @@
             "selection": "St. John's Red Storm",
             "probability_pct": 98.2,
             "market_probability_pct": 97.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–63"
           },
           {
             "event_name": "Miami Hurricanes at Florida Gators",
@@ -82646,8 +84308,8 @@
             "selection": "Florida Gators",
             "probability_pct": 90.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–67"
           },
           {
             "event_name": "Pepperdine Waves at Cornell Big Red",
@@ -82656,8 +84318,8 @@
             "selection": "Cornell Big Red",
             "probability_pct": 81.7,
             "market_probability_pct": 40.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "86–85"
           },
           {
             "event_name": "Oakland Golden Grizzlies at Michigan Wolverines",
@@ -82666,8 +84328,8 @@
             "selection": "Michigan Wolverines",
             "probability_pct": 99.4,
             "market_probability_pct": 97.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "84–68"
           },
           {
             "event_name": "Florida Gators at Miami Hurricanes",
@@ -82686,8 +84348,8 @@
             "selection": "McNeese Cowboys",
             "probability_pct": 84.4,
             "market_probability_pct": 61.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "99–78"
           },
           {
             "event_name": "UMBC Retrievers at George Mason Patriots",
@@ -82696,8 +84358,8 @@
             "selection": "George Mason Patriots",
             "probability_pct": 94.2,
             "market_probability_pct": 92.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "82–54"
           },
           {
             "event_name": "UTSA Roadrunners at San José State Spartans",
@@ -82706,8 +84368,8 @@
             "selection": "San José State Spartans",
             "probability_pct": 62.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "95–74"
           },
           {
             "event_name": "UTEP Miners at Northern Kentucky Norse",
@@ -82716,8 +84378,8 @@
             "selection": "UTEP Miners",
             "probability_pct": 62.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "84–76"
           },
           {
             "event_name": "Northern Kentucky Norse at UTEP Miners",
@@ -82736,8 +84398,8 @@
             "selection": "Murray State Racers",
             "probability_pct": 59.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "64–94"
           },
           {
             "event_name": "Winthrop Eagles at Queens University Royals",
@@ -82746,8 +84408,8 @@
             "selection": "Queens University Royals",
             "probability_pct": 63.6,
             "market_probability_pct": 52.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "103–98"
           },
           {
             "event_name": "Northern Illinois Huskies at Grambling Tigers",
@@ -82756,8 +84418,8 @@
             "selection": "Northern Illinois Huskies",
             "probability_pct": 77.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "89–87"
           },
           {
             "event_name": "St. Thomas Tommies at Presbyterian Blue Hose",
@@ -82766,8 +84428,8 @@
             "selection": "Presbyterian Blue Hose",
             "probability_pct": 55.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "78–87"
           },
           {
             "event_name": "Liberty Flames at High Point Panthers",
@@ -82776,8 +84438,8 @@
             "selection": "High Point Panthers",
             "probability_pct": 96.4,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "72–57"
           },
           {
             "event_name": "Paine Lions at Jacksonville Dolphins",
@@ -82786,8 +84448,8 @@
             "selection": "Jacksonville Dolphins",
             "probability_pct": 95.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "105–61"
           },
           {
             "event_name": "Saint Peter's Peacocks at Seton Hall Pirates",
@@ -82806,8 +84468,8 @@
             "selection": "Wisconsin Badgers",
             "probability_pct": 97.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "75–68"
           },
           {
             "event_name": "Colgate Raiders at Washington Huskies",
@@ -82836,8 +84498,8 @@
             "selection": "Boston University Terriers",
             "probability_pct": 60.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "93–85"
           },
           {
             "event_name": "Vermont Catamounts at Iona Gaels",
@@ -82846,8 +84508,8 @@
             "selection": "Iona Gaels",
             "probability_pct": 53.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "56–55"
           },
           {
             "event_name": "Lipscomb Bisons at Southeast Missouri State Redhawks",
@@ -82876,8 +84538,8 @@
             "selection": "Marist Red Foxes",
             "probability_pct": 72.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "62–69"
           },
           {
             "event_name": "UMBC Retrievers at George Mason Patriots",
@@ -82886,8 +84548,8 @@
             "selection": "George Mason Patriots",
             "probability_pct": 94.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "82–54"
           },
           {
             "event_name": "Le Moyne Dolphins at Nebraska Cornhuskers",
@@ -82896,8 +84558,8 @@
             "selection": "Nebraska Cornhuskers",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "106–64"
           },
           {
             "event_name": "Long Island University Sharks at Florida Atlantic Owls",
@@ -82906,8 +84568,8 @@
             "selection": "Florida Atlantic Owls",
             "probability_pct": 95.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–60"
           },
           {
             "event_name": "Adams State Grizzlies at California Golden Bears",
@@ -82926,8 +84588,8 @@
             "selection": "Clemson Tigers",
             "probability_pct": 99.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–72"
           },
           {
             "event_name": "Campbell Fighting Camels at NC State Wolfpack",
@@ -83036,8 +84698,8 @@
             "selection": "Indiana Hoosiers",
             "probability_pct": 99.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "91–57"
           },
           {
             "event_name": "Bucknell Bison at Maryland Terrapins",
@@ -83046,8 +84708,8 @@
             "selection": "Maryland Terrapins",
             "probability_pct": 99.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–67"
           },
           {
             "event_name": "North Dakota Fighting Hawks at Minnesota Golden Gophers",
@@ -83066,8 +84728,8 @@
             "selection": "Butler Bulldogs",
             "probability_pct": 95.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "96–60"
           },
           {
             "event_name": "North Carolina Central Eagles at Georgia Bulldogs",
@@ -83126,8 +84788,8 @@
             "selection": "Marquette Golden Eagles",
             "probability_pct": 99.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–43"
           },
           {
             "event_name": "Maine Black Bears at Providence Friars",
@@ -83136,8 +84798,8 @@
             "selection": "Providence Friars",
             "probability_pct": 98.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–56"
           },
           {
             "event_name": "Mount St. Mary's Mountaineers at Xavier Musketeers",
@@ -83146,8 +84808,8 @@
             "selection": "Xavier Musketeers",
             "probability_pct": 98.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "97–52"
           },
           {
             "event_name": "Rider Broncs at Pittsburgh Panthers",
@@ -83156,8 +84818,8 @@
             "selection": "Pittsburgh Panthers",
             "probability_pct": 98.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "95–57"
           },
           {
             "event_name": "New Haven Chargers at Syracuse Orange",
@@ -83166,8 +84828,8 @@
             "selection": "Syracuse Orange",
             "probability_pct": 98.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–58"
           },
           {
             "event_name": "Maryland Eastern Shore Hawks at Wake Forest Demon Deacons",
@@ -83206,8 +84868,8 @@
             "selection": "Georgia State Panthers",
             "probability_pct": 59.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "73–76"
           },
           {
             "event_name": "Buffalo Bulls at Marshall Thundering Herd",
@@ -83216,8 +84878,8 @@
             "selection": "Marshall Thundering Herd",
             "probability_pct": 63.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "92–65"
           },
           {
             "event_name": "Western Michigan Broncos at Old Dominion Monarchs",
@@ -83226,8 +84888,8 @@
             "selection": "Western Michigan Broncos",
             "probability_pct": 63.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "61–49"
           },
           {
             "event_name": "Eastern Michigan Eagles at Coastal Carolina Chanticleers",
@@ -83236,8 +84898,8 @@
             "selection": "Coastal Carolina Chanticleers",
             "probability_pct": 55.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "70–71"
           },
           {
             "event_name": "Toledo Rockets at Arkansas State Red Wolves",
@@ -83266,8 +84928,8 @@
             "selection": "Troy Trojans",
             "probability_pct": 78.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "60–71"
           },
           {
             "event_name": "Miami (OH) RedHawks at James Madison Dukes",
@@ -83276,8 +84938,8 @@
             "selection": "Miami (OH) RedHawks",
             "probability_pct": 61.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–86"
           },
           {
             "event_name": "Ohio Bobcats at South Alabama Jaguars",
@@ -83296,8 +84958,8 @@
             "selection": "Ball State Cardinals",
             "probability_pct": 64.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "67–55"
           },
           {
             "event_name": "NJIT Highlanders at Dayton Flyers",
@@ -83306,8 +84968,8 @@
             "selection": "Dayton Flyers",
             "probability_pct": 98.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "89–58"
           },
           {
             "event_name": "Navy Midshipmen at George Washington Revolutionaries",
@@ -83316,8 +84978,8 @@
             "selection": "George Washington Revolutionaries",
             "probability_pct": 82.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "91–39"
           },
           {
             "event_name": "The Citadel Bulldogs at Loyola Chicago Ramblers",
@@ -83336,8 +84998,8 @@
             "selection": "Richmond Spiders",
             "probability_pct": 84.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–77"
           },
           {
             "event_name": "Lehigh Mountain Hawks at Saint Louis Billikens",
@@ -83356,8 +85018,8 @@
             "selection": "St. Bonaventure Bonnies",
             "probability_pct": 66.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "71–79"
           },
           {
             "event_name": "Air Force Falcons at Wright State Raiders",
@@ -83366,8 +85028,8 @@
             "selection": "Wright State Raiders",
             "probability_pct": 96.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "102–71"
           },
           {
             "event_name": "Charleston Southern Buccaneers at South Florida Bulls",
@@ -83406,8 +85068,8 @@
             "selection": "Cincinnati Bearcats",
             "probability_pct": 96.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "79–53"
           },
           {
             "event_name": "Western Carolina Catamounts at North Carolina Tar Heels",
@@ -83416,8 +85078,8 @@
             "selection": "North Carolina Tar Heels",
             "probability_pct": 95.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "80–72"
           },
           {
             "event_name": "High Point Panthers at Liberty Flames",
@@ -83450,8 +85112,29 @@
             "score": null
           }
         ],
-        "underdog_wins": [],
-        "reportable": false,
+        "underdog_wins": [
+          {
+            "event_name": "Pepperdine Waves at Cornell Big Red",
+            "sport": "ncaam",
+            "starts_at": "2026-11-02T23:00:00Z",
+            "selection": "Cornell Big Red",
+            "probability_pct": 81.7,
+            "market_probability_pct": 40.3,
+            "result": "win",
+            "score": "86–85"
+          },
+          {
+            "event_name": "Miami (OH) RedHawks at James Madison Dukes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-03T00:03:36Z",
+            "selection": "Miami (OH) RedHawks",
+            "probability_pct": 61.6,
+            "market_probability_pct": 49.4,
+            "result": "win",
+            "score": "77–86"
+          }
+        ],
+        "reportable": true,
         "minimum_picks_to_read": 50
       }
     },
