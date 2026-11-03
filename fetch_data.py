@@ -1614,6 +1614,8 @@ def basketball_conference_tables(matches):
                                             if r.get("sport") == "ncaam" and r.get("season") == season]})
     head_to_head = {}
     for game in sorted(matches, key=lambda m: m.get("kickoff") or ""):
+        if str(game.get("kickoff") or "")[:10] < f"{season - 1}-11-01":
+            continue
         home, away = game["home"]["name"], game["away"]["name"]
         score = game.get("score") or {}
         if game.get("status") == "FINISHED":

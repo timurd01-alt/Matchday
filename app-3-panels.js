@@ -759,12 +759,12 @@ function _scMarket(vm,c){
   const lift=c?.underdog_lift_points;
   const stats=(d&&d.picks&&lift!=null)
     ? _scCompare([['Underdog lean',`${lift>0?'+':''}${esc(lift)} pts`,`${esc(c.contested_underdogs??'—')} selections`],
-        ['Avg. price gap',`${esc(c.mean_divergence_points??'—')} pts`,'every graded card'],
+        ['Avg. price gap',`${esc(c.mean_divergence_points??'—')} pts`,'priced selections only'],
         ['Model underdogs',`${esc(d.wins)}–${esc(d.losses)}`,'record vs market'],
         ...(Number.isFinite(Number(vm?.disagreement_share_pct))?[['Different side',`${Number(vm.disagreement_share_pct).toFixed(1)}%`,'of priced picks']]:[])])
     : '';
   const pairs=[['Agreed',vm?.agreed_with_market],['Disagreed',vm?.disagreed_with_market]]
-    .filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
+    .filter(([,b])=>b&&b.picks>0&&b.hit_rate_pct!=null&&Number.isFinite(Number(b.hit_rate_pct)));
   if(!stats&&!pairs.length)return '';
   // Agreed vs disagreed as bars: hit rate filled, expected as a tick. The
   // same numbers the table held, drawn so the gap between the two reads first.
@@ -855,9 +855,9 @@ function renderScore(){
     +(ci?`<div><dt>95% CI</dt><dd>${_scNum(ci[0])}–${_scNum(ci[1])}%</dd></div>`:'')+`</dl>`
     +_scRange({value:rec.hit_rate_pct,ref:rec.expected_hit_rate_pct,lo:ci?.[0],hi:ci?.[1],min:50,max:100,refLabel:'Expected'})
     +`<div class="scRangeKey"><span><i class="scKeyDot"></i>Hit rate</span><span><i class="scKeyRef"></i>Expected</span>${ci?'<span><i class="scKeyBand"></i>95% range</span>':''}</div></section>`;
-  const price=`<section class="rsBlock rsSpan5">${rsTop('Against the price','graded')}`
+  const price=`<section class="rsBlock rsSpan5">${rsTop('Against the price','graded',Number.isFinite(priced)?`${priced} priced selections`:'')}`
     +_scCompare([['Actual',_scPct(vm.beat_market_pct)],['Expected',bm?_scPct(bm.expected_hit_rate_pct):'50.0%'],['Difference',bm?_scGap(bm.calibration_gap_points):'—']])
-    +_scRange({value:vm.beat_market_pct,ref:50,lo:bmCi?.[0],hi:bmCi?.[1],min:35,max:65,refLabel:'Coin flip',leftLabel:'← Market better',rightLabel:'Matchday better →'})
+    +_scRange({value:vm.beat_market_pct,ref:50,lo:bmCi?.[0],hi:bmCi?.[1],min:0,max:100,refLabel:'Coin flip',leftLabel:'← Market better',rightLabel:'Matchday better →'})
     +`<div class="scRangeKey"><span><i class="scKeyDot"></i>Beat the price</span><span><i class="scKeyRef"></i>Coin flip</span>${bmCi?'<span><i class="scKeyBand"></i>95% range</span>':''}</div>`
     +`</section>`;
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
@@ -1228,7 +1228,7 @@ renderNews=function(){
   }
   const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
   // College Research is model research only; the news feed is not shown.
-  if(collegeAnalysis)host.replaceChildren();
+  if(collegeAnalysis||currentSportKey()==='ncaam')host.replaceChildren();
   host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
     ${collegeAnalysis}`);
 }

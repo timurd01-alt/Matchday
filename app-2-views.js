@@ -1127,6 +1127,7 @@ function rsTeamRow(name){
   const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
   if(!t)return '';
   const standing=currentSportKey()==='ncaam'?(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]).find(r=>teamKey(r.name)===teamKey(name)):null;
+  if(currentSportKey()==='ncaam')return [`PR #${t.rank}`,standing?.record].filter(Boolean).join(' · ');
   return `PR #${t.rank} · ${esc(standing?.record||t.record||`${t.wins}-${t.losses}`)}`;
 }
 function rsFeatured(){
@@ -1672,13 +1673,13 @@ function collegeResearchModules(){
   const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
   const parts=[
     ['This week',grid(rsFeatured(),rsModelMarketWatch())],
-    ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
+    ['What the model is finding',football && grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
       +(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
-    ['The bigger picture',grid(rsSchedules(),rsConferences())
+    ['The bigger picture',football && grid(rsSchedules(),rsConferences())
       +(football?grid(rsDefence(),rsDefenceNotes()):'')],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span><span>${rsChip('blend')} power rating, includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span>${football?`<span>${rsChip('blend')} power rating, includes last season</span>`:''}<span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
     +`${parts}</section>`;
 }
