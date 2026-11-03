@@ -156,9 +156,8 @@ function matchdayLivePickHTML(m){
     const note=graceOpener?'Grace (CA) entered the season without prior varsity results.':pastTip?'Tip time has passed. No archived pregame forecast on this card.':'No published pregame forecast';
     return '<div class="pick"><span class="pl">Model</span><span>'+note+'</span></div>';
   }
-  const score=basketball?projectedScoreLine(m,p):'';
   const model=Number(p.model_pct);
-  return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:pastTip?'Pregame prediction':p.model_name==='NCAAM school-results margin model'?'Based on opponent-adjusted school results':'Live prediction · updates until kickoff'}</span></div>`+score;
+  return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:pastTip?'Pregame prediction':p.model_name==='NCAAM school-results margin model'?'Based on opponent-adjusted school results':'Live prediction · updates until kickoff'}</span></div>`;
 }
 // Game cards give each name about 83px at their narrowest (a 360px card).
 // These schools have one word wider than that, so the card uses a short form

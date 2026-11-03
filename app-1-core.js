@@ -1070,13 +1070,22 @@ function gameFilterBarHTML(active){
   const select=confs.length?`<label class="gameConfPick"><span>Conference</span><select onchange="setGameFilter({conf:this.value})"><option value="">All conferences</option>${confs.map(c=>`<option value="${esc(c)}" ${c===GAME_FILTER.conf?'selected':''}>${esc(c)}</option>`).join('')}</select></label>`:'';
   return `<div class="modelToolbar gameFilters" role="group" aria-label="Filter games">${chips}${select}</div>`;
 }
+let boardTipTimer;
 function renderMatches(){const M=DATA.matches||[];
+  clearTimeout(boardTipTimer);
+  const basketball=currentSportKey()==='ncaam';
+  const now=Date.now();
+  const beforeTip=m=>m.status==='UPCOMING'&&(kickoffTimeTbd(m)||!kickMs(m)||kickMs(m)>now);
   // One sport's full schedule, in kickoff order with favorites pinned. The
   // horizon headings below (In play / Today / This week) do the work the old
   // merged board needed a watchability ranking for: a long schedule stays
   // readable because it is grouped by when it happens, not trimmed.
   GAME_TEAM_CACHE=new Map();
-  const all=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  const all=M.filter(m=>!isCompleteOrPast(m)&&(!basketball||beforeTip(m))).sort(favoriteFixtureSort);
+  if(basketball){
+    const tips=all.filter(m=>!kickoffTimeTbd(m)&&kickMs(m)>now).map(kickMs);
+    if(tips.length)boardTipTimer=setTimeout(()=>{if(VIEW==='matches')renderMatches()},Math.min(2147483647,Math.max(1,Math.min(...tips)-Date.now())));
+  }
   const filterBar=gameFilterBarHTML(all);
   const active=all.filter(m=>gameMatchesFilter(m,GAME_FILTER));
   const filtered=GAME_FILTER.kind!=='all'||!!GAME_FILTER.conf;
