@@ -42,8 +42,22 @@ def refresh():
         cache = {"season_start": start.isoformat(), "games": {}}
     # Revisit recent finals to collect late box scores. Existing finals need no summary call.
     day = max(start, dt.date.fromisoformat(cache.get("through", start.isoformat())) - dt.timedelta(days=3))
+    if "box_averages" not in cache:
+        day = start
+        cache["box_averages"] = {}
     while day <= today:
         events = get("scoreboard?groups=50&limit=500&dates=" + day.strftime("%Y%m%d"))["events"]
+        for event in events:
+            if not event["status"]["type"]["completed"]:
+                continue
+            sides = []
+            for side in event["competitions"][0]["competitors"]:
+                stats = {s["name"]: s["displayValue"] for s in side.get("statistics", [])}
+                team = side["team"]
+                sides.append({"name": team["displayName"], "school": team.get("location"),
+                              "short": team.get("shortDisplayName"), "points": int(side["score"]),
+                              "rebounds": stats.get("rebounds"), "assists": stats.get("assists")})
+            cache["box_averages"][event["id"]] = sides
         pending = [e for e in events if e["status"]["type"]["completed"] and e["id"] not in cache["games"]]
         with ThreadPoolExecutor(max_workers=5) as workers:
             cache["games"].update(row for row in workers.map(totals, pending) if row)
