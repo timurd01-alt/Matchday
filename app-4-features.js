@@ -146,7 +146,17 @@ function pickMarginHTML(p){
   const by=Math.round(p.pick==='a'?-mg:mg);
   return by>=1?`<span class="pmargin">by ${by}</span>`:'';
 }
-function matchdayLivePickHTML(m){const p=trdlabReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
+function matchdayLivePickHTML(m){
+  const p=trdlabReadFor(m);
+  const basketball=(m._comp||DATA.comp_key||currentSportKey())==='ncaam';
+  if(!p){
+    if(!basketball||m.status!=='UPCOMING')return '';
+    return '<div class="pick"><span class="pl">Model</span><span>No published pregame forecast</span></div>';
+  }
+  const score=basketball?projectedScoreLine(m,p):'';
+  const model=Number(p.model_pct);
+  return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`+score;
+}
 // Game cards give each name about 83px at their narrowest (a 360px card).
 // These schools have one word wider than that, so the card uses a short form
 // the school itself goes by instead of splitting the word ("Tennesse / e").
