@@ -1148,8 +1148,8 @@ function rsFeatured(){
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
     +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,hoops&&m.neutral!==false?'':'Away')}<span class="rsAt">${hoops&&m.neutral!==false?'vs':'at'}</span>${side(home,hoops&&m.neutral!==false?'':'Home')}</div>`
     +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b>${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
-    +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
-    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="${gap>0?'rsGapUp':gap<0?'rsGapDown':''}">${gap>0?'+':gap<0?'−':''}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
+    +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:hoops?'<div><span class="rsKicker">Market</span><b>—</b><span>No price available</span></div>':'')
+    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="${gap>0?'rsGapUp':gap<0?'rsGapDown':''}">${gap>0?'+':gap<0?'−':''}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:hoops?'<div><span class="rsKicker">Difference</span><b>—</b><span>points</span></div>':'')+`</div>`
     +`<div class="rsFoot">${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.
@@ -1186,7 +1186,7 @@ function rsModelMarketWatch(){
       .sort((a,b)=>b._p4-a._p4||b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
-  if(!calls.length)return '';
+  if(!calls.length&&currentSportKey()!=='ncaam')return '';
   const rows=calls.map(p=>{
     const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
     const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
@@ -1216,13 +1216,22 @@ function rsModelMarketWatch(){
   return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',esc(rsSeasonWeek()))}`
     +`<div class="rsSplit"${hist?'':' style="grid-template-columns:1fr"'}><div class="rsSplitMain">`
     // One header row instead of a gray label under every number.
-    +`<ul class="rsList rsWatchList"><li class="rsGapRow rsWatchHead"><span></span><span>Matchday</span><span>Market</span><span>Gap</span></li>${rows}</ul></div>`
+    +`<ul class="rsList rsWatchList"><li class="rsGapRow rsWatchHead"><span></span><span>Matchday</span><span>Market</span><span>Gap</span></li>${rows}</ul>${rows?'':'<p class="rsWaitingNote">No upcoming underdogs with a qualifying market price this week.</p>'}</div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
     +`</div></div></section>`;
 }
 function rsLongshots(){
   const board=(typeof MATCHDAY_TRDLAB_UPSETS!=='undefined'&&MATCHDAY_TRDLAB_UPSETS)||{};
-  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
+  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):(trdlabScorecard()?.recent||[]).flatMap(r=>{
+    if(!['win','loss'].includes(r.result)||r.market_probability_pct==null)return [];
+    const [away,home]=String(r.event_name).split(' at ');
+    const scores=String(r.score).split(/[\u2013-]/).map(Number);
+    if(!home||scores.length!==2||!scores.every(Number.isFinite)||scores[0]===scores[1])return [];
+    const chance=r.result==='win'?Number(r.market_probability_pct):100-Number(r.market_probability_pct);
+    if(!(chance>0&&chance<=45))return [];
+    const homeWon=scores[0]>scores[1];
+    return [{winner:homeWon?home:away,loser:homeWon?away:home,winner_score:Math.max(...scores),loser_score:Math.min(...scores),winner_pregame_pct:chance,played_on:r.starts_at}];
+  }).sort((a,b)=>a.winner_pregame_pct-b.winner_pregame_pct);
   if(!shots.length)return '';
   const card=(x,i)=>`<li class="rsShot${i>=8?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
@@ -1309,7 +1318,7 @@ const RS_ZOOM_CHARTS={
 function rsZoomBlock(kind,c,title,chip,aside){
   return `<section class="rsBlock rsSpan8 rsChartBlock rsZoomBlock" data-chart="${kind}" data-zoom="all">${rsTop(title,chip,aside)}`
     +`<div class="rsZoomHead"></div><div class="rsPlot">${rsZoomCharts(c,'all')}</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Logos: top 10 · tap a corner to zoom in</span></div><div class="rsReadout" aria-live="polite">Tap any team to see its numbers.</div>`
+    +`<div class="rsLegend">${currentSportKey()==='ncaam'?'<span>Basketball teams</span>':'<span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span>'}<span>Logos: top 10 · tap a corner to zoom in</span></div><div class="rsReadout" aria-live="polite">Tap any team to see its numbers.</div>`
     +`</section>`;
 }
 function rsZoomCharts(c,key){
@@ -1672,16 +1681,15 @@ function collegeResearchModules(){
   // play-by-play measures; basketball has no downs or snaps, so those panels
   // are football-only rather than showing football teams on the NCAAM page.
   const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
-  const sc=football?null:trdlabScorecard();
   const parts=[
     ['This week',grid(rsFeatured(),rsModelMarketWatch())],
-    ['What the model is finding',football ? grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
-      +grid(rsEfficiency(),rsEfficiencyNotes()):grid(_scBands(sc?.by_confidence),_scRecent(sc?.recent))],
-    ['The bigger picture',football ? grid(rsSchedules(),rsConferences())
-      +grid(rsDefence(),rsDefenceNotes()):grid(_scMarket(sc?.versus_market,sc?.conviction))],
+    ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())
+      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
+    ['The bigger picture',grid(rsSchedules(),rsConferences())
+      +(football?grid(rsDefence(),rsDefenceNotes()):'')],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span>${football?`<span>${rsChip('blend')} power rating, includes last season</span>`:''}<span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span><span>${rsChip('blend')} power rating, includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
     +`${parts}</section>`;
 }
