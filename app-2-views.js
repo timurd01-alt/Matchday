@@ -1131,7 +1131,7 @@ function rsFeatured(){
   const fp=typeof featuredPick==='function'?featuredPick():null;
   if(!fp)return '';
   const {m,p}=fp;
-  const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);
+  const model=Number(p.model_pct),market=p.market_pct==null?NaN:Number(p.market_pct),gap=!Number.isFinite(market)||p.edge_points==null?NaN:Number(p.edge_points);
   const home=m.home?.name||m.home||p.home||'',away=m.away?.name||m.away||p.away||'';
   const team=rsShortName(p.pick_name);
   const read=Number.isFinite(gap)&&Math.abs(gap)>=0.5
@@ -1157,7 +1157,7 @@ function rsModelMarketWatch(){
   const fp=typeof featuredPick==='function'?featuredPick():null;
   const featured=fp?[fp.m?.home?.name||fp.p?.home,fp.m?.away?.name||fp.p?.away].filter(Boolean):[];
   const isFeatured=c=>featured.length===2&&featured.every(n=>bbNameMatches(n,c.home)||bbNameMatches(n,c.away));
-  const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c));
+  const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c)&&Date.parse(c.kickoff)>Date.now());
   // Always three: the engine's upset card can carry fewer, so the list is
   // filled from this week's picks with the same rule -- an underdog the model
   // rates above the market -- by the size of that gap.
@@ -1178,7 +1178,7 @@ function rsModelMarketWatch(){
       // Power Four first: games between two power-conference teams, then games
       // with one, each by the size of the gap.
       .map(c=>({...c,_p4:[c.home,c.away].filter(n=>tier[teamKey(n)]==='power').length}))
-      .filter(c=>c._p4>0)
+      .filter(c=>currentSportKey()==='ncaam'||c._p4>0)
       .sort((a,b)=>b._p4-a._p4||b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
@@ -1210,7 +1210,7 @@ function rsModelMarketWatch(){
   const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
     .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
   return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',esc(rsSeasonWeek()))}`
-    +`<div class="rsSplit"><div class="rsSplitMain">`
+    +`<div class="rsSplit"${hist?'':' style="grid-template-columns:1fr"'}><div class="rsSplitMain">`
     // One header row instead of a gray label under every number.
     +`<ul class="rsList rsWatchList"><li class="rsGapRow rsWatchHead"><span></span><span>Matchday</span><span>Market</span><span>Gap</span></li>${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`

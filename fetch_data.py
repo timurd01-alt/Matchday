@@ -1560,6 +1560,9 @@ def fetch_college_bundle():
     adapter._model_history = all_matches + list(bundle.get("history") or [])
     st = {norm(name): row for name, row in (bundle.get("standings_model") or {}).items()}
     tables = bundle.get("tables") or []
+    if COMP_KEY == "NCAAM":
+        # The complete season bundle includes members who have yet to play.
+        tables = basketball_conference_tables(all_matches)
     adapter._cached_rankings = (bundle.get("rankings") or [], bundle.get("projection"))
     now = datetime.datetime.now(datetime.timezone.utc)
     past, future = [], []
@@ -1593,6 +1596,54 @@ def fetch_college_bundle():
 
 
 COLLEGE_HISTORY_SEASONS = 3   # the season in progress plus two completed ones
+
+
+def basketball_conference_tables(matches):
+    groups, records = {}, {}
+    for game in matches:
+        for team in (game["home"], game["away"]):
+            group, name = team.get("group"), team.get("name")
+            if group and name and str(group).lower() not in {"non-d1", "non-d-i", "unknown"}:
+                groups[name] = group
+    for name in groups:
+        records[name] = dict(name=name, code="", w=0, l=0, d=0, gf=0, ga=0, gd=0,
+                             pts=0, pld=0, cw=0, cl=0, form="", record="0-0")
+    handoff = trdlab_handoff.load() or {}
+    season = datetime.date.today().year + (datetime.date.today().month >= 8)
+    results = trdlab_handoff.index({"picks":[dict(r, sport="ncaam") for r in handoff.get("results", [])
+                                            if r.get("sport") == "ncaam" and r.get("season") == season]})
+    head_to_head = {}
+    for game in sorted(matches, key=lambda m: m.get("kickoff") or ""):
+        home, away = game["home"]["name"], game["away"]["name"]
+        score = game.get("score") or {}
+        if game.get("status") == "FINISHED":
+            hs, ats = score.get("home"), score.get("away")
+        else:
+            result = trdlab_handoff.find(results, home, away, game.get("kickoff"))
+            if not result:
+                continue
+            hs, ats = result.get("home_score"), result.get("away_score")
+            if trdlab_handoff._compatible(trdlab_handoff._pick_team(result,"home"), trdlab_handoff._normalize(away)):
+                hs, ats = ats, hs
+        if hs is None or ats is None or hs == ats:
+            continue
+        conf = groups.get(home) and groups.get(home) == groups.get(away)
+        if conf:
+            head_to_head.setdefault(groups[home], []).append(dict(home=home,away=away,hs=hs,**{"as":ats}))
+        for name, pf, pa in ((home,hs,ats),(away,ats,hs)):
+            if name not in records:
+                continue
+            t=records[name]
+            win=pf>pa
+            t["w" if win else "l"]+=1
+            t["gf"]+=int(pf)
+            t["ga"]+=int(pa)
+            t["gd"]=t["gf"]-t["ga"]
+            t["pld"]+=1
+            t["form"]=(t["form"]+("W" if win else "L"))[-5:]
+            t["record"]=f"{t['w']}-{t['l']}"
+    return [dict(group=g, teams=[records[n] for n in groups if groups[n]==g],
+                 conference_games=head_to_head.get(g,[])) for g in sorted(set(groups.values()))]
 
 
 def fetch_college_season_history(adapter, provider_name, current_matches):

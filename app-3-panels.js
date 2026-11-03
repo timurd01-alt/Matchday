@@ -188,6 +188,50 @@ function sameCfbFixture(a,b){
   return Number.isFinite(ta)&&Number.isFinite(tb)?Math.abs(ta-tb)<=36*3600e3
     :String(a.kickoff||'').slice(0,10)===String(b.kickoff||'').slice(0,10);
 }
+  /* Conference standings, ordered the way conferences order them.
+     1. Conference win percentage -- only games between two members of this
+        table count; non-conference games never move a team up or down here.
+     2. Head-to-head among the tied teams (a mini-table if three or more are
+        level); if that separates some of them, each still-level subgroup is
+        re-run from step 2.
+     3. Overall win percentage.
+     4. Model rating, standing in for the computer/CFP rankings most
+        conferences use as their late tiebreaker.
+     Conference-specific steps (common opponents, rival divisions) are not
+     modelled; the first three settle almost every real tie. */
+function conferenceOrder(teams,gameLog,aliases){
+    const idx=new Map();
+    teams.forEach((t,i)=>{aliases(t).forEach(n=>{if(n)idx.set(teamKey(n),i)})});
+    const confGames=gameLog.map(g=>({h:idx.get(g.home),a:idx.get(g.away),hs:g.hs,as:g.as}))
+      .filter(g=>g.h!=null&&g.a!=null&&g.h!==g.a&&g.hs!==g.as);
+    teams.forEach(t=>{t.cw=0;t.cl=0});
+    confGames.forEach(g=>{const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];teams[w].cw++;teams[l].cl++;});
+    teams.forEach(t=>{t.conf_record=`${t.cw}-${t.cl}`});
+    const pct=(w,l)=>w+l?w/(w+l):0;
+    const overall=t=>pct(Number(t.w)||0,Number(t.l)||0);
+    const pos=new Map(teams.map((t,i)=>[t,i]));
+    const h2h=group=>{
+      const inG=new Set(group.map(t=>pos.get(t))),rec=new Map(group.map(t=>[t,{w:0,l:0}]));
+      confGames.forEach(g=>{if(!inG.has(g.h)||!inG.has(g.a))return;
+        const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];rec.get(teams[w]).w++;rec.get(teams[l]).l++;});
+      return t=>{const r=rec.get(t);return r.w+r.l?pct(r.w,r.l):null};
+    };
+    const bucket=(list,key)=>{const out=[];list.forEach(t=>{const k=key(t),last=out[out.length-1];if(last&&last.k===k)last.items.push(t);else out.push({k,items:[t]})});return out.map(b=>b.items)};
+    const fallback=(a,b)=>(overall(b)-overall(a))||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name);
+    const breakTie=group=>{
+      if(group.length<2)return group;
+      const score=h2h(group),scores=group.map(score);
+      // Head-to-head only decides a tie when every tied team has played at
+      // least one of the others; otherwise it rewards whoever happened to be
+      // scheduled against the group.
+      if(scores.some(v=>v==null)||new Set(scores).size===1)return [...group].sort(fallback);
+      const ordered=[...group].sort((a,b)=>score(b)-score(a));
+      return bucket(ordered,score).flatMap(g=>g.length===group.length?[...g].sort(fallback):breakTie(g));
+    };
+    // Equal percentage is the tie; more conference wins breaks 2-0 vs 1-0.
+    const byConf=[...teams].sort((a,b)=>(pct(b.cw,b.cl)-pct(a.cw,a.cl))||(b.cw-a.cw));
+    return bucket(byConf,t=>`${pct(t.cw,t.cl)}|${t.cw}`).flatMap(breakTie);
+  }
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
   if(comp!=='NCAAF'||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
@@ -481,50 +525,6 @@ function applyCurrentCfbSnapshot(payload){
   // both keyed lookups miss and the conference table read 0-0 all season.
   const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name))||completedRecord(name);
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
-  /* Conference standings, ordered the way conferences order them.
-     1. Conference win percentage -- only games between two members of this
-        table count; non-conference games never move a team up or down here.
-     2. Head-to-head among the tied teams (a mini-table if three or more are
-        level); if that separates some of them, each still-level subgroup is
-        re-run from step 2.
-     3. Overall win percentage.
-     4. Model rating, standing in for the computer/CFP rankings most
-        conferences use as their late tiebreaker.
-     Conference-specific steps (common opponents, rival divisions) are not
-     modelled; the first three settle almost every real tie. */
-  const conferenceOrder=teams=>{
-    const idx=new Map();
-    teams.forEach((t,i)=>{[t.name,rankFor(t.name)?.name,resultKeyFor(t.name)].forEach(n=>{if(n)idx.set(teamKey(n),i)})});
-    const confGames=gameLog.map(g=>({h:idx.get(g.home),a:idx.get(g.away),hs:g.hs,as:g.as}))
-      .filter(g=>g.h!=null&&g.a!=null&&g.h!==g.a&&g.hs!==g.as);
-    teams.forEach(t=>{t.cw=0;t.cl=0});
-    confGames.forEach(g=>{const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];teams[w].cw++;teams[l].cl++;});
-    teams.forEach(t=>{t.conf_record=`${t.cw}-${t.cl}`});
-    const pct=(w,l)=>w+l?w/(w+l):0;
-    const overall=t=>pct(Number(t.w)||0,Number(t.l)||0);
-    const pos=new Map(teams.map((t,i)=>[t,i]));
-    const h2h=group=>{
-      const inG=new Set(group.map(t=>pos.get(t))),rec=new Map(group.map(t=>[t,{w:0,l:0}]));
-      confGames.forEach(g=>{if(!inG.has(g.h)||!inG.has(g.a))return;
-        const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];rec.get(teams[w]).w++;rec.get(teams[l]).l++;});
-      return t=>{const r=rec.get(t);return r.w+r.l?pct(r.w,r.l):null};
-    };
-    const bucket=(list,key)=>{const out=[];list.forEach(t=>{const k=key(t),last=out[out.length-1];if(last&&last.k===k)last.items.push(t);else out.push({k,items:[t]})});return out.map(b=>b.items)};
-    const fallback=(a,b)=>(overall(b)-overall(a))||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name);
-    const breakTie=group=>{
-      if(group.length<2)return group;
-      const score=h2h(group),scores=group.map(score);
-      // Head-to-head only decides a tie when every tied team has played at
-      // least one of the others; otherwise it rewards whoever happened to be
-      // scheduled against the group.
-      if(scores.some(v=>v==null)||new Set(scores).size===1)return [...group].sort(fallback);
-      const ordered=[...group].sort((a,b)=>score(b)-score(a));
-      return bucket(ordered,score).flatMap(g=>g.length===group.length?[...g].sort(fallback):breakTie(g));
-    };
-    // Equal percentage is the tie; more conference wins breaks 2-0 vs 1-0.
-    const byConf=[...teams].sort((a,b)=>(pct(b.cw,b.cl)-pct(a.cw,a.cl))||(b.cw-a.cw));
-    return bucket(byConf,t=>`${pct(t.cw,t.cl)}|${t.cw}`).flatMap(breakTie);
-  };
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     // A poll carries its own order. Attaching ratings is fine; re-sorting on
     // them, and renumbering pos, publishes a different table under the poll's
@@ -543,7 +543,7 @@ function applyCurrentCfbSnapshot(payload){
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
     });
-    const sorted=conferenceOrder(teams);
+    const sorted=conferenceOrder(teams,gameLog,t=>[t.name,rankFor(t.name)?.name,resultKeyFor(t.name)]);
     teams.length=0;teams.push(...sorted);
     teams.forEach((team,index)=>team.pos=index+1);
     return {...g,teams};
@@ -576,7 +576,17 @@ function buildNcaamBracketology(rankings){
 function applyCurrentNcaamSnapshot(payload){
   if(String(payload?.comp_key||'').toUpperCase()!=='NCAAM'||typeof MATCHDAY_NCAAM_SNAPSHOT==='undefined')return payload;
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_NCAAM_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
-  payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{if(isPollTable(g))return {...g,teams:(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??team.rating??null,external_rank:ranked?.rank??team.external_rank??null}})};const teams=(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??null,external_rank:ranked?.rank??null,pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',record:'0-0',cw:0,cl:0,conf_record:'0-0',win_pct:0,avg_pf:0,avg_pa:0}}).sort((a,b)=>(b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name));teams.forEach((team,index)=>team.pos=index+1);return {...g,teams};});
+  payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
+    const teams=(g.teams||[]).map(team=>{
+      const ranked=externalRating(team.name);
+      return {...team,rating:ranked?.model_score??team.rating??null,external_rank:ranked?.rank??null};
+    });
+    if(isPollTable(g))return {...g,teams};
+    const games=(g.conference_games||[]).map(game=>({...game,home:teamKey(game.home),away:teamKey(game.away)}));
+    const sorted=conferenceOrder(teams,games,t=>[t.name]);
+    sorted.forEach((team,index)=>team.pos=index+1);
+    return {...g,teams:sorted};
+  });
   // The basketball AP poll, on basketball's calendar. Out of season the latest
   // poll is last season's final one, so the table says which poll it is
   // ("2025-26 final poll") instead of passing it off as this season's.
