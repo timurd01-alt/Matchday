@@ -1642,7 +1642,7 @@ function trdlabReadFor(m){
     &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
       ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))));
   if(m.trdlab_pick)candidates.push(m.trdlab_pick);
-  return candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null;
+  return basketballMarketPick(candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null,m);
 }
 /* How it played. A finished game has no live read to show, so the space goes
    to what happened: each team's plays, expected points per play and success

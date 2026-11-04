@@ -404,12 +404,21 @@ function collegeRankingTable(){
 // rather than guessing. A row that carries no sport is dropped on a sport's own
 // board: if the engine ever stops stamping it, a card goes missing, which is the
 // safer of the two failures.
+function basketballMarketPick(p,match){
+  if(!p||currentSportKey()!=='ncaam'||!p.pick_name)return p;
+  const m=match||(DATA.matches||[]).find(m=>String(m.kickoff).slice(0,10)===String(p.kickoff).slice(0,10)
+    &&bbNameMatches(m.home?.name,p.home)&&bbNameMatches(m.away?.name,p.away));
+  const price=m?.markets?.['1x2'];
+  const value=bbNameMatches(p.pick_name,m?.home?.name)?price?.home_pct:bbNameMatches(p.pick_name,m?.away?.name)?price?.away_pct:null;
+  if(value==null||!Number.isFinite(Number(value))||value<=0||value>=100)return p;
+  return {...p,market_pct:Number(value),edge_points:Number(p.model_pct)-Number(value),market_source:price.source,market_observed_at:price.observed_at};
+}
 function bbSportRows(rows){
   const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
   // The mixed board makes no claim about which sport it is showing, so there is
   // nothing there for a row to be wrong about.
   if(!key)return rows||[];
-  return (rows||[]).filter(r=>String(r?.sport||'').toLowerCase()===key);
+  return (rows||[]).filter(r=>String(r?.sport||'').toLowerCase()===key).map(r=>key==='ncaam'?basketballMarketPick(r):r);
 }
 function formPips(form){
   const chars=String(form||'').slice(-6).split('');
@@ -570,7 +579,7 @@ function featuredPick(preferPriced=false){
   const weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+7);
   const thisWeek=kickoff=>{const date=new Date(kickoff);return date>now&&date<weekEnd};
   const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.trdlab_pick&&thisWeek(m.kickoff))
-    .map(m=>({m,p:m.trdlab_pick}));
+    .map(m=>({m,p:basketballMarketPick(m.trdlab_pick,m)}));
   const baked=attached.length&&!preferPriced?[]:bbSportRows(typeof MATCHDAY_TRDLAB_PICKS!=='undefined'?MATCHDAY_TRDLAB_PICKS:[])
     .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
@@ -1315,16 +1324,25 @@ function rsScatter(){
    Each chart supplies its points, medians, axis formats and corner names. */
 const RS_ZOOM_CHARTS={
   hoopsDefense(){
-    const teams=rsBasketballTeams().sort((a,b)=>a.allowed/a.poss-b.allowed/b.poss);
-    if(!teams.length)return null;
-    const pts=teams.map((t,i)=>{
-      const x=40*t.poss/t.minutes,y=100*t.allowed/t.poss;
-      return {name:t.name,row:{games:t.games,rank:i+1},x,y,
-        data:`data-m1l="Allowed per 100" data-m1="${y.toFixed(1)}" data-m2l="Pace (poss / 40)" data-m2="${x.toFixed(1)}"`};
+    const totals=new Map();
+    for(const [minutes,sides] of Object.values(MATCHDAY_BASKETBALL_BOX_TOTALS.games||{})){
+      if(sides.some(s=>!s[3]))continue;
+      sides.forEach(([name,points,poss,own],i)=>{
+        const opp=sides[1-i],f=opp[3];
+        const t=totals.get(name)||{games:0,fgm:0,fga:0,threes:0,tov:0,poss:0,drb:0,orb:0};
+        t.games++;t.fgm+=f.fgm;t.fga+=f.fga;t.threes+=f.threes;t.tov+=f.turnovers;
+        t.poss+=(poss+opp[2])/2;t.drb+=own.drb;t.orb+=f.orb;totals.set(name,t);
+      });
+    }
+    const pts=[...totals].filter(([,t])=>t.fga>0&&t.poss>0&&t.drb+t.orb>0).map(([name,t])=>{
+      const x=100*(t.fgm+.5*t.threes)/t.fga,y=100*t.tov/t.poss,drb=100*t.drb/(t.drb+t.orb);
+      return {name,row:{games:t.games,drb},x,y,
+        data:`data-m1l="Opponent eFG%" data-m1="${x.toFixed(1)}%" data-m2l="Turnovers forced" data-m2="${y.toFixed(1)}%" data-m3l="Defensive rebound rate" data-m3="${drb.toFixed(1)}%" data-games="${t.games}"`};
     });
+    if(!pts.length)return null;
     return {pts,mx:rsMedian(pts.map(p=>p.x)),my:rsMedian(pts.map(p=>p.y)),
-      fx:v=>v.toFixed(0),fy:v=>v.toFixed(0),xl:'Possessions per 40 minutes',yl:'Points allowed per 100 possessions',
-      groups:{e:'Fast · more allowed',s:'Slow · more allowed',t:'Fast · fewer allowed',u:'Slow · fewer allowed'}};
+      fx:v=>v.toFixed(0)+'%',fy:v=>v.toFixed(0)+'%',xl:'Opponent effective FG% (lower is better)',yl:'Turnovers forced per 100 possessions',
+      groups:{e:'Pressure · more made',s:'Pressure · fewer made',t:'Less pressure · more made',u:'Less pressure · fewer made'}};
   },
   rating(){
     const rows=((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[])
@@ -1540,7 +1558,7 @@ function rsScatterPoint(e){
   // Each chart names its own two measures on the dots; Rating/SoS is only
   // the default for the rating-vs-schedule chart.
   const m1l=d.m1l||'Rating',m1=d.m1??d.rating,m2l=d.m2l||'SoS',m2=d.m2??d.sos;
-  const card=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>${esc(m1l)}</dt><dd>${esc(m1)}</dd></div><div><dt>${esc(m2l)}</dt><dd>${esc(m2)}</dd></div></dl>`;
+  const card=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>${esc(m1l)}</dt><dd>${esc(m1)}</dd></div><div><dt>${esc(m2l)}</dt><dd>${esc(m2)}</dd></div>${d.m3l?`<div><dt>${esc(d.m3l)}</dt><dd>${esc(d.m3)}</dd></div><div><dt>Games</dt><dd>${esc(d.games)}</dd></div>`:''}</dl>`;
   // Phones: the card sits under the chart, where a thumb doesn't cover it.
   if(phone){tip.hidden=true;readout.innerHTML=card;readout.classList.add('on');return}
   tip.innerHTML=card;
@@ -1731,12 +1749,12 @@ function rsBasketballDefense(){
   const c=RS_ZOOM_CHARTS.hoopsDefense();
   if(!c)return '';
   const groups=Object.entries(c.groups).map(([key,label])=>({
-    label,what:'Compared with the median pace and points allowed per 100 possessions.',
+    label,what:'Compared with the median opponent effective shooting and turnover rate.',
     rows:c.pts.filter(p=>(p.y>=c.my?(p.x>=c.mx?'e':'s'):(p.x>=c.mx?'t':'u'))===key)
-      .sort((a,b)=>a.y-b.y).map(p=>({name:p.name,a:p.y.toFixed(1),b:p.row.games}))
+      .sort((a,b)=>b.row.drb-a.row.drb).map(p=>({name:p.name,a:p.row.drb.toFixed(1)+'%',b:p.row.games}))
   }));
-  return rsZoomBlock('hoopsDefense',c,'Defense vs pace','current',c.pts.length+' teams')
-    +`<section class="rsBlock rsSpan4">${rsTop('Defense groups','current','Lower allowed is better')}${rsQuadTabs('hoopsDefense',groups,'Allowed / 100','Games')}</section>`;
+  return rsZoomBlock('hoopsDefense',c,'Shooting defense & turnovers','current',c.pts.length+' teams · season to date')
+    +`<section class="rsBlock rsSpan4">${rsTop('Defensive rebounding','current','Share of available defensive rebounds')}${rsQuadTabs('hoopsDefense',groups,'DREB%','Games')}</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';

@@ -27,7 +27,12 @@ def totals(event):
                            + int(stats["totalTurnovers"]) + .475 * attempts("freeThrowsMade-freeThrowsAttempted"))
             if possessions <= 0:
                 return None
-            sides.append([side["team"]["displayName"], scores[side["team"]["id"]], possessions])
+            shooting = [int(v) for v in stats["fieldGoalsMade-fieldGoalsAttempted"].split("-")]
+            threes = int(stats["threePointFieldGoalsMade-threePointFieldGoalsAttempted"].split("-")[0])
+            factors = dict(fgm=shooting[0], fga=shooting[1], threes=threes,
+                           orb=int(stats["offensiveRebounds"]), drb=int(stats["defensiveRebounds"]),
+                           turnovers=int(stats["totalTurnovers"]))
+            sides.append([side["team"]["displayName"], scores[side["team"]["id"]], possessions, factors])
         if len(sides) == 2:
             return event["id"], [minutes, sides]
     except (OSError, KeyError, ValueError, IndexError):
@@ -42,9 +47,9 @@ def refresh():
         cache = {"season_start": start.isoformat(), "games": {}}
     # Revisit recent finals to collect late box scores. Existing finals need no summary call.
     day = max(start, dt.date.fromisoformat(cache.get("through", start.isoformat())) - dt.timedelta(days=3))
-    if "box_averages" not in cache:
+    if "box_averages" not in cache or any(len(side) < 4 for _, sides in cache["games"].values() for side in sides):
         day = start
-        cache["box_averages"] = {}
+        cache.setdefault("box_averages", {})
     while day <= today:
         events = get("scoreboard?groups=50&limit=500&dates=" + day.strftime("%Y%m%d"))["events"]
         for event in events:
@@ -58,7 +63,7 @@ def refresh():
                               "short": team.get("shortDisplayName"), "points": int(side["score"]),
                               "rebounds": stats.get("rebounds"), "assists": stats.get("assists")})
             cache["box_averages"][event["id"]] = sides
-        pending = [e for e in events if e["status"]["type"]["completed"] and e["id"] not in cache["games"]]
+        pending = [e for e in events if e["status"]["type"]["completed"] and (e["id"] not in cache["games"] or any(len(s) < 4 for s in cache["games"][e["id"]][1]))]
         with ThreadPoolExecutor(max_workers=5) as workers:
             cache["games"].update(row for row in workers.map(totals, pending) if row)
         cache["through"] = day.isoformat()
