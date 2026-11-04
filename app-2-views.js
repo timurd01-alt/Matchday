@@ -956,7 +956,7 @@ function modToughestSchedules(){
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
-  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,16);
+  const top=(hoops?pool:pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,16);
   if(!top.length)return '';
   const body=top.map(r=>`<tr><td class="tsTeam" title="${esc(r.name)}"><span class="tsTeamName">${teamMark(r.name)}<span>${esc(r.name)}</span></span></td>`
     +`<td>#${r.rank}</td>`
@@ -1623,14 +1623,14 @@ function rsSchedules(){
   const table=collegeRankingTable();
   const rows=(hoops?basketballSeasonSchedules():table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
-  const pool=hoops?rows:rows.filter(r=>(r.rank||999)<=40);
+  const pool=hoops?rows.filter(r=>(table?.rankings||[]).some(team=>Number(team.rank)<=40&&bbNameMatches(team.name||team.team_name,r.name))):rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
   const shown=currentSportKey()==='ncaam'?8:6;
   const row=(r,i)=>`<li class="rsSchedRow${i>=shown?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="${hoops?'Completed games':'Power rating rank'}"><b>${hoops?r.games:'#'+r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel${shown===8?' rsSchedulesBasketball':''}">${rsTop('Toughest schedules',hoops?'current':'blend',hoops?'Games since Nov 1':'Power top 40 only')}`
+  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel${shown===8?' rsSchedulesBasketball':''}">${rsTop('Toughest schedules',hoops?'current':'blend',hoops?'Top 40 · games since Nov 1':'Power top 40 only')}`
     +`<div class="rsSchedHead"><span></span><span>Team</span><span>${hoops?'Games':'Power rk'}</span><span title="${hoops?'Average opponent rating fitted from current-season scoring margins, shrunk toward zero for small samples':'Strength of schedule'}">SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>shown?rsMoreBtn(top.length,'View all',hoops?'Toughest schedules · current season':'Toughest schedules · power rating top 40'):'')+`</section>`;
