@@ -1258,7 +1258,7 @@ function rsLongshots(){
   return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','current')}`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
     +`<div class="rsFoot">`
-    +(shots.length>8?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
+    +((shots.length>8||currentSportKey()==='ncaam')?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
 }
 function rsStat(){
   const table=collegeRankingTable();
