@@ -1599,21 +1599,41 @@ function rsConferences(){
     +`<ul class="rsConf">${confs.map(row).join('')}</ul></div>`
     +(confs.length>10?rsMoreBtn(confs.length,'View all','Conference landscape · mean power rating'):'')+`</section>`;
 }
+function basketballSeasonSchedules(){
+  const games=typeof MATCHDAY_BASKETBALL_BOX_TOTALS==='undefined'?{}:MATCHDAY_BASKETBALL_BOX_TOTALS.games||{};
+  const teams=new Map();
+  for(const [,sides] of Object.values(games)){
+    sides.forEach(([name,points],i)=>{
+      const t=teams.get(name)||{name,margin:0,opponents:[]};
+      t.margin+=points-sides[1-i][1];t.opponents.push(sides[1-i][0]);teams.set(name,t);
+    });
+  }
+  // Fit current-season scoring margins with a three-game zero-centred ridge.
+  // No previous-season results or ratings enter this calculation.
+  let ratings=new Map([...teams.keys()].map(name=>[name,0]));
+  for(let iteration=0;iteration<80;iteration++){
+    ratings=new Map([...teams.values()].map(t=>[t.name,
+      (t.margin+t.opponents.reduce((sum,name)=>sum+ratings.get(name),0))/(t.opponents.length+3)]));
+  }
+  return [...teams.values()].map(t=>({name:t.name,games:t.opponents.length,
+    sos:t.opponents.reduce((sum,name)=>sum+ratings.get(name),0)/t.opponents.length}));
+}
 function rsSchedules(){
+  const hoops=currentSportKey()==='ncaam';
   const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
+  const rows=(hoops?basketballSeasonSchedules():table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
-  const pool=rows.filter(r=>(r.rank||999)<=40);
+  const pool=hoops?rows:rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
   const shown=currentSportKey()==='ncaam'?8:6;
   const row=(r,i)=>`<li class="rsSchedRow${i>=shown?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
-    +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
+    +`<span class="rsNum rsMuted" title="${hoops?'Completed games':'Power rating rank'}"><b>${hoops?r.games:'#'+r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel${shown===8?' rsSchedulesBasketball':''}">${rsTop('Toughest schedules','blend','Power top 40 only')}`
-    +`<div class="rsSchedHead"><span></span><span>Team</span><span title="Power rating rank">Power rk</span><span title="Strength of schedule">SoS</span></div>`
+  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel${shown===8?' rsSchedulesBasketball':''}">${rsTop('Toughest schedules',hoops?'current':'blend',hoops?'Games since Nov 1':'Power top 40 only')}`
+    +`<div class="rsSchedHead"><span></span><span>Team</span><span>${hoops?'Games':'Power rk'}</span><span title="${hoops?'Average opponent rating fitted from current-season scoring margins, shrunk toward zero for small samples':'Strength of schedule'}">SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
-    +(top.length>shown?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
+    +(top.length>shown?rsMoreBtn(top.length,'View all',hoops?'Toughest schedules · current season':'Toughest schedules · power rating top 40'):'')+`</section>`;
 }
 /* Team play-by-play profiles (MATCHDAY_TRDLAB_TEAM_PROFILES), FBS only:
    a team must be in the power rating table, which is FBS-only and supplies

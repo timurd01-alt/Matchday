@@ -111,7 +111,7 @@ function pollSectionHTML(polls){
   const rows=g=>{const hist=(g.teams||[]).some(t=>t.movement!=null);return (g.teams||[]).map((t,i)=>`<tr><td class="pollRank">${esc(t.pos??i+1)}</td><td class="pollMoveCell">${movement({...t,_pollHasHistory:hist})}</td>`
     +`<td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)">`
     +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td></tr>`).join('')};
-  return `<div class="vhead">Rankings</div>`+polls.map(g=>
+  return polls.map(g=>
     `<div class="tablewrap officialPoll"><div class="groupHead">${esc(g.group||'Ranking')}<span>${esc(pollTableNote(g))}</span></div>`
     +(g.waiting?`<p class="pollWaiting">Waiting for the AP's preseason rating.</p></div>`
     :`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
