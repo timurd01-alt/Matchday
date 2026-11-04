@@ -1761,9 +1761,9 @@ function rsBasketballTeams(){
 function rsBasketballTempo(){
   const teams=rsBasketballTeams().sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
   if(!teams.length)return '';
-  const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsSchedHead"><span></span><span>Team</span><span>${cols[0]}</span><span>${cols[1]}</span></div><ol class="rsSched">${items.map((t,i)=>`<li class="rsSchedRow${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`).join('')}</ol>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
+  const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsScrollX"><div class="rsSchedHead${cols.length===4?' rsEfficiencyColumns':''}"><span></span><span>Team</span>${cols.map(col=>`<span>${col}</span>`).join('')}</div><ol class="rsSched">${items.map((t,i)=>`<li class="rsSchedRow${cols.length===4?' rsEfficiencyColumns':''}${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`).join('')}</ol></div>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
   return list('Pace',teams,['Games','Poss / 40'],t=>[t.games,(40*t.poss/t.minutes).toFixed(1)],5)
-    +list('Efficiency per 100 possessions',teams.slice().sort((a,b)=>(b.points-b.allowed)/b.poss-(a.points-a.allowed)/a.poss),['Offense','Defense'],t=>[(100*t.points/t.poss).toFixed(1),(100*t.allowed/t.poss).toFixed(1)],7);
+    +list('Efficiency per 100 possessions',teams.slice().sort((a,b)=>(b.points-b.allowed)/b.poss-(a.points-a.allowed)/a.poss),['Games','Offense','Defense','Net'],t=>[t.games,(100*t.points/t.poss).toFixed(1),(100*t.allowed/t.poss).toFixed(1),((t.points>=t.allowed?'+':'')+(100*(t.points-t.allowed)/t.poss).toFixed(1))],7);
 }
 function rsBasketballDefense(){
   const c=RS_ZOOM_CHARTS.hoopsDefense();

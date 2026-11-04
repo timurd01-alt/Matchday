@@ -4304,3 +4304,6 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .rsDefenseBars .rsLogoName{min-width:0}
 .rsDefenseBars .rsLogoName>span{overflow:hidden;text-overflow:ellipsis}
 .rsDefenseBars .rsBar{display:block!important}
+
+.rsSchedHead.rsEfficiencyColumns,.rsSchedRow.rsEfficiencyColumns{grid-template-columns:24px minmax(180px,1fr) 52px 72px 72px 72px;min-width:560px}
+.rsSchedHead.rsEfficiencyColumns span:nth-child(3){display:block}
