@@ -1587,14 +1587,15 @@ function rsSchedules(){
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
-  const row=(r,i)=>`<li class="rsSchedRow${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
+  const shown=currentSportKey()==='ncaam'?8:6;
+  const row=(r,i)=>`<li class="rsSchedRow${i>=shown?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel">${rsTop('Toughest schedules','blend','Power top 40 only')}`
+  return `<section class="rsBlock rsExpandable rsSpan5 rsSchedulesPanel${shown===8?' rsSchedulesBasketball':''}">${rsTop('Toughest schedules','blend','Power top 40 only')}`
     +`<div class="rsSchedHead"><span></span><span>Team</span><span title="Power rating rank">Power rk</span><span title="Strength of schedule">SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
-    +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
+    +(top.length>shown?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
 /* Team play-by-play profiles (MATCHDAY_TRDLAB_TEAM_PROFILES), FBS only:
    a team must be in the power rating table, which is FBS-only and supplies

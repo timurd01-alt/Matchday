@@ -4152,6 +4152,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
    how many conferences the adjacent sport lists. Stacked cards size naturally. */
 @media(min-width:1101px){
   #view-news .rsSchedulesPanel{align-self:start}
+  #view-news .rsSchedulesBasketball{align-self:stretch}
   #view-news .rsSchedulesPanel .rsSchedRow:not(.rsExtra){flex:none;min-height:63px;box-sizing:border-box}
 }
 
