@@ -83223,81 +83223,81 @@
           "rule": "The scorecard freezes 60 minutes before kickoff. It stores the newest forecast generated at or before that moment, alongside the market price as it stood then, and is never rewritten afterwards."
         },
         "totals": {
-          "locked_events": 175,
+          "locked_events": 204,
           "duplicate_cards_not_counted": 0,
           "fbs_versus_fcs_not_counted": 0,
-          "locked_selections": 350,
-          "graded_selections": 163,
-          "awaiting_result": 187
+          "locked_selections": 408,
+          "graded_selections": 383,
+          "awaiting_result": 25
         },
         "record": {
-          "picks": 82,
-          "wins": 62,
-          "losses": 20,
-          "hit_rate_pct": 75.6,
-          "expected_hit_rate_pct": 84.8,
-          "calibration_gap_points": -9.2,
+          "picks": 192,
+          "wins": 163,
+          "losses": 29,
+          "hit_rate_pct": 84.9,
+          "expected_hit_rate_pct": 87.5,
+          "calibration_gap_points": -2.6,
           "confidence_interval_pct": [
-            65.3,
-            83.6
+            79.1,
+            89.3
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 68,
-          "beat_market_pct": 67.6,
+          "graded_priced_selections": 134,
+          "beat_market_pct": 64.2,
           "beat_market": {
-            "picks": 68,
-            "wins": 46,
-            "losses": 22,
+            "picks": 134,
+            "wins": 86,
+            "losses": 48,
             "ties": 0,
-            "hit_rate_pct": 67.6,
+            "hit_rate_pct": 64.2,
             "expected_hit_rate_pct": 50.0,
-            "calibration_gap_points": 17.6,
+            "calibration_gap_points": 14.2,
             "confidence_interval_pct": [
               55.8,
-              77.6
+              71.8
             ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 33,
-            "wins": 24,
-            "losses": 9,
-            "hit_rate_pct": 72.7,
-            "expected_hit_rate_pct": 85.6,
-            "calibration_gap_points": -12.9,
+            "picks": 65,
+            "wins": 53,
+            "losses": 12,
+            "hit_rate_pct": 81.5,
+            "expected_hit_rate_pct": 87.2,
+            "calibration_gap_points": -5.6,
             "confidence_interval_pct": [
-              55.8,
-              84.9
+              70.4,
+              89.1
             ]
           },
           "disagreed_with_market": {
-            "picks": 2,
-            "wins": 2,
+            "picks": 3,
+            "wins": 3,
             "losses": 0,
             "hit_rate_pct": 100.0,
-            "expected_hit_rate_pct": 71.6,
-            "calibration_gap_points": 28.4,
+            "expected_hit_rate_pct": 67.5,
+            "calibration_gap_points": 32.5,
             "confidence_interval_pct": [
-              34.2,
+              43.8,
               100.0
             ]
           },
-          "disagreement_share_pct": 5.7,
+          "disagreement_share_pct": 4.4,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
           "available": true,
-          "underdog_lift_points": -4.9,
-          "contested_underdogs": 11,
+          "underdog_lift_points": -3.8,
+          "contested_underdogs": 17,
           "contested_band_pct": [
             30.0,
             50.0
           ],
-          "mean_divergence_points": 6.7,
+          "mean_divergence_points": 5.7,
           "outright_disagreements": {
-            "picks": 2,
-            "wins": 2,
+            "picks": 3,
+            "wins": 3,
             "losses": 0,
             "hit_rate_pct": 100.0
           },
@@ -83319,6 +83319,15 @@
               "market_pct": 49.4,
               "divergence_points": 12.2,
               "result": "win"
+            },
+            {
+              "event_name": "Ohio Bobcats at South Alabama Jaguars",
+              "selection": "Ohio Bobcats",
+              "starts_at": "2026-11-03T01:00:00Z",
+              "model_pct": 59.2,
+              "market_pct": 48.3,
+              "divergence_points": 10.8,
+              "result": "win"
             }
           ],
           "basis": "no-vig consensus at the lock deadline, not the closing price"
@@ -83326,41 +83335,331 @@
         "by_confidence": [
           {
             "band": "50–60%",
-            "picks": 7,
-            "hit_rate_pct": 42.9,
+            "picks": 14,
+            "hit_rate_pct": 50.0,
             "expected_hit_rate_pct": 55.9,
-            "calibration_gap_points": -13.0
+            "calibration_gap_points": -5.9
           },
           {
             "band": "60–70%",
-            "picks": 14,
-            "hit_rate_pct": 50.0,
-            "expected_hit_rate_pct": 63.5,
-            "calibration_gap_points": -13.5
+            "picks": 17,
+            "hit_rate_pct": 52.9,
+            "expected_hit_rate_pct": 63.6,
+            "calibration_gap_points": -10.7
           },
           {
             "band": "70–80%",
-            "picks": 8,
-            "hit_rate_pct": 25.0,
-            "expected_hit_rate_pct": 76.2,
-            "calibration_gap_points": -51.2
+            "picks": 19,
+            "hit_rate_pct": 63.2,
+            "expected_hit_rate_pct": 76.0,
+            "calibration_gap_points": -12.8
           },
           {
             "band": "80–90%",
-            "picks": 8,
-            "hit_rate_pct": 75.0,
-            "expected_hit_rate_pct": 84.7,
-            "calibration_gap_points": -9.7
+            "picks": 25,
+            "hit_rate_pct": 84.0,
+            "expected_hit_rate_pct": 85.4,
+            "calibration_gap_points": -1.4
           },
           {
             "band": "90–100%",
-            "picks": 45,
-            "hit_rate_pct": 97.8,
-            "expected_hit_rate_pct": 97.5,
+            "picks": 117,
+            "hit_rate_pct": 97.4,
+            "expected_hit_rate_pct": 97.1,
             "calibration_gap_points": 0.3
           }
         ],
         "recent": [
+          {
+            "event_name": "Lewis & Clark River Otters at Portland State Vikings",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00Z",
+            "selection": "Portland State Vikings",
+            "probability_pct": 81.2,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "North Florida Ospreys at California Baptist Lancers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00Z",
+            "selection": "California Baptist Lancers",
+            "probability_pct": 75.6,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Cal State Fullerton Titans at San Diego State Aztecs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00Z",
+            "selection": "San Diego State Aztecs",
+            "probability_pct": 96.5,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Bethesda Flames at Pacific Tigers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00Z",
+            "selection": "Pacific Tigers",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "102–47"
+          },
+          {
+            "event_name": "Chapman Panthers at UC Irvine Anteaters",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00Z",
+            "selection": "UC Irvine Anteaters",
+            "probability_pct": 98.3,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Northern Arizona Lumberjacks at UNLV Rebels",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T03:00:00Z",
+            "selection": "UNLV Rebels",
+            "probability_pct": 94.0,
+            "market_probability_pct": 94.5,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Western New Mexico Mustangs at New Mexico State Aggies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:30Z",
+            "selection": "New Mexico State Aggies",
+            "probability_pct": 96.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "73–66"
+          },
+          {
+            "event_name": "Regis University REGIS UNIVERSITY at Wyoming Cowboys",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:30Z",
+            "selection": "Wyoming Cowboys",
+            "probability_pct": 94.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "95–48"
+          },
+          {
+            "event_name": "Arkansas-Pine Bluff Golden Lions at Arkansas Razorbacks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Arkansas Razorbacks",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "106–61"
+          },
+          {
+            "event_name": "Lincoln (MO) Blue Tigers at Missouri State Bears",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Missouri State Bears",
+            "probability_pct": 86.6,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "88–60"
+          },
+          {
+            "event_name": "Cornell (IA) Rams at Northern Iowa Panthers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Northern Iowa Panthers",
+            "probability_pct": 98.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "106–70"
+          },
+          {
+            "event_name": "Louisiana Christian Wildcats at Houston Christian Huskies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Houston Christian Huskies",
+            "probability_pct": 77.5,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "108–45"
+          },
+          {
+            "event_name": "LSU New Orleans Privateers at LSU Tigers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "LSU Tigers",
+            "probability_pct": 95.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "100–57"
+          },
+          {
+            "event_name": "Cleveland State Vikings at Missouri Tigers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Missouri Tigers",
+            "probability_pct": 97.4,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "111–50"
+          },
+          {
+            "event_name": "Alabama State Hornets at Texas A&M Aggies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Texas A&M Aggies",
+            "probability_pct": 99.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "97–66"
+          },
+          {
+            "event_name": "Lipscomb Bisons at Iowa Hawkeyes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Iowa Hawkeyes",
+            "probability_pct": 91.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "76–54"
+          },
+          {
+            "event_name": "South Dakota State Jackrabbits at Kansas State Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T01:00Z",
+            "selection": "Kansas State Wildcats",
+            "probability_pct": 79.8,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "66–68"
+          },
+          {
+            "event_name": "Sam Houston Bearkats at Alabama Crimson Tide",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:30Z",
+            "selection": "Alabama Crimson Tide",
+            "probability_pct": 99.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "96–74"
+          },
+          {
+            "event_name": "Drexel Dragons at Virginia Cavaliers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:30Z",
+            "selection": "Virginia Cavaliers",
+            "probability_pct": 98.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "89–60"
+          },
+          {
+            "event_name": "Wagner Seahawks at Boston College Eagles",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Boston College Eagles",
+            "probability_pct": 95.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "76–50"
+          },
+          {
+            "event_name": "Holy Cross Crusaders at Rhode Island Rams",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Rhode Island Rams",
+            "probability_pct": 94.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "103–59"
+          },
+          {
+            "event_name": "Hampton Pirates at Georgia Tech Yellow Jackets",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Georgia Tech Yellow Jackets",
+            "probability_pct": 83.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "75–55"
+          },
+          {
+            "event_name": "Coppin State Eagles at Virginia Tech Hokies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Virginia Tech Hokies",
+            "probability_pct": 99.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "88–54"
+          },
+          {
+            "event_name": "Warren Wilson Owls at North Carolina A&T Aggies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "North Carolina A&T Aggies",
+            "probability_pct": 79.7,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Stetson Hatters at South Carolina Gamecocks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "South Carolina Gamecocks",
+            "probability_pct": 92.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "81–55"
+          },
+          {
+            "event_name": "Purdue Fort Wayne Mastodons at Duquesne Dukes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Duquesne Dukes",
+            "probability_pct": 75.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "78–71"
+          },
+          {
+            "event_name": "Milligan Buffaloes at UNC Greensboro Spartans",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "UNC Greensboro Spartans",
+            "probability_pct": 95.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "96–43"
+          },
+          {
+            "event_name": "Manhattan Jaspers at Kentucky Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-04T00:00Z",
+            "selection": "Kentucky Wildcats",
+            "probability_pct": 99.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "85–57"
+          },
+          {
+            "event_name": "Wofford Terriers at Tennessee Volunteers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-03T23:00Z",
+            "selection": "Tennessee Volunteers",
+            "probability_pct": 99.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "90–59"
+          },
           {
             "event_name": "Milwaukee Panthers at USC Trojans",
             "sport": "ncaam",
@@ -83368,8 +83667,8 @@
             "selection": "USC Trojans",
             "probability_pct": 99.0,
             "market_probability_pct": 97.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "95–63"
           },
           {
             "event_name": "Arizona Wildcats at UCLA Bruins",
@@ -83378,8 +83677,8 @@
             "selection": "Arizona Wildcats",
             "probability_pct": 62.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "84–75"
           },
           {
             "event_name": "Whittier Poets at UC San Diego Tritons",
@@ -83388,8 +83687,8 @@
             "selection": "UC San Diego Tritons",
             "probability_pct": 99.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–75"
           },
           {
             "event_name": "Jessup Warriors at Sacramento State Hornets",
@@ -83398,8 +83697,8 @@
             "selection": "Sacramento State Hornets",
             "probability_pct": 82.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "90–74"
           },
           {
             "event_name": "La Verne Leopards at UC Riverside Highlanders",
@@ -83408,8 +83707,8 @@
             "selection": "UC Riverside Highlanders",
             "probability_pct": 81.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "110–47"
           },
           {
             "event_name": "West Coast Baptist Eagles at Southern Utah Thunderbirds",
@@ -83418,8 +83717,8 @@
             "selection": "Southern Utah Thunderbirds",
             "probability_pct": 99.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "134–69"
           },
           {
             "event_name": "Montana State Bobcats at Colorado State Rams",
@@ -83428,8 +83727,8 @@
             "selection": "Colorado State Rams",
             "probability_pct": 77.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "84–74"
           },
           {
             "event_name": "George Fox Bruins at Idaho Vandals",
@@ -83438,8 +83737,8 @@
             "selection": "Idaho Vandals",
             "probability_pct": 88.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "97–56"
           },
           {
             "event_name": "East Tennessee State Buccaneers at Arizona State Sun Devils",
@@ -83448,8 +83747,8 @@
             "selection": "Arizona State Sun Devils",
             "probability_pct": 77.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "75–65"
           },
           {
             "event_name": "Towson Tigers at Santa Clara Broncos",
@@ -83458,8 +83757,8 @@
             "selection": "Santa Clara Broncos",
             "probability_pct": 86.9,
             "market_probability_pct": 87.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "89–70"
           },
           {
             "event_name": "North Alabama Lions at UC Davis Aggies",
@@ -83468,8 +83767,8 @@
             "selection": "UC Davis Aggies",
             "probability_pct": 86.8,
             "market_probability_pct": 78.7,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "75–79"
           },
           {
             "event_name": "Eastern Washington Eagles at Stanford Cardinal",
@@ -83478,8 +83777,8 @@
             "selection": "Stanford Cardinal",
             "probability_pct": 91.4,
             "market_probability_pct": 88.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–65"
           },
           {
             "event_name": "Colgate Raiders at Washington Huskies",
@@ -83488,8 +83787,8 @@
             "selection": "Washington Huskies",
             "probability_pct": 88.1,
             "market_probability_pct": 89.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "90–76"
           },
           {
             "event_name": "Robert Morris Colonials at Nevada Wolf Pack",
@@ -83498,8 +83797,8 @@
             "selection": "Nevada Wolf Pack",
             "probability_pct": 80.3,
             "market_probability_pct": 87.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "86–49"
           },
           {
             "event_name": "Montana Grizzlies at Oregon Ducks",
@@ -83508,8 +83807,8 @@
             "selection": "Oregon Ducks",
             "probability_pct": 90.2,
             "market_probability_pct": 93.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "87–69"
           },
           {
             "event_name": "Radford Highlanders at San Francisco Dons",
@@ -83518,8 +83817,8 @@
             "selection": "San Francisco Dons",
             "probability_pct": 64.3,
             "market_probability_pct": 86.5,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "76–62"
           },
           {
             "event_name": "UCLA Bruins at Arizona Wildcats",
@@ -83538,8 +83837,8 @@
             "selection": "Baylor Bears",
             "probability_pct": 99.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "87–65"
           },
           {
             "event_name": "Weber State Wildcats at Oregon State Beavers",
@@ -83548,8 +83847,8 @@
             "selection": "Oregon State Beavers",
             "probability_pct": 90.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "102–61"
           },
           {
             "event_name": "Colorado College Tigers at Northern Colorado Bears",
@@ -83558,8 +83857,8 @@
             "selection": "Northern Colorado Bears",
             "probability_pct": 92.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "117–64"
           },
           {
             "event_name": "Idaho State Bengals at Utah State Aggies",
@@ -83568,8 +83867,8 @@
             "selection": "Utah State Aggies",
             "probability_pct": 99.3,
             "market_probability_pct": 97.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–58"
           },
           {
             "event_name": "Southwestern Christian U Eagles at North Texas Mean Green",
@@ -83578,8 +83877,8 @@
             "selection": "North Texas Mean Green",
             "probability_pct": 99.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "122–50"
           },
           {
             "event_name": "Gardner-Webb Runnin' Bulldogs at UConn Huskies",
@@ -83588,8 +83887,8 @@
             "selection": "UConn Huskies",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "86–46"
           },
           {
             "event_name": "Chicago State Cougars at Texas Longhorns",
@@ -83598,8 +83897,8 @@
             "selection": "Texas Longhorns",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "109–59"
           },
           {
             "event_name": "Texas Southern Tigers at Grand Canyon Lopes",
@@ -83608,8 +83907,8 @@
             "selection": "Grand Canyon Lopes",
             "probability_pct": 99.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "103–79"
           },
           {
             "event_name": "La Salle Explorers at Houston Cougars",
@@ -83618,8 +83917,8 @@
             "selection": "Houston Cougars",
             "probability_pct": 99.9,
             "market_probability_pct": 97.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–55"
           },
           {
             "event_name": "Utah Tech Trailblazers at New Mexico Lobos",
@@ -83628,8 +83927,8 @@
             "selection": "New Mexico Lobos",
             "probability_pct": 95.5,
             "market_probability_pct": 94.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–60"
           },
           {
             "event_name": "North Dakota Fighting Hawks at Minnesota Golden Gophers",
@@ -83638,8 +83937,8 @@
             "selection": "Minnesota Golden Gophers",
             "probability_pct": 90.2,
             "market_probability_pct": 96.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–50"
           },
           {
             "event_name": "Chattanooga Mocs at Louisville Cardinals",
@@ -83648,8 +83947,8 @@
             "selection": "Louisville Cardinals",
             "probability_pct": 99.4,
             "market_probability_pct": 98.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "84–70"
           },
           {
             "event_name": "Ohio State Buckeyes at BYU Cougars",
@@ -83658,8 +83957,8 @@
             "selection": "BYU Cougars",
             "probability_pct": 71.1,
             "market_probability_pct": 59.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–83"
           },
           {
             "event_name": "Abilene Christian Wildcats at Colorado Buffaloes",
@@ -83668,8 +83967,8 @@
             "selection": "Colorado Buffaloes",
             "probability_pct": 92.2,
             "market_probability_pct": 92.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–59"
           },
           {
             "event_name": "Florida A&M Rattlers at Florida State Seminoles",
@@ -83678,8 +83977,8 @@
             "selection": "Florida State Seminoles",
             "probability_pct": 97.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "69–112"
           },
           {
             "event_name": "Oral Roberts Golden Eagles at Central Arkansas Bears",
@@ -83688,8 +83987,8 @@
             "selection": "Central Arkansas Bears",
             "probability_pct": 79.6,
             "market_probability_pct": 76.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–55"
           },
           {
             "event_name": "Fairleigh Dickinson Knights at Illinois Fighting Illini",
@@ -83698,8 +83997,8 @@
             "selection": "Illinois Fighting Illini",
             "probability_pct": 99.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "120–45"
           },
           {
             "event_name": "Willamette Bearcats at Portland Pilots",
@@ -83708,8 +84007,8 @@
             "selection": "Portland Pilots",
             "probability_pct": 83.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "133–89"
           },
           {
             "event_name": "Western Illinois Leathernecks at Valparaiso Beacons",
@@ -83718,8 +84017,8 @@
             "selection": "Valparaiso Beacons",
             "probability_pct": 93.3,
             "market_probability_pct": 93.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "80–58"
           },
           {
             "event_name": "Fordham Rams at Kansas Jayhawks",
@@ -83728,8 +84027,8 @@
             "selection": "Kansas Jayhawks",
             "probability_pct": 94.7,
             "market_probability_pct": 96.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "95–65"
           },
           {
             "event_name": "Akron Zips at Louisiana Ragin' Cajuns",
@@ -83738,8 +84037,8 @@
             "selection": "Akron Zips",
             "probability_pct": 73.6,
             "market_probability_pct": 67.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "61–75"
           },
           {
             "event_name": "Maryland-Eastern Shore Hawks at Wake Forest Demon Deacons",
@@ -83748,8 +84047,8 @@
             "selection": "Wake Forest Demon Deacons",
             "probability_pct": 99.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–62"
           },
           {
             "event_name": "East Texas A&M Lions at Oklahoma Sooners",
@@ -83758,8 +84057,8 @@
             "selection": "Oklahoma Sooners",
             "probability_pct": 99.8,
             "market_probability_pct": 98.1,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "64–68"
           },
           {
             "event_name": "Lindenwood Lions at TCU Horned Frogs",
@@ -83768,8 +84067,8 @@
             "selection": "TCU Horned Frogs",
             "probability_pct": 97.7,
             "market_probability_pct": 97.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "98–59"
           },
           {
             "event_name": "Ohio Bobcats at South Alabama Jaguars",
@@ -83778,8 +84077,8 @@
             "selection": "Ohio Bobcats",
             "probability_pct": 59.2,
             "market_probability_pct": 48.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–86"
           },
           {
             "event_name": "Bethune-Cookman Wildcats at Furman Paladins",
@@ -83798,8 +84097,8 @@
             "selection": "DePaul Blue Demons",
             "probability_pct": 96.1,
             "market_probability_pct": 96.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "75–58"
           },
           {
             "event_name": "Southern Jaguars at SMU Mustangs",
@@ -83808,8 +84107,8 @@
             "selection": "SMU Mustangs",
             "probability_pct": 98.7,
             "market_probability_pct": 96.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–72"
           },
           {
             "event_name": "Lehigh Mountain Hawks at Saint Louis Billikens",
@@ -83818,8 +84117,8 @@
             "selection": "Saint Louis Billikens",
             "probability_pct": 97.7,
             "market_probability_pct": 96.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "92–67"
           },
           {
             "event_name": "Charleston Southern Buccaneers at South Florida Bulls",
@@ -83828,8 +84127,8 @@
             "selection": "South Florida Bulls",
             "probability_pct": 99.0,
             "market_probability_pct": 93.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "98–71"
           },
           {
             "event_name": "Canisius Golden Griffins at Penn State Nittany Lions",
@@ -83838,8 +84137,8 @@
             "selection": "Penn State Nittany Lions",
             "probability_pct": 97.9,
             "market_probability_pct": 95.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "97–57"
           },
           {
             "event_name": "North Carolina Central Eagles at Georgia Bulldogs",
@@ -83848,8 +84147,8 @@
             "selection": "Georgia Bulldogs",
             "probability_pct": 99.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–62"
           },
           {
             "event_name": "Purdue Boilermakers at Gonzaga Bulldogs",
@@ -83858,8 +84157,8 @@
             "selection": "Gonzaga Bulldogs",
             "probability_pct": 88.5,
             "market_probability_pct": 66.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–72"
           },
           {
             "event_name": "Central Michigan Chippewas at UL Monroe Warhawks",
@@ -83868,8 +84167,8 @@
             "selection": "Central Michigan Chippewas",
             "probability_pct": 53.5,
             "market_probability_pct": 57.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–83"
           },
           {
             "event_name": "Kent State Golden Flashes at Louisiana Tech Bulldogs",
@@ -83878,8 +84177,8 @@
             "selection": "Kent State Golden Flashes",
             "probability_pct": 52.5,
             "market_probability_pct": 68.1,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "85–75"
           },
           {
             "event_name": "Mercyhurst Lakers at Marquette Golden Eagles",
@@ -83908,8 +84207,8 @@
             "selection": "Belmont Bruins",
             "probability_pct": 93.4,
             "market_probability_pct": 92.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "72–54"
           },
           {
             "event_name": "Saint Peter's Peacocks at Seton Hall Pirates",
@@ -83918,8 +84217,8 @@
             "selection": "Seton Hall Pirates",
             "probability_pct": 93.6,
             "market_probability_pct": 94.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "66–42"
           },
           {
             "event_name": "Campbell Fighting Camels at NC State Wolfpack",
@@ -83928,8 +84227,8 @@
             "selection": "NC State Wolfpack",
             "probability_pct": 97.2,
             "market_probability_pct": 95.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–64"
           },
           {
             "event_name": "Denver Pioneers at Wisconsin Badgers",
@@ -84268,8 +84567,8 @@
             "selection": "VCU Rams",
             "probability_pct": 98.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "82–72"
           },
           {
             "event_name": "Curry Colonels at Stonehill Skyhawks",
@@ -84458,8 +84757,8 @@
             "selection": "Seton Hall Pirates",
             "probability_pct": 93.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "66–42"
           },
           {
             "event_name": "Denver Pioneers at Wisconsin Badgers",
@@ -84478,8 +84777,8 @@
             "selection": "Washington Huskies",
             "probability_pct": 88.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "90–76"
           },
           {
             "event_name": "Binghamton Bearcats at Northwestern Wildcats",
@@ -84488,8 +84787,8 @@
             "selection": "Northwestern Wildcats",
             "probability_pct": 97.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "86–60"
           },
           {
             "event_name": "Northeastern Huskies at Boston University Terriers",
@@ -84518,8 +84817,8 @@
             "selection": "Lipscomb Bisons",
             "probability_pct": 55.4,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "86–79"
           },
           {
             "event_name": "Eastern Washington Eagles at Stanford Cardinal",
@@ -84528,8 +84827,8 @@
             "selection": "Stanford Cardinal",
             "probability_pct": 91.4,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–65"
           },
           {
             "event_name": "Dartmouth Big Green at Marist Red Foxes",
@@ -84578,8 +84877,8 @@
             "selection": "California Golden Bears",
             "probability_pct": 92.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "115–86"
           },
           {
             "event_name": "Stetson Hatters at Clemson Tigers",
@@ -84598,8 +84897,8 @@
             "selection": "NC State Wolfpack",
             "probability_pct": 97.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–64"
           },
           {
             "event_name": "Southern Jaguars at SMU Mustangs",
@@ -84608,8 +84907,8 @@
             "selection": "SMU Mustangs",
             "probability_pct": 98.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–72"
           },
           {
             "event_name": "UT Martin Skyhawks at Tulane Green Wave",
@@ -84618,8 +84917,8 @@
             "selection": "Tulane Green Wave",
             "probability_pct": 73.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–98"
           },
           {
             "event_name": "Incarnate Word Cardinals at Oklahoma State Cowboys",
@@ -84628,8 +84927,8 @@
             "selection": "Oklahoma State Cowboys",
             "probability_pct": 98.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "91–60"
           },
           {
             "event_name": "Lindenwood Lions at TCU Horned Frogs",
@@ -84638,8 +84937,8 @@
             "selection": "TCU Horned Frogs",
             "probability_pct": 97.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "98–59"
           },
           {
             "event_name": "Lane College Dragons at Austin Peay Governors",
@@ -84648,8 +84947,8 @@
             "selection": "Austin Peay Governors",
             "probability_pct": 89.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "109–65"
           },
           {
             "event_name": "Seattle U Redhawks at Hawai'i Rainbow Warriors",
@@ -84658,8 +84957,8 @@
             "selection": "Hawai'i Rainbow Warriors",
             "probability_pct": 58.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "74–73"
           },
           {
             "event_name": "Illinois State Redbirds at Saint Mary's Gaels",
@@ -84668,8 +84967,8 @@
             "selection": "Saint Mary's Gaels",
             "probability_pct": 76.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "90–85"
           },
           {
             "event_name": "Towson Tigers at Santa Clara Broncos",
@@ -84678,8 +84977,8 @@
             "selection": "Santa Clara Broncos",
             "probability_pct": 86.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "89–70"
           },
           {
             "event_name": "Canisius Golden Griffins at Penn State Nittany Lions",
@@ -84688,8 +84987,8 @@
             "selection": "Penn State Nittany Lions",
             "probability_pct": 97.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "97–57"
           },
           {
             "event_name": "Eastern Illinois Panthers at Indiana Hoosiers",
@@ -84718,8 +85017,8 @@
             "selection": "Minnesota Golden Gophers",
             "probability_pct": 90.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "85–50"
           },
           {
             "event_name": "Lafayette Leopards at Butler Bulldogs",
@@ -84738,8 +85037,8 @@
             "selection": "Georgia Bulldogs",
             "probability_pct": 99.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "78–62"
           },
           {
             "event_name": "Tennessee Tech Golden Eagles at Mississippi State Bulldogs",
@@ -84748,8 +85047,8 @@
             "selection": "Mississippi State Bulldogs",
             "probability_pct": 94.4,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "106–88"
           },
           {
             "event_name": "East Texas A&M Lions at Oklahoma Sooners",
@@ -84758,8 +85057,8 @@
             "selection": "Oklahoma Sooners",
             "probability_pct": 99.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "64–68"
           },
           {
             "event_name": "Kansas City Roos at Creighton Bluejays",
@@ -84768,8 +85067,8 @@
             "selection": "Creighton Bluejays",
             "probability_pct": 99.4,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "76–61"
           },
           {
             "event_name": "West Georgia Wolves at DePaul Blue Demons",
@@ -84778,8 +85077,8 @@
             "selection": "DePaul Blue Demons",
             "probability_pct": 96.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "75–58"
           },
           {
             "event_name": "Mercyhurst Lakers at Marquette Golden Eagles",
@@ -84838,8 +85137,8 @@
             "selection": "Wake Forest Demon Deacons",
             "probability_pct": 99.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "83–62"
           },
           {
             "event_name": "Abilene Christian Wildcats at Colorado Buffaloes",
@@ -84848,8 +85147,8 @@
             "selection": "Colorado Buffaloes",
             "probability_pct": 92.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–59"
           },
           {
             "event_name": "Akron Zips at Louisiana Ragin' Cajuns",
@@ -84858,8 +85157,8 @@
             "selection": "Akron Zips",
             "probability_pct": 73.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "61–75"
           },
           {
             "event_name": "Bowling Green Falcons at Georgia State Panthers",
@@ -84908,8 +85207,8 @@
             "selection": "Arkansas State Red Wolves",
             "probability_pct": 64.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "71–70"
           },
           {
             "event_name": "Kent State Golden Flashes at Louisiana Tech Bulldogs",
@@ -84918,8 +85217,8 @@
             "selection": "Kent State Golden Flashes",
             "probability_pct": 52.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "85–75"
           },
           {
             "event_name": "Massachusetts Minutemen at Troy Trojans",
@@ -84948,8 +85247,8 @@
             "selection": "Ohio Bobcats",
             "probability_pct": 59.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–86"
           },
           {
             "event_name": "Ball State Cardinals at Georgia Southern Eagles",
@@ -84988,8 +85287,8 @@
             "selection": "Loyola Chicago Ramblers",
             "probability_pct": 87.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "77–52"
           },
           {
             "event_name": "UNC Asheville Bulldogs at Richmond Spiders",
@@ -85008,8 +85307,8 @@
             "selection": "Saint Louis Billikens",
             "probability_pct": 97.7,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "92–67"
           },
           {
             "event_name": "Youngstown State Penguins at St. Bonaventure Bonnies",
@@ -85038,8 +85337,8 @@
             "selection": "South Florida Bulls",
             "probability_pct": 99.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "98–71"
           },
           {
             "event_name": "Robert Morris Colonials at Nevada Wolf Pack",
@@ -85048,8 +85347,8 @@
             "selection": "Nevada Wolf Pack",
             "probability_pct": 80.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "86–49"
           },
           {
             "event_name": "North Alabama Lions at UC Davis Aggies",
@@ -85058,8 +85357,8 @@
             "selection": "UC Davis Aggies",
             "probability_pct": 86.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "75–79"
           },
           {
             "event_name": "American University Eagles at Cincinnati Bearcats",
@@ -85124,6 +85423,16 @@
             "score": "86–85"
           },
           {
+            "event_name": "Ohio Bobcats at South Alabama Jaguars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-03T01:00:00Z",
+            "selection": "Ohio Bobcats",
+            "probability_pct": 59.2,
+            "market_probability_pct": 48.3,
+            "result": "win",
+            "score": "77–86"
+          },
+          {
             "event_name": "Miami (OH) RedHawks at James Madison Dukes",
             "sport": "ncaam",
             "starts_at": "2026-11-03T00:03:36Z",
@@ -85135,7 +85444,8 @@
           }
         ],
         "reportable": true,
-        "minimum_picks_to_read": 50
+        "minimum_picks_to_read": 50,
+        "updated_at": "2026-11-04T18:26:27.442141+00:00"
       }
     },
     "caveat": "A hit rate alone overstates this. The cards are mostly heavy favourites, so the model expects to win nearly all of them: read hit_rate_pct next to expected_hit_rate_pct, and read beat_market_pct, which has been below 50%. Never render the hit rate on its own.",
