@@ -1754,7 +1754,7 @@ function rsBasketballDefense(){
       .sort((a,b)=>b.row.drb-a.row.drb).map(p=>({name:p.name,a:p.row.drb.toFixed(1)+'%',b:p.row.games}))
   }));
   return rsZoomBlock('hoopsDefense',c,'Shooting defense & turnovers','current',c.pts.length+' teams · season to date')
-    +`<section class="rsBlock rsSpan4">${rsTop('Defensive rebounding','current','Share of available defensive rebounds')}${rsQuadTabs('hoopsDefense',groups,'DREB%','Games')}</section>`;
+    +`<section class="rsBlock rsSpan4">${rsTop('Defensive rebounding','current')}${rsQuadTabs('hoopsDefense',groups,'DREB%','Games')}</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
