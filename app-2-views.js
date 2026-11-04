@@ -1753,7 +1753,15 @@ function rsBasketballDefense(){
     rows:c.pts.filter(p=>(p.y>=c.my?(p.x>=c.mx?'e':'s'):(p.x>=c.mx?'t':'u'))===key)
       .sort((a,b)=>b.row.drb-a.row.drb).map(p=>({name:p.name,a:p.row.drb.toFixed(1)+'%',b:p.row.games}))
   }));
-  return rsZoomBlock('hoopsDefense',c,'Shooting defense & turnovers','current',c.pts.length+' teams · season to date')
+  const ranked=c.pts.slice().sort((a,b)=>a.x-b.x||b.y-a.y||a.name.localeCompare(b.name));
+  const chart=`<section class="rsBlock rsExpandable rsSpan8">${rsTop('Shooting defense & turnovers','current')}
+    <div class="rsScrollX"><div class="rsConfHead rsDefenseBars"><span>Team</span><span title="Opponent effective field goal percentage includes the extra value of three-pointers. Lower is better.">Opp. eFG% · lower is better</span><span title="Opponent turnovers per 100 estimated possessions">Forced TO%</span><span>Games</span></div>
+    <ol class="rsConf">${ranked.map((p,i)=>`<li class="rsConfRow rsDefenseBars${i>=8?' rsExtra':''}">
+      <span class="rsLogoName">${teamMark(p.name)}<span>${esc(rsShortName(p.name))}</span></span>
+      <span class="rsDefenseBarValue"><i class="rsBar" aria-hidden="true"><b style="width:${Math.min(100,Math.max(0,p.x)).toFixed(1)}%"></b></i><b>${p.x.toFixed(1)}%</b></span>
+      <span class="rsNum">${p.y.toFixed(1)}%</span><span class="rsNum rsMuted">${p.row.games}</span></li>`).join('')}</ol></div>
+    ${ranked.length>8?rsMoreBtn(ranked.length,'View all','Shooting defense & turnovers'):''}</section>`;
+  return chart
     +`<section class="rsBlock rsSpan4">${rsTop('Defensive rebounding','current')}${rsQuadTabs('hoopsDefense',groups,'DREB%','Games')}</section>`;
 }
 function collegeResearchModules(){

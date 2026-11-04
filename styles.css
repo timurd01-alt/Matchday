@@ -4292,3 +4292,15 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
    real space below that line; the 4px top padding only exists to align with
    the list beside it on desktop. */
 @media(max-width:899px){#view-home .gamesSideCol>.gamesRecord:first-child,.gamesSideCol>.gamesRecord:first-child{padding-top:18px!important}}
+
+
+/* Basketball defensive comparison uses the existing conference-bar layout. */
+.rsConfHead.rsDefenseBars,.rsConfRow.rsDefenseBars,
+.rsScrollX .rsConfHead.rsDefenseBars,.rsScrollX .rsConfRow.rsDefenseBars{
+  grid-template-columns:minmax(170px,1fr) minmax(180px,1.2fr) 88px 48px;
+  min-width:550px;
+}
+.rsDefenseBarValue{display:grid;grid-template-columns:minmax(0,1fr) 58px;gap:12px;align-items:center;text-align:right}
+.rsDefenseBars .rsLogoName{min-width:0}
+.rsDefenseBars .rsLogoName>span{overflow:hidden;text-overflow:ellipsis}
+.rsDefenseBars .rsBar{display:block!important}
