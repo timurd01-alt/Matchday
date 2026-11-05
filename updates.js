@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1105A",
+  "tag": "Fix",
+  "title": "Basketball market prices and verified scorecard",
+  "items": [
+   "Match abbreviated school names across odds and fixture providers, preserve home/away prices, and repair the odds cache between refreshes.",
+   "Refresh the basketball scorecard through November 5: 189–32 across 221 verified games. Exclude a replaced-opponent matchup and correct Florida State’s displayed score."
+  ]
+ },
+ {
   "date": "Build 1102H",
   "tag": "Fix",
   "title": "One form badge per season game",

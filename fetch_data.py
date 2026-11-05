@@ -440,6 +440,19 @@ def pair(a, b): return frozenset({norm(a), norm(b)})
 
 def _name_match(a, b):
     a, b = norm(a), norm(b)
+    def school(s):
+        # Provider abbreviations, while preserving Saint/Mount Saint schools.
+        s = re.sub(r"^st\b", "saint", s)
+        s = re.sub(r"\bmount st\b", "mount saint", s)
+        s = re.sub(r"\bst\b", "state", s)
+        for short, full in (("liu", "long island university"),
+                            ("ualbany", "albany"),
+                            ("loyola chi", "loyola chicago"),
+                            ("penn", "pennsylvania")):
+            s = re.sub(r"^" + short + r"\b", full, s)
+        return s
+    a, b = school(a), school(b)
+    if not a or not b: return False
     if a == b: return True
     if a in b or b in a: return True            # "cape verde" ⊂ "cape verde islands"
     ta, tb = set(a.split()), set(b.split())
@@ -448,15 +461,27 @@ def _name_match(a, b):
 
 def find_odds(odds, home, away):
     """Exact pair first, then a fuzzy fallback that tolerates name variants."""
+    def oriented(record):
+        if not record.get("provider_home") or _name_match(home, record["provider_home"]):
+            return record
+        record = json.loads(json.dumps(record))
+        price = record.get("1x2", {})
+        price["home_pct"], price["away_pct"] = price.get("away_pct"), price.get("home_pct")
+        for field in ("open", "move"):
+            if field in price:
+                price[field]["h"], price[field]["a"] = price[field].get("a"), price[field].get("h")
+        if "spread_lo" in price and "spread_hi" in price:
+            price["spread_lo"], price["spread_hi"] = 100-price["spread_hi"], 100-price["spread_lo"]
+        return record
     rec = odds.get(pair(home, away))
-    if rec: return rec, "exact"
+    if rec: return oriented(rec), "exact"
     for k, r in odds.items():
         names = list(k)
         if len(names) != 2: continue
         n1, n2 = names
         if (_name_match(home, n1) and _name_match(away, n2)) or \
            (_name_match(home, n2) and _name_match(away, n1)):
-            return r, "fuzzy"
+            return oriented(r), "fuzzy"
     return None, "none"
 
 
@@ -496,9 +521,10 @@ def _load_odds_market_cache():
     try:
         with open(ODDS_CACHE_FILE, encoding="utf-8") as f:
             cached = json.load(f)
-        if isinstance(cached.get("data"), dict):
+        if cached.get("schema") == 2 and isinstance(cached.get("entries"), list):
             _ODDS_CACHE["t"] = float(cached.get("t") or 0)
-            _ODDS_CACHE["data"] = cached["data"]
+            _ODDS_CACHE["data"] = {frozenset(row["teams"]): row["markets"]
+                                   for row in cached["entries"]}
     except Exception:
         pass
 
@@ -507,7 +533,9 @@ def _save_odds_market_cache():
     try:
         tmp = ODDS_CACHE_FILE + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(_ODDS_CACHE, f)
+            json.dump({"schema": 2, "t": _ODDS_CACHE["t"], "entries": [
+                {"teams": sorted(teams), "markets": markets}
+                for teams, markets in _ODDS_CACHE["data"].items()]}, f)
         os.replace(tmp, ODDS_CACHE_FILE)
     except Exception as e:
         DIAG.append(f"odds market cache save failed: {e}")
@@ -598,7 +626,9 @@ def fetch_odds():
             ln = sorted(tot, key=lambda L: len(tot[L]["o"]), reverse=True)[0]
             o, u = tot[ln]["o"], tot[ln]["u"]
             rec["totals"] = {"line": ln, "over_pct": round(sum(o)/len(o)*100), "under_pct": round(sum(u)/len(u)*100)}
-        if rec: out[pair(home, away)] = rec
+        if rec:
+            rec["provider_home"], rec["provider_away"] = home, away
+            out[pair(home, away)] = rec
     if dirty: _save_open()
     _ODDS_CACHE["t"] = now; _ODDS_CACHE["data"] = out
     _save_odds_market_cache()

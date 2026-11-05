@@ -45,10 +45,11 @@ class ScoreRefreshTests(unittest.TestCase):
 
     def test_odds_market_cache_survives_a_new_process(self):
         now = 1_800_000_000.0
-        payload = {"Team A|Team B": {"1x2": {"home_pct": 55}}}
+        payload = {fetch_data.pair("Team A", "Team B"): {"1x2": {"home_pct": 55}}}
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "odds_cache.json"
-            path.write_text(json.dumps({"t": now, "data": payload}), encoding="utf-8")
+            with mock.patch.object(fetch_data, "ODDS_CACHE_FILE", str(path)), mock.patch.object(fetch_data, "_ODDS_CACHE", {"t": now, "data": payload}):
+                fetch_data._save_odds_market_cache()
             with mock.patch.object(fetch_data, "ODDS_CACHE_FILE", str(path)), \
                  mock.patch.object(fetch_data, "_ODDS_CACHE", {"t": 0.0, "data": {}}), \
                  mock.patch.object(fetch_data.time, "time", return_value=now), \
@@ -56,11 +57,27 @@ class ScoreRefreshTests(unittest.TestCase):
                 self.assertEqual(fetch_data.fetch_odds(), payload)
                 get.assert_not_called()
 
+    def test_basketball_provider_aliases_and_orientation(self):
+        record = {"provider_home": "Chicago St Cougars", "provider_away": "Incarnate Word Cardinals",
+                  "1x2": {"home_pct": 30, "away_pct": 70, "open": {"h": 32, "a": 68},
+                          "spread_lo": 28, "spread_hi": 32}}
+        odds = {fetch_data.pair(record["provider_home"], record["provider_away"]): record}
+        found, how = fetch_data.find_odds(odds, "Incarnate Word", "Chicago State")
+        self.assertEqual(how, "fuzzy")
+        self.assertEqual(found["1x2"]["home_pct"], 70)
+        self.assertEqual(found["1x2"]["open"]["h"], 68)
+        self.assertEqual(record["1x2"]["home_pct"], 30)
+        for short, long in (("LIU Sharks", "Long Island University"),
+                            ("Loyola (Chi) Ramblers", "Loyola Chicago"),
+                            ("Georgia St Panthers", "Georgia State")):
+            self.assertTrue(fetch_data._name_match(short, long))
+        self.assertFalse(fetch_data._name_match("", "Georgia State"))
+
     def test_empty_odds_snapshot_is_also_cached(self):
         now = 1_800_000_000.0
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "odds_cache.json"
-            path.write_text(json.dumps({"t": now, "data": {}}), encoding="utf-8")
+            path.write_text(json.dumps({"schema": 2, "t": now, "entries": []}), encoding="utf-8")
             with mock.patch.object(fetch_data, "ODDS_CACHE_FILE", str(path)), \
                  mock.patch.object(fetch_data, "_ODDS_CACHE", {"t": 0.0, "data": {}}), \
                  mock.patch.object(fetch_data.time, "time", return_value=now), \
