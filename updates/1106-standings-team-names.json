@@ -1,0 +1,9 @@
+{
+  "rank": 549,
+  "date": "Build 1106E",
+  "tag": "Fix",
+  "title": "Simpler conference team names",
+  "items": [
+    "Removed team logo badges and abbreviations from conference standings, keeping the team names."
+  ]
+}
