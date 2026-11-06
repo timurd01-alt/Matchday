@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106H",
+  "tag": "Fix",
+  "title": "Matchup ranks match Power Ratings",
+  "items": [
+   "Football and basketball matchup ranks now use the same published ranks as Power Ratings.",
+   "Missing or ambiguous power ranks are omitted instead of showing a different standings position."
+  ]
+ },
+ {
   "date": "Build 1106G",
   "tag": "Fix",
   "title": "Consistent standings numbers",

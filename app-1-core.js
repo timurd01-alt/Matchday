@@ -346,10 +346,22 @@ function teamRecordText(team){
 }
 // One standings blurb shared by the fixture card, the expanded view's hero and
 // its match-read panel, so all three stay honest about the same sport.
+function teamPowerRank(name,comp){
+  const key=String(comp||DATA.comp_key||currentSportKey()).toLowerCase();
+  const table=key==='ncaam'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :key==='ncaaf'?(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null):null;
+  const rows=table?.rankings||[];
+  const exact=rows.find(row=>teamKey(row.name)===teamKey(name));
+  const matches=exact?[exact]:rows.filter(row=>bbNameMatches(row.name,name));
+  const rank=matches.length===1?Number(matches[0].rank):NaN;
+  return Number.isInteger(rank)&&rank>0?rank:null;
+}
 function teamStandingsMeta(team,comp,opts){
   opts=opts||{};
   const parts=[];
-  if(team?.pos)parts.push(`#${team.pos}`);
+  const rank=teamPowerRank(team?.name,comp);
+  if(rank!=null)parts.push(`#${rank}`);
   if(usesTablePoints(comp)){
     const pts=Number(team?.pts);
     // Preseason there is no table yet, so "0 pts" is a placeholder pretending
