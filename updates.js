@@ -4,6 +4,19 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106N",
+  "tag": "Fix",
+  "title": "Bracketology: current season, clearer odds, tighter brackets",
+  "items": [
+   "Bracketology is refreshed with this season's first games, so records are no longer all 0-0.",
+   "Conferences list each team by its chance to win the conference tournament, highest first, and the cards pack together without blank space. The Beta label is gone.",
+   "Region brackets are shorter, show the likeliest team in each later-round slot, and add a region-favourites column.",
+   "The First Four is one row of four games, each naming who its winner plays. The National view and the Full bracket follow the football playoff bracket's design, with the title trophy in the middle.",
+   "The Full bracket opens fitted to the screen, with zoom out, zoom in and fit controls.",
+   "The expanded game view no longer repeats the model pick beneath the matchup table."
+  ]
+ },
+ {
   "date": "Build 1106M",
   "tag": "Fix",
   "title": "Market prices from US sportsbooks",

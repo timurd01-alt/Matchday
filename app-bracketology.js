@@ -1,6 +1,6 @@
 /* Presentation only. The engine owns every selection, seed, rating and odds value. */
 window.MatchdayBracketology=(()=>{
-  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',full:false,compare:false,opener:null,staleTimer:null,observer:null};
+  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',full:false,zoom:null,compare:false,opener:null,staleTimer:null,observer:null};
   const h=v=>esc(String(v??''));
   const number=v=>typeof v==='number'&&Number.isFinite(v);
   const odds=v=>number(v)&&v>=0&&v<=1?(v>0&&v<.01?'<1%':new Intl.NumberFormat('en-US',{style:'percent',maximumFractionDigits:0}).format(v)):'Unavailable';
@@ -53,7 +53,7 @@ window.MatchdayBracketology=(()=>{
     if(!m)return '';
     const parts=[];
     if(number(m.seed)&&m.seed!==0)parts.push(`${m.seed<0?'↑':'↓'} ${Math.abs(m.seed)} seed${Math.abs(m.seed)===1?'':'s'}`);
-    if(number(m.make_field)&&m.make_field!==0)parts.push(`${m.make_field>0?'↑':'↓'} ${(Math.abs(m.make_field)*100).toFixed(1).replace(/\.0$/,'')} pp field odds`);
+    if(number(m.make_field)&&m.make_field!==0)parts.push(`${m.make_field>0?'↑':'↓'} ${(Math.abs(m.make_field)*100).toFixed(1).replace(/\.0$/,'')} pts field odds since last update`);
     return parts.length?`<span class="bkMovement">${h(parts.join(' · '))}</span>`:'';
   }
   function status(t){return `<span class="bkStatus bkStatus-${h(t.status)}">${h(statuses[t.status]||'Status unavailable')}</span>`}
@@ -61,51 +61,97 @@ window.MatchdayBracketology=(()=>{
     const t=current().teams[key];if(!t)return '<span>Team unavailable</span>';
     return `<button type="button" class="bkTeam ${h(extra)}" data-team="${h(key)}">${teamMark(t.logo_key||t.team_name)}<span><b>${h(t.team_name)}</b>${detail?`<small>${detail}</small>`:''}</span><span class="bkOpen" aria-hidden="true">↗</span></button>`;
   }
-  function gameCard(g,d){
+  // Teams that can arrive in a slot: every team seeded anywhere beneath its feeder game.
+  function feederTeams(d,gameId,seen=new Set()){
+    const g=d.bracket.games.find(n=>n.id===gameId);if(!g||seen.has(gameId))return [];seen.add(gameId);
+    return g.slots.flatMap(slot=>slot.team_key?[slot.team_key]:slot.source_game?feederTeams(d,slot.source_game,seen):[]);
+  }
+  function likeliestSlot(d,g,slot){
+    if(!slot.source_game||g.round==='FF')return null;
+    let best=null;
+    for(const key of feederTeams(d,slot.source_game)){const p=d.teams[key]?.odds?.rounds?.[g.round];if(number(p)&&(!best||p>best.p))best={key,p};}
+    return best;
+  }
+  function gameCard(g,d,compact=false,meta=''){
       const next=d.bracket.games.find(n=>n.id===g.next_game);
-      return `<article class="bkGame" data-game="${h(g.id)}"><div class="bkGameMeta">${h(g.label||g.id)}${g.status==='finished'?' · Final':d.bracket.kind==='official'?'':' · Projected'}</div>${g.slots.map((slot,i)=>{
-        if(!slot.team_key)return `<div class="bkSlot"><span aria-hidden="true">—</span><span>${h(slot.label||'Awaiting team')}</span></div>`;
+      const head=meta?`<div class="bkGameMeta bkMetaCaps">${h(meta)}</div>`:compact?'':`<div class="bkGameMeta">${h(g.label||g.id)}${g.status==='finished'?' · Final':d.bracket.kind==='official'?'':' · Projected'}</div>`;
+      return `<article class="bkGame${compact?' bkGameCompact':''}${compact==='mini'?' bkGameMini':''}" data-game="${h(g.id)}">${head}${g.slots.map((slot,i)=>{
+        if(!slot.team_key){
+          const likely=compact&&d.bracket.kind!=='official'?likeliestSlot(d,g,slot):null;
+          if(likely)return `<div class="bkGameTeam bkLikely"><span class="bkSeed">${value(d.field.find(f=>f.team_key===likely.key)?.seed)}</span>${teamButton(likely.key,`${odds(likely.p)} to get here`)}</div>`;
+          return `<div class="bkSlot"><span aria-hidden="true">—</span><span>${h(slot.label||'Awaiting team')}</span></div>`;
+        }
         const t=d.teams[slot.team_key],entry=d.field.find(f=>f.team_key===slot.team_key)||t;
         const bid={auto:'Projected auto',at_large:'At-large',auto_clinched:'🔒 Clinched auto'}[entry.bid]||'Bid unavailable';
         const eliminated=['eliminated','tournament_eliminated'].includes(t.status);
         const score=g.status==='finished'&&Array.isArray(g.score)?g.score[i]:null;
         return `<div class="bkGameTeam ${eliminated?'bkLost':''} ${g.winner_key===slot.team_key?'bkWinner':''}"><span class="bkSeed">${value(entry.seed)}</span>${teamButton(slot.team_key,`${h(bid)} · ${odds(t.odds?.seed?.[entry.seed])} at seed${eliminated?` · ${h(t.eliminated_round||statuses[t.status])}`:''}`)}${score!=null?`<strong class="bkScore">${value(score)}</strong>`:''}</div>`;
-      }).join('')}${next?`<footer>→ ${h(next.label||next.id)}${next.region!==state.region?` · ${h(next.region)}`:''}</footer>`:''}</article>`;
+      }).join('')}${next&&!compact?`<footer>→ ${h(next.label||next.id)}${next.region!==state.region?` · ${h(next.region)}`:''}</footer>`:''}</article>`;
   }
   function bracket(d){
     if(state.full)return fullBracket(d);
     const games=d.bracket.games.filter(g=>(g.region??null)===state.region);
+    const nav=`<nav class="bkRegions" aria-label="Bracket region"><button type="button" data-full="true" aria-pressed="false">Full bracket</button>${(d.regions.length?d.regions:[null]).map(r=>`<button type="button" data-region="${h(r??'')}" aria-pressed="${r===state.region}">${h(r??'Playoff')}</button>`).join('')}</nav>`;
+    const final=games.find(g=>g.round==='F'&&!g.next_game),semis=final?games.filter(g=>g.next_game===final.id).sort((a,b)=>a.id.localeCompare(b.id)):[];
+    if(final&&semis.length===2&&games.length===3)return nav+national(d,final,semis);
+    if(games.length&&games.every(g=>g.round==='FF'))return nav+firstFour(d,games);
     const columns=d.rounds.filter(r=>games.some(g=>g.round===r.key));
-    return `<nav class="bkRegions" aria-label="Bracket region"><button type="button" data-full="true" aria-pressed="false">Full bracket</button>${(d.regions.length?d.regions:[null]).map(r=>`<button type="button" data-region="${h(r??'')}" aria-pressed="${r===state.region}">${h(r??'Playoff')}</button>`).join('')}</nav><p class="bkHint">Select a school for its résumé. Scroll inside the bracket to follow the rounds.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="${h(state.region)} bracket, scroll horizontally"><div class="bkBracketColumns">${columns.map(r=>`<section class="bkRound"><h3>${h(r.label)}</h3><div class="bkGames">${games.filter(g=>g.round===r.key).map(g=>{
-      return gameCard(g,d);
-    }).join('')}</div></section>`).join('')}</div></div>`;
+    const last=columns[columns.length-1],nextRound=last&&d.rounds[d.rounds.findIndex(r=>r.key===last.key)+1];
+    const contenders=nextRound&&state.region?[...new Set(games.flatMap(g=>g.slots.map(s=>s.team_key).filter(Boolean)))]
+      .map(key=>({key,p:d.teams[key]?.odds?.rounds?.[nextRound.key]})).filter(t=>number(t.p)).sort((a,b)=>b.p-a.p).slice(0,6):[];
+    const favourites=contenders.length&&last.key==='E8'?`<section class="bkRound bkRegionOdds"><h3>Region favourites</h3><div class="bkSupport"><p class="bkHint">Chance to win the ${h(state.region)} and reach the ${h(nextRound.label)}.</p>${contenders.map(t=>`<div class="bkConferenceTeam">${teamButton(t.key)}<span>${odds(t.p)}</span></div>`).join('')}</div></section>`:'';
+    return `${nav}<p class="bkHint">Select a school for its résumé. Scroll inside the bracket to follow the rounds.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="${h(state.region)} bracket, scroll horizontally"><div class="bkBracketColumns">${columns.map(r=>`<section class="bkRound"><h3>${h(r.label)}</h3><div class="bkGames">${games.filter(g=>g.round===r.key).map(g=>{
+      return gameCard(g,d,true);
+    }).join('')}</div></section>`).join('')}${favourites}</div></div>`;
+  }
+  // Outlined gold trophy in the football bracket's style: the basketball title
+  // trophy's ball on a tall banded pedestal.
+  const TROPHY=`<svg class="bkTrophy" viewBox="0 0 80 120" aria-hidden="true"><circle cx="40" cy="22" r="17"/><path d="M23 22h34M40 5v34M28 9.5c6 7 6 18 0 25M52 9.5c-6 7-6 18 0 25"/><path d="M33 40h14l-3 8h-8z"/><path d="M36 48h8l5 40H31z"/><path d="M31 62h18M30 76h20"/><path d="M24 88h32v10H24zM19 98h42v12H19z"/></svg>`;
+  const championHead=`<div class="bkChampHead">${TROPHY}<span>National championship</span></div>`;
+  // Play-in games sit side by side, each naming who its winner meets.
+  function firstFour(d,games){
+    const card=g=>{
+      const next=d.bracket.games.find(n=>n.id===g.next_game),other=next?.slots.find(s=>s.source_game!==g.id&&s.team_key),t=other&&d.teams[other.team_key],entry=other&&d.field.find(f=>f.team_key===other.team_key);
+      const html=gameCard(g,d,true).replace(/<\/article>$/,`<footer>Winner plays ${t?`${h(t.team_name)}${entry?.seed?` (${h(entry.seed)})`:''}`:'the Round of 64'} in the ${h(next?.region||'bracket')}</footer></article>`);
+      return `<section class="bkFFGame"><h3>${h(g.region&&g.region!=='First Four'?g.region:next?.region||'')} · ${h(g.slots.map(s=>d.field.find(f=>f.team_key===s.team_key)?.seed).find(Boolean)||'')} seeds</h3>${html}</section>`;
+    };
+    return `<p class="bkHint">Four play-in games open the tournament. Each winner joins the Round of 64. Select a school for its résumé.</p><div class="bkFirstFour">${games.map(card).join('')}</div>`;
+  }
+  // The last weekend: both semifinals feed the championship in the middle.
+  function national(d,final,semis){
+    let champ=null;
+    for(const key of feederTeams(d,final.id)){const p=d.teams[key]?.odds?.rounds?.champion;if(number(p)&&(!champ||p>champ.p))champ={key,p};}
+    const semi=(g,i)=>`<section class="bkNatSide">${gameCard(g,d,true,`Semifinal ${i+1} · ${String(g.label||'').replace(/^Final Four · /,'')}`)}</section>`;
+    return `<p class="bkHint">Two sides. One champion. Both national semifinals feed the title game in the middle. Select a school for its résumé.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="National bracket"><div class="bkBracketColumns bkNational">${semi(semis[0],0)}<section class="bkNatCenter">${championHead}${champ&&d.bracket.kind!=='official'?`<div class="bkChampPick"><span>Projected champion</span>${teamButton(champ.key,`${odds(champ.p)} to win the title`)}</div>`:''}${gameCard(final,d,true,'Title game')}</section>${semi(semis[1],1)}</div></div>`;
   }
   function fullBracket(d){
     const games=d.bracket.games.filter(g=>g.round!=='FF'),positions=new Map(),roots=games.filter(g=>!g.next_game);
     const rounds=d.rounds.filter(r=>games.some(g=>g.round===r.key));
-    const final=roots[0],step=248,center=(rounds.length-1)*step;
+    const final=roots[0],step=192,center=(rounds.length-1)*step;
     const feeders=g=>games.filter(n=>n.next_game===g.id).sort((a,b)=>(a.next_slot??0)-(b.next_slot??0));
-    const cursors=[24,24];
+    const cursors=[40,40];
     function place(g,side){
       const incoming=feeders(g),children=incoming.map(n=>place(n,side));
       const y=children.length?children.reduce((sum,n)=>sum+n.y,0)/children.length:cursors[side];
-      if(!children.length)cursors[side]+=148;
+      if(!children.length)cursors[side]+=76;
       const round=rounds.findIndex(r=>r.key===g.round),distance=(rounds.length-1-round)*step;
       const pos={x:center+(side?distance:-distance),y};positions.set(g.id,pos);return pos;
     }
     if(final){const branches=feeders(final);const placed=branches.map((g,i)=>place(g,i%2));positions.set(final.id,{x:center,y:placed.length?placed.reduce((sum,p)=>sum+p.y,0)/placed.length:60})}
     games.filter(g=>!positions.has(g.id)).forEach(g=>place(g,0));
-    const height=Math.max(...cursors)+100,width=center*2+220;
-    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button></nav><p class="bkHint">Both sides advance toward the championship in the middle. First Four games are in their region tab. Swipe or scroll left and right. Select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px">${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d)}</div>`}).join('')}</div></div>`;
+    const height=Math.max(...cursors)+40,width=center*2+170,z=state.zoom??1,finalPos=final&&positions.get(final.id);
+    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button><span class="bkZoomControls" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out"${z<=.4?' disabled':''}>−</button><button type="button" data-zoom="fit">Fit</button><button type="button" data-zoom="1" aria-label="Zoom in"${z>=1?' disabled':''}>+</button><output aria-live="polite">${Math.round(z*100)}%</output></span></nav><p class="bkHint">Two sides. One champion. Later rounds show each slot’s likeliest team. First Four games are in their own tab. Zoom in to read closer; select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkZoomBox" style="width:${Math.ceil(width*z)}px;height:${Math.ceil(height*z)}px"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px;transform:scale(${z})">${finalPos?`<div class="bkFullTrophy" style="left:${finalPos.x}px;top:${Math.max(0,finalPos.y-190)}px">${championHead}</div>`:''}${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d,'mini',g===final?'Title game':'')}</div>`}).join('')}</div></div></div>`;
   }
   function connectBracket(host,d){
     const board=host.querySelector('.bkBracketColumns');if(!board)return;
     const bounds=board.getBoundingClientRect(),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('class','bkConnections');svg.setAttribute('aria-hidden','true');svg.setAttribute('width',bounds.width);svg.setAttribute('height',bounds.height);
+    // A zoomed board is scaled with a transform; draw in its unscaled units.
+    const k=board.offsetWidth?bounds.width/board.offsetWidth:1;
+    svg.setAttribute('class','bkConnections');svg.setAttribute('aria-hidden','true');svg.setAttribute('width',board.offsetWidth||bounds.width);svg.setAttribute('height',board.offsetHeight||bounds.height);
     const cards=new Map(Array.from(board.querySelectorAll('[data-game]')).map(el=>[el.dataset.game,el]));
     d.bracket.games.forEach(g=>{
       const from=cards.get(g.id),to=cards.get(g.next_game);if(!from||!to)return;
-      const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x1=(a.left>b.left?a.left:a.right)-bounds.left,x2=(a.left>b.left?b.right:b.left)-bounds.left,y1=a.top+a.height/2-bounds.top,y2=b.top+b.height/2-bounds.top;
+      const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x1=((a.left>b.left?a.left:a.right)-bounds.left)/k,x2=((a.left>b.left?b.right:b.left)-bounds.left)/k,y1=(a.top+a.height/2-bounds.top)/k,y2=(b.top+b.height/2-bounds.top)/k;
       const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M ${x1} ${y1} H ${(x1+x2)/2} V ${y2} H ${x2}`);svg.append(path);
     });board.prepend(svg);
   }
@@ -116,7 +162,11 @@ window.MatchdayBracketology=(()=>{
   function table(headers,rows){return `<div class="bkTableFrame" tabindex="0" role="region" aria-label="Scrollable bracketology table"><table><thead><tr>${headers.map(s=>`<th scope="col">${s}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`}
   function seedList(d){return table(['S-curve','Seed','School','Conference','Power rating','Résumé rank','Q1','Make field','Movement'],d.field.slice().sort((a,b)=>a.overall_seed-b.overall_seed).map(f=>{const t=d.teams[f.team_key];return `<tr><td>${value(f.overall_seed)}</td><td>${value(f.seed)}</td><th scope="row">${teamButton(f.team_key)}</th><td>${h(t.conference)}</td><td>${value(t.power_rating)}</td><td>${value(t.resume_rank)}</td><td>${record(t.quadrants?.Q1)}</td><td>${odds(t.odds?.make_field)}</td><td>${movement(t.movement)||'—'}</td></tr>`}))}
   function record(v){return Array.isArray(v)&&v.length===2?v.map(value).join('–'):'Unavailable'}
-  function conferences(d){return `<div class="bkConferenceGrid">${(d.conferences||[]).map(c=>`<section class="bkSupport"><h3>${h(c.conference)}</h3><p><b>${value(c.projected_bids)}</b> projected bids</p>${Object.entries(c.auto_bid_odds||{}).map(([key,p])=>`<div class="bkConferenceTeam">${teamButton(key)}<span>${odds(p)} auto bid</span></div>`).join('')}</section>`).join('')||'<p>Conference projections unavailable.</p>'}</div>`}
+  function conferences(d){
+    // Team keys are numeric strings, which JavaScript objects iterate in id
+    // order regardless of the handoff's order, so sort by the odds explicitly.
+    const ranked=c=>Object.entries(c.auto_bid_odds||{}).sort((a,b)=>(number(b[1])?b[1]:-1)-(number(a[1])?a[1]:-1));
+    return `<p class="bkHint">Each conference champion gets an automatic bid. The percentage is each team’s chance to win its conference tournament, so a conference’s chances add up to 100%.</p><div class="bkConferenceGrid">${(d.conferences||[]).map(c=>`<section class="bkSupport"><h3>${h(c.conference)}</h3><p class="bkConferenceBids"><span><b>${value(c.projected_bids)}</b> projected bid${Number(c.projected_bids)===1?'':'s'}</span><span>Win tournament</span></p>${ranked(c).map(([key,p])=>`<div class="bkConferenceTeam">${teamButton(key)}<span>${odds(p)}</span></div>`).join('')}</section>`).join('')||'<p>Conference projections unavailable.</p>'}</div>`}
   function tournamentOdds(d){return table(['School',...d.odds_rounds.map(r=>h(r.label)),'Model alert'],d.field.map(f=>{const t=d.teams[f.team_key];return `<tr><th scope="row">${teamButton(f.team_key,`Seed ${h(f.seed)}`)}</th>${d.odds_rounds.map(r=>`<td>${odds(t.odds?.rounds?.[r.key])}</td>`).join('')}<td>${t.upset_alert?'⚑ Upset alert':'—'}</td></tr>`}))}
   function eliminated(d){return `<section class="bkSupport"><h3>Eliminated teams</h3>${(d.eliminated||[]).slice().sort((a,b)=>String(b.eliminated_on).localeCompare(String(a.eliminated_on))).map(t=>`<article class="bkEliminated">${teamButton(t.team_key)}<span>${h(t.eliminated_reason||'Reason unavailable')}</span><time>${h(t.eliminated_on||'Date unavailable')}</time></article>`).join('')||'<p class="bkHint">No eliminated teams supplied.</p>'}</section>`}
   function resume(key){
@@ -125,7 +175,7 @@ window.MatchdayBracketology=(()=>{
     dialog=document.createElement('dialog');dialog.id='bk-resume';dialog.className='bkResume';dialog.setAttribute('aria-labelledby','bk-resume-title');
     const f=d.field.find(f=>f.team_key===key),seedKeys=Array.from({length:d.max_seed},(_,i)=>String(i+1)).concat('out');
     const games=(label,rows)=>`<section><h3>${label}</h3>${rows?.length?`<ul class="bkResults">${rows.map(g=>`<li><b>${h(g.opponent||'Opponent unavailable')}</b><span>${h([g.site,g.date].filter(Boolean).join(' · '))}</span></li>`).join('')}</ul>`:'<p class="bkHint">None supplied.</p>'}</section>`;
-    dialog.innerHTML=`<header><div>${teamMark(t.logo_key||t.team_name)}<h2 id="bk-resume-title">${h(t.team_name)}</h2></div><button type="button" data-close aria-label="Close résumé">×</button></header><div class="bkResumeBody">${d.mock?'<p class="bkMock">Design preview · Not a forecast</p>':''}${!d.calibrated?'<span class="bkStatus">Beta</span>':''}<p class="bkHint">${h(t.conference)} · ${h(t.record||'Record unavailable')}${f?` · ${d.bracket.kind==='official'?'':'Projected '}seed ${h(f.seed)}`:''}</p>${status(t)}${movement(t.movement)}${['eliminated','tournament_eliminated'].includes(t.status)?`<p>${h(t.eliminated_reason||'Reason unavailable')} · ${h(t.eliminated_on||'Date unavailable')}</p>`:''}<div class="bkRatingPair"><section><span>Who is best ${help('power rating','Opponent-adjusted, tempo-free team strength supplied by the engine. It is separate from tournament selection.')}</span><strong>${value(t.power_rating)}</strong><b>Power rating</b></section><section><span>Who earned a spot ${help('résumé rank','The model’s résumé measure of results earned. This is not the NCAA NET.')}</span><strong>${t.resume_rank!=null?'#'+value(t.resume_rank):'Unavailable'}</strong><b>Résumé rank</b></section></div><div class="bkQuadGrid">${['Q1','Q2','Q3','Q4'].map(q=>`<div><span>${q}</span><b>${record(t.quadrants?.[q])}</b></div>`).join('')}</div><dl class="bkStats"><div><dt>Strength of schedule</dt><dd>${t.sos_rank!=null?'#'+value(t.sos_rank):'Unavailable'}</dd></div><div><dt>Strength of record</dt><dd>${t.sor_rank!=null?'#'+value(t.sor_rank):'Unavailable'}</dd></div><div><dt>Make field</dt><dd>${odds(t.odds?.make_field)}</dd></div><div><dt>Auto bid</dt><dd>${odds(t.odds?.auto_bid)}</dd></div></dl><section><h3>Seed odds ${help('seed odds','Each bar is the supplied chance of that seed, including missing the field. Unavailable values are not zero.')}</h3><div class="bkSeedChart">${seedKeys.map(seed=>{const p=t.odds?.seed?.[seed];return `<div><span>${seed==='out'?'Out':seed}</span><span class="bkBar" aria-hidden="true"><i style="width:${number(p)?p*100:0}%"></i></span><b>${odds(p)}</b></div>`}).join('')}</div></section><section><h3>Tournament odds</h3><dl class="bkRoundOdds">${d.odds_rounds.map(r=>`<div><dt>${h(r.label)}</dt><dd>${odds(t.odds?.rounds?.[r.key])}</dd></div>`).join('')}</dl></section>${games('Best wins',t.best_wins)}${games('Worst losses',t.bad_losses)}</div>`;
+    dialog.innerHTML=`<header><div>${teamMark(t.logo_key||t.team_name)}<h2 id="bk-resume-title">${h(t.team_name)}</h2></div><button type="button" data-close aria-label="Close résumé">×</button></header><div class="bkResumeBody">${d.mock?'<p class="bkMock">Design preview · Not a forecast</p>':''}<p class="bkHint">${h(t.conference)} · ${h(t.record||'Record unavailable')}${f?` · ${d.bracket.kind==='official'?'':'Projected '}seed ${h(f.seed)}`:''}</p>${status(t)}${movement(t.movement)}${['eliminated','tournament_eliminated'].includes(t.status)?`<p>${h(t.eliminated_reason||'Reason unavailable')} · ${h(t.eliminated_on||'Date unavailable')}</p>`:''}<div class="bkRatingPair"><section><span>Who is best ${help('power rating','Opponent-adjusted, tempo-free team strength supplied by the engine. It is separate from tournament selection.')}</span><strong>${value(t.power_rating)}</strong><b>Power rating</b></section><section><span>Who earned a spot ${help('résumé rank','The model’s résumé measure of results earned. This is not the NCAA NET.')}</span><strong>${t.resume_rank!=null?'#'+value(t.resume_rank):'Unavailable'}</strong><b>Résumé rank</b></section></div><div class="bkQuadGrid">${['Q1','Q2','Q3','Q4'].map(q=>`<div><span>${q}</span><b>${record(t.quadrants?.[q])}</b></div>`).join('')}</div><dl class="bkStats"><div><dt>Strength of schedule</dt><dd>${t.sos_rank!=null?'#'+value(t.sos_rank):'Unavailable'}</dd></div><div><dt>Strength of record</dt><dd>${t.sor_rank!=null?'#'+value(t.sor_rank):'Unavailable'}</dd></div><div><dt>Make field</dt><dd>${odds(t.odds?.make_field)}</dd></div><div><dt>Auto bid</dt><dd>${odds(t.odds?.auto_bid)}</dd></div></dl><section><h3>Seed odds ${help('seed odds','Each bar is the supplied chance of that seed, including missing the field. Unavailable values are not zero.')}</h3><div class="bkSeedChart">${seedKeys.map(seed=>{const p=t.odds?.seed?.[seed];return `<div><span>${seed==='out'?'Out':seed}</span><span class="bkBar" aria-hidden="true"><i style="width:${number(p)?p*100:0}%"></i></span><b>${odds(p)}</b></div>`}).join('')}</div></section><section><h3>Tournament odds</h3><dl class="bkRoundOdds">${d.odds_rounds.map(r=>`<div><dt>${h(r.label)}</dt><dd>${odds(t.odds?.rounds?.[r.key])}</dd></div>`).join('')}</dl></section>${games('Best wins',t.best_wins)}${games('Worst losses',t.bad_losses)}</div>`;
     document.body.append(dialog);dialog.querySelector('[data-close]').onclick=()=>dialog.close();dialog.addEventListener('close',()=>{dialog.remove();if(state.opener?.isConnected)state.opener.focus()});dialog.showModal();
   }
   function draw(host){
@@ -139,14 +189,20 @@ window.MatchdayBracketology=(()=>{
     if(!d.regions.includes(state.region))state.region=d.regions[0]??null;
     const tabs=[['bracket','Bracket'],['bubble','Bubble'],['seeds','Seed list'],['conferences','Conferences'],['odds','Tournament odds'],['eliminated','Eliminated']];
     const body={bracket,bubble,seeds:seedList,conferences,odds:tournamentOdds,eliminated};
-    host.innerHTML=`<section class="bkShell">${d.mock?'<div class="bkMock" role="status">DESIGN PREVIEW · Illustrative data · Not a forecast</div>':''}<header class="bkHeader"><div><span class="bkEyebrow">Men’s college basketball · ${h(d.season)}</span><h2>Bracketology</h2></div><div class="bkBadges">${!d.calibrated?'<span>Beta</span>':''}<span>${h(state.compare?'Final projection':phaseNames[d.phase])}</span></div></header><div class="bkAsOf"><span>Updated ${h(new Date(d.as_of).toLocaleString())}</span>${d.phase==='early'?'<span>Early-season uncertainty · Explore each team’s seed odds</span>':''}${d.final_projection?`<button type="button" data-compare>${state.compare?'View official bracket':'Compare final projection'}</button>`:state.compare?'<button type="button" data-compare>View official bracket</button>':''}</div><nav class="bkTabs" aria-label="Bracketology views">${tabs.map(([key,label])=>`<button type="button" data-tab="${key}" aria-pressed="${state.tab===key}">${label}</button>`).join('')}</nav><div class="bkContent">${body[state.tab](d)}</div><p class="bkSource">Selections, résumé measures and odds supplied by the engine.${d.odds_basis==='unconditional_season'?' Odds include the chance of reaching the field.':d.odds_basis==='conditional_on_field'?' Tournament odds assume a place in the field.':''}</p></section>`;
-    if(state.tab==='bracket')requestAnimationFrame(()=>{const board=host.querySelector('.bkBracketColumns');if(!board)return;connectBracket(host,d);if(typeof ResizeObserver!=='undefined'){state.observer=new ResizeObserver(()=>{board.querySelector('.bkConnections')?.remove();connectBracket(host,d)});state.observer.observe(board)}});
+    host.innerHTML=`<section class="bkShell">${d.mock?'<div class="bkMock" role="status">DESIGN PREVIEW · Illustrative data · Not a forecast</div>':''}<header class="bkHeader"><div><span class="bkEyebrow">Men’s college basketball · ${h(d.season)}</span><h2>Bracketology</h2></div><div class="bkBadges"><span>${h(state.compare?'Final projection':phaseNames[d.phase])}</span></div></header><div class="bkAsOf"><span>Updated ${h(new Date(d.as_of).toLocaleString())}</span>${d.phase==='early'?'<span>Early-season uncertainty · Explore each team’s seed odds</span>':''}${d.final_projection?`<button type="button" data-compare>${state.compare?'View official bracket':'Compare final projection'}</button>`:state.compare?'<button type="button" data-compare>View official bracket</button>':''}</div><nav class="bkTabs" aria-label="Bracketology views">${tabs.map(([key,label])=>`<button type="button" data-tab="${key}" aria-pressed="${state.tab===key}">${label}</button>`).join('')}</nav><div class="bkContent">${body[state.tab](d)}</div><p class="bkSource">Selections, résumé measures and odds supplied by the engine.${d.odds_basis==='unconditional_season'?' Odds include the chance of reaching the field.':d.odds_basis==='conditional_on_field'?' Tournament odds assume a place in the field.':''}</p></section>`;
+    if(state.tab==='bracket')requestAnimationFrame(()=>{const board=host.querySelector('.bkBracketColumns');if(!board)return;
+      // The full bracket opens fitted to the screen; the zoom buttons take over after that.
+      if(board.classList.contains('bkFullBoard')&&state.zoom==null){const frame=host.querySelector('.bkBracketFrame');state.zoom=Math.max(.4,Math.min(1,Math.floor((frame.clientWidth-8)/board.offsetWidth*100)/100));draw(host);return}connectBracket(host,d);if(typeof ResizeObserver!=='undefined'){state.observer=new ResizeObserver(()=>{board.querySelector('.bkConnections')?.remove();connectBracket(host,d)});state.observer.observe(board)}});
     host.onclick=event=>{
       if(expired()){document.getElementById('bk-resume')?.close();draw(host);return}
       const button=event.target.closest('button');if(!button)return;
       if(button.dataset.team){state.opener=button;resume(button.dataset.team)}
       else if(button.dataset.tab){state.tab=button.dataset.tab;draw(host);host.querySelector(`[data-tab="${state.tab}"]`)?.focus()}
       else if(button.hasAttribute('data-full')){state.full=button.dataset.full==='true';draw(host);host.querySelector(`[data-full="${state.full}"]`)?.focus()}
+      else if(button.hasAttribute('data-zoom')){
+        const frame=host.querySelector('.bkBracketFrame'),board=host.querySelector('.bkFullBoard');
+        state.zoom=button.dataset.zoom==='fit'&&frame&&board?Math.max(.4,Math.min(1,(frame.clientWidth-8)/board.offsetWidth)):Math.max(.4,Math.min(1,Math.round(((state.zoom??1)+Number(button.dataset.zoom)*.15)*100)/100));
+        draw(host);host.querySelector(`[data-zoom="${button.dataset.zoom}"]`)?.focus()}
       else if(button.hasAttribute('data-scroll')){const frame=host.querySelector('.bkBracketFrame');frame.scrollBy({left:Number(button.dataset.scroll)*frame.clientWidth*.75,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
       else if(button.hasAttribute('data-region')){state.region=button.dataset.region||null;draw(host);Array.from(host.querySelectorAll('[data-region]')).find(b=>b.dataset.region===state.region)?.focus()}
       else if(button.hasAttribute('data-compare')){state.compare=!state.compare;draw(host);host.querySelector('[data-compare]')?.focus()}

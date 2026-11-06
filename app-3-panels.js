@@ -1618,7 +1618,7 @@ ${lead}
 <table class="bbTable"><thead><tr><th></th><th>${esc(m?.home?.name||'Home')}</th><th>${esc(m?.away?.name||'Away')}</th></tr></thead>
 <tbody>${rows.map(([k,x,y])=>`<tr><td class="bbKey">${esc(k)}</td><td>${esc(x)}</td><td>${esc(y)}</td></tr>`).join('')}</tbody></table>
 <p class="bbNote">Opponent-adjusted scoring margin and the schedule it was earned against, from the same table the ranking is drawn from. A rating difference is not a prediction.</p>
-${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
+</div>`;
 }
 /* The model read, from the engine the rest of this board already quotes.
 

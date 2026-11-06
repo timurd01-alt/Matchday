@@ -100,7 +100,7 @@ class BracketologyHandoffTests(unittest.TestCase):
     def test_preview_is_explicit_and_local_only(self):
         self.run_js("""
         await api.render(host);assert.equal(requests[0],'docs/fixtures/bracketology_ncaam.mock.json');
-        assert.match(host.innerHTML,/DESIGN PREVIEW/);assert.match(host.innerHTML,/Beta/);
+        assert.match(host.innerHTML,/DESIGN PREVIEW/);assert.doesNotMatch(host.innerHTML,/>Beta</);
         context.location.hostname='matchday.example';await api.render(host,true);
         assert.equal(requests[1],'bracketology_ncaam.json');
         assert.match(host.innerHTML,/cannot be shown as a live projection/);
