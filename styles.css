@@ -3579,6 +3579,7 @@ body{font-variant-numeric:tabular-nums}
 .gamesSeeds li{display:flex;align-items:center;gap:8px;min-width:0;font-size:var(--fs-sm)}
 .homeBasketballSeeds{min-height:74px;color:var(--muted);font-size:var(--fs-sm)}
 .homeBasketballSeeds li>span{display:grid;min-width:0;gap:2px}
+.homeBasketballSeeds li b{color:var(--text)}
 .homeBasketballSeeds small{font-size:var(--fs-xs)}
 @media(min-width:900px){#view-home .gamesSupportGrid{column-gap:clamp(24px,4vw,56px)}#view-home .gamesBracket>button{min-height:48px}}
 .gamesSeeds em{font-style:normal;width:16px;color:var(--signal);font-weight:var(--fw-bold)}

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106L",
+  "tag": "Fix",
+  "title": "Open the current Bracketology projection",
+  "items": [
+   "The full basketball Bracketology view opens as soon as a valid projection is published, even while Power Ratings still reflects preseason.",
+   "The Home seed card and Bracketology view accept projections for the current basketball season only.",
+   "School names on the projected No. 1 seeds card now use white text."
+  ]
+ },
+ {
   "date": "Build 1106K",
   "tag": "Update",
   "title": "Projected No. 1 seeds on Home",

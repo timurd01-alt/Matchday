@@ -8,6 +8,11 @@ window.MatchdayBracketology=(()=>{
   const statuses={locked:'Locked',in:'Projected in',bubble:'Bubble',out:'Outside projected field',auto_bid_only:'Auto bid only',eliminated:'Eliminated',tournament_eliminated:'Tournament eliminated'};
   const phaseNames={early:'Early projection',in_season:'Projected field',championship_week:'Championship week',official:'Official bracket'};
   const preview=()=>['localhost','127.0.0.1','[::1]'].includes(location.hostname)&&new URLSearchParams(location.search).get('bracketology_preview')==='1';
+  function currentBasketballSeason(){
+    const today=new Date();
+    const start=today.getUTCFullYear()-(today.getUTCMonth()<6?1:0);
+    return `${start}-${String(start+1).slice(-2)}`;
+  }
   function validate(d,allowMock=false){
     if(!d||d.version!=='0.1'||d.display_contract!=='matchday-1')throw Error('The bracketology handoff is not compatible with this view.');
     if(d.mock&&!allowMock)throw Error('Preview data cannot be shown as a live projection.');
@@ -157,6 +162,7 @@ window.MatchdayBracketology=(()=>{
         const response=await fetch(url,{cache:'no-store',signal:controller.signal});
         if(!response.ok)throw Error(response.status===404?'The engine’s bracketology update has not arrived yet.':'The bracketology handoff could not be loaded.');
         const data=validate(await response.json(),preview());
+        if(data.competition!=='NCAAM'||(!preview()&&data.season!==currentBasketballSeason()))throw Error('A projection for the current basketball season has not been published yet.');
         if(data.final_projection)validate(data.final_projection,preview());
         state.data=data;state.error='';state.compare=false;
       }catch(error){state.data=null;state.error=error.name==='AbortError'?'The bracketology handoff timed out. Please try again.':error.message}
@@ -165,11 +171,8 @@ window.MatchdayBracketology=(()=>{
     })();return state.pending;
   }
   async function load(host,force=false){
-    // Before the first game the field is a guess built on preseason ratings;
-    // it is shown once results exist to calculate it from.
-    const table=typeof collegeRankingTable==='function'?collegeRankingTable():null;
-    const played=(table?.rankings||[]).some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
-    if((table?.rankings||[]).length&&!played&&!preview()){host.innerHTML='<div class="bkUnavailable bkAwaiting" role="status"><b>Awaiting results</b><span>Bracketology will be calculated once the season tips off and games are played.</span></div>';return}
+    // The bracket handoff carries its own publication and freshness state.
+    // Power Ratings may still reflect preseason when a projection is available.
     if(force||!state.loaded||Date.now()-state.loaded>=60000)host.innerHTML='<div class="bkUnavailable" role="status">Loading bracketology…</div>';
     await loadData(force);
     if(DATA.comp_key!=='NCAAM')return;
