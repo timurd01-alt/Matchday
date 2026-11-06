@@ -147,15 +147,9 @@ window.MatchdayBracketology=(()=>{
       else if(button.hasAttribute('data-compare')){state.compare=!state.compare;draw(host);host.querySelector('[data-compare]')?.focus()}
     };
   }
-  async function load(host,force=false){
-    // Before the first game the field is a guess built on preseason ratings;
-    // it is shown once results exist to calculate it from.
-    const table=typeof collegeRankingTable==='function'?collegeRankingTable():null;
-    const played=(table?.rankings||[]).some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
-    if((table?.rankings||[]).length&&!played&&!preview()){host.innerHTML='<div class="bkUnavailable bkAwaiting" role="status"><b>Awaiting results</b><span>Bracketology will be calculated once the season tips off and games are played.</span></div>';return}
+  async function loadData(force=false){
     if(state.pending)return state.pending;
-    if(!force&&state.loaded&&Date.now()-state.loaded<60000){draw(host);return}
-    host.innerHTML='<div class="bkUnavailable" role="status">Loading bracketology…</div>';
+    if(!force&&state.loaded&&Date.now()-state.loaded<60000)return state.data;
     state.pending=(async()=>{
       const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
       try{
@@ -165,11 +159,31 @@ window.MatchdayBracketology=(()=>{
         const data=validate(await response.json(),preview());
         if(data.final_projection)validate(data.final_projection,preview());
         state.data=data;state.error='';state.compare=false;
-        clearTimeout(state.staleTimer);const delay=Date.parse(data.valid_until)-Date.now();
-        if(delay>0&&delay<2147483647)state.staleTimer=setTimeout(()=>{document.getElementById('bk-resume')?.close();if(DATA.comp_key==='NCAAM')draw(host)},delay+10);
       }catch(error){state.data=null;state.error=error.name==='AbortError'?'The bracketology handoff timed out. Please try again.':error.message}
-      finally{clearTimeout(timer);state.loaded=Date.now();state.pending=null;if(DATA.comp_key==='NCAAM')draw(host)}
+      finally{clearTimeout(timer);state.loaded=Date.now();state.pending=null}
+      return state.data;
     })();return state.pending;
   }
-  return {render:load,validate,formatOdds:odds};
+  async function load(host,force=false){
+    // Before the first game the field is a guess built on preseason ratings;
+    // it is shown once results exist to calculate it from.
+    const table=typeof collegeRankingTable==='function'?collegeRankingTable():null;
+    const played=(table?.rankings||[]).some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
+    if((table?.rankings||[]).length&&!played&&!preview()){host.innerHTML='<div class="bkUnavailable bkAwaiting" role="status"><b>Awaiting results</b><span>Bracketology will be calculated once the season tips off and games are played.</span></div>';return}
+    if(force||!state.loaded||Date.now()-state.loaded>=60000)host.innerHTML='<div class="bkUnavailable" role="status">Loading bracketology…</div>';
+    await loadData(force);
+    if(DATA.comp_key!=='NCAAM')return;
+    clearTimeout(state.staleTimer);
+    const delay=Date.parse(state.data?.valid_until)-Date.now();
+    if(delay>0&&delay<2147483647)state.staleTimer=setTimeout(()=>{document.getElementById('bk-resume')?.close();if(DATA.comp_key==='NCAAM')draw(host)},delay+10);
+    draw(host);
+  }
+  async function projectedTopSeeds(){
+    const data=await loadData();
+    if(data?.competition!=='NCAAM'||data.bracket.kind!=='projected'||expired())return [];
+    const seeds=data.field.filter(team=>team.seed===1&&!team.first_four&&team.region&&team.team_name);
+    if(seeds.length!==4||new Set(seeds.map(team=>team.region)).size!==4)return [];
+    return seeds.sort((a,b)=>a.overall_seed-b.overall_seed);
+  }
+  return {render:load,validate,formatOdds:odds,projectedTopSeeds};
 })();

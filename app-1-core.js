@@ -951,6 +951,12 @@ function renderHome(){
     +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +homeLatestReactionHTML()
     +gamesSummaryHTML(active);
+  const seedsHost=host.querySelector('[data-home-basketball-seeds]');
+  if(seedsHost&&window.MatchdayBracketology)window.MatchdayBracketology.projectedTopSeeds().then(seeds=>{
+    if(!seedsHost.isConnected||DATA.comp_key!=='NCAAM')return;
+    if(!seeds.length){seedsHost.textContent='Current projections are unavailable.';return}
+    seedsHost.innerHTML=`<ul class="gamesSeeds">${seeds.map(team=>`<li>${teamMark(team.team_name)}<span><b>${esc(typeof rsShortName==='function'?rsShortName(team.team_name):team.team_name)}</b><small>${esc(team.region)}</small></span></li>`).join('')}</ul>`;
+  });
 }
 function gamesFeaturedHTML(read){
   const m=read.match;
@@ -981,6 +987,8 @@ function gamesDifferencesHTML(reads){
 /* The projected playoff field's top four seeds, from the same bracket data
    the Bracket tab draws, as a way into that tab from the home page. */
 function gamesBracketHTML(){
+  if(DATA.comp_key==='NCAAM')return `<section class="gamesRecord gamesBracket"><div><span>Projected No. 1 seeds</span><div class="homeBasketballSeeds" data-home-basketball-seeds>Loading projections…</div></div>
+    <button type="button" onclick="setView('bracket')">View bracketology <span aria-hidden="true">→</span></button></section>`;
   if(String(DATA?.comp_key||'').toUpperCase()!=='NCAAF')return '';
   const rounds=(typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&MATCHDAY_CFB_AP_BRACKET)||[];
   const byes=(rounds.find(r=>/quarter/i.test(r.round||''))?.matches||[])

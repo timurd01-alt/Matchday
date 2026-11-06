@@ -1,5 +1,8 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-06 (the basketball Home card displays team names and regions
+from the existing validated Bracketology projection. No new provider sourcing.)
+
 Reviewed: 2026-11-06 (matchup rank labels now use the same published Matchday
 power-rating rows as Rankings for both college sports. No new provider calls,
 retained fields or redistribution; official AP/CFP tables remain separately labeled.)

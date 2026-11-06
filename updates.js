@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106K",
+  "tag": "Update",
+  "title": "Projected No. 1 seeds on Home",
+  "items": [
+   "Basketball Home shows the four projected No. 1 seeds and their regions from Bracketology.",
+   "Tightened the space between the Home columns and aligned the bottom buttons."
+  ]
+ },
+ {
   "date": "Build 1106J",
   "tag": "Fix",
   "title": "More room beside standings logos",
