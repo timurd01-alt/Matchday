@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106O",
+  "tag": "Fix",
+  "title": "Region favourites sits at the right edge",
+  "items": [
+   "The Region favourites column moves to the right edge of the region bracket so the Elite Eight has room, and school names stay on one line."
+  ]
+ },
+ {
   "date": "Build 1106N",
   "tag": "Fix",
   "title": "Bracketology: current season, clearer odds, tighter brackets",

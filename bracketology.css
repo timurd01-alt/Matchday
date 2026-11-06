@@ -109,7 +109,7 @@
 /* Region view: compact cards, likeliest arrivals, region favourites. */
 .bkGame .bkLikely .bkTeam small{display:block}
 .bkLikely .bkTeam{opacity:.78}.bkLikely .bkTeam b{font-weight:var(--fw-medium)}.bkLikely .bkTeam small{color:var(--bk-gold)}
-.bkRegionOdds .bkSupport{margin-top:0}.bkRegionOdds .bkHint{margin:0 0 10px;font-size:var(--fs-sm)}
+.bkRegionOdds{margin-left:auto;width:320px}.bkRegionOdds .bkSupport{margin-top:0}.bkRegionOdds .bkTeam b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bkRegionOdds .bkTeam>span:nth-child(2){overflow:hidden}.bkRegionOdds .bkHint{margin:0 0 10px;font-size:var(--fs-sm)}
 .bkNational{display:grid;grid-template-columns:minmax(220px,1fr) minmax(240px,1.15fr) minmax(220px,1fr);gap:56px;align-items:end;width:100%;max-width:1180px;margin:0 auto;padding:12px 12px 28px}
 .bkNatCenter{display:flex;flex-direction:column;align-items:stretch}
 .bkChampPick{border:1px solid var(--bk-gold);border-radius:7px;padding:8px 10px;margin:0 0 22px;background:#1b1a14}.bkChampPick>span{display:block;font:var(--fw-semibold) var(--fs-3xs) var(--mono);color:var(--bk-gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}.bkChampPick .bkTeam small{color:var(--bk-gold)}
