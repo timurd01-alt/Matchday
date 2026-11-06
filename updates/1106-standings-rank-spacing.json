@@ -1,0 +1,9 @@
+{
+  "rank": 554,
+  "date": "Build 1106J",
+  "tag": "Fix",
+  "title": "More room beside standings logos",
+  "items": [
+    "Matched the space between standings numbers and team logos to Rankings."
+  ]
+}

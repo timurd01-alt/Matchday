@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106J",
+  "tag": "Fix",
+  "title": "More room beside standings logos",
+  "items": [
+   "Matched the space between standings numbers and team logos to Rankings."
+  ]
+ },
+ {
   "date": "Build 1106I",
   "tag": "Fix",
   "title": "Weekly desktop updates and a distinct standings icon",

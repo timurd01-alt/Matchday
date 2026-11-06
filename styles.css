@@ -3869,6 +3869,8 @@ body{font-variant-numeric:tabular-nums}
 :is(#view-groups,#view-standings) td,:is(#view-groups,#view-standings) td b,#view-groups details>summary{font-family:var(--mono)}
 #view-groups td:has(.gteam,.pollTeamInner){font-family:var(--display);letter-spacing:.02em}
 .gteam .pos{font-family:var(--mono);font-size:var(--fs-sm);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:normal;text-align:right;flex:0 0 2ch;width:2ch}
+/* Match the 18px between the two Rankings cells (9px padding each). */
+#view-standings .gteam .pos{margin-inline-end:10px}
 /* A rank is a position, not a result or an action: one muted grey everywhere. */
 :is(.pollRank,.pollRanked .pollRank,.pos,.rsRank,.rsQuadRank,.gamesSeeds em,#view-home .gamesSeeds em){color:var(--muted)}
 
