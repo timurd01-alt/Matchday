@@ -121,20 +121,20 @@ const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
   // profile exposes the same destinations. The established route keys remain
   // in place so saved preferences and bookmarks continue to work.
-  college:           ['home','reactions','matches','groups','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED),
-  college_basketball:['home','reactions','matches','groups','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED)
+  college:           ['home','reactions','matches','groups','standings','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED),
+  college_basketball:['home','reactions','matches','groups','standings','results','news','learn','score','bracket','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED)
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['home','reactions','matches','results','groups','bracket','score','news','learn','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED));
+const VIEWS=new Set(['home','reactions','matches','results','groups','standings','bracket','score','news','learn','community'].filter(v=>v!=='reactions'||window.MATCHDAY_REACTIONS_ENABLED));
 const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
 function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'home';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
-const NAV_LABELS={college:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'CFP Playoff'},college_basketball:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'Bracketology'}};
+const NAV_LABELS={college:{home:'Home',matches:'Games',groups:'Rankings',standings:'Conference Standings',news:'Research',bracket:'CFP Playoff'},college_basketball:{home:'Home',matches:'Games',groups:'Rankings',standings:'Conference Standings',news:'Research',bracket:'Bracketology'}};
 function tottTitle(){return 'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
@@ -160,7 +160,7 @@ function applySportNav(){
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
 function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
 function clearCompetitionViewsForLoad(){
-  ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
+  ['groups','standings','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
 function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
 
@@ -918,7 +918,7 @@ function gamesSummaryHTML(active){
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
     +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
-    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
+    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and polls</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function homeLatestReactionHTML(){
   if(!window.MATCHDAY_REACTIONS_ENABLED)return "";

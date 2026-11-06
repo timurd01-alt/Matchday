@@ -877,6 +877,7 @@ const PAGE_TAGS={
   news:()=>'Model · Team · Conference',
   learn:()=>'How to read the numbers',
   score:()=>'Public model record',
+  standings:()=>'Conference standings',
   groups:()=>{
     // Basketball seasons span two years and are labelled by the ending one.
     if(String(DATA?.comp_key||'').toUpperCase()==='NCAAM'){const s=Number(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'&&MATCHDAY_NCAAM_RANKINGS?.season)||0;return `${s?`${s-1}-${String(s).slice(2)} `:''}team ratings`}
@@ -894,7 +895,7 @@ function tagPageHead(){
   head.classList.add('pageHead');
   head.insertAdjacentHTML('beforeend',`<small class="pageTag">${esc(tag)}</small>`);
 }
-function renderCurrent(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
+function renderCurrent(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -1479,8 +1480,7 @@ const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
   if(!['NCAAF','NCAAM'].includes(String(DATA.comp_key||'').toUpperCase()))return;
-  // The poll goes above the conference tables: it is the headline answer this
-  // tab was missing, and the conferences are the breakdown beneath it.
+  // Build rankings and conference tables together, then place each in its own view.
   const host=$('#view-groups'),poll=collegeRankingTableHTML();
   if(poll&&!host.querySelector('.pollSection'))host.insertAdjacentHTML('afterbegin',poll);
   const ballotTable=collegeBallotTableHTML();
@@ -1537,6 +1537,16 @@ renderGroups=function(){
   const intro=host.querySelector('.rankingsIntro');
   if(intro){let at=intro;['power','ap','top25'].forEach(k=>group(k).forEach(el=>{at.after(el);at=el;}));}
   decorateRankingTeamMarks(host);
+  const standingsHost=$('#view-standings');
+  const conferenceTables=[...host.querySelectorAll('.tablewrap:not(.officialPoll)')];
+  standingsHost.innerHTML='<div class="vhead">Conference Standings</div><div class="hint" style="margin-bottom:8px">Ordered by conference record, then head-to-head, overall record and model rating.</div>';
+  conferenceTables.forEach(table=>standingsHost.appendChild(table));
+  if(!conferenceTables.length)standingsHost.insertAdjacentHTML('beforeend','<div class="empty">No conference standings available yet.</div>');
+  const conferenceLabel=host.querySelector('[data-ranking-section="conferences"]');
+  if(conferenceLabel?.nextElementSibling?.classList.contains('hint'))conferenceLabel.nextElementSibling.remove();
+  conferenceLabel?.remove();
+  host.querySelectorAll(':scope > .vhead, :scope > .empty').forEach(el=>el.remove());
+  if(!host.querySelector('.pollSection, .officialPoll'))host.insertAdjacentHTML('beforeend','<div class="empty">No rankings available yet.</div>');
 };
 /* dedup */
 // The board loads its sport's full data file, so every match on screen already

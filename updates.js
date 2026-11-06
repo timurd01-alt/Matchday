@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106C",
+  "tag": "Update",
+  "title": "Separate conference standings",
+  "items": [
+   "Rankings now focuses on power ratings and polls.",
+   "Conference Standings has its own tab for college football and basketball."
+  ]
+ },
+ {
   "date": "Build 1105A",
   "tag": "Fix",
   "title": "Basketball market prices and verified scorecard",
