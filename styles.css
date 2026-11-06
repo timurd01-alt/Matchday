@@ -3866,8 +3866,9 @@ body{font-variant-numeric:tabular-nums}
 
 /* ---- Rankings and shared tables -------------------------------------------- */
 .gteam,.pollTeamInner,.pollTeamInner>span{font-family:var(--sans);font-weight:var(--fw-bold);font-size:var(--fs-xl)}
-#view-groups td,#view-groups td b,#view-groups details>summary{font-family:var(--mono)}
+:is(#view-groups,#view-standings) td,:is(#view-groups,#view-standings) td b,#view-groups details>summary{font-family:var(--mono)}
 #view-groups td:has(.gteam,.pollTeamInner){font-family:var(--display);letter-spacing:.02em}
+.gteam .pos{font-family:var(--mono);font-size:var(--fs-sm);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:normal;text-align:right;flex:0 0 2ch;width:2ch}
 /* A rank is a position, not a result or an action: one muted grey everywhere. */
 :is(.pollRank,.pollRanked .pollRank,.pos,.rsRank,.rsQuadRank,.gamesSeeds em,#view-home .gamesSeeds em){color:var(--muted)}
 

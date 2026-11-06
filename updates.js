@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106G",
+  "tag": "Fix",
+  "title": "Consistent standings numbers",
+  "items": [
+   "Conference positions use compact, aligned numbers matching the rankings tables.",
+   "Standings numeric columns share the rankings typography."
+  ]
+ },
+ {
   "date": "Build 1106F",
   "tag": "Fix",
   "title": "Keep team logos without abbreviations",

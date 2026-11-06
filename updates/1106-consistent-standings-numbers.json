@@ -1,0 +1,10 @@
+{
+  "rank": 551,
+  "date": "Build 1106G",
+  "tag": "Fix",
+  "title": "Consistent standings numbers",
+  "items": [
+    "Conference positions use compact, aligned numbers matching the rankings tables.",
+    "Standings numeric columns share the rankings typography."
+  ]
+}
