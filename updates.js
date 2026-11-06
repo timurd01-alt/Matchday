@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106I",
+  "tag": "Fix",
+  "title": "Weekly desktop updates and a distinct standings icon",
+  "items": [
+   "Desktop updates forecast the current week only and report unfinished grading without repeating the refresh.",
+   "Conference Standings now has a podium icon to distinguish it from Rankings."
+  ]
+ },
+ {
   "date": "Build 1106H",
   "tag": "Fix",
   "title": "Matchup ranks match Power Ratings",

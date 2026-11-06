@@ -4,8 +4,7 @@
 # lives here, not in GitHub. Order matters and is fixed:
 #
 #   1. refresh run     results, play-by-play, EPA, ratings, settle, power poll
-#   2. forecast slate  the coming week's predictions (8 days; the rest of the
-#                      season is forecast separately so it never delays this)
+#   2. forecast slate  current week for desktop updates, upcoming slate for scheduled runs
 #   3. upset settle    grade last week's upset card
 #   4. upset publish   record the coming week's card (--as-of next Monday,
 #                      because Sunday is still the outgoing ISO week)
@@ -36,7 +35,7 @@ $matchday = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $logDir = Join-Path $matchday 'automation\logs'
 New-Item -ItemType Directory -Force $logDir | Out-Null
 $log = Join-Path $logDir ("sunday-ship-{0:yyyy-MM-dd_HHmm}.log" -f (Get-Date))
-function Say([string]$m) { $line = "{0:HH:mm:ss} $m" -f (Get-Date); $line | Tee-Object -FilePath $log -Append | Write-Host }
+function Say([string]$m) { $line = "{0:HH:mm:ss} $m" -f (Get-Date); $line | Out-File -FilePath $log -Append -Encoding utf8; Write-Host $line }
 function Run([string]$what, [string]$dir, [string]$exe, [string[]]$argv, [switch]$Soft) {
     Say "== $what"
     Push-Location $dir
@@ -50,6 +49,27 @@ function Run([string]$what, [string]$dir, [string]$exe, [string[]]$argv, [switch
     if ($code -ne 0) {
         if ($Soft) { Say "   (exit $code, continuing)" } else { throw "$what failed (exit $code); see $log" }
     }
+}
+
+# Both desktop buttons pass -Force. Capture the current Central week once,
+# so a run that crosses midnight does not start forecasting the next week.
+$forecastCutoffUtc = $null
+if ($Force -and -not $SkipRefresh) {
+    $central = [TimeZoneInfo]::FindSystemTimeZoneById('Central Standard Time')
+    $today = [TimeZoneInfo]::ConvertTimeFromUtc([DateTime]::UtcNow, $central).Date
+    $daysSinceMonday = ([int]$today.DayOfWeek + 6) % 7
+    $nextMonday = $today.AddDays(7 - $daysSinceMonday)
+    $forecastCutoffUtc = [TimeZoneInfo]::ConvertTimeToUtc($nextMonday, $central)
+    Say "manual forecast cutoff: $($nextMonday.ToString('yyyy-MM-dd HH:mm')) Central"
+}
+function RunForecastSlate([string]$sportKey) {
+    $days = 8
+    if ($null -ne $forecastCutoffUtc) {
+        $days = ($forecastCutoffUtc - [DateTime]::UtcNow).TotalDays
+        if ($days -le 0) { Say "current week ended; skipping $sportKey forecast slate"; return }
+    }
+    $horizon = $days.ToString([Globalization.CultureInfo]::InvariantCulture)
+    Run "$sportKey forecast slate" $TRDLab $PythonPath @('-m','trdlab','forecast','slate','--sport',$sportKey,'--days',$horizon) -Soft
 }
 
 # The five-minute data task writes the same SQLite file; two writers at once
@@ -82,21 +102,10 @@ try {
         # still unfinished when the refresh grades the week.
         Run 'fetch finals' $TRDLab $PythonPath @('-m','trdlab','once','--force') -Soft
         Run 'refresh run' $TRDLab $PythonPath @('-m','trdlab','refresh','run','--handoff=') -Soft
-        # Every game of the past week must be graded before the scorecard ships.
-        foreach ($attempt in 1..3) {
-            Push-Location $TRDLab
-            & $PythonPath -m trdlab forecast pending *> $null
-            $pending = $LASTEXITCODE
-            Pop-Location
-            if ($pending -eq 0) { Say '   every game of the past week is graded'; break }
-            Say "   ungraded games remain (attempt $attempt); fetching finals and grading again"
-            Run 'fetch finals' $TRDLab $PythonPath @('-m','trdlab','once','--force') -Soft
-            Run 'grade' $TRDLab $PythonPath @('-m','trdlab','forecast','settle') -Soft
-        }
+        # Refresh already grades completed games. Report any remaining backlog
+        # once so missing finals do not restart the fetch and grading steps.
         Run 'pending check' $TRDLab $PythonPath @('-m','trdlab','forecast','pending') -Soft
-        # The coming week only: the publish is what has to be fresh. The rest
-        # of the season (about 560 games, nearly an hour) is a separate job.
-        Run 'forecast slate' $TRDLab $PythonPath @('-m','trdlab','forecast','slate','--sport','ncaaf','--days','8') -Soft
+        RunForecastSlate 'ncaaf'
         # Basketball: posted rosters first (a late transfer or a new posting
         # changes the preseason), then the season rated against its prior, the
         # Top 25, and the picks read from those ratings.
@@ -104,7 +113,7 @@ try {
         Run 'basketball rosters' $TRDLab $PythonPath @('-m','trdlab','hoops','rosters') -Soft
         Run 'basketball ratings' $TRDLab $PythonPath @('-m','trdlab','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
         Run 'basketball Top 25' $TRDLab $PythonPath @('-m','trdlab','poll','publish','--sport','ncaam') -Soft
-        Run 'basketball forecast slate' $TRDLab $PythonPath @('-m','trdlab','forecast','slate','--sport','ncaam','--days','8') -Soft
+        RunForecastSlate 'ncaam'
         # Bracketology: the season's schedule topped up, then the field projected
         # with last week's file kept for movement arrows.
         Run 'basketball schedule' $TRDLab $PythonPath @('-m','trdlab','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft

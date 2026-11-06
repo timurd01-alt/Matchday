@@ -1,0 +1,10 @@
+{
+  "rank": 553,
+  "date": "Build 1106I",
+  "tag": "Fix",
+  "title": "Weekly desktop updates and a distinct standings icon",
+  "items": [
+    "Desktop updates forecast the current week only and report unfinished grading without repeating the refresh.",
+    "Conference Standings now has a podium icon to distinguish it from Rankings."
+  ]
+}
