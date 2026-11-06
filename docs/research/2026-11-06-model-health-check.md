@@ -65,3 +65,37 @@ There is no CLV signal either way. Lines barely move between the lock and kickof
 - The CFB rows are one season, and the games are correlated within a week, so the bootstrap is per game rather than per week. The interval is probably a bit narrow.
 - The raw-model back-out assumes a linear 60/40 blend.
 - The CLV ledger covers only about 1.5 weeks of CFB.
+
+## Follow-up 1: why so many picks have no market price
+Basketball: 154 of 229 graded picks have no price. Football: 45 of 522.
+
+1. **The odds cache and name matching were broken until Build 1105A (2026-11-05).** The cache saved frozenset keys, so it never persisted between hourly runs. Abbreviations ("St", "LIU", "UAlbany") never matched fixture names. Basketball games from 11-02 through 11-05 were mostly unpriced as a result, and the fix only reaches games locked after it.
+2. **The Odds API is called with `regions=eu` only** (`fetch_data.py`, `ODDS_URL`). That was inherited from the soccer days and never changed. European books post the big college games and skip much of the small-conference slate. For 2026-11-07, 41 of 103 basketball games are priced. Unpriced D1-vs-D1 games include American @ Clemson, Mississippi Valley St @ Oklahoma and Wagner @ Miami. `regions=us` costs the same one credit per call. **Not yet verified:** there is no local API key, so no live call compared the two regions.
+3. **About 24 of the 62 unpriced 11-07 basketball games are against non-D1 schools.** Books never price those, and no fix applies.
+
+Football coverage is about 95% and the missing games are scattered, so it is a minor gap.
+
+## Follow-up 2: the 85 CFB games with a 10+ point gap
+Method: the same priced rows as above. The published gap is ≥10 points, and the median raw-model gap is 26 points. Matchups are tagged with conferences from the live feed. Season-to-date margins come from `trdlab_picks.json → results` (600 CFB finals, 09-04 → 10-31). Some raw back-outs exceed 100%, so the blend is not purely linear at the extremes (probably clamped).
+
+| Split (big-gap games only) | n | Won | Model | Market | Actual |
+|---|---|---|---|---|---|
+| September | 71 | 42 | 69.4% | 60.6% | 59.2% |
+| October | 14 | 8 | 63.7% | 66.7% | 57.1% |
+| Model higher than the market on the pick | 54 | 26 | 71.7% | 52.2% | 48.1% |
+| Model lower than the market on the pick | 31 | 24 | 62.9% | 78.0% | 77.4% |
+| Pick is the market underdog | 29 | 8 | 62.7% | 39.4% | 27.6% |
+| Pick is the away team | 43 | 21 | 65.0% | 57.9% | 48.8% |
+| Conference game | 38 | 18 | 67.1% | 59.5% | 47.4% |
+| P4 vs P4 | 42 | 22 | 67.8% | 61.1% | 52.4% |
+
+**Big gaps are almost all a September problem.** Below a 10-point gap, the model matches the market every month: September Brier 0.092 vs 0.093, October 0.206 vs 0.204.
+
+**Cause: the model is anchored to preseason expectations.**
+- Big-gap rate by the fewer games either team had played: 0 games 19%, 1–2 games **36%**, 3–4 games 20%, 5+ games 5%.
+- corr(model − market, season-to-date margin difference) is **−0.20** at 1–2 games, −0.20 at 3–4 and −0.17 at 5+.
+- So when a team has outplayed its opponent this season, the model likes it *less* than the market does. The market updates on in-season results and the model holds its prior.
+- In big-gap games after 1–2 weeks, season form sided with the market in 20 of 34.
+- Worst examples: North Texas @ Texas State (model 83, market 43, lost), Ole Miss @ Florida (69 vs 38, lost 52–28), Vanderbilt @ Auburn (62 vs 24, lost), Texas A&M @ LSU (61 vs 26, lost 35–6) and Old Dominion @ Virginia Tech (50 vs 11, lost).
+
+**Where the fix lives.** The pick engine (TRDLab, outside this repo; see `automation/engine_paths.ps1`) should drop its preseason prior faster once real games exist. Test that walk-forward on the 2026 September slate, and judge it on disagreement Brier and CLV, not hit rate. Quarterback and availability changes could not be tested: `qb_availability_snapshot.json` keeps only the current state, so there is no history to check.
