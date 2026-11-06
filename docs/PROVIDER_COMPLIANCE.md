@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-06 (The Odds API game-odds fetch now requests the `us` bookmaker
+region instead of `eu` for college football and basketball. Same provider, same
+endpoint, same one credit per call; display and redistribution rules unchanged.)
+
 Reviewed: 2026-11-06 (the basketball Home card displays team names and regions
 from the existing validated Bracketology projection. The full view also uses
 the handoff freshness dates to decide availability. No new provider sourcing.)

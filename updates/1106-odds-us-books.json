@@ -1,0 +1,10 @@
+{
+  "rank": 557,
+  "date": "Build 1106M",
+  "tag": "Fix",
+  "title": "Market prices from US sportsbooks",
+  "items": [
+    "College football and basketball market prices now come from US sportsbooks instead of European ones, which skipped much of the smaller-conference schedule.",
+    "The change costs no extra provider calls. Games against non-Division I schools still have no market price, because sportsbooks do not post them."
+  ]
+}

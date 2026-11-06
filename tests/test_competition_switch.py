@@ -64,6 +64,14 @@ class DerivedStateTests(unittest.TestCase):
         fetch_data.set_competition("NCAAM")
         self.assertIn(fetch_data.COMPETITIONS["NCAAM"]["odds"], fetch_data.ODDS_URL)
 
+    def test_college_odds_come_from_us_books(self):
+        # EU books skip much of the small-conference college slate; the US
+        # region costs the same single credit per call.
+        for comp in ("NCAAF", "NCAAM"):
+            with self.subTest(competition=comp):
+                fetch_data.set_competition(comp)
+                self.assertIn("regions=us&", fetch_data.ODDS_URL)
+
     def test_the_news_feed_set_follows_the_competition(self):
         # The one piece of competition-scoped state no caller ever reset,
         # because it was built by inline module-level code rather than by a

@@ -139,7 +139,7 @@ def _competition_state(key):
         "COMP_KEY": key,
         "COMP": comp,
         "ODDS_URL": (f"https://api.the-odds-api.com/v4/sports/{comp['odds']}/odds/"
-                     "?regions=eu&markets=h2h&oddsFormat=decimal"),
+                     "?regions=us&markets=h2h&oddsFormat=decimal"),
         "ODDS_CACHE_FILE": f"odds_market_cache_{low}.json",
         "SPORTSDATAIO_PREGAME_CACHE_FILE": f"sportsdataio_pregame_{low}_cache.json",
         "PREGAME_CONTEXT_CACHE_FILE": f"pregame_{low}_cache.json",
