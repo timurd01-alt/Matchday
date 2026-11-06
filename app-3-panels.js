@@ -1533,6 +1533,8 @@ renderGroups=function(){
     if(stray?.classList.contains('vhead')&&stray.textContent.trim()==='Rankings')stray.remove();
     if(!host.querySelector('[data-ranking-section="ap"]'))apTable.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="ap">AP Top 25</div><div class="hint" style="margin-bottom:8px">The official national media poll.${_apPollDate()}</div>`);
   }
+  const cfpTable=[...host.querySelectorAll('.tablewrap.officialPoll')].find(el=>/CFP committee/i.test(el.querySelector('.groupHead')?.textContent||''));
+  if(cfpTable&&!host.querySelector('[data-ranking-section="cfp"]'))cfpTable.insertAdjacentHTML('beforebegin','<div class="seclbl" data-ranking-section="cfp">CFP Committee Rankings</div>');
   const group=key=>{const lbl=host.querySelector(`[data-ranking-section="${key}"]`);if(!lbl)return[];const out=[lbl];let n=lbl.nextElementSibling;while(n&&!n.dataset.rankingSection&&!n.classList.contains('vhead')){out.push(n);n=n.nextElementSibling;if(out.length>2)break;}return out;};
   const intro=host.querySelector('.rankingsIntro');
   if(intro){let at=intro;['power','ap','top25'].forEach(k=>group(k).forEach(el=>{at.after(el);at=el;}));}
