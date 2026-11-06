@@ -1459,7 +1459,7 @@ function collegeBallotTableHTML(){
     +`<tbody>${body}</tbody></table></div>`;
 }
 function decorateRankingTeamMarks(host){
-  host.querySelectorAll('.officialPoll .gteam[data-team]').forEach(cell=>{
+  host.querySelectorAll('.gteam[data-team]').forEach(cell=>{
     if(cell.querySelector('.teamMark'))return;
     const anchor=cell.querySelector('.code,.flagIcon,.pos');
     if(anchor)anchor.insertAdjacentHTML('afterend',teamMark(cell.dataset.team));

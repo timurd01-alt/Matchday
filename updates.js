@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106F",
+  "tag": "Fix",
+  "title": "Keep team logos without abbreviations",
+  "items": [
+   "Conference standings retain every team logo and team name, without the yellow abbreviation beside them."
+  ]
+ },
+ {
   "date": "Build 1106E",
   "tag": "Fix",
   "title": "Simpler conference team names",

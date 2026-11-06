@@ -1,0 +1,9 @@
+{
+  "rank": 550,
+  "date": "Build 1106F",
+  "tag": "Fix",
+  "title": "Keep team logos without abbreviations",
+  "items": [
+    "Conference standings retain every team logo and team name, without the yellow abbreviation beside them."
+  ]
+}
