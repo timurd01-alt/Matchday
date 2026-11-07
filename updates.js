@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106R",
+  "tag": "Fix",
+  "title": "Basketball bracket tab renamed Bracketology",
+  "items": [
+   "On the basketball Bracketology page, the first tab and the bracket picker now say Bracketology instead of Bracket."
+  ]
+ },
+ {
   "date": "Build 1106Q",
   "tag": "Fix",
   "title": "Research lists mix Power Four and other teams",
