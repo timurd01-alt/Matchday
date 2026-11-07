@@ -1,6 +1,6 @@
 /* Presentation only. The engine owns every selection, seed, rating and odds value. */
 window.MatchdayBracketology=(()=>{
-  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',full:false,zoom:null,compare:false,opener:null,staleTimer:null,observer:null};
+  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',full:false,zoom:null,conf:'',compare:false,opener:null,staleTimer:null,observer:null};
   const h=v=>esc(String(v??''));
   const number=v=>typeof v==='number'&&Number.isFinite(v);
   const odds=v=>number(v)&&v>=0&&v<=1?(v>0&&v<.01?'<1%':new Intl.NumberFormat('en-US',{style:'percent',maximumFractionDigits:0}).format(v)):'Unavailable';
@@ -43,7 +43,7 @@ window.MatchdayBracketology=(()=>{
       while(current){if(visited.has(current.id))throw Error('The bracket contains a circular path.');visited.add(current.id);current=d.bracket.games.find(g=>g.id===current.next_game)}
     }
     for(const group of Object.values(d.bubble||{}))if(!Array.isArray(group)||group.some(k=>!d.teams[k]))throw Error('The bubble contains an unknown team.');
-    if((d.eliminated||[]).some(t=>!d.teams[t.team_key])||(d.bid_thieves||[]).some(t=>!d.teams[t.team_key])||(d.conferences||[]).some(c=>Object.keys(c.auto_bid_odds||{}).some(k=>!d.teams[k])))throw Error('A report refers to an unknown team.');
+    if((d.eliminated||[]).some(t=>!d.teams[t.team_key])||(d.bid_thieves||[]).some(t=>!d.teams[t.team_key])||(d.conferences||[]).some(c=>Object.keys(c.auto_bid_odds||{}).some(k=>!d.teams[k])||(c.tournament?.seeds||[]).some(k=>!d.teams[k])||Object.keys(c.tournament?.odds||{}).some(k=>!d.teams[k])))throw Error('A report refers to an unknown team.');
     return d;
   }
   function current(){return state.compare&&state.data?.final_projection?state.data.final_projection:state.data}
@@ -57,9 +57,11 @@ window.MatchdayBracketology=(()=>{
     return parts.length?`<span class="bkMovement">${h(parts.join(' · '))}</span>`:'';
   }
   function status(t){return `<span class="bkStatus bkStatus-${h(t.status)}">${h(statuses[t.status]||'Status unavailable')}</span>`}
-  function teamButton(key,detail='',extra=''){
+  function teamButton(key,detail='',extra='',short=false){
     const t=current().teams[key];if(!t)return '<span>Team unavailable</span>';
-    return `<button type="button" class="bkTeam ${h(extra)}" data-team="${h(key)}">${teamMark(t.logo_key||t.team_name)}<span><b>${h(t.team_name)}</b>${detail?`<small>${detail}</small>`:''}</span><span class="bkOpen" aria-hidden="true">↗</span></button>`;
+    // The slim full-bracket cards use the school name the rest of the site uses ("Duke").
+    const name=short&&typeof rsShortName==='function'?rsShortName(t.team_name):t.team_name;
+    return `<button type="button" class="bkTeam ${h(extra)}" data-team="${h(key)}" title="${h(t.team_name)}">${teamMark(t.logo_key||t.team_name)}<span><b>${h(name)}</b>${detail?`<small>${detail}</small>`:''}</span><span class="bkOpen" aria-hidden="true">↗</span></button>`;
   }
   // Teams that can arrive in a slot: every team seeded anywhere beneath its feeder game.
   function feederTeams(d,gameId,seen=new Set()){
@@ -78,17 +80,45 @@ window.MatchdayBracketology=(()=>{
       return `<article class="bkGame${compact?' bkGameCompact':''}${compact==='mini'?' bkGameMini':''}" data-game="${h(g.id)}">${head}${g.slots.map((slot,i)=>{
         if(!slot.team_key){
           const likely=compact&&d.bracket.kind!=='official'?likeliestSlot(d,g,slot):null;
-          if(likely)return `<div class="bkGameTeam bkLikely"><span class="bkSeed">${value(d.field.find(f=>f.team_key===likely.key)?.seed)}</span>${teamButton(likely.key,`${odds(likely.p)} to get here`)}</div>`;
+          if(likely)return `<div class="bkGameTeam bkLikely"><span class="bkSeed">${value(d.field.find(f=>f.team_key===likely.key)?.seed)}</span>${teamButton(likely.key,`${odds(likely.p)} to get here`,'',compact==='mini')}</div>`;
           return `<div class="bkSlot"><span aria-hidden="true">—</span><span>${h(slot.label||'Awaiting team')}</span></div>`;
         }
         const t=d.teams[slot.team_key],entry=d.field.find(f=>f.team_key===slot.team_key)||t;
         const bid={auto:'Projected auto',at_large:'At-large',auto_clinched:'🔒 Clinched auto'}[entry.bid]||'Bid unavailable';
         const eliminated=['eliminated','tournament_eliminated'].includes(t.status);
         const score=g.status==='finished'&&Array.isArray(g.score)?g.score[i]:null;
-        return `<div class="bkGameTeam ${eliminated?'bkLost':''} ${g.winner_key===slot.team_key?'bkWinner':''}"><span class="bkSeed">${value(entry.seed)}</span>${teamButton(slot.team_key,`${h(bid)} · ${odds(t.odds?.seed?.[entry.seed])} at seed${eliminated?` · ${h(t.eliminated_round||statuses[t.status])}`:''}`)}${score!=null?`<strong class="bkScore">${value(score)}</strong>`:''}</div>`;
+        return `<div class="bkGameTeam ${eliminated?'bkLost':''} ${g.winner_key===slot.team_key?'bkWinner':''}"><span class="bkSeed">${value(entry.seed)}</span>${teamButton(slot.team_key,`${h(bid)} · ${odds(t.odds?.seed?.[entry.seed])} at seed${eliminated?` · ${h(t.eliminated_round||statuses[t.status])}`:''}`,'',compact==='mini')}${score!=null?`<strong class="bkScore">${value(score)}</strong>`:''}</div>`;
       }).join('')}${next&&!compact?`<footer>→ ${h(next.label||next.id)}${next.region!==state.region?` · ${h(next.region)}`:''}</footer>`:''}</article>`;
   }
+  // Which bracket: the NCAA tournament, or one conference's tournament.
+  function picker(d){
+    const tournaments=(d.conferences||[]).filter(c=>c.tournament?.games?.length);
+    if(!tournaments.length)return '';
+    return `<div class="bkPicker"><label for="bk-which">Bracket</label><select id="bk-which" data-which><option value=""${state.conf?'':' selected'}>NCAA Tournament</option>${tournaments.map(c=>`<option value="${h(c.conference)}"${state.conf===c.conference?' selected':''}>${h(c.conference.replace(/ Conference$/,''))} Tournament</option>`).join('')}</select></div>`;
+  }
+  function conferenceGames(d){return (d.conferences||[]).find(c=>c.conference===state.conf)?.tournament?.games||[]}
+  function conferenceBracket(d,c){
+    const T=c?.tournament;
+    if(!T)return '<p class="bkHint">This conference tournament has no projection right now.</p>';
+    const o=key=>T.odds?.[key]||{};
+    const feeders=(gid,seen=new Set())=>{const g=T.games.find(x=>x.id===gid);if(!g||seen.has(gid))return [];seen.add(gid);return g.slots.flatMap(sl=>sl.team_key?[sl.team_key]:sl.source_game?feeders(sl.source_game,seen):[])};
+    const card=g=>`<article class="bkGame bkGameCompact" data-game="${h(g.id)}">${g.slots.map(sl=>{
+      if(sl.team_key)return `<div class="bkGameTeam"><span class="bkSeed">${value(sl.seed)}</span>${teamButton(sl.team_key,g.round===0?`${odds(o(sl.team_key).qualify)} to qualify`:`${odds(o(sl.team_key).rounds?.[g.round])} to play here`)}</div>`;
+      let best=null;for(const key of feeders(sl.source_game)){const p=o(key).rounds?.[g.round];if(number(p)&&(!best||p>best.p))best={key,p}}
+      if(!best)return `<div class="bkSlot"><span aria-hidden="true">—</span><span>Winner advances</span></div>`;
+      return `<div class="bkGameTeam bkLikely"><span class="bkSeed">${value(T.seeds.indexOf(best.key)+1||'')}</span>${teamButton(best.key,`${odds(best.p)} to get here`)}</div>`;
+    }).join('')}</article>`;
+    const columns=T.format.rounds.map((label,r)=>({label,games:T.games.filter(g=>g.round===r)})).filter(col=>col.games.length);
+    const favourites=Object.entries(T.odds||{}).filter(([,v])=>number(v.title)&&v.title>0).sort((a,b)=>b[1].title-a[1].title).slice(0,6);
+    const learned=T.format.learned_from?`the format it played in ${h(T.format.learned_from)}`:'a standard bracket (no earlier tournament on record)';
+    const short=c.conference.replace(/ Conference$/,'');
+    return `<p class="bkHint">${h(T.format.size)} teams, seeded by projected conference finish from this season’s results, in ${learned}. Later rounds show each slot’s likeliest team. Select a school for its résumé.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="${h(short)} tournament bracket, scroll horizontally"><div class="bkBracketColumns">${columns.map(col=>`<section class="bkRound"><h3>${h(col.label)}</h3><div class="bkGames">${col.games.map(card).join('')}</div></section>`).join('')}${favourites.length?`<section class="bkRound bkRegionOdds"><h3>Title favourites</h3><div class="bkSupport"><p class="bkHint">Chance to win the ${h(short)} tournament and its automatic bid.</p>${favourites.map(([key,v])=>`<div class="bkConferenceTeam">${teamButton(key)}<span>${odds(v.title)}</span></div>`).join('')}</div></section>`:''}</div></div>`;
+  }
   function bracket(d){
+    if(state.conf){const c=(d.conferences||[]).find(x=>x.conference===state.conf);if(c)return picker(d)+conferenceBracket(d,c);state.conf=''}
+    return picker(d)+ncaaBracket(d);
+  }
+  function ncaaBracket(d){
     if(state.full)return fullBracket(d);
     const games=d.bracket.games.filter(g=>(g.region??null)===state.region);
     const nav=`<nav class="bkRegions" aria-label="Bracket region"><button type="button" data-full="true" aria-pressed="false">Full bracket</button>${(d.regions.length?d.regions:[null]).map(r=>`<button type="button" data-region="${h(r??'')}" aria-pressed="${r===state.region}">${h(r??'Playoff')}</button>`).join('')}</nav>`;
@@ -140,7 +170,7 @@ window.MatchdayBracketology=(()=>{
     if(final){const branches=feeders(final);const placed=branches.map((g,i)=>place(g,i%2));positions.set(final.id,{x:center,y:placed.length?placed.reduce((sum,p)=>sum+p.y,0)/placed.length:60})}
     games.filter(g=>!positions.has(g.id)).forEach(g=>place(g,0));
     const height=Math.max(...cursors)+40,width=center*2+170,z=state.zoom??1,finalPos=final&&positions.get(final.id);
-    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button><span class="bkZoomControls" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out"${z<=.4?' disabled':''}>−</button><button type="button" data-zoom="fit">Fit</button><button type="button" data-zoom="1" aria-label="Zoom in"${z>=1?' disabled':''}>+</button><output aria-live="polite">${Math.round(z*100)}%</output></span></nav><p class="bkHint">Two sides. One champion. Later rounds show each slot’s likeliest team. First Four games are in their own tab. Zoom in to read closer; select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkZoomBox" style="width:${Math.ceil(width*z)}px;height:${Math.ceil(height*z)}px"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px;transform:scale(${z})">${finalPos?`<div class="bkFullTrophy" style="left:${finalPos.x}px;top:${Math.max(0,finalPos.y-190)}px">${championHead}</div>`:''}${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d,'mini',g===final?'Title game':'')}</div>`}).join('')}</div></div></div>`;
+    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button><span class="bkZoomControls" role="group" aria-label="Zoom"><button type="button" data-zoom="-1" aria-label="Zoom out"${z<=.4?' disabled':''}>−</button><button type="button" data-zoom="fit">Fit</button><button type="button" data-zoom="1" aria-label="Zoom in"${z>=1?' disabled':''}>+</button><output aria-live="polite">${Math.round(z*100)}%</output></span></nav><p class="bkHint">Two sides. One champion. Later rounds show each slot’s likeliest team. First Four games are in their own tab. Scroll sideways with either scrollbar, or Fit to see it all at once. Select a school for its résumé.</p><div class="bkTopScroll" aria-hidden="true"><div style="width:${Math.ceil(width*z)}px"></div></div><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkZoomBox" style="width:${Math.ceil(width*z)}px;height:${Math.ceil(height*z)}px"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px;transform:scale(${z})">${finalPos?`<div class="bkFullTrophy" style="left:${finalPos.x}px;top:${Math.max(0,finalPos.y-190)}px">${championHead}</div>`:''}${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d,'mini',g===final?'Title game':'')}</div>`}).join('')}</div></div></div>`;
   }
   function connectBracket(host,d){
     const board=host.querySelector('.bkBracketColumns');if(!board)return;
@@ -149,7 +179,7 @@ window.MatchdayBracketology=(()=>{
     const k=board.offsetWidth?bounds.width/board.offsetWidth:1;
     svg.setAttribute('class','bkConnections');svg.setAttribute('aria-hidden','true');svg.setAttribute('width',board.offsetWidth||bounds.width);svg.setAttribute('height',board.offsetHeight||bounds.height);
     const cards=new Map(Array.from(board.querySelectorAll('[data-game]')).map(el=>[el.dataset.game,el]));
-    d.bracket.games.forEach(g=>{
+    (state.conf?conferenceGames(d):d.bracket.games).forEach(g=>{
       const from=cards.get(g.id),to=cards.get(g.next_game);if(!from||!to)return;
       const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x1=((a.left>b.left?a.left:a.right)-bounds.left)/k,x2=((a.left>b.left?b.right:b.left)-bounds.left)/k,y1=(a.top+a.height/2-bounds.top)/k,y2=(b.top+b.height/2-bounds.top)/k;
       const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M ${x1} ${y1} H ${(x1+x2)/2} V ${y2} H ${x2}`);svg.append(path);
@@ -189,10 +219,12 @@ window.MatchdayBracketology=(()=>{
     if(!d.regions.includes(state.region))state.region=d.regions[0]??null;
     const tabs=[['bracket','Bracket'],['bubble','Bubble'],['seeds','Seed list'],['conferences','Conferences'],['odds','Tournament odds'],['eliminated','Eliminated']];
     const body={bracket,bubble,seeds:seedList,conferences,odds:tournamentOdds,eliminated};
-    host.innerHTML=`<section class="bkShell">${d.mock?'<div class="bkMock" role="status">DESIGN PREVIEW · Illustrative data · Not a forecast</div>':''}<header class="bkHeader"><div><span class="bkEyebrow">Men’s college basketball · ${h(d.season)}</span><h2>Bracketology</h2></div><div class="bkBadges"><span>${h(state.compare?'Final projection':phaseNames[d.phase])}</span></div></header><div class="bkAsOf"><span>Updated ${h(new Date(d.as_of).toLocaleString())}</span>${d.phase==='early'?'<span>Early-season uncertainty · Explore each team’s seed odds</span>':''}${d.final_projection?`<button type="button" data-compare>${state.compare?'View official bracket':'Compare final projection'}</button>`:state.compare?'<button type="button" data-compare>View official bracket</button>':''}</div><nav class="bkTabs" aria-label="Bracketology views">${tabs.map(([key,label])=>`<button type="button" data-tab="${key}" aria-pressed="${state.tab===key}">${label}</button>`).join('')}</nav><div class="bkContent">${body[state.tab](d)}</div><p class="bkSource">Selections, résumé measures and odds supplied by the engine.${d.odds_basis==='unconditional_season'?' Odds include the chance of reaching the field.':d.odds_basis==='conditional_on_field'?' Tournament odds assume a place in the field.':''}</p></section>`;
+    host.innerHTML=`<section class="bkShell">${d.mock?'<div class="bkMock" role="status">DESIGN PREVIEW · Illustrative data · Not a forecast</div>':''}<header class="bkHeader"><div><span class="bkEyebrow">Men’s college basketball · ${h(d.season)}</span><h2>Bracketology</h2></div><div class="bkBadges"><span>${h(state.compare?'Final projection':d.power_basis?.basis==='preseason'?'Preseason projection':phaseNames[d.phase])}</span></div></header><div class="bkAsOf"><span>Updated ${h(new Date(d.as_of).toLocaleString())}</span>${d.power_basis?.basis==='preseason'?`<span class="bkBasis"><b>Preseason projection.</b> Team strength comes from the preseason ratings (last season plus roster changes). It switches to this season’s results alone once teams have played about ${h(d.power_basis.switch_at_games||10)} games${number(d.power_basis.median_games)?` (now ${h(d.power_basis.median_games)})`:''}.</span>`:d.power_basis?.basis==='season'?'<span class="bkBasis">Team strength from this season’s results only.</span>':''}${d.phase==='early'?'<span>Early-season uncertainty · Explore each team’s seed odds</span>':''}${d.final_projection?`<button type="button" data-compare>${state.compare?'View official bracket':'Compare final projection'}</button>`:state.compare?'<button type="button" data-compare>View official bracket</button>':''}</div><nav class="bkTabs" aria-label="Bracketology views">${tabs.map(([key,label])=>`<button type="button" data-tab="${key}" aria-pressed="${state.tab===key}">${label}</button>`).join('')}</nav><div class="bkContent">${body[state.tab](d)}</div><p class="bkSource">Selections, résumé measures and odds supplied by the engine.${d.odds_basis==='unconditional_season'?' Odds include the chance of reaching the field.':d.odds_basis==='conditional_on_field'?' Tournament odds assume a place in the field.':''}</p></section>`;
     if(state.tab==='bracket')requestAnimationFrame(()=>{const board=host.querySelector('.bkBracketColumns');if(!board)return;
-      // The full bracket opens fitted to the screen; the zoom buttons take over after that.
-      if(board.classList.contains('bkFullBoard')&&state.zoom==null){const frame=host.querySelector('.bkBracketFrame');state.zoom=Math.max(.4,Math.min(1,Math.floor((frame.clientWidth-8)/board.offsetWidth*100)/100));draw(host);return}connectBracket(host,d);if(typeof ResizeObserver!=='undefined'){state.observer=new ResizeObserver(()=>{board.querySelector('.bkConnections')?.remove();connectBracket(host,d)});state.observer.observe(board)}});
+connectBracket(host,d);if(typeof ResizeObserver!=='undefined'){state.observer=new ResizeObserver(()=>{board.querySelector('.bkConnections')?.remove();connectBracket(host,d)});state.observer.observe(board)}});
+    const topScroll=host.querySelector('.bkTopScroll'),fullFrame=host.querySelector('.bkFullFrame');
+    if(topScroll&&fullFrame){topScroll.onscroll=()=>{if(fullFrame.scrollLeft!==topScroll.scrollLeft)fullFrame.scrollLeft=topScroll.scrollLeft};fullFrame.onscroll=()=>{if(topScroll.scrollLeft!==fullFrame.scrollLeft)topScroll.scrollLeft=fullFrame.scrollLeft}}
+    host.onchange=event=>{const select=event.target.closest('[data-which]');if(!select)return;state.conf=select.value;state.full=false;draw(host);host.querySelector('[data-which]')?.focus()};
     host.onclick=event=>{
       if(expired()){document.getElementById('bk-resume')?.close();draw(host);return}
       const button=event.target.closest('button');if(!button)return;
@@ -242,7 +274,9 @@ window.MatchdayBracketology=(()=>{
     if(data?.competition!=='NCAAM'||data.bracket.kind!=='projected'||expired())return [];
     const seeds=data.field.filter(team=>team.seed===1&&!team.first_four&&team.region&&team.team_name);
     if(seeds.length!==4||new Set(seeds.map(team=>team.region)).size!==4)return [];
-    return seeds.sort((a,b)=>a.overall_seed-b.overall_seed);
+    const sorted=seeds.sort((a,b)=>a.overall_seed-b.overall_seed);
+    sorted.basis=data.power_basis?.basis||null;
+    return sorted;
   }
   return {render:load,validate,formatOdds:odds,projectedTopSeeds};
 })();

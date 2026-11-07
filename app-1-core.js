@@ -955,6 +955,7 @@ function renderHome(){
   if(seedsHost&&window.MatchdayBracketology)window.MatchdayBracketology.projectedTopSeeds().then(seeds=>{
     if(!seedsHost.isConnected||DATA.comp_key!=='NCAAM')return;
     if(!seeds.length){seedsHost.textContent='Current projections are unavailable.';return}
+    if(seeds.basis==='preseason'){const label=seedsHost.parentElement?.querySelector('span');if(label)label.textContent='Projected No. 1 seeds · preseason'}
     seedsHost.innerHTML=`<ul class="gamesSeeds">${seeds.map(team=>`<li>${teamMark(team.team_name)}<span><b>${esc(typeof rsShortName==='function'?rsShortName(team.team_name):team.team_name)}</b><small>${esc(team.region)}</small></span></li>`).join('')}</ul>`;
   });
 }

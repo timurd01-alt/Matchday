@@ -1164,13 +1164,25 @@ function rsFeatured(){
 /* Model–market watch: the week's largest disagreements with the price.
    Framed as research on purpose -- these are calls to watch and grade, and
    the engine's own caveat says disagreement of this kind has graded worse. */
+// Power Four: the owner's rule for the Research watch lists (2026-11-06) --
+// every game shown involves at least one SEC, Big Ten, Big 12 or ACC team.
+// Football rankings mark them tier "power"; basketball rankings carry the
+// conference name.
+const RS_P4_CONFERENCE=/^(southeastern|atlantic coast|big 12|big ten)( conference)?$|^(sec|acc)$/i;
+function rsIsP4(name){
+  const rows=(typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[];
+  const key=teamKey(name);
+  const row=rows.find(r=>teamKey(r.name)===key)||rows.find(r=>typeof bbNameMatches==='function'&&bbNameMatches(r.name,name));
+  return !!row&&(String(row.tier||'')==='power'||RS_P4_CONFERENCE.test(String(row.conference||'').trim()));
+}
+function rsHasP4(...names){return names.some(n=>n&&rsIsP4(n))}
 function rsModelMarketWatch(){
   const u=(typeof MATCHDAY_TRDLAB_UPSET!=='undefined')?MATCHDAY_TRDLAB_UPSET:null;
   // The featured read already covers its game, so that game never repeats here.
   const fp=typeof featuredPick==='function'?featuredPick(currentSportKey()==='ncaam'):null;
   const featured=fp?[fp.m?.home?.name||fp.p?.home,fp.m?.away?.name||fp.p?.away].filter(Boolean):[];
   const isFeatured=c=>featured.length===2&&featured.every(n=>bbNameMatches(n,c.home)||bbNameMatches(n,c.away));
-  const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c)&&Date.parse(c.kickoff)>Date.now());
+  const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c)&&Date.parse(c.kickoff)>Date.now()&&rsHasP4(c.home,c.away));
   // Always three: the engine's upset card can carry fewer, so the list is
   // filled from this week's picks with the same rule -- an underdog the model
   // rates above the market -- by the size of that gap.
@@ -1191,12 +1203,12 @@ function rsModelMarketWatch(){
       // Power Four first: games between two power-conference teams, then games
       // with one, each by the size of the gap.
       .map(c=>({...c,_p4:[c.home,c.away].filter(n=>tier[teamKey(n)]==='power').length}))
-      .filter(c=>currentSportKey()==='ncaam'||c._p4>0)
+      .filter(c=>c._p4>0||rsHasP4(c.home,c.away))
       .sort((a,b)=>b._p4-a._p4||b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
   if(currentSportKey()==='ncaam'&&calls.length<WATCH){
-    const upcoming=bbSportRows(MATCHDAY_TRDLAB_PICKS).filter(p=>Date.parse(p.kickoff)>Date.now()&&p.model_pct!=null&&!isFeatured(p));
+    const upcoming=bbSportRows(MATCHDAY_TRDLAB_PICKS).filter(p=>Date.parse(p.kickoff)>Date.now()&&p.model_pct!=null&&!isFeatured(p)&&rsHasP4(p.home,p.away));
     const key=p=>[teamKey(p.home),teamKey(p.away)].sort().join('|')+'|'+String(p.kickoff).slice(0,10);
     const seen=new Set(calls.map(key));
     const candidates=upcoming.map(p=>{
@@ -1249,7 +1261,7 @@ function rsModelMarketWatch(){
 }
 function rsLongshots(){
   const board=(typeof MATCHDAY_TRDLAB_UPSETS!=='undefined'&&MATCHDAY_TRDLAB_UPSETS)||{};
-  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):(trdlabScorecard()?.recent||[]).flatMap(r=>{
+  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]).filter(x=>rsHasP4(x.winner,x.loser)):(trdlabScorecard()?.recent||[]).flatMap(r=>{
     if(!['win','loss'].includes(r.result)||r.market_probability_pct==null)return [];
     const [away,home]=String(r.event_name).split(' at ');
     const scores=String(r.score).split(/[\u2013-]/).map(Number);
@@ -1258,7 +1270,7 @@ function rsLongshots(){
     if(!(chance>0&&chance<=45))return [];
     const homeWon=scores[0]>scores[1];
     return [{winner:homeWon?home:away,loser:homeWon?away:home,winner_score:Math.max(...scores),loser_score:Math.min(...scores),winner_pregame_pct:chance,played_on:r.starts_at}];
-  }).sort((a,b)=>a.winner_pregame_pct-b.winner_pregame_pct);
+  }).filter(x=>rsHasP4(x.winner,x.loser)).sort((a,b)=>a.winner_pregame_pct-b.winner_pregame_pct);
   if(!shots.length)return '';
   const card=(x,i)=>`<li class="rsShot${i>=8?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
@@ -1272,7 +1284,8 @@ function rsLongshots(){
 function rsStat(){
   const table=collegeRankingTable();
   const all=table?.rankings||[];
-  const rows=all.filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
+  const p4=r=>String(r.tier||'')==='power'||RS_P4_CONFERENCE.test(String(r.conference||'').trim());
+  const rows=all.filter(r=>p4(r)&&Number.isFinite(Number(r.movement_since_preseason)));
   const byMove=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason));
   const riser=byMove[0];
   if(!riser||Number(riser.movement_since_preseason)<=0)return '';
@@ -1283,7 +1296,7 @@ function rsStat(){
   // edition. Only drawn when a previous edition exists.
   // Weekly moves only once games are played; before that they are model changes.
   const played=all.some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
-  const weekly=played?all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0):[];
+  const weekly=played?all.filter(r=>p4(r)&&Number.isFinite(Number(r.movement))&&Number(r.movement)!==0):[];
   const usePreseason=currentSportKey()==='ncaam'&&!weekly.length;
   const field=usePreseason?'movement_since_preseason':'movement';
   const moves=usePreseason?rows:weekly;

@@ -125,3 +125,9 @@
 .bkMetaCaps{text-transform:uppercase;letter-spacing:.7px;font-weight:var(--fw-semibold)}.bkNatCenter .bkMetaCaps,.bkFullFinal .bkMetaCaps{color:#d6bd80}
 .bkFullPosition{width:170px}.bkFullTrophy{position:absolute;width:170px}
 .bkGameMini .bkGameTeam{min-height:30px;padding:0 6px;gap:2px}.bkGameMini .bkTeam{min-height:30px;min-width:0;padding:2px 0;gap:6px}.bkGameMini .bkTeam b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bkGameMini .bkTeam>span:nth-child(2){overflow:hidden}.bkGameMini .bkOpen,.bkGame.bkGameMini .bkLikely .bkTeam small,.bkGameMini .bkTeam small{display:none}.bkGameMini .bkSeed{font-size:11px;width:16px}.bkGameMini .bkSlot{min-height:30px;padding:4px 8px;font-size:11px}
+/* Bracket picker and the full bracket's paired scrollbars. */
+.bkPicker{display:flex;align-items:center;gap:10px;margin:0 0 12px}.bkPicker label{font:var(--fw-semibold) var(--fs-sm) var(--mono);color:var(--bk-gold);letter-spacing:.05em}.bkPicker select{min-height:40px;min-width:260px;max-width:100%;padding:8px 12px;background:var(--bg2);color:var(--text);border:1px solid var(--line2);border-radius:6px;font:var(--fw-semibold) var(--fs-base) var(--sans)}
+.bkTopScroll{overflow-x:auto;overflow-y:hidden;height:16px;margin:0 4px 4px}.bkTopScroll>div{height:1px}
+.bkGameMini .bkTeam b{font-size:14px}.bkGameMini .bkGameTeam,.bkGameMini .bkTeam{min-height:32px}.bkGameMini .bkSeed{font-size:12px}
+@media(max-width:600px){.bkPicker select{min-width:0;flex:1}}
+.bkBasis{flex-basis:100%;order:-1;padding:10px 12px;border:1px solid var(--bk-gold);border-radius:6px;background:#1b1a14;color:var(--text);line-height:1.5}.bkBasis b{color:var(--bk-gold)}

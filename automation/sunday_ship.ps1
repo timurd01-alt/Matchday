@@ -111,6 +111,11 @@ try {
         # Top 25, and the picks read from those ratings.
         $hoopsSeason = if ((Get-Date).Month -ge 7) { (Get-Date).Year + 1 } else { (Get-Date).Year }
         Run 'basketball rosters' $TRDLab $PythonPath @('-m','trdlab','hoops','rosters') -Soft
+        # This week's results and their box scores before rating: the rating
+        # solves on box-score possessions, and without them it re-stored the
+        # preseason prior every week (2026-11-06: zero 2026-27 box scores).
+        Run 'basketball results' $TRDLab $PythonPath @('-m','trdlab','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
+        Run 'basketball box scores' $TRDLab $PythonPath @('-m','trdlab','hoops','boxes','--season',"$hoopsSeason",'--limit','2000') -Soft
         Run 'basketball ratings' $TRDLab $PythonPath @('-m','trdlab','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
         Run 'basketball Top 25' $TRDLab $PythonPath @('-m','trdlab','poll','publish','--sport','ncaam') -Soft
         RunForecastSlate 'ncaam'

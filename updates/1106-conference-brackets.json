@@ -1,0 +1,14 @@
+{
+  "rank": 560,
+  "date": "Build 1106P",
+  "tag": "Feature",
+  "title": "Conference tournament brackets and a labelled preseason projection",
+  "items": [
+    "Bracketology has a bracket picker: the NCAA Tournament or any conference tournament, drawn in the format that conference played last season (byes, double byes, stepladders), with projected seeds, each team's chance to reach every round, and title favourites.",
+    "The projection is labelled as preseason: team strength comes from the preseason ratings (last season plus roster changes) until teams have played about 10 games, then switches to this season's results alone. The Home No. 1 seeds card says so too.",
+    "Saint Francis, which left Division I, no longer takes an automatic bid and a 16 seed.",
+    "The Full bracket opens at full size with school names, larger text, and scrollbars above and below.",
+    "Model-Market Watch, Longshots that won, and Risers & Fallers show only games and teams from the SEC, Big Ten, Big 12 and ACC.",
+    "The weekly basketball update now collects box scores before rating, so this season's games count."
+  ]
+}
