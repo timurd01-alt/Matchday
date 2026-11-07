@@ -102,6 +102,9 @@ STUDIO_FOOTER_MAX = 44
 STUDIO_NAME_MAX = 30
 STUDIO_DETAIL_MAX = 36
 LOGO_DIR = Path(__file__).resolve().parent / "social" / "logos"
+# Studio-corrected artwork that wins over social/logos for the graphics only
+# (Iowa's committed mark is black, invisible on the studio's dark background).
+LOGO_OVERRIDE_DIR = Path(__file__).resolve().parent / "social" / "studio" / "logo-overrides"
 # A 1x1 transparent PNG. The studio requires an image for every team; a team
 # with no committed artwork gets this and is listed in the edition's warnings.
 BLANK_PNG = (
@@ -516,11 +519,16 @@ def build_queue(now: dt.datetime | None = None, root: str | os.PathLike[str] = "
 
 # --------------------------------------------------------------------------- studio
 
-def _logo_index(logo_dir: Path) -> dict[str, Path]:
-    try:
-        return {social_export._slug(p.stem): p for p in logo_dir.glob("*.png")}
-    except OSError:
-        return {}
+def _logo_index(logo_dir: Path, override_dir: Path | None = None) -> dict[str, Path]:
+    index: dict[str, Path] = {}
+    for directory in (logo_dir, override_dir):
+        if directory is None:
+            continue
+        try:
+            index.update({social_export._slug(p.stem): p for p in Path(directory).glob("*.png")})
+        except OSError:
+            pass
+    return index
 
 
 def logo_for(team: str, index: dict[str, Path]) -> Path | None:
@@ -550,7 +558,8 @@ def _studio_team(team: str, index: dict[str, Path], missing: list[str]) -> dict[
     return {"team": key, "name": short(team).upper()[:STUDIO_NAME_MAX], "src": src}
 
 
-def studio_edition(queue: dict[str, Any], logo_dir: Path = LOGO_DIR) -> dict[str, Any] | None:
+def studio_edition(queue: dict[str, Any], logo_dir: Path = LOGO_DIR,
+                   override_dir: Path | None = LOGO_OVERRIDE_DIR) -> dict[str, Any] | None:
     """A Matchday Studio version-2 edition, or None if any required list is short.
 
     The studio refuses an edition without exactly 25 rankings and 5 matchups,
@@ -562,7 +571,7 @@ def studio_edition(queue: dict[str, Any], logo_dir: Path = LOGO_DIR) -> dict[str
     slate = by_kind.get(("slate_preview", "ncaaf"))
     if not power or not slate or len(slate["facts"]["games"]) < SLATE_SIZE:
         return None
-    index = _logo_index(Path(logo_dir))
+    index = _logo_index(Path(logo_dir), override_dir)
     missing: list[str] = []
     day = parse_time(power["facts"]["published_on"])
     stamp = f"{day:%b} {day.day}, {day.year}".upper()

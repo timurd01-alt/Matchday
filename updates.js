@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1107C",
+  "tag": "Social",
+  "title": "Weekly graphics render automatically",
+  "items": [
+   "The Matchday Studio now lives in the repository, and a new weekly job renders the Top 25 power ratings, Top 25 ballot, Top 5 matchups and Upset Watch graphics from this week's data as 2160x3840 PNGs.",
+   "Each image comes with its draft caption, source hash and expiry, attached to the workflow run. Nothing is posted or committed automatically.",
+   "Iowa's graphic logo is now the gold hawk; the old black mark disappeared on the dark background."
+  ]
+ },
+ {
   "date": "Build 1107B",
   "tag": "Social",
   "title": "Content engine for X and TikTok posts",

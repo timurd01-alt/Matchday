@@ -1,0 +1,59 @@
+name: Render the week's graphics
+
+# Renders this week's Matchday Studio graphics (Top 25 power ratings, Top 25
+# ballot, Top 5 matchups, Upset Watch when there are three) as 2160x3840 PNGs
+# and attaches them to the run as an artifact, with a manifest naming each
+# image's caption, source hash and expiry.
+#
+#   * Publishes nothing. A person downloads the artifact and decides.
+#   * Commits nothing. The PNGs are ~1 MB each; they live on the run, not in git.
+#   * Says nothing when there is nothing to say: a stale handoff or a short
+#     slate renders no images and the job still succeeds.
+#
+# Sunday 23:30 UTC, half an hour after weekly-slate.yml, and a Tuesday catch-up.
+on:
+  schedule:
+    - cron: '30 23 * * 0'
+    - cron: '30 13 * * 2'
+  workflow_dispatch:
+
+concurrency:
+  group: matchday-social-graphics
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install the headless browser
+        run: |
+          python -m pip install playwright==1.63.0
+          python -m playwright install --with-deps chromium
+
+      # Full discovery, the same command as every other workflow. With
+      # Playwright installed, the studio render test runs here instead of
+      # being skipped.
+      - name: Run the test suite
+        run: python -m unittest discover -p "test_*.py"
+
+      - name: Render the graphics
+        run: python render_social.py --out out/graphics
+
+      - name: Attach the graphics to this run
+        if: ${{ hashFiles('out/graphics/manifest.json') != '' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: matchday-graphics-${{ github.run_number }}
+          path: out/graphics
+          retention-days: 21
