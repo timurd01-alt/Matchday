@@ -1,40 +1,40 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-06T20:56:21.027375+00:00",
+  "generated_at": "2026-11-07T00:58:39.652288+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-11-06T20:56:21.027375+00:00",
+      "checked_at": "2026-11-07T00:58:39.652288+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-06T20:56:21.027375+00:00",
+      "last_success_at": "2026-11-07T00:58:39.652288+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-11-06T20:56:21.027375+00:00",
+      "checked_at": "2026-11-07T00:58:39.652288+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-06T20:56:21.027375+00:00",
+      "last_success_at": "2026-11-07T00:58:39.652288+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-11-06T20:56:21.027375+00:00",
+      "checked_at": "2026-11-07T00:58:39.652288+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-06T20:56:21.027375+00:00",
+      "last_success_at": "2026-11-07T00:58:39.652288+00:00",
       "current_reports": 5,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-11-06T20:56:21.027375+00:00",
+      "checked_at": "2026-11-07T00:58:39.652288+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-06T20:56:21.027375+00:00",
+      "last_success_at": "2026-11-07T00:58:39.652288+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
@@ -11862,6 +11862,84 @@
       ]
     },
     {
+      "conference": "ACC",
+      "report_id": "10002938",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-11-06T22:00:00+00:00",
+      "kickoff": "2026-11-07T00:00:00+00:00",
+      "published_local": "2026-11-06 17:00:00 ET",
+      "teams": [
+        {
+          "name": "Virginia Tech",
+          "quarterbacks": [
+            {
+              "name": "Kelden Ryan",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Troy Huhn",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Ethan Grunkemeyer",
+              "jersey": "17",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Bryce Baker",
+              "jersey": "22",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "SMU",
+          "quarterbacks": [
+            {
+              "name": "Ty Hawkins",
+              "jersey": "1",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Kevin Jennings",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Cole Leinart",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Charlie Fiser",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Mabrey Mettauer",
+              "jersey": "28",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "267e098840ec9d241ccec4d87527e61963cec19435ce9cffe7a55259ee09c312",
+      "first_observed_at": "2026-11-07T00:58:39.652288+00:00",
+      "observed_before_kickoff": false
+    },
+    {
       "conference": "B10",
       "content_sha256": "202cba2b3c14a35ec061172d4803a1e0969d07d0cd73afdb95134924ff71f72c",
       "first_observed_at": "2026-11-04T06:19:29.823547+00:00",
@@ -12076,6 +12154,78 @@
           ]
         }
       ]
+    },
+    {
+      "conference": "B10",
+      "report_id": "10002943",
+      "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "report_type": "Game Day",
+      "published_at": "2026-11-06T23:00:00+00:00",
+      "kickoff": "2026-11-07T01:00:00+00:00",
+      "published_local": "2026-11-06 17:00:00 CT",
+      "teams": [
+        {
+          "name": "Nebraska",
+          "quarterbacks": [
+            {
+              "name": "Anthony Colandrea",
+              "jersey": "10",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Daniel Kaelin",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "TJ Lateef",
+              "jersey": "14",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Bode Soukup",
+              "jersey": "16",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        },
+        {
+          "name": "Illinois",
+          "quarterbacks": [
+            {
+              "name": "Carson Boyd",
+              "jersey": "2",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Katin Houser",
+              "jersey": "4",
+              "position": "QB",
+              "status": "Available"
+            },
+            {
+              "name": "Michael Clayton II",
+              "jersey": "7",
+              "position": "QB",
+              "status": "Out"
+            },
+            {
+              "name": "Dane Eisenmenger",
+              "jersey": "12",
+              "position": "QB",
+              "status": "Available"
+            }
+          ]
+        }
+      ],
+      "content_sha256": "fedefb81c5eb0791fb971e0881c1b063ccef84c5e75c19ee717c56acb1f0aee8",
+      "first_observed_at": "2026-11-07T00:58:39.652288+00:00",
+      "observed_before_kickoff": true
     },
     {
       "conference": "B12",
