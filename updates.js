@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1107A",
+  "tag": "Data",
+  "title": "Basketball scorecard updated through November 7",
+  "items": [
+   "The basketball scorecard now grades 357 locked picks, up from 221: 308 right and 49 wrong (86.3%), against an expected 87.9%.",
+   "Picks from November 5 through 7 are included now that pregame locking is running again."
+  ]
+ },
+ {
   "date": "Build 1106R",
   "tag": "Fix",
   "title": "Basketball bracket tab renamed Bracketology",
