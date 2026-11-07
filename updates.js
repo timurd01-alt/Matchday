@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1106Q",
+  "tag": "Fix",
+  "title": "Research lists mix Power Four and other teams",
+  "items": [
+   "Model-Market Watch, Longshots that won, and Risers & Fallers alternate Power Four games and teams with everyone else, so both show up instead of Power Four only."
+  ]
+ },
+ {
   "date": "Build 1106P",
   "tag": "Feature",
   "title": "Conference tournament brackets and a labelled preseason projection",
