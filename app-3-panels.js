@@ -70,6 +70,16 @@ function bbNameMatches(a,b){
   // Equal lengths have no shorter side, so either name may hold the abbreviation.
   return short.every((word,i)=>long[i].startsWith(word)||(x.length===y.length&&word.startsWith(long[i])));
 }
+// list.find(item=>bbNameMatches(nameOf(item),name)) for many names against one
+// list, without comparing every pair. A match needs one name's first word to
+// be a prefix of the other's, so both start with the same character: items
+// are bucketed by it and each bucket keeps list order, so the first match
+// found is the same item find() would return.
+function bbNameFinder(list,nameOf){
+  const buckets=new Map();
+  (list||[]).forEach(item=>{const first=bbNameWords(nameOf(item))[0];if(!first)return;const c=first[0];if(!buckets.has(c))buckets.set(c,[]);buckets.get(c).push(item)});
+  return name=>{const first=bbNameWords(name)[0];if(!first)return undefined;return (buckets.get(first[0])||[]).find(item=>bbNameMatches(nameOf(item),name))};
+}
 /* A poll is not a conference, and its order is not ours to re-derive.
 
    The provider's poll tables arrive in payload.standings beside the real
@@ -900,8 +910,9 @@ function tagPageHead(){
 // had changed since the visitor last looked. Each view's last render is
 // stamped; setView() reuses the existing DOM while the stamp still holds.
 // Any other caller of renderCurrent() (data load, settings, language,
-// watchlist...) and any interaction inside the page bumps VIEW_EPOCH, which
-// invalidates every stamp, so a reused view is never behind its inputs.
+// watchlist...), any write to browser storage and any account change bumps
+// VIEW_EPOCH, which invalidates every stamp, so a reused view is never behind
+// its inputs.
 // The age limit bounds relative labels ("in 2h", "updated 5m ago"): one
 // minute for the views that count down to kickoff or show news ages, ten for
 // the tables and the bracket, which change only with their data.
@@ -914,12 +925,21 @@ function viewIsReusable(v){
   return !!(stamp&&host&&host.firstChild&&stamp.epoch===VIEW_EPOCH&&stamp.data===DATA&&stamp.lang===LANG&&stamp.sport===DATA_FILE&&Date.now()-stamp.at<(VIEW_REUSE_MS[v]||VIEW_REUSE_DEFAULT_MS));
 }
 function renderViewChrome(){renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
-function paintCurrentView(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();VIEW_STAMPS[VIEW]={epoch:VIEW_EPOCH,data:DATA,lang:LANG,sport:DATA_FILE,at:Date.now()};renderViewChrome()}
+function paintCurrentView(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();const stamp={epoch:VIEW_EPOCH,data:DATA,lang:LANG,sport:DATA_FILE,at:Date.now()};VIEW_STAMPS[VIEW]=stamp;
+  // renderGroups() builds Rankings and Conference standings together (it moves
+  // the conference tables into #view-standings), so either visit builds both.
+  if(VIEW==='groups'||VIEW==='standings'){VIEW_STAMPS.groups=stamp;VIEW_STAMPS.standings=stamp}
+  renderViewChrome()}
 function renderCurrent(){invalidateViewStamps();paintCurrentView()}
-// Clicks and edits inside the page can change state another view shows
-// (a Pick 'Em pick, a filter, a favourite), so they invalidate the stamps.
-// Nav clicks are the one exception -- they are what the reuse is for.
-['click','change','input','submit'].forEach(type=>document.addEventListener(type,e=>{if(!e.target?.closest?.('.navbtn[data-v]'))invalidateViewStamps()},true));
+// State one view changes and another shows -- favourites, the watchlist,
+// Pick 'Em picks and the Beat the Model record, settings, the language, the
+// signed-in handle -- is all kept in browser storage, so a write there is what
+// invalidates the other views. Every click used to, which meant opening a
+// match card or a filter on one tab made the next switch rebuild every view.
+// In-memory state a click changes (the Games filter, page sizes, the Research
+// source/category toggle, Pick 'Em's show-all) belongs to the view it is
+// clicked in, and that view re-renders itself.
+try{for(const method of ['setItem','removeItem','clear']){const original=Storage.prototype[method];Storage.prototype[method]=function(...args){invalidateViewStamps();return original.apply(this,args)}}}catch(e){}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -1459,11 +1479,16 @@ function collegeRankingTableHTML(){
   const played=rows.some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
   const moved=played&&table.season_in_progress!==false&&rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
   const currentRecords=(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]);
+  // Both lookups used to scan every conference team for every ranked row --
+  // ~90,000 name comparisons per Rankings render on the basketball board,
+  // most of a tab switch. Same first-match-in-order results, indexed once.
+  const exactRecord=new Map();currentRecords.forEach(t=>{const key=teamKey(t.name);if(!exactRecord.has(key))exactRecord.set(key,t)});
+  const fuzzyRecord=bbNameFinder(currentRecords,t=>t.name);
   const recordForRow=row=>{
     const completed=DATA.cfb_result_records?.[teamKey(row.name)];
     if(completed&&completed.pld>=(Number(row.season_games)||0))return completed.record;
-    return currentRecords.find(t=>teamKey(t.name)===teamKey(row.name))?.record
-      ||currentRecords.find(t=>bbNameMatches(t.name,row.name))?.record;
+    return exactRecord.get(teamKey(row.name))?.record
+      ||fuzzyRecord(row.name)?.record;
   };
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
@@ -1597,7 +1622,13 @@ renderGroups=function(){
   const standingsHost=$('#view-standings');
   const conferenceTables=[...host.querySelectorAll('.tablewrap:not(.officialPoll)')];
   standingsHost.innerHTML='<div class="vhead">Conference Standings</div><div class="hint" style="margin-bottom:8px">Ordered by conference record, then head-to-head, overall record and model rating.</div>';
-  conferenceTables.forEach(table=>standingsHost.appendChild(table));
+  // 32 basketball conference tables, almost all below the fold, were laid out
+  // and painted in full before the tab could show (~490ms of a first visit).
+  // content-visibility:auto (styles.css) skips them until they near the
+  // viewport; the placeholder height is the table's real height at desktop
+  // width -- 75px of header plus 45px a team -- so the scrollbar stays honest,
+  // and 'auto' keeps the measured height once a table has been drawn.
+  conferenceTables.forEach(table=>{table.style.containIntrinsicSize=`auto ${75+45*table.querySelectorAll('tbody tr').length}px`;standingsHost.appendChild(table)});
   if(!conferenceTables.length)standingsHost.insertAdjacentHTML('beforeend','<div class="empty">No conference standings available yet.</div>');
   const conferenceLabel=host.querySelector('[data-ranking-section="conferences"]');
   if(conferenceLabel?.nextElementSibling?.classList.contains('hint'))conferenceLabel.nextElementSibling.remove();

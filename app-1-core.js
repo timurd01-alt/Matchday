@@ -202,7 +202,11 @@ function decodeEntities(s){let out=String(s??'');for(let i=0;i<3;i++){const next
 function decodeNewsEntities(payload){(payload?.news||[]).forEach(a=>{for(const k of ['headline','title','desc','source','feed'])if(typeof a[k]==='string')a[k]=decodeEntities(a[k])});return payload}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uiLocale(){return({es:'es',fr:'fr',de:'de',pt:'pt-BR',ru:'ru'})[LANG]||undefined}
-function relativeTime(value,unit){return new Intl.RelativeTimeFormat(uiLocale(),{numeric:'auto'}).format(value,unit)}
+// Building an Intl formatter costs far more than using one, and the board
+// formats hundreds of times per render, so each is built once (per locale).
+const INTL_FORMATS=new Map();
+function intlFormat(Kind,locale,options){const key=Kind.name+'|'+locale+'|'+JSON.stringify(options);let f=INTL_FORMATS.get(key);if(!f){f=new Kind(locale,options);INTL_FORMATS.set(key,f)}return f}
+function relativeTime(value,unit){return intlFormat(Intl.RelativeTimeFormat,uiLocale(),{numeric:'auto'}).format(value,unit)}
 function dt(iso){try{return new Date(iso).toLocaleString(uiLocale(),{weekday:'short',hour:'numeric',minute:'2-digit',month:'short',day:'numeric'})}catch(e){return''}}
 function ago(iso){try{const s=(Date.now()-new Date(iso).getTime())/1000;if(!isFinite(s))return'';if(s<70)return relativeTime(0,'second');if(s<3600)return relativeTime(-Math.round(s/60),'minute');if(s<86400)return relativeTime(-Math.round(s/3600),'hour');return relativeTime(-Math.round(s/86400),'day')}catch(e){return''}}
 function kickIn(iso){try{const m=Math.round((new Date(iso)-Date.now())/60000);if(m<=0)return relativeTime(0,'minute');if(m<60)return relativeTime(m,'minute');if(m<1440)return relativeTime(Math.round(m/60),'hour');return relativeTime(Math.round(m/1440),'day')}catch(e){return''}}
@@ -216,10 +220,10 @@ const STALE_MATCH_MINUTES=150;
 function kickoffTimeTbd(m){
   if(m?.time_tbd===true)return true;if(m?.time_tbd===false)return false;
   const t=Date.parse(m?.kickoff||'');if(!Number.isFinite(t))return false;
-  try{const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(t));
+  try{const p=intlFormat(Intl.DateTimeFormat,'en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(t));
     return p.find(x=>x.type==='hour')?.value==='00'&&p.find(x=>x.type==='minute')?.value==='00'}catch(e){return false}
 }
-function easternDayKey(ms){try{return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms))}catch(e){return boardDayKey(ms)}}
+function easternDayKey(ms){try{return intlFormat(Intl.DateTimeFormat,'en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms))}catch(e){return boardDayKey(ms)}}
 function kickMs(m){const t=Date.parse(m?.kickoff||'');return Number.isFinite(t)?t:0}
 function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0&&(Date.now()-t)>STALE_MATCH_MINUTES*60000}
 function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
@@ -370,16 +374,22 @@ function teamRecordText(team){
 }
 // One standings blurb shared by the fixture card, the expanded view's hero and
 // its match-read panel, so all three stay honest about the same sport.
+const TEAM_POWER_RANK_CACHE=new WeakMap();
 function teamPowerRank(name,comp){
   const key=String(comp||DATA.comp_key||currentSportKey()).toLowerCase();
   const table=key==='ncaam'
     ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
     :key==='ncaaf'?(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null):null;
   const rows=table?.rankings||[];
+  // Asked twice per fixture card, each a scan of every ranked team; the answer
+  // is a pure function of the table and the name, so it is kept per table.
+  let cache=TEAM_POWER_RANK_CACHE.get(rows);if(!cache){cache=new Map();TEAM_POWER_RANK_CACHE.set(rows,cache)}
+  const label=String(name||'');if(cache.has(label))return cache.get(label);
   const exact=rows.find(row=>teamKey(row.name)===teamKey(name));
   const matches=exact?[exact]:rows.filter(row=>bbNameMatches(row.name,name));
   const rank=matches.length===1?Number(matches[0].rank):NaN;
-  return Number.isInteger(rank)&&rank>0?rank:null;
+  const answer=Number.isInteger(rank)&&rank>0?rank:null;
+  cache.set(label,answer);return answer;
 }
 function teamStandingsMeta(team,comp,opts){
   opts=opts||{};
@@ -1085,11 +1095,14 @@ function gamePollRankUncached(name){
   return Number.isFinite(r)&&r<=25?r:null;
 }
 // Live fixtures carry no conference; the power-rating table does.
+const GAME_CONFERENCE_FINDERS=new WeakMap();
 function gameConference(side){
   if(side?.group)return side.group;
   return gameTeamMemo('conf',side?.name,()=>{
   const rows=typeof collegeRankingTable==='function'?(collegeRankingTable()?.rankings||[]):[];
-  return rows.find(r=>bbNameMatches(r.name,side?.name))?.conference||'';
+  // Same first match as rows.find(), without comparing against every team.
+  let find=GAME_CONFERENCE_FINDERS.get(rows);if(!find){find=bbNameFinder(rows,r=>r.name);GAME_CONFERENCE_FINDERS.set(rows,find)}
+  return find(side?.name)?.conference||'';
   });
 }
 function gameMatchesFilter(m,f){
@@ -1408,7 +1421,7 @@ let ACCOUNT={signedIn:false,handle:'',canReshuffle:false};
 let AUTH_PROVIDERS=[];
 function authToken(){try{return localStorage.getItem('matchday.session')||''}catch(e){return ''}}
 function setAuthToken(t){try{t?localStorage.setItem('matchday.session',t):localStorage.removeItem('matchday.session')}catch(e){}}
-function applyAccount(d){
+function applyAccount(d){if(typeof invalidateViewStamps==='function')invalidateViewStamps();
   if(!d)return;
   // `canReshuffle` is absent from pick responses; absent means unchanged, not false.
   ACCOUNT={signedIn:!!d.signedIn,handle:d.handle||ACCOUNT.handle,

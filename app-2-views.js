@@ -192,6 +192,9 @@ function commLoad(comp){
   Promise.all([commFetch('consensus',comp),commFetch('activity',comp),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
     COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;
     if(c&&c.ok)commForgetStalePicks(COMM_CONSENSUS);
+    // A Pick 'Em view built before these arrived is out of date even if the
+    // visitor has moved on, so it must not be reused on the way back.
+    if(typeof invalidateViewStamps==='function')invalidateViewStamps();
     if(VIEW==='community')renderCommunity(true);
   });
 }
@@ -283,6 +286,9 @@ function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH=
   h+=`<section class="commBox" aria-labelledby="commActTitle"><div class="commHead"><h2 id="commActTitle">Recent activity</h2></div>${COMM_ACTIVITY===null?'<div class="empty">Loading…</div>':items.length?`<ul class="commFeed">${items.slice(0,12).join('')}</ul>`:'<div class="empty">No picks yet this week. Be the first.</div>'}</section>`;
   h+=`</aside></div>`;
   host.innerHTML=h;
+  // Re-renders from a fetch or the show-all toggle bypass renderCurrent(), which
+  // is what adds the page tag, so the header lost it until the next tab switch.
+  if(VIEW==='community'&&typeof tagPageHead==='function')tagPageHead();
 }
 
 function tournamentPlayerKey(name){return String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
@@ -407,10 +413,29 @@ function collegeRankingTable(){
 // rather than guessing. A row that carries no sport is dropped on a sport's own
 // board: if the engine ever stops stamping it, a card goes missing, which is the
 // safer of the two failures.
+// DATA.matches grouped by kickoff date, in list order, built once per payload:
+// basketballMarketPick() runs for every handoff row on a Research render and
+// used to scan the whole fixture list each time.
+const MATCHES_BY_DATE=new WeakMap();
+function matchesOnDate(day){
+  const list=DATA.matches||[];
+  let index=MATCHES_BY_DATE.get(list);
+  if(!index){index=new Map();list.forEach(m=>{const d=String(m.kickoff).slice(0,10);if(!index.has(d))index.set(d,[]);index.get(d).push(m)});MATCHES_BY_DATE.set(list,index)}
+  return index.get(day)||[];
+}
+// Research runs the same handoff rows through this from five sections; the
+// result depends only on the row and the fixture list, so it is kept per list.
+const MARKET_PICK_CACHE=new WeakMap();
 function basketballMarketPick(p,match){
   if(!p||currentSportKey()!=='ncaam'||!p.pick_name)return p;
-  const m=match||(DATA.matches||[]).find(m=>String(m.kickoff).slice(0,10)===String(p.kickoff).slice(0,10)
-    &&bbNameMatches(m.home?.name,p.home)&&bbNameMatches(m.away?.name,p.away));
+  if(match||typeof p!=='object')return basketballMarketPickUncached(p,match);
+  const list=DATA.matches||[];
+  let cache=MARKET_PICK_CACHE.get(list);if(!cache){cache=new WeakMap();MARKET_PICK_CACHE.set(list,cache)}
+  if(!cache.has(p))cache.set(p,basketballMarketPickUncached(p));
+  return cache.get(p);
+}
+function basketballMarketPickUncached(p,match){
+  const m=match||matchesOnDate(String(p.kickoff).slice(0,10)).find(m=>bbNameMatches(m.home?.name,p.home)&&bbNameMatches(m.away?.name,p.away));
   const price=m?.markets?.['1x2'];
   const value=bbNameMatches(p.pick_name,m?.home?.name)?price?.home_pct:bbNameMatches(p.pick_name,m?.away?.name)?price?.away_pct:null;
   if(value==null||!Number.isFinite(Number(value))||value<=0||value>=100)return p;
@@ -1044,12 +1069,25 @@ function rsMoreBtn(total,label,title){
 /* "View all" opens the complete list in its own window rather than growing
    the section in place. The list is cloned from the section, so the window
    shows exactly the same rows and columns, just all of them. */
+// The full-season lists (pace, efficiency, shooting defense) each built every
+// team's row -- ~1,400 hidden rows and 740KB of the Research page's 1.4MB --
+// only for "View all" to copy them. The rows past the preview are now kept as
+// markup and only parsed when that window opens. rsDeferredList() returns the
+// preview rows plus a data-rs-more key on the list that holds the rest.
+const RS_DEFERRED_ROWS=new Map();let RS_DEFERRED_SEQ=0;
+function rsDeferredList(rows,shown){
+  if(rows.length<=shown)return {attr:'',html:rows.join('')};
+  const key='rs'+(++RS_DEFERRED_SEQ);RS_DEFERRED_ROWS.set(key,rows.slice(shown).join(''));
+  return {attr:` data-rs-more="${key}"`,html:rows.slice(0,shown).join('')};
+}
 function rsOpenAll(btn){
   const box=btn.closest('.rsExpandable');if(!box)return;
   const title=btn.dataset.title||'All';
   const body=document.createElement('div');
   box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > .rsScrollX, :scope > ul, :scope > ol').forEach(el=>{
-    const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
+    const c=el.cloneNode(true);
+    [c,...c.querySelectorAll('[data-rs-more]')].filter(list=>list.dataset?.rsMore).forEach(list=>{list.insertAdjacentHTML('beforeend',RS_DEFERRED_ROWS.get(list.dataset.rsMore)||'');list.removeAttribute('data-rs-more')});
+    c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
   });
   rsShowDialog(title,[...body.childNodes],btn);
 }
@@ -1172,11 +1210,17 @@ function rsFeatured(){
 // neither side crowds out the other. Football rankings mark them tier
 // "power"; basketball rankings carry the conference name.
 const RS_P4_CONFERENCE=/^(southeastern|atlantic coast|big 12|big ten)( conference)?$|^(sec|acc)$/i;
+// Answers are kept per rankings table: Research asks about the same teams a
+// few hundred times per render, each a scan of every ranked row.
+const RS_P4_CACHE=new WeakMap();
 function rsIsP4(name){
   const rows=(typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[];
+  let cache=RS_P4_CACHE.get(rows);if(!cache){cache=new Map();RS_P4_CACHE.set(rows,cache)}
+  const label=String(name||'');if(cache.has(label))return cache.get(label);
   const key=teamKey(name);
   const row=rows.find(r=>teamKey(r.name)===key)||rows.find(r=>typeof bbNameMatches==='function'&&bbNameMatches(r.name,name));
-  return !!row&&(String(row.tier||'')==='power'||RS_P4_CONFERENCE.test(String(row.conference||'').trim()));
+  const answer=!!row&&(String(row.tier||'')==='power'||RS_P4_CONFERENCE.test(String(row.conference||'').trim()));
+  cache.set(label,answer);return answer;
 }
 function rsHasP4(...names){return names.some(n=>n&&rsIsP4(n))}
 // Alternate Power Four and other rows, each side keeping its own order; when
@@ -1649,7 +1693,10 @@ function rsSchedules(){
   const table=collegeRankingTable();
   const rows=(hoops?basketballSeasonSchedules():table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
-  const pool=hoops?rows.filter(r=>(table?.rankings||[]).some(team=>Number(team.rank)<=40&&bbNameMatches(team.name||team.team_name,r.name))):rows.filter(r=>(r.rank||999)<=40);
+  // Every schedule row against every top-40 team was ~15,000 name comparisons
+  // per Research render; the finder asks only the plausible ones.
+  const top40=hoops?bbNameFinder((table?.rankings||[]).filter(team=>Number(team.rank)<=40),team=>team.name||team.team_name):null;
+  const pool=hoops?rows.filter(r=>top40(r.name)!==undefined):rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
   const shown=currentSportKey()==='ncaam'?8:6;
   const row=(r,i)=>`<li class="rsSchedRow${i>=shown?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
@@ -1787,7 +1834,7 @@ function rsBasketballTeams(){
 function rsBasketballTempo(){
   const teams=rsBasketballTeams().sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
   if(!teams.length)return '';
-  const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsScrollX"><div class="rsSchedHead${cols.length===4?' rsEfficiencyColumns':''}"><span></span><span>Team</span>${cols.map(col=>`<span>${col}</span>`).join('')}</div><ol class="rsSched">${items.map((t,i)=>`<li class="rsSchedRow${cols.length===4?' rsEfficiencyColumns':''}${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`).join('')}</ol></div>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
+  const list=(title,items,cols,values,span)=>`<section class="rsBlock rsExpandable rsSpan${span}">${rsTop(title,'current',teams.length+' teams')}<div class="rsScrollX"><div class="rsSchedHead${cols.length===4?' rsEfficiencyColumns':''}"><span></span><span>Team</span>${cols.map(col=>`<span>${col}</span>`).join('')}</div>${(l=>`<ol class="rsSched"${l.attr}>${l.html}</ol>`)(rsDeferredList(items.map((t,i)=>`<li class="rsSchedRow${cols.length===4?' rsEfficiencyColumns':''}${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span><span class="rsSchedTeam">${teamMark(t.name)}<b>${esc(rsShortName(t.name))}</b></span>${values(t).map(v=>`<span class="rsNum">${v}</span>`).join('')}</li>`),6))}</div>${items.length>6?rsMoreBtn(items.length,'View all',title):''}</section>`;
   return list('Pace',teams,['Games','Poss / 40'],t=>[t.games,(40*t.poss/t.minutes).toFixed(1)],5)
     +list('Efficiency per 100 possessions',teams.slice().sort((a,b)=>(b.points-b.allowed)/b.poss-(a.points-a.allowed)/a.poss),['Games','Offense','Defense','Net'],t=>[t.games,(100*t.points/t.poss).toFixed(1),(100*t.allowed/t.poss).toFixed(1),((t.points>=t.allowed?'+':'')+(100*(t.points-t.allowed)/t.poss).toFixed(1))],7);
 }
@@ -1802,16 +1849,18 @@ function rsBasketballDefense(){
   const ranked=c.pts.slice().sort((a,b)=>a.x-b.x||b.y-a.y||a.name.localeCompare(b.name));
   const chart=`<section class="rsBlock rsExpandable rsSpan8">${rsTop('Shooting defense & turnovers','current')}
     <div class="rsScrollX"><div class="rsConfHead rsDefenseBars"><span>Team</span><span title="Opponent effective field goal percentage includes the extra value of three-pointers. Lower is better.">Opp. eFG% · lower is better</span><span title="Opponent turnovers per 100 estimated possessions">Forced TO%</span><span>Games</span></div>
-    <ol class="rsConf">${ranked.map((p,i)=>`<li class="rsConfRow rsDefenseBars${i>=8?' rsExtra':''}">
+    ${(l=>`<ol class="rsConf"${l.attr}>${l.html}</ol>`)(rsDeferredList(ranked.map((p,i)=>`<li class="rsConfRow rsDefenseBars${i>=8?' rsExtra':''}">
       <span class="rsLogoName">${teamMark(p.name)}<span>${esc(rsShortName(p.name))}</span></span>
       <span class="rsDefenseBarValue"><i class="rsBar" aria-hidden="true"><b style="width:${Math.min(100,Math.max(0,p.x)).toFixed(1)}%"></b></i><b>${p.x.toFixed(1)}%</b></span>
-      <span class="rsNum">${p.y.toFixed(1)}%</span><span class="rsNum rsMuted">${p.row.games}</span></li>`).join('')}</ol></div>
+      <span class="rsNum">${p.y.toFixed(1)}%</span><span class="rsNum rsMuted">${p.row.games}</span></li>`),8))}</div>
     ${ranked.length>8?rsMoreBtn(ranked.length,'View all','Shooting defense & turnovers'):''}</section>`;
   return chart
     +`<section class="rsBlock rsSpan4">${rsTop('Defensive rebounding','current')}${rsQuadTabs('hoopsDefense',groups,'DREB%','Games')}</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
+  // A new Research page replaces the old one, and the stored rows with it.
+  RS_DEFERRED_ROWS.clear();
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
   // so a finding and its supporting numbers share a row at sensible widths.
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
