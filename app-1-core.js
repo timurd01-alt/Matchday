@@ -374,6 +374,10 @@ function teamRecordText(team){
 }
 // One standings blurb shared by the fixture card, the expanded view's hero and
 // its match-read panel, so all three stay honest about the same sport.
+// Lookups over a list are cached per list object. The length is part of the
+// key too, so a list grown in place (a late-arriving row) is never answered
+// from a cache built before the row existed.
+function listCache(store,list,make){let hit=store.get(list);if(!hit||hit.length!==list.length){hit={length:list.length,value:make()};store.set(list,hit)}return hit.value}
 const TEAM_POWER_RANK_CACHE=new WeakMap();
 function teamPowerRank(name,comp){
   const key=String(comp||DATA.comp_key||currentSportKey()).toLowerCase();
@@ -383,7 +387,7 @@ function teamPowerRank(name,comp){
   const rows=table?.rankings||[];
   // Asked twice per fixture card, each a scan of every ranked team; the answer
   // is a pure function of the table and the name, so it is kept per table.
-  let cache=TEAM_POWER_RANK_CACHE.get(rows);if(!cache){cache=new Map();TEAM_POWER_RANK_CACHE.set(rows,cache)}
+  let cache=listCache(TEAM_POWER_RANK_CACHE,rows,()=>new Map());
   const label=String(name||'');if(cache.has(label))return cache.get(label);
   const exact=rows.find(row=>teamKey(row.name)===teamKey(name));
   const matches=exact?[exact]:rows.filter(row=>bbNameMatches(row.name,name));
@@ -1101,7 +1105,7 @@ function gameConference(side){
   return gameTeamMemo('conf',side?.name,()=>{
   const rows=typeof collegeRankingTable==='function'?(collegeRankingTable()?.rankings||[]):[];
   // Same first match as rows.find(), without comparing against every team.
-  let find=GAME_CONFERENCE_FINDERS.get(rows);if(!find){find=bbNameFinder(rows,r=>r.name);GAME_CONFERENCE_FINDERS.set(rows,find)}
+  const find=listCache(GAME_CONFERENCE_FINDERS,rows,()=>bbNameFinder(rows,r=>r.name));
   return find(side?.name)?.conference||'';
   });
 }

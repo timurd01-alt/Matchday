@@ -419,8 +419,7 @@ function collegeRankingTable(){
 const MATCHES_BY_DATE=new WeakMap();
 function matchesOnDate(day){
   const list=DATA.matches||[];
-  let index=MATCHES_BY_DATE.get(list);
-  if(!index){index=new Map();list.forEach(m=>{const d=String(m.kickoff).slice(0,10);if(!index.has(d))index.set(d,[]);index.get(d).push(m)});MATCHES_BY_DATE.set(list,index)}
+  const index=listCache(MATCHES_BY_DATE,list,()=>{const byDay=new Map();list.forEach(m=>{const d=String(m.kickoff).slice(0,10);if(!byDay.has(d))byDay.set(d,[]);byDay.get(d).push(m)});return byDay});
   return index.get(day)||[];
 }
 // Research runs the same handoff rows through this from five sections; the
@@ -430,7 +429,7 @@ function basketballMarketPick(p,match){
   if(!p||currentSportKey()!=='ncaam'||!p.pick_name)return p;
   if(match||typeof p!=='object')return basketballMarketPickUncached(p,match);
   const list=DATA.matches||[];
-  let cache=MARKET_PICK_CACHE.get(list);if(!cache){cache=new WeakMap();MARKET_PICK_CACHE.set(list,cache)}
+  const cache=listCache(MARKET_PICK_CACHE,list,()=>new WeakMap());
   if(!cache.has(p))cache.set(p,basketballMarketPickUncached(p));
   return cache.get(p);
 }
@@ -1215,7 +1214,7 @@ const RS_P4_CONFERENCE=/^(southeastern|atlantic coast|big 12|big ten)( conferenc
 const RS_P4_CACHE=new WeakMap();
 function rsIsP4(name){
   const rows=(typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[];
-  let cache=RS_P4_CACHE.get(rows);if(!cache){cache=new Map();RS_P4_CACHE.set(rows,cache)}
+  const cache=listCache(RS_P4_CACHE,rows,()=>new Map());
   const label=String(name||'');if(cache.has(label))return cache.get(label);
   const key=teamKey(name);
   const row=rows.find(r=>teamKey(r.name)===key)||rows.find(r=>typeof bbNameMatches==='function'&&bbNameMatches(r.name,name));
