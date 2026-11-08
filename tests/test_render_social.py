@@ -116,7 +116,28 @@ def _png_size(path: Path) -> tuple[int, int]:
     return struct.unpack(">II", head[16:24])
 
 
-@unittest.skipUnless(importlib.util.find_spec("playwright"), "Playwright is not installed")
+def _browser_available() -> bool:
+    """Playwright's package can be present without the browser it drives.
+
+    `playwright install` is a separate download; a machine that has only the
+    package (the owner's desktop, 2026-11-08) must skip, not fail, or the
+    weekly ship's test step refuses to publish over a missing local binary.
+    A named channel (system Chrome/Edge) is checked by the test's own launch.
+    """
+    if not importlib.util.find_spec("playwright"):
+        return False
+    if os.environ.get("MATCHDAY_RENDER_CHANNEL"):
+        return True
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as pw:
+            pw.chromium.launch().close()  # headless uses its own shell binary
+        return True
+    except Exception:
+        return False
+
+
+@unittest.skipUnless(_browser_available(), "Playwright or its browser is not installed")
 class RealRender(unittest.TestCase):
     """Load a full edition through the studio's own input and export every mode."""
 

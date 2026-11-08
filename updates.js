@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108D",
+  "tag": "Fix",
+  "title": "Desktop update buttons publish next week's picks on Sunday",
+  "items": [
+   "The College Football and Basketball desktop buttons now treat Sunday as the start of the coming week, so a Sunday update publishes the next week's predictions instead of none.",
+   "Each button updates only its own sport and keeps the other sport's published picks as they are.",
+   "The weekly update no longer stops before publishing when this computer lacks the headless browser used to render social graphics; that one check is skipped instead."
+  ]
+ },
+ {
   "date": "Build 1108C",
   "tag": "Fix",
   "title": "Faster switching between tabs",

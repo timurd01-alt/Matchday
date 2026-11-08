@@ -20,8 +20,9 @@
 # week's file (Desktop button "Edit My Ballot"): TRDLab/ballots/ncaaf/<Sunday>.txt.
 # No file means last week's ballot stays up; nothing is ever invented.
 param(
-    [string]$TRDLab = '',
+    [Alias('SigmaLab')][string]$TRDLab = '',
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
+    [ValidateSet('both','ncaaf','ncaam')][string]$Sport = 'both',
     [switch]$NoPush,
     # Ship the handoff already on disk; skip the TRDLab refresh.
     [switch]$SkipRefresh,
@@ -59,6 +60,9 @@ if ($Force -and -not $SkipRefresh) {
     $today = [TimeZoneInfo]::ConvertTimeFromUtc([DateTime]::UtcNow, $central).Date
     $daysSinceMonday = ([int]$today.DayOfWeek + 6) % 7
     $nextMonday = $today.AddDays(7 - $daysSinceMonday)
+    # Sunday belongs to the coming week: Saturday's games are final, and the
+    # cutoff would otherwise be hours away, publishing no picks (2026-11-08).
+    if ($today.DayOfWeek -eq [DayOfWeek]::Sunday) { $nextMonday = $nextMonday.AddDays(7) }
     $forecastCutoffUtc = [TimeZoneInfo]::ConvertTimeToUtc($nextMonday, $central)
     Say "manual forecast cutoff: $($nextMonday.ToString('yyyy-MM-dd HH:mm')) Central"
 }
@@ -84,6 +88,15 @@ if (-not $Force -and -not $SkipRefresh -and (Test-Path $marker) -and ((Get-Conte
     exit 0
 }
 
+if ($Sport -ne 'both') {
+    $env:TRDLAB_SPORTS = $Sport
+    $marker = Join-Path $logDir "last-shipped-$Sport.txt"
+}
+# The manual buttons and scheduled ship share the same publication worktree.
+try {
+    $shipLock = [IO.File]::Open((Join-Path $logDir 'ship.lock'), 'OpenOrCreate', 'ReadWrite', 'None')
+} catch { throw 'Another Matchday update is running, or the update lock is inaccessible.' }
+try {
 $poller = Resolve-TRDLabRefreshTask
 $pollerPaused = $false
 try {
@@ -105,7 +118,10 @@ try {
         # Refresh already grades completed games. Report any remaining backlog
         # once so missing finals do not restart the fetch and grading steps.
         Run 'pending check' $TRDLab $PythonPath @('-m','trdlab','forecast','pending') -Soft
+        if ($Sport -ne 'ncaam') {
         RunForecastSlate 'ncaaf'
+        }
+        if ($Sport -ne 'ncaaf') {
         # Basketball: posted rosters first (a late transfer or a new posting
         # changes the preseason), then the season rated against its prior, the
         # Top 25, and the picks read from those ratings.
@@ -128,15 +144,18 @@ try {
         $bkArgs = @('-m','trdlab','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
         if (Test-Path $bkPrev) { $bkArgs += @('--previous',$bkPrev) }
         Run 'basketball bracketology' $TRDLab $PythonPath $bkArgs -Soft
+        }
         Run 'upset settle' $TRDLab $PythonPath @('-m','trdlab','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $TRDLab $PythonPath @('-m','trdlab','upset','publish','--as-of',$asOf) -Soft
         # The owner's ballot, dated this week's Sunday, if one has been written.
+        if ($Sport -ne 'ncaam') {
         $ballotDay = (Get-Date).Date.AddDays(-[int](Get-Date).DayOfWeek).ToString('yyyy-MM-dd')
         $ballotFile = Join-Path $TRDLab (Join-Path 'ballots' (Join-Path 'ncaaf' "$ballotDay.txt"))
         if (Test-Path $ballotFile) {
             Run "ballot publish ($ballotDay)" $TRDLab $PythonPath @('-m','trdlab','ballot','publish',$ballotFile,'--date',$ballotDay) -Soft
         } else { Say "   no ballot file for $ballotDay; last week's ballot stays up" }
-        Run 'matchday export' $TRDLab $PythonPath @('-m','trdlab','matchday','export','--out','trdlab_picks.json')
+        }
+        Run 'matchday export' $TRDLab $PythonPath @('-m','trdlab','matchday','export','--sport','ncaaf','--sport','ncaam','--out','trdlab_picks.json')
     }
 } finally {
     if ($pollerPaused) { Enable-ScheduledTask -TaskName $poller | Out-Null }
@@ -153,9 +172,13 @@ Push-Location $tree
 try {
     git checkout -q --detach origin/main
     git reset -q --hard origin/main
-    Copy-Item -Force (Join-Path $TRDLab 'trdlab_picks.json') (Join-Path $tree 'trdlab_picks.json')
+    if ($Sport -eq 'both') {
+        Copy-Item -Force (Join-Path $TRDLab 'trdlab_picks.json') (Join-Path $tree 'trdlab_picks.json')
+    } else {
+        Run 'merge selected sport into published handoff' $tree $PythonPath @((Join-Path $PSScriptRoot 'merge_sport.py'), $Sport, (Join-Path $TRDLab 'trdlab_picks.json'), (Join-Path $tree 'trdlab_picks.json'))
+    }
     $bk = Join-Path $TRDLab 'output\bracketology_ncaam.json'
-    if (Test-Path $bk) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
+    if ($Sport -ne 'ncaaf' -and (Test-Path $bk)) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
 
     Run 'validate handoff' $tree $PythonPath @('-c', "import trdlab_handoff as h, json, sys; d=json.load(open('trdlab_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
     # Stop before publishing if this week's picks fell sharply against what is live.
@@ -185,3 +208,5 @@ try {
     if (-not $SkipRefresh) { Set-Content $marker $asOf }
     Say "shipped $(git rev-parse --short HEAD); deploy.yml publishes the site"
 } finally { Pop-Location }
+
+} finally { $shipLock.Dispose() }
