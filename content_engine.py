@@ -92,8 +92,12 @@ ARTICLE_LIFETIME = dt.timedelta(days=14)
 SPORT_LABELS = {"ncaaf": "College football", "ncaam": "Men's college basketball"}
 KINDS = (
     "power_top25", "ballot_top25", "slate_preview", "upset_watch",
-    "game_of_the_week", "upset_results", "scorecard", "article",
+    "game_of_the_week", "upset_results", "scorecard", "article", "bracketology",
 )
+BRACKETOLOGY_PATH = "bracketology_ncaam.json"
+# The early phase is a preseason guess the site badges as such; it is not
+# something to broadcast. Posts start once the projection is in season.
+BRACKETOLOGY_PHASES = ("in_season", "championship_week", "official")
 SLATE_SIZE = 5
 UPSET_SIZE = 3
 STUDIO_VERSION = 2
@@ -473,6 +477,41 @@ def articles(posts: object, now: dt.datetime, path: str) -> list[ContentItem]:
     return out
 
 
+def bracketology(document: object, now: dt.datetime, path: str) -> list[ContentItem]:
+    """The projected (or official) No. 1 seeds, once the projection is in season."""
+    if not isinstance(document, dict) or document.get("mock"):
+        return []
+    if document.get("phase") not in BRACKETOLOGY_PHASES:
+        return []
+    valid_until = parse_time(document.get("valid_until"))
+    if valid_until is None or now >= valid_until:
+        return []
+    ones = sorted((f for f in document.get("field") or []
+                   if isinstance(f, dict) and f.get("seed") == 1 and f.get("team_name")),
+                  key=lambda f: f.get("overall_seed") or 99)
+    if len(ones) < 4:
+        return []
+    official = document.get("phase") == "official"
+    label = "Official No. 1 seeds" if official else "Projected No. 1 seeds"
+    teams = ", ".join(f"{short(f['team_name'])} ({f.get('region')})" for f in ones[:4])
+    beta = "" if document.get("calibrated") or official else " Beta projection."
+    url = link("bracket", "ncaam", "bracketology")
+    caveat = None if official else "Matchday's own projection, not the NCAA selection committee."
+    return [ContentItem(
+        kind="bracketology", key=f"bracketology:ncaam:{document.get('build_id')}", sport="ncaam",
+        title=label,
+        facts={"phase": document.get("phase"), "as_of": document.get("as_of"),
+               "calibrated": bool(document.get("calibrated")),
+               "simulations": document.get("simulations"),
+               "one_seeds": [{"team": f["team_name"], "region": f.get("region"),
+                              "overall_seed": f.get("overall_seed")} for f in ones[:4]]},
+        source=_source(path, "field[seed=1]", ones[:4], document.get("as_of")),
+        expires_at=_iso(valid_until), link=url,
+        caption=fit(f"{label}: {teams}.{beta} The full field and every team's odds: {url}"),
+        caveat=caveat,
+    )]
+
+
 # --------------------------------------------------------------------------- queue
 
 def build_queue(now: dt.datetime | None = None, root: str | os.PathLike[str] = ".") -> dict[str, Any]:
@@ -507,6 +546,11 @@ def build_queue(now: dt.datetime | None = None, root: str | os.PathLike[str] = "
     except (OSError, ValueError):
         posts = []
     items += articles(posts, now, "posts.json")
+    try:
+        bracket = json.loads((root / BRACKETOLOGY_PATH).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        bracket = None
+    items += bracketology(bracket, now, BRACKETOLOGY_PATH)
 
     items = [i for i in items if parse_time(i.expires_at) > now]
     return {

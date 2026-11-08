@@ -1,5 +1,12 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-08 (social posting schedule: up to twelve scheduled runs a
+week, at most one X post and one TikTok draft per run, at most three a day per
+platform, plus Top 25 reply threads on X built from Matchday's own ratings. The
+content rules above are unchanged; bracketology posts carry Matchday's own
+projection, labeled as not the NCAA committee's, and only after its early
+phase. Publishing remains off until SOCIAL_PUBLISHING is "on".)
+
 Reviewed: 2026-11-08 (social publishing returns, opt-in and off by default.
 social_publish.py posts to X through the official v2 API (OAuth 1.0a user
 context) and uploads videos to TikTok as inbox drafts through the Content

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108F",
+  "tag": "Social",
+  "title": "A weekly posting schedule for X and TikTok",
+  "items": [
+   "Posts now follow a weekly rhythm in Eastern time: new rankings Sunday evening, the receipts on Tuesday, the slate on Thursday, Game of the Week on Friday and Upset Watch on Saturday morning. Each slot sends at most one post per platform.",
+   "An item that would expire before its next slot can go in any slot, so a time-sensitive pick is never held until after kickoff. The X Top 25 post now carries the full 25 as replies.",
+   "Bracketology No. 1 seeds join the schedule once the projection leaves its early phase. Publishing stays off until it is switched on."
+  ]
+ },
+ {
   "date": "Build 1108E",
   "tag": "Fix",
   "title": "Weekly update: video test skips without a local browser",

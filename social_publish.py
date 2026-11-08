@@ -70,6 +70,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 import content_engine
+import social_schedule
 
 ROOT = Path(__file__).resolve().parent
 LEDGER_DIR = ROOT / "social"
@@ -82,6 +83,8 @@ EXPIRY_MARGIN = dt.timedelta(minutes=30)
 PRIORITY = ("upset_watch", "game_of_the_week", "slate_preview", "power_top25",
             "ballot_top25", "upset_results", "scorecard", "article")
 USER_AGENT = "MatchdayContentBot/1.0"
+THREAD_KIND = "thread"
+THREAD_LIMIT = 270
 
 X_API = "https://api.x.com/2"
 X_SEGMENT = 4 * 1024 * 1024               # under X's documented 5 MB guidance
@@ -183,9 +186,12 @@ class Ledger:
         return {k for k, e in self.latest().items() if e.get("status") == "success"}
 
     def successes_since(self, moment: dt.datetime) -> list[dt.datetime]:
+        """Successful posts since `moment`; a thread reply is part of its post, not one more."""
         out = []
         for event in self.events():
             at = content_engine.parse_time(event.get("at"))
+            if event.get("kind") == THREAD_KIND:
+                continue
             if event.get("status") == "success" and at and at >= moment:
                 out.append(at)
         return out
@@ -209,6 +215,7 @@ class Post:
     text: str
     media: Path | None
     expires_at: str
+    thread: tuple[str, ...] = ()   # X replies posted under the main post, in order
 
     def text_sha256(self) -> str:
         return hashlib.sha256(self.text.encode("utf-8")).hexdigest()
@@ -226,8 +233,26 @@ def _manifest(directory: Path | None) -> dict[str, Any]:
         return {}
 
 
+def top25_thread(item: dict[str, Any]) -> tuple[str, ...]:
+    """The full 25 as replies under the graphic, each under X's limit, no links."""
+    rows = item.get("facts", {}).get("rows") or []
+    lines = ["%d. %s %.2f" % (r["rank"], content_engine.short(r["team"]), r["rating"])
+             for r in rows if isinstance(r.get("rating"), (int, float))]
+    replies, current = [], ""
+    for line in lines:
+        candidate = f"{current}\n{line}" if current else line
+        if len(candidate) > THREAD_LIMIT:
+            replies.append(current)
+            current = line
+        else:
+            current = candidate
+    if current:
+        replies.append(current)
+    return tuple(replies)
+
+
 def candidates(platform: str, queue: dict[str, Any], graphics: Path | None = None,
-               videos: Path | None = None) -> list[Post]:
+               videos: Path | None = None, assume_videos: bool = False) -> list[Post]:
     """Everything this platform could post now, most time-sensitive first."""
     order = {kind: i for i, kind in enumerate(PRIORITY)}
     items = sorted(queue.get("items", []),
@@ -237,7 +262,15 @@ def candidates(platform: str, queue: dict[str, Any], graphics: Path | None = Non
                   for e in _manifest(graphics).get("images", []) if e.get("item_key")}
         return [Post("x", item["key"], item["kind"], item["caption"],
                      images.get(item["key"]) if images.get(item["key"], Path()).is_file() else None,
-                     item["expires_at"]) for item in items]
+                     item["expires_at"],
+                     top25_thread(item) if item["kind"] == "power_top25" else ())
+                for item in items]
+    if platform == "tiktok" and assume_videos:
+        # Planning: which item would go next if its video were rendered.
+        import render_reels
+
+        return [Post("tiktok", item["key"], item["kind"], "", None, item["expires_at"])
+                for item in items if item["kind"] in render_reels.BUILDERS]
     if platform == "tiktok":
         clips = {e["item_key"]: e for e in _manifest(videos).get("videos", []) if e.get("item_key")}
         out = []
@@ -383,10 +416,12 @@ class XClient:
             raise DefinitiveError(f"X media processing failed: {info.get('error')}")
         return media_id
 
-    def post(self, text: str, media_id: str | None = None) -> str:
+    def post(self, text: str, media_id: str | None = None, reply_to: str | None = None) -> str:
         body: dict[str, Any] = {"text": text}
         if media_id:
             body["media"] = {"media_ids": [media_id]}
+        if reply_to:
+            body["reply"] = {"in_reply_to_tweet_id": reply_to}
         response = self._call("POST", f"{X_API}/tweets", json.dumps(body, ensure_ascii=False).encode(),
                               "application/json")
         payload = self._ok(response, "post")
@@ -564,6 +599,24 @@ def publish(platform: str, posts: list[Post], ledger: Ledger, client: Any, now: 
         ledger.record(post.key, post.kind, "success", _utc_now(),
                       **({"post_id": ref} if platform == "x" else {"publish_id": ref, "state": state}))
         print(f"[{platform}] {post.key}: sent ({ref}{', ' + state if state else ''})")
+        parent = ref
+        for index, reply in enumerate(post.thread, 1):
+            key = f"{post.key}#{index}"
+            ledger.record(key, THREAD_KIND, "attempting", _utc_now(),
+                          text_sha256=hashlib.sha256(reply.encode("utf-8")).hexdigest())
+            try:
+                parent = client.post(reply, reply_to=parent)
+            except AmbiguousError as exc:
+                ledger.record(key, THREAD_KIND, "ambiguous", _utc_now(), detail=exc)
+                print(f"[{platform}] {key}: outcome unknown -- {exc}", file=sys.stderr)
+                return 2
+            except DefinitiveError as exc:
+                # The post stands; a missing reply is noted, not retried blind.
+                ledger.record(key, THREAD_KIND, "failed", _utc_now(), detail=exc)
+                print(f"[{platform}] {key}: reply failed -- {exc}", file=sys.stderr)
+                return 1
+            ledger.record(key, THREAD_KIND, "success", _utc_now(), post_id=parent)
+            print(f"[{platform}] {key}: reply sent ({parent})")
     return 0
 
 
@@ -612,6 +665,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--post-id", help="the verified post/publish id, for --resolution success")
     parser.add_argument("--redirect-uri", help="tiktok-auth: the app's registered redirect URI")
     parser.add_argument("--code", help="tiktok-auth: the code from the redirect")
+    parser.add_argument("--ignore-schedule", action="store_true",
+                        help="post outside the weekly slots (manual runs only)")
+    parser.add_argument("--plan", action="store_true",
+                        help="print only the kind of the next post (for rendering just that)")
     args = parser.parse_args(argv)
 
     if args.platform == "tiktok-auth":
@@ -635,8 +692,19 @@ def main(argv: list[str] | None = None) -> int:
 
     queue = content_engine.build_queue(now, ROOT)
     posts = candidates(args.platform, queue, Path(args.graphics) if args.graphics else None,
-                       Path(args.videos) if args.videos else None)
+                       Path(args.videos) if args.videos else None, assume_videos=args.plan)
+    slot = None
+    if not args.ignore_schedule:
+        posts, slot = social_schedule.order(posts, now)
     chosen, reasons = select(posts, ledger, now)
+    if args.plan:
+        print(chosen[0].kind if chosen else "")
+        return 0
+    if slot is None and not args.ignore_schedule:
+        print(f"[{args.platform}] outside every posting slot; nothing to send.")
+        return 0
+    if slot is not None:
+        print(f"slot: {slot.name}")
     for reason in reasons:
         print(f"held: {reason}")
     if not chosen:
@@ -645,6 +713,8 @@ def main(argv: list[str] | None = None) -> int:
     for post in chosen:
         media = f" + {post.media.name}" if post.media else ""
         print(f"[{args.platform}] {post.key}{media}\n    {post.text}")
+        for reply in post.thread:
+            print("    \u21b3 " + reply.replace("\n", " / "))
     if not args.publish:
         print("Dry run: nothing was sent and the ledger was not changed.")
         return 0

@@ -1,16 +1,40 @@
 # Social publishing (X and TikTok)
 
-The weekly graphics workflow (`.github/workflows/social-graphics.yml`) builds
-this week's content queue, renders the studio PNGs and the TikTok MP4s, then
-hands them to `social_publish.py`. **By default nothing is sent**: every run
-prints a dry run of the one post each platform would make next.
+`.github/workflows/social-post.yml` runs once per posting slot. Each run
+builds the content queue, renders the studio PNGs and the one TikTok video it
+plans to send, then hands them to `social_publish.py`. **By default nothing is
+sent**: every run prints a dry run of the one post each platform would make.
+(`social-graphics.yml` still renders the full weekly set on Sunday and Tuesday
+as a downloadable artifact; it posts nothing.)
 
 | | X | TikTok |
 |---|---|---|
-| What is sent | One post per content item, with its studio graphic when there is one | One video per item, to the account's **inbox as a draft** |
+| What is sent | One post per content item, with its studio graphic when there is one; the Top 25 gets the full list as replies | One video per item, to the account's **inbox as a draft** |
 | Goes public | Immediately | Only when a person opens TikTok, adds a sound and posts |
 | Pace | 1 per run, ≥3 h apart, ≤3 per 24 h | 1 per run, ≥1 h apart, ≤3 per 24 h (TikTok allows 5 pending drafts) |
 | Ledger | `social/ledger_x.jsonl` | `social/ledger_tiktok.jsonl` |
+
+## The weekly schedule
+
+Slots are in US Eastern time (`social_schedule.py`); the cron times sit inside
+them in both EST and EDT, with room for GitHub's usual start delay.
+
+| When (Eastern) | Runs | Posts first |
+|---|---|---|
+| Sunday 18:00–24:00 | ~18:45 and ~23:00 | New power Top 25, then the ballot |
+| Monday 11:00–17:00 | ~12:00 and ~15:15 | Ballot, Top 25, bracketology |
+| Tuesday 11:00–17:00 | ~12:00 and ~15:15 | The receipts: scorecards, last week's upset calls |
+| Wednesday 11:00–17:00 | ~12:00 and ~15:15 | Research articles, basketball Top 25, bracketology |
+| Thursday 11:00–17:00 | ~12:00 and ~15:15 | The weekend slate, Upset Watch |
+| Friday 11:00–17:00 | ~12:00 and ~15:15 | Game of the Week, Upset Watch |
+| Saturday 08:00–13:00 | ~9:30 | Upset Watch before the first kickoff |
+
+(Times shown are EST; add an hour in daylight time.) A slot posts its own
+kinds first. Anything that would expire before its next slot is **urgent**
+and may go in any slot, so a Monday upset pick does not wait for Thursday.
+Off-season weeks produce no items and so no posts. Bracketology posts begin
+once the projection leaves its early phase. A manual run of the workflow can
+tick *ignore schedule* to post outside the slots; the caps still apply.
 
 ## Turning it on
 

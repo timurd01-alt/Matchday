@@ -1,0 +1,144 @@
+name: Post to X and TikTok on schedule
+
+# One run per posting slot (social_schedule.py, US Eastern). Each run posts
+# at most one item per platform: the slot's own kinds first, then anything
+# that would expire before its next slot. It renders only what it is about
+# to send: the studio PNGs for X (fast) and the one TikTok video planned.
+#
+#   * Dry run unless the repository variable SOCIAL_PUBLISHING is "on" and
+#     that platform's secrets exist (docs/SOCIAL_PUBLISHING.md).
+#   * TikTok receives drafts in the account's inbox, never public posts.
+#   * Commits only the publish ledgers (social/ledger_*.jsonl).
+#
+# Cron is UTC. Each time below falls inside its Eastern slot in both EST and
+# EDT, so the clock change needs no edit:
+#   23:45 Sun / 03:00 Mon   Sunday evening (18:45-23:00 Eastern), each
+#                           still inside the slot after a 30-minute delay
+#   17:00 / 20:15 M-F   weekday midday and afternoon
+#   14:30 Sat           Saturday morning, before the first kickoff
+on:
+  schedule:
+    - cron: '45 23 * * 0'
+    - cron: '0 3 * * 1'
+    - cron: '0 17 * * 1-5'
+    - cron: '15 20 * * 1-5'
+    - cron: '30 14 * * 6'
+  workflow_dispatch:
+    inputs:
+      ignore_schedule:
+        description: 'Post outside the weekly slots (still one per platform, still capped)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: matchday-social-post
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # the publish ledgers are committed back to main
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    env:
+      SCHEDULE_FLAG: ${{ inputs.ignore_schedule && '--ignore-schedule' || '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install the headless browser and encoder
+        run: |
+          python -m pip install playwright==1.63.0 imageio-ffmpeg==0.6.0
+          python -m playwright install --with-deps chromium
+
+      # Which TikTok video this slot would send, so only that one is encoded.
+      - name: Plan
+        id: plan
+        run: |
+          set -euo pipefail
+          kind=$(python social_publish.py tiktok --plan $SCHEDULE_FLAG)
+          echo "TikTok next: ${kind:-nothing}"
+          echo "tiktok_kind=$kind" >> "$GITHUB_OUTPUT"
+
+      - name: Render the graphics
+        run: python render_social.py --out out/graphics
+
+      - name: Render the planned video
+        if: ${{ steps.plan.outputs.tiktok_kind != '' }}
+        run: python render_reels.py --out out/videos --only "${{ steps.plan.outputs.tiktok_kind }}"
+
+      - name: Post to X
+        if: ${{ !cancelled() }}
+        env:
+          SOCIAL_PUBLISHING: ${{ vars.SOCIAL_PUBLISHING }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: |
+          set -euo pipefail
+          flag=""
+          if [ "${SOCIAL_PUBLISHING:-}" = "on" ] && [ -n "$X_API_KEY" ] && [ -n "$X_ACCESS_TOKEN" ]; then
+            flag="--publish"
+          else
+            echo "X: dry run (SOCIAL_PUBLISHING is not on, or X secrets are missing)"
+          fi
+          python social_publish.py x --graphics out/graphics $SCHEDULE_FLAG $flag
+
+      # TikTok rotates its refresh token on every use, so the replacement is
+      # written back to the TIKTOK_REFRESH_TOKEN secret with SOCIAL_SECRETS_PAT.
+      # Without that PAT the step stays a dry run instead of refreshing a
+      # token it could not save.
+      - name: Send a TikTok draft
+        if: ${{ !cancelled() }}
+        env:
+          SOCIAL_PUBLISHING: ${{ vars.SOCIAL_PUBLISHING }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
+          GH_TOKEN: ${{ secrets.SOCIAL_SECRETS_PAT }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          flag=""
+          ready="no"
+          if [ -n "$TIKTOK_CLIENT_KEY" ] && [ -n "$TIKTOK_REFRESH_TOKEN" ] && [ -n "$GH_TOKEN" ]; then
+            ready="yes"
+          fi
+          if [ "${SOCIAL_PUBLISHING:-}" = "on" ] && [ "$ready" = "yes" ]; then
+            flag="--publish"
+          else
+            echo "TikTok: dry run (SOCIAL_PUBLISHING is not on, or TikTok secrets / SOCIAL_SECRETS_PAT are missing)"
+          fi
+          python social_publish.py tiktok --videos out/videos $SCHEDULE_FLAG $flag
+
+      - name: Commit the publish ledgers
+        if: ${{ !cancelled() }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for ledger in social/ledger_x.jsonl social/ledger_tiktok.jsonl; do
+            if [ -f "$ledger" ]; then git add -- "$ledger"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "no publish attempts this run"
+            exit 0
+          fi
+          git commit -m "Record social publish attempts [skip ci]"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "ledger push attempt $attempt lost a race; rebasing against latest main"
+            if ! git pull --rebase --autostash origin main; then
+              git rebase --abort 2>/dev/null || true
+            fi
+          done
+          echo "::error::could not persist the publish ledgers after 3 attempts"
+          exit 1

@@ -328,5 +328,41 @@ class Determinism(unittest.TestCase):
         self.assertNotEqual(ce.digest(a), ce.digest(changed))
 
 
+def _bracket(**over):
+    field = [{"team_name": n, "seed": 1, "region": r, "overall_seed": i + 1}
+             for i, (n, r) in enumerate([("Duke Blue Devils", "East"), ("Florida Gators", "West"),
+                                         ("Houston Cougars", "South"), ("Purdue Boilermakers", "Midwest")])]
+    field.append({"team_name": "Iowa State Cyclones", "seed": 2, "region": "East", "overall_seed": 5})
+    doc = {"phase": "in_season", "calibrated": False, "build_id": "b1", "simulations": 10000,
+           "as_of": "2027-02-01T00:00:00Z", "valid_until": "2027-02-08T00:00:00Z", "field": field}
+    doc.update(over)
+    return doc
+
+
+class Bracketology(unittest.TestCase):
+    NOW = dt.datetime(2027, 2, 3, tzinfo=dt.timezone.utc)
+
+    def test_in_season_projection_names_the_one_seeds(self):
+        [item] = ce.bracketology(_bracket(), self.NOW, "bracketology_ncaam.json")
+        self.assertEqual(item.key, "bracketology:ncaam:b1")
+        self.assertIn("Projected No. 1 seeds: Duke (East), Florida (West), Houston (South), Purdue (Midwest)",
+                      item.caption)
+        self.assertIn("Beta projection", item.caption)
+        self.assertIn("not the NCAA selection committee", item.caveat)
+        self.assertEqual(item.expires_at, "2027-02-08T00:00:00Z")
+
+    def test_early_phase_mock_and_expired_say_nothing(self):
+        self.assertEqual(ce.bracketology(_bracket(phase="early"), self.NOW, "b"), [])
+        self.assertEqual(ce.bracketology(_bracket(mock=True), self.NOW, "b"), [])
+        self.assertEqual(ce.bracketology(_bracket(valid_until="2027-02-02T00:00:00Z"), self.NOW, "b"), [])
+        self.assertEqual(ce.bracketology(None, self.NOW, "b"), [])
+
+    def test_official_bracket_drops_the_beta_and_the_caveat(self):
+        [item] = ce.bracketology(_bracket(phase="official"), self.NOW, "b")
+        self.assertIn("Official No. 1 seeds", item.caption)
+        self.assertNotIn("Beta", item.caption)
+        self.assertIsNone(item.caveat)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -323,5 +323,64 @@ class Cli(Workspace):
         self.assertIn(".tiktok_token.json", ignore)
 
 
+class Thread(Workspace):
+    ITEM = {"kind": "power_top25", "key": "p", "caption": "c", "expires_at": "2026-11-08T00:00:00Z",
+            "facts": {"rows": [{"rank": i, "team": f"Team Number {i} Fighting Things", "rating": 40 - i}
+                               for i in range(1, 26)]}}
+
+    def test_thread_covers_all_25_under_the_limit(self):
+        replies = sp.top25_thread(self.ITEM)
+        self.assertGreaterEqual(len(replies), 2)
+        self.assertTrue(all(len(r) <= sp.THREAD_LIMIT for r in replies))
+        joined = "\n".join(replies)
+        for rank in range(1, 26):
+            self.assertIn(f"{rank}. Team Number {rank}", joined)
+        self.assertNotIn("http", joined)
+
+    def test_only_the_top_25_gets_a_thread(self):
+        queue = {"items": [self.ITEM, {"kind": "scorecard", "key": "s", "caption": "c",
+                                       "expires_at": "2026-11-08T00:00:00Z", "facts": {}}]}
+        posts = {p.key: p for p in sp.candidates("x", queue)}
+        self.assertTrue(posts["p"].thread)
+        self.assertEqual(posts["s"].thread, ())
+
+    def test_replies_chain_and_do_not_count_against_the_cap(self):
+        ids = (str(n) for n in range(100, 200))
+        fake = FakeTransport({("POST", "/tweets"): lambda: (201, {"data": {"id": next(ids)}})})
+        post = sp.candidates("x", {"items": [self.ITEM]})[0]
+        code = sp.publish("x", [post], self.ledger, sp.XClient(CREDS, transport=fake), NOW)
+        self.assertEqual(code, 0)
+        bodies = [json.loads(c[3]) for c in fake.calls]
+        self.assertNotIn("reply", bodies[0])
+        self.assertEqual(bodies[1]["reply"], {"in_reply_to_tweet_id": "100"})
+        self.assertEqual(bodies[2]["reply"], {"in_reply_to_tweet_id": "101"})
+        self.assertEqual(len(self.ledger.successes_since(NOW - dt.timedelta(days=1))), 1)
+
+    def test_a_failed_reply_leaves_the_post_standing(self):
+        answers = iter([(201, {"data": {"id": "100"}}), (403, {"detail": "no"})])
+        fake = FakeTransport({("POST", "/tweets"): lambda: next(answers)})
+        post = sp.candidates("x", {"items": [self.ITEM]})[0]
+        code = sp.publish("x", [post], self.ledger, sp.XClient(CREDS, transport=fake), NOW)
+        self.assertEqual(code, 1)
+        latest = self.ledger.latest()
+        self.assertEqual(latest["p"]["status"], "success")
+        self.assertEqual(latest["p#1"]["status"], "failed")
+        self.assertEqual(self.ledger.unresolved(), [])
+
+
+class Planning(Workspace):
+    def test_plan_names_a_video_kind_without_any_video_on_disk(self):
+        queue = {"items": [
+            {"kind": "article", "key": "a", "caption": "c", "expires_at": "2026-11-08T00:00:00Z"},
+            {"kind": "slate_preview", "key": "s", "caption": "c", "expires_at": "2026-11-08T00:00:00Z"}]}
+        posts = sp.candidates("tiktok", queue, assume_videos=True)
+        self.assertEqual([p.kind for p in posts], ["slate_preview"])
+
+    def test_outside_a_slot_the_cli_sends_nothing(self):
+        code = sp.main(["x", "--now", "2026-11-05T08:00:00Z", "--ledger-dir", str(self.dir)])
+        self.assertEqual(code, 0)
+        self.assertEqual(list(self.dir.iterdir()), [])
+
+
 if __name__ == "__main__":
     unittest.main()

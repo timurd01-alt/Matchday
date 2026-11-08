@@ -6,12 +6,10 @@ name: Render the week's graphics
 # attaches both to the run as artifacts, each with a manifest naming every
 # file's caption, source hash and expiry.
 #
-#   * Publishes only behind the kill switch. social_publish.py always prints
-#     the next post per platform; it sends only when the repository variable
-#     SOCIAL_PUBLISHING is "on" and that platform's secrets exist (see
-#     docs/SOCIAL_PUBLISHING.md). TikTok receives drafts, never public posts.
-#   * Commits only the publish ledgers (social/ledger_*.jsonl). Images and
-#     videos are 1-3 MB each; they live on the run, not in git.
+#   * Publishes nothing: this is the full weekly set for a person to look at.
+#     Scheduled posting is social-post.yml, which renders only what it sends.
+#   * Commits nothing. Images and videos are 1-3 MB each; they live on the
+#     run, not in git.
 #   * Says nothing when there is nothing to say: a stale handoff or a short
 #     slate renders no images and the job still succeeds.
 #
@@ -27,7 +25,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write   # the publish ledgers are committed back to main
+  contents: read
 
 jobs:
   render:
@@ -75,73 +73,3 @@ jobs:
           name: matchday-videos-${{ github.run_number }}
           path: out/videos
           retention-days: 21
-
-      # Dry run unless the kill switch is on and the credentials exist. One
-      # post per run; the ledger refuses repeats, late items and anything
-      # after an unknown outcome until it is resolved.
-      - name: Post to X
-        if: ${{ !cancelled() }}
-        env:
-          SOCIAL_PUBLISHING: ${{ vars.SOCIAL_PUBLISHING }}
-          X_API_KEY: ${{ secrets.X_API_KEY }}
-          X_API_SECRET: ${{ secrets.X_API_SECRET }}
-          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
-          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
-        run: |
-          set -euo pipefail
-          flag=""
-          if [ "${SOCIAL_PUBLISHING:-}" = "on" ] && [ -n "$X_API_KEY" ] && [ -n "$X_ACCESS_TOKEN" ]; then
-            flag="--publish"
-          else
-            echo "X: dry run (SOCIAL_PUBLISHING is not on, or X secrets are missing)"
-          fi
-          python social_publish.py x --graphics out/graphics $flag
-
-      # TikTok rotates its refresh token on every use, so the replacement is
-      # written back to the TIKTOK_REFRESH_TOKEN secret with SOCIAL_SECRETS_PAT.
-      # Without that PAT the step stays a dry run instead of refreshing a
-      # token it could not save.
-      - name: Send TikTok drafts
-        if: ${{ !cancelled() }}
-        env:
-          SOCIAL_PUBLISHING: ${{ vars.SOCIAL_PUBLISHING }}
-          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
-          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
-          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
-          GH_TOKEN: ${{ secrets.SOCIAL_SECRETS_PAT }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          flag=""
-          if [ "${SOCIAL_PUBLISHING:-}" = "on" ] && [ -n "$TIKTOK_CLIENT_KEY" ]              && [ -n "$TIKTOK_REFRESH_TOKEN" ] && [ -n "$GH_TOKEN" ]; then
-            flag="--publish"
-          else
-            echo "TikTok: dry run (SOCIAL_PUBLISHING is not on, or TikTok secrets / SOCIAL_SECRETS_PAT are missing)"
-          fi
-          python social_publish.py tiktok --videos out/videos $flag
-
-      - name: Commit the publish ledgers
-        if: ${{ !cancelled() }}
-        run: |
-          set -euo pipefail
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for ledger in social/ledger_x.jsonl social/ledger_tiktok.jsonl; do
-            if [ -f "$ledger" ]; then git add -- "$ledger"; fi
-          done
-          if git diff --cached --quiet; then
-            echo "no publish attempts this run"
-            exit 0
-          fi
-          git commit -m "Record social publish attempts [skip ci]"
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            echo "ledger push attempt $attempt lost a race; rebasing against latest main"
-            if ! git pull --rebase --autostash origin main; then
-              git rebase --abort 2>/dev/null || true
-            fi
-          done
-          echo "::error::could not persist the publish ledgers after 3 attempts"
-          exit 1
