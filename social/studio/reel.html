@@ -1,0 +1,23 @@
+<!doctype html>
+<!--
+  Matchday reels: vertical 1080x1920 videos in the studio's look, drawn frame
+  by frame. render_reels.py loads a spec with REEL.load(spec), then asks for
+  frames with REEL.frames(times) and encodes them to MP4. Nothing here plays
+  in real time; every frame is a pure function of t, so a render is
+  reproducible and never drops a frame.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Matchday reels</title>
+<style>
+@font-face{font-family:Matchday;src:url('matchday.ttf')}
+body{margin:0;background:#070a0f}
+canvas{display:block;width:540px;height:960px}
+</style>
+</head>
+<body>
+<canvas id="reel" width="1080" height="1920" aria-label="Video frame"></canvas>
+<script src="reel.js"></script>
+</body>
+</html>

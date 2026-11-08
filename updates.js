@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108A",
+  "tag": "Social",
+  "title": "TikTok videos from the week's data",
+  "items": [
+   "The weekly graphics job now also renders vertical 1080x1920 videos: a Top 25 countdown for football and basketball, the Top 5 games, Upset Watch, Game of the Week, and a receipts video with the record, the expected rate and the market comparison, plus last week's upset calls once they are settled.",
+   "Every number comes from the same sourced, expiring post items as the X drafts. Each video ends on a plain-language note, such as 'Forecasting, not betting advice'.",
+   "Videos have no audio, so a TikTok sound can be added in the app. Nothing is posted automatically."
+  ]
+ },
+ {
   "date": "Build 1107C",
   "tag": "Social",
   "title": "Weekly graphics render automatically",
