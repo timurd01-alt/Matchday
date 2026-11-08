@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108K",
+  "tag": "Fix",
+  "title": "Faster first visits to Games, Standings and Research",
+  "items": [
+   "Opening a tab for the first time is about 40% faster on the basketball board (about 0.2s down to 0.13s on average): Games and Conference standings now open in about half the time, and Research about 40% faster.",
+   "Clicking something on a page (opening a game, changing a filter) no longer makes every other tab rebuild on your next visit; tabs only rebuild when something they show has changed.",
+   "Research builds its full-season lists only when you open View all, and conference tables further down the Standings page are drawn as you scroll to them.",
+   "The Pick 'Em page keeps its header tag after the community picks load."
+  ]
+ },
+ {
   "date": "Build 1108J",
   "tag": "Fix",
   "title": "Social graphics find UConn's logo",
