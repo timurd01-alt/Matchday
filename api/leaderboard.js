@@ -296,6 +296,13 @@ export default async function handler(req, res) {
     if ((action === "consensus" || action === "activity") && req.method === "GET") {
       const comp = String(req.query.comp || "").toLowerCase();
       const payload = action === "consensus" ? await consensus(db, comp) : await activity(db, comp);
+      // These two reads are edge-cached and carry no credentials, so the cached
+      // copy must be identical for every origin. Vercel's edge cache does not
+      // key on Vary: Origin -- with an echoed origin, the first caller's origin
+      // (once http://localhost:8749) was served to every production visitor and
+      // every browser call failed CORS for the cache's lifetime. "*" is safe:
+      // the payload is public and the site never sends credentials here.
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
       return res.status(payload.ok ? 200 : 400).json(payload);
     }

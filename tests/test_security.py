@@ -118,6 +118,25 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertIn("PUBLIC_DATA_ORIGIN", leaderboard)
         self.assertNotIn("matchdayterminal.com", leaderboard)
 
+    def test_edge_cached_leaderboard_reads_never_echo_an_origin(self):
+        """A response with a shared-cache lifetime (s-maxage) is stored once at
+        Vercel's edge and served to every caller, and that cache does not key on
+        Vary: Origin. If it echoes the request origin, the first caller's origin
+        is what everyone gets -- on 2026-11-08 production visitors received
+        Access-Control-Allow-Origin: http://localhost:8749 and every consensus
+        and activity call failed CORS. Any shared-cached branch must send "*"."""
+        leaderboard = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        lines = leaderboard.splitlines()
+        cached = [i for i, line in enumerate(lines) if "s-maxage" in line]
+        self.assertTrue(cached, "expected the public reads to stay edge-cached")
+        for i in cached:
+            block = "\n".join(lines[max(0, i - 12):i + 1])
+            self.assertIn('res.setHeader("Access-Control-Allow-Origin", "*")', block,
+                          f"line {i + 1} sets s-maxage without a wildcard origin")
+        accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
+        self.assertNotIn("s-maxage", accounts)
+        self.assertIn('res.setHeader("Cache-Control", "no-store")', accounts)
+
     def test_security_headers_are_configured(self):
         config = (ROOT / "vercel.json").read_text(encoding="utf-8")
         for header in ("Content-Security-Policy", "X-Content-Type-Options",

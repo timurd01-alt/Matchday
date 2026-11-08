@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108G",
+  "tag": "Fix",
+  "title": "Community picks load again on the live site",
+  "items": [
+   "The community consensus and recent-activity panels were failing for every visitor: a cached copy of those responses had been stored for a local test address and was handed to the live site, so browsers refused it.",
+   "Those two public, cached responses now open to any page, so one shared cached copy works for everyone. Signed-in actions still answer only to the site itself."
+  ]
+ },
+ {
   "date": "Build 1108F",
   "tag": "Social",
   "title": "A weekly posting schedule for X and TikTok",
