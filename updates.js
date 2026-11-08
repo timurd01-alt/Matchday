@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108E",
+  "tag": "Fix",
+  "title": "Weekly update: video test skips without a local browser",
+  "items": [
+   "The TikTok video render check now skips, like the social graphics check, when this computer lacks the headless browser, so it can no longer stop the weekly update from publishing."
+  ]
+ },
+ {
   "date": "Build 1108D",
   "tag": "Fix",
   "title": "Desktop update buttons publish next week's picks on Sunday",

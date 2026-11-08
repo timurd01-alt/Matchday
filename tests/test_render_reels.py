@@ -19,6 +19,7 @@ import render_reels
 import render_social
 import trdlab_handoff
 from tests.test_content_engine import NOW, _handoff
+from tests.test_render_social import _browser_available
 
 STUDIO = render_social.STUDIO_DIR
 
@@ -140,8 +141,8 @@ class StudioAssets(unittest.TestCase):
         self.assertIn("+faststart", joined)
 
 
-@unittest.skipUnless(importlib.util.find_spec("playwright") and importlib.util.find_spec("imageio_ffmpeg"),
-                     "Playwright or imageio-ffmpeg is not installed")
+@unittest.skipUnless(_browser_available() and importlib.util.find_spec("imageio_ffmpeg"),
+                     "Playwright, its browser, or imageio-ffmpeg is not installed")
 class RealEncode(unittest.TestCase):
     def test_renders_a_playable_vertical_mp4(self):
         import os
