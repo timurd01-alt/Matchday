@@ -895,7 +895,31 @@ function tagPageHead(){
   head.classList.add('pageHead');
   head.insertAdjacentHTML('beforeend',`<small class="pageTag">${esc(tag)}</small>`);
 }
-function renderCurrent(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
+// A tab switch used to rebuild the view it opened from scratch every time --
+// Rankings and Research are thousands of nodes -- even when nothing it shows
+// had changed since the visitor last looked. Each view's last render is
+// stamped; setView() reuses the existing DOM while the stamp still holds.
+// Any other caller of renderCurrent() (data load, settings, language,
+// watchlist...) and any interaction inside the page bumps VIEW_EPOCH, which
+// invalidates every stamp, so a reused view is never behind its inputs.
+// The age limit bounds relative labels ("in 2h", "updated 5m ago"): one
+// minute for the views that count down to kickoff or show news ages, ten for
+// the tables and the bracket, which change only with their data.
+let VIEW_EPOCH=0;const VIEW_STAMPS=Object.create(null);
+const VIEW_REUSE_MS={groups:600000,standings:600000,bracket:600000,score:600000,results:600000,learn:600000};
+const VIEW_REUSE_DEFAULT_MS=60000;
+function invalidateViewStamps(){VIEW_EPOCH++}
+function viewIsReusable(v){
+  const stamp=VIEW_STAMPS[v],host=document.getElementById('view-'+v);
+  return !!(stamp&&host&&host.firstChild&&stamp.epoch===VIEW_EPOCH&&stamp.data===DATA&&stamp.lang===LANG&&stamp.sport===DATA_FILE&&Date.now()-stamp.at<(VIEW_REUSE_MS[v]||VIEW_REUSE_DEFAULT_MS));
+}
+function renderViewChrome(){renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
+function paintCurrentView(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();VIEW_STAMPS[VIEW]={epoch:VIEW_EPOCH,data:DATA,lang:LANG,sport:DATA_FILE,at:Date.now()};renderViewChrome()}
+function renderCurrent(){invalidateViewStamps();paintCurrentView()}
+// Clicks and edits inside the page can change state another view shows
+// (a Pick 'Em pick, a filter, a favourite), so they invalidate the stamps.
+// Nav clicks are the one exception -- they are what the reuse is for.
+['click','change','input','submit'].forEach(type=>document.addEventListener(type,e=>{if(!e.target?.closest?.('.navbtn[data-v]'))invalidateViewStamps()},true));
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -921,12 +945,43 @@ function viewDocTitle(v){
   const sport={ncaaf:'College Football',ncaam:'College Basketball'}[currentSportKey()]||'College';
   return `${sport} Pick 'Em · Matchday Terminal`;
 }
+// Older browsers (Safari before 18) would render a content-visibility-parked
+// view in full, so they keep display:none.
+const VIEW_PARK_DISPLAY=(()=>{try{return CSS.supports('content-visibility','hidden')?'block':'none'}catch(e){return 'none'}})();
 function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDocTitle(v)}catch(e){}if(typeof closeNavSheet==='function')closeNavSheet();
-  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();
+  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const reuse=viewIsReusable(v);
+  // Hidden views are parked with content-visibility:hidden rather than
+  // display:none. display:none discards every computed style in the view, so
+  // showing it again recalculated style and layout for the whole subtree
+  // (~500ms for Rankings on a full basketball board); a parked view keeps that
+  // rendering state and costs nothing while hidden. See .viewParked.
+  document.querySelectorAll('.view').forEach(el=>{const on=el.id==='view-'+v;el.classList.toggle('viewParked',!on);el.style.display=on?((v==='matches'||v==='results')?'grid':'block'):VIEW_PARK_DISPLAY});if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');if(reuse){captureSignalsIfFresh();renderViewChrome()}else paintCurrentView();
   // A new view opens at its top. The scroll position used to carry over from
   // the previous view, so the CFP bracket opened scrolled to the bottom.
   const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}
-  const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+  playViewEntrance($('#view-'+v))}
+// Same motion the .viewEntering class used to give, without its cost: the
+// class had to be removed, the layout forced (void offsetWidth) and the class
+// re-added, restyling every node in the view twice on each switch. Animations
+// on the view and its direct cards touch nothing else. Reduced motion skips it,
+// as the stylesheet's prefers-reduced-motion block did.
+// fill:'backwards' holds the start frame through a card's stagger delay and
+// then lets go: a forwards fill would leave an identity transform on the view
+// (a containing block for its fixed-position children) after the fade ended.
+function playViewEntrance(view){
+  if(!view||typeof view.animate!=='function')return;
+  try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){}
+  view.getAnimations().forEach(a=>a.cancel());
+  view.animate([{opacity:.5,transform:'translateY(5px)'},{opacity:1,transform:'none'}],{duration:160,easing:'ease-out',fill:'backwards'});
+  const typeIndex=Object.create(null);
+  for(const child of view.children){
+    const n=typeIndex[child.tagName]=(typeIndex[child.tagName]||0)+1;
+    if(!child.classList.contains('card'))continue;
+    child.getAnimations().forEach(a=>a.cancel());
+    // nth-of-type(2..6) were delayed 25ms apiece; later cards started at once.
+    child.animate([{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'none'}],{duration:200,easing:'ease-out',delay:n>=2&&n<=6?(n-1)*25:0,fill:'backwards'});
+  }
+}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
 // one the merged "All college" board showed. Each board now reads its own
@@ -991,7 +1046,7 @@ async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFi
   }
   applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='data unavailable';
   const notice='<div class="empty scLoadError"><b>Matchday data did not load.</b><br>Check your connection, then try again.<br><button class="actionbtn" type="button" onclick="load(true)">Retry loading</button></div>';
-  document.querySelectorAll('.view').forEach(view=>{view.innerHTML=notice;view.style.display=view.id==='view-'+VIEW?'block':'none'});
+  invalidateViewStamps();document.querySelectorAll('.view').forEach(view=>{view.innerHTML=notice;view.classList.remove('viewParked');view.style.display=view.id==='view-'+VIEW?'block':'none'});
   const alert=$('#alertBar');if(alert){alert.style.display='block';alert.textContent='The data connection failed. Use Retry loading below.'}
 }finally{if(loadSequence===LOAD_SEQUENCE){const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}}
 function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=setTimeout(()=>load(),Math.max(30,Number(SETTINGS.refresh)||60)*1000)}

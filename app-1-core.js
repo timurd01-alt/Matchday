@@ -46,22 +46,45 @@ function translateUiText(source,dict){
   if(dict[source])return dict[source];
   // Generated UI commonly combines a stable phrase with a number or timestamp.
   // Translate those known fragments without touching provider-owned content.
-  return Object.keys(dict).sort((a,b)=>b.length-a.length).reduce((out,key)=>
-    key.length>2?out.split(key).join(dict[key]):out,source);
+  return i18nFragmentKeys(dict).reduce((out,key)=>out.split(key).join(dict[key]),source);
 }
+// Sorting the whole dictionary used to happen once per text node, inside the
+// walk below -- thousands of sorts per tab switch for a translated page.
+const I18N_FRAGMENT_KEYS=new WeakMap();
+function i18nFragmentKeys(dict){
+  let keys=I18N_FRAGMENT_KEYS.get(dict);
+  if(!keys){keys=Object.keys(dict).filter(key=>key.length>2).sort((a,b)=>b.length-a.length);I18N_FRAGMENT_KEYS.set(dict,keys)}
+  return keys;
+}
+// True once any text node has been rewritten to another language, so a switch
+// back to English still restores them. Until then an English page (nearly
+// every visit) has nothing to translate or restore.
+let I18N_APPLIED=false;
 function applyStaticI18n(){
   const dict=(LANG&&window.MD_I18N&&MD_I18N[LANG])||{};
-  document.querySelectorAll('.navbtn .lbl,.navExternal .lbl').forEach(el=>{const en=el.getAttribute('data-en')||el.textContent.trim();el.setAttribute('data-en',en);el.textContent=dict[en]||en;});
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  document.querySelectorAll('.navbtn .lbl,.navExternal .lbl').forEach(el=>{const en=el.getAttribute('data-en')||el.textContent.trim();if(el.getAttribute('data-en')!==en)el.setAttribute('data-en',en);const label=dict[en]||en;if(el.textContent!==label)el.textContent=label;});
+  // Rewriting an unchanged label still replaces its text node and dirties layout.
+  if(document.documentElement.lang!==(LANG||'en'))document.documentElement.lang=LANG||'en';
+  // This walk visited every text node in the document -- every hidden view
+  // included -- with a closest() lookup each, on every tab switch: ~60% of
+  // a switch's script time while doing nothing at all in English.
+  if(!LANG&&!I18N_APPLIED)return;
+  // Hidden views are skipped: renderCurrent() rebuilds a view when it is
+  // shown and calls this again, so none is ever displayed untranslated.
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT,{acceptNode(node){
+    if(node.nodeType!==1)return NodeFilter.FILTER_ACCEPT;
+    if(node.tagName==='SCRIPT'||node.tagName==='STYLE'||(node.classList.contains('view')&&(node.style.display==='none'||node.classList.contains('viewParked'))))return NodeFilter.FILTER_REJECT;
+    return NodeFilter.FILTER_SKIP;
+  }});
   let node;
   while((node=walker.nextNode())){
-    if(node.parentElement?.closest('script,style,.navbtn,.navExternal,.nhead,.ndesc,.teamName,.modalName,.ins-match'))continue;
+    if(node.parentElement?.closest('.navbtn,.navExternal,.nhead,.ndesc,.teamName,.modalName,.ins-match'))continue;
     const raw=node.nodeValue||'',trimmed=raw.trim();if(!trimmed)continue;
     const en=node.__matchdayEnglish||trimmed;node.__matchdayEnglish=en;
     const translated=translateUiText(en,dict);
-    if(translated!==trimmed)node.nodeValue=raw.replace(trimmed,translated);
+    if(translated!==trimmed){node.nodeValue=raw.replace(trimmed,translated);if(LANG)I18N_APPLIED=true}
   }
-  document.documentElement.lang=LANG||'en';
+  if(!LANG)I18N_APPLIED=false;
 }
 function t(s){if(!LANG||!window.MD_I18N||!MD_I18N[LANG])return s;return translateUiText(s,MD_I18N[LANG]);}
 function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){};renderStrip();renderCurrent();renderInsight&&renderInsight();applyStaticI18n();renderAlerts();}
@@ -158,8 +181,9 @@ function applySportNav(){
   if(!allowed.includes(VIEW)||!activeButton||activeButton.style.display==='none')setView('matches');
 }
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
-function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
+function showMatchLoading(){if(typeof invalidateViewStamps==='function')invalidateViewStamps();const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
 function clearCompetitionViewsForLoad(){
+  if(typeof invalidateViewStamps==='function')invalidateViewStamps();
   ['groups','standings','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
 function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
