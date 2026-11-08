@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108I",
+  "tag": "Fix",
+  "title": "Social posts shorten team names correctly",
+  "items": [
+   "Post captions, graphics and videos drop the mascot from team names. A few came out wrong, such as 'Marquette Golden' for Marquette Golden Eagles, 'Army Black' for Army Black Knights, and Cincinnati keeping 'Bearcats'. The longest matching mascot now wins, and a leftover word like 'Golden' or 'Black' goes with it.",
+   "Schools whose mascot is not on the list keep their full name rather than being cut short."
+  ]
+ },
+ {
   "date": "Build 1108H",
   "tag": "Fix",
   "title": "Community picks: clear the stuck browser copy",

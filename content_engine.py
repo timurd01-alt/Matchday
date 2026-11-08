@@ -80,6 +80,13 @@ EXTRA_MASCOTS = (
     " Horned Frogs", " Sun Devils", " Beavers", " Buffaloes", " Gophers", " Golden Gophers",
     " Cornhuskers", " Hawkeyes", " Penguins", " Bonnies", " Hoyas", " Wolfpack", " Lobos", " Aztecs", " Gamecocks",
     " Mean Green", " Roadrunners", " Miners", " Hornets", " Monarchs", " Dukes",
+    " Bearcats", " Red Raiders", " Razorbacks", " Mustangs", " Pirates", " Owls",
+    " Ramblers", " Explorers", " Pilots", " Toreros", " Dons", " Waves", " Anteaters",
+    " Tritons", " Highlanders", " Matadors", " 49ers", " Bulls", " Blue Raiders",
+    " Hilltoppers", " Racers", " Salukis", " Redbirds", " Sycamores", " Panthers",
+    " Hawks", " Golden Grizzlies", " Phoenix", " Titans", " Vikings", " Norse",
+    " Mastodons", " Jaguars", " Paladins", " Spiders", " Rebels", " Volunteers",
+    " Commodores", " Seminoles", " Yellow Jackets", " Demon Deacons", " Orangemen",
 )
 # The handoff is rebuilt at least weekly by the Sunday ship. Past this it is
 # last week's news and nothing derived from it is posted.
@@ -200,13 +207,32 @@ def fit(text: str, limit: int = MAX_CAPTION) -> str:
 
 
 def short(name: object) -> str:
-    text = social_export.short_name(str(name or ""))
-    if text != str(name or ""):
-        return text
-    for mascot in sorted(EXTRA_MASCOTS, key=len, reverse=True):
+    """School name without its mascot, matching the longest mascot first.
+
+    Longest first across both lists: "Marquette Golden Eagles" ends with
+    " Eagles" too, and stripping that first leaves "Marquette Golden".
+    """
+    text = str(name or "")
+    for mascot in _MASCOTS:
         if text.endswith(mascot) and len(text) > len(mascot):
-            return text[: -len(mascot)]
+            school = text[: -len(mascot)]
+            # A two-word mascot whose first word is a colour or descriptor:
+            # "Army Black Knights" matches " Knights" and would leave "Army Black".
+            head, _, last = school.rpartition(" ")
+            if head and last in MASCOT_MODIFIERS:
+                return head
+            return school
     return text
+
+
+# Words that begin two-word mascots. "Green" is deliberately absent: Bowling
+# Green is a school, and Mean Green is listed whole.
+MASCOT_MODIFIERS = frozenset({
+    "Golden", "Black", "Blue", "Purple", "Fighting", "Red", "River", "Scarlet", "Yellow",
+    "Rainbow", "Thundering", "Demon", "Flying", "Sun", "Horned", "Nittany", "Mean", "Tar",
+    "Delta", "Ragin'", "Crimson",
+})
+_MASCOTS = tuple(sorted(set(social_export.MASCOTS) | set(EXTRA_MASCOTS), key=len, reverse=True))
 
 
 # --------------------------------------------------------------------------- item builders

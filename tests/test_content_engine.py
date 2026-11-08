@@ -255,6 +255,19 @@ class Captions(unittest.TestCase):
         self.assertEqual(ce.short("Ohio State Buckeyes"), "Ohio State")
         self.assertEqual(ce.short("Duke"), "Duke")
 
+    def test_the_longest_mascot_wins_and_no_half_mascot_is_left(self):
+        """Seen in a replayed week: "Marquette Golden" and "Cincinnati Bearcats"."""
+        cases = {
+            "Marquette Golden Eagles": "Marquette", "Cincinnati Bearcats": "Cincinnati",
+            "Army Black Knights": "Army", "North Dakota Fighting Hawks": "North Dakota",
+            "UMass Lowell River Hawks": "UMass Lowell", "Bowling Green Falcons": "Bowling Green",
+            "Tulsa Golden Hurricane": "Tulsa", "Miami Hurricanes": "Miami",
+            "Stanford Cardinal": "Stanford", "Louisville Cardinals": "Louisville",
+            "Alabama Crimson Tide": "Alabama", "Akron Zips": "Akron Zips",
+        }
+        for full, expected in cases.items():
+            self.assertEqual(ce.short(full), expected, full)
+
 
 PNG = base64.b64decode(ce.BLANK_PNG.split(",", 1)[1])
 
