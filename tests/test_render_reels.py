@@ -157,7 +157,12 @@ class RealEncode(unittest.TestCase):
             path = videos["upset_watch-ncaaf"]
             probe = subprocess.run([render_reels.ffmpeg_exe(), "-hide_banner", "-i", str(path)],
                                    capture_output=True, text=True).stderr
-        self.assertRegex(probe, r"Video: h264 .*yuv420p\(tv")
+        # yuv420p, never full-range yuvj420p/"(pc". The Windows ffmpeg build tags
+        # the range "(tv"; the Linux one leaves it untagged, which players read
+        # as TV range too, so only the full-range forms are refused.
+        self.assertRegex(probe, r"Video: h264 \(High\).*\byuv420p\(")
+        self.assertNotIn("yuvj420p", probe)
+        self.assertNotIn("yuv420p(pc", probe)
         self.assertIn("1080x1920", probe)
         seconds = render_reels.duration(specs[0])
         match = re.search(r"Duration: 00:00:(\d+\.\d+)", probe)
