@@ -338,7 +338,7 @@ def upset_watch(document: dict, now: dt.datetime, path: str) -> list[ContentItem
         caption=fit(f"Upset Watch: the model gives {short(lead['underdog'])} "
                     f"{_pct(lead['underdog_model_pct'])}; the market says "
                     f"{_pct(lead['underdog_market_pct'])}. "
-                    f"Would you take the dog? {url}"),
+                    f"Would you take the dog? Forecast, not betting advice. {url}"),
         caveat="Forecasting, not betting advice. " + _live_caveat(document),
     )]
 

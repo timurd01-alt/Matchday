@@ -1,5 +1,19 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-08 (social publishing returns, opt-in and off by default.
+social_publish.py posts to X through the official v2 API (OAuth 1.0a user
+context) and uploads videos to TikTok as inbox drafts through the Content
+Posting API (`video.upload` only; a person posts from the app). Every post is
+built from content_engine items: Matchday's own ratings, ballot, live model
+reads and graded record, plus one derived no-vig market percentage per game,
+the same user-facing analytic the site already shows. No provider feed, raw
+odds, ESPN statistics or ESPN content is posted. Team marks appear in graphics
+for identification under social/logos/README.md. Upset posts carry
+"Forecast, not betting advice". Publishing requires the SOCIAL_PUBLISHING
+repository variable set to "on"; credentials live only in GitHub secrets or a
+gitignored local token file. Re-check X's and TikTok's automation and
+developer terms before enabling it, and whenever posting volume changes.)
+
 Reviewed: 2026-11-06 (The Odds API game-odds fetch now requests the `us` bookmaker
 region instead of `eu` for college football and basketball. Same provider, same
 endpoint, same one credit per call; display and redistribution rules unchanged.)

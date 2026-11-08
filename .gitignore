@@ -55,4 +55,8 @@ independent_value_report.json
 research_posts.json
 posts/research-*.html
 .x_bot_state.json
+# TikTok rotates its refresh token on every use; social_publish.py keeps the
+# live one here on a local machine. A credential: never commit it.
+.tiktok_token.json
+.tiktok_token.json.tmp
 promotion_readiness.json
