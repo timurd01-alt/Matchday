@@ -182,7 +182,10 @@ async function submitDraft(){
 }
 async function commFetch(action,comp){
   if(!LEADERBOARD_URL)return null;
-  try{const r=await fetch(`${LEADERBOARD_URL}?action=${action}&comp=${encodeURIComponent(comp)}`);const d=await r.json();return d.ok?d:null}catch(e){return null}
+  // c=2: browsers that cached these URLs while the edge echoed a localhost
+  // origin keep that copy for good -- Vercel's 304 carries no Allow-Origin, so
+  // revalidation never replaces it. A new URL is a new cache entry.
+  try{const r=await fetch(`${LEADERBOARD_URL}?action=${action}&comp=${encodeURIComponent(comp)}&c=2`);const d=await r.json();return d.ok?d:null}catch(e){return null}
 }
 function commLoad(comp){
   const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp)return;COMM_FETCHED=stamp;

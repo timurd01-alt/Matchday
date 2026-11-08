@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108H",
+  "tag": "Fix",
+  "title": "Community picks: clear the stuck browser copy",
+  "items": [
+   "Browsers that had saved the broken community responses kept reusing them even after the fix, because a refresh check never replaced the saved copy. The site now asks for a fresh address, so those panels load for everyone without clearing anything."
+  ]
+ },
+ {
   "date": "Build 1108G",
   "tag": "Fix",
   "title": "Community picks load again on the live site",

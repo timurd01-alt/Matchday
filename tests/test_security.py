@@ -133,6 +133,11 @@ class DeploymentSecurityTests(unittest.TestCase):
             block = "\n".join(lines[max(0, i - 12):i + 1])
             self.assertIn('res.setHeader("Access-Control-Allow-Origin", "*")', block,
                           f"line {i + 1} sets s-maxage without a wildcard origin")
+        # Browsers that stored a bad copy keep it: Vercel's 304 carries no
+        # Allow-Origin, so revalidation never replaces the stored header. The
+        # client asks for a fresh URL; dropping the bust brings them back.
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        self.assertIn("&comp=${encodeURIComponent(comp)}&c=2`", views)
         accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
         self.assertNotIn("s-maxage", accounts)
         self.assertIn('res.setHeader("Cache-Control", "no-store")', accounts)
