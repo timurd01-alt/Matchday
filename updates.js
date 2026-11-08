@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108C",
+  "tag": "Fix",
+  "title": "Faster switching between tabs",
+  "items": [
+   "Moving between Games, Rankings, Research and the other tabs is about five times faster on a full basketball board (about 0.32s down to 0.07s on average; Rankings and Conference standings, the heaviest pages, went from 0.5s and 1.1s to about 0.15s and 0.12s).",
+   "A tab you come back to is shown as you left it instead of being rebuilt, unless its data has changed or something on the page has.",
+   "The translation pass no longer re-reads every word of every page on each switch when there is nothing to translate."
+  ]
+ },
+ {
   "date": "Build 1108B",
   "tag": "Social",
   "title": "X and TikTok publishers, off until switched on",
