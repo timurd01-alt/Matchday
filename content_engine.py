@@ -60,6 +60,7 @@ import hashlib
 import json
 import os
 import sys
+import unicodedata
 import urllib.parse
 from pathlib import Path
 from typing import Any
@@ -73,7 +74,7 @@ X_LINK_WEIGHT = 23
 # Basketball mascots social_export's football list does not carry. Matched as
 # whole trailing words, longest first, so "Iowa State Cyclones" -> "Iowa State".
 EXTRA_MASCOTS = (
-    " Golden Flashes", " Fighting Illini", " Tar Heels", " Blue Devils", " Gators",
+    " Ragin' Cajuns", " Warhawks", " Skyhawks", " Colonels", " Bearkats", " Great Danes", " Blue Hose", " Golden Flashes", " Fighting Illini", " Tar Heels", " Blue Devils", " Gators",
     " Cyclones", " Jayhawks", " Boilermakers", " Bluejays", " Red Storm", " Golden Eagles",
     " Gaels", " Zags", " Hokies", " Cavaliers", " Terrapins", " Orange", " Friars",
     " Musketeers", " Shockers", " Flyers", " Billikens", " Rams", " Mountaineers",
@@ -116,6 +117,30 @@ LOGO_DIR = Path(__file__).resolve().parent / "social" / "logos"
 # Studio-corrected artwork that wins over social/logos for the graphics only
 # (Iowa's committed mark is black, invisible on the studio's dark background).
 LOGO_OVERRIDE_DIR = Path(__file__).resolve().parent / "social" / "studio" / "logo-overrides"
+
+# Feeds name a school by its brand ("UConn", "App State", "UTSA"); the logo
+# files are named by the full school ("connecticut", "appalachianState"). Keys
+# are slugs of the mascot-less name, values are logo file stems. Prefix
+# matching cannot bridge these: "uconn" shares no prefix with "connecticut".
+LOGO_ALIASES = {
+    "uconn": "connecticut",
+    "appstate": "appalachianState",
+    "louisiana": "louisianaLafayette",
+    "ulmonroe": "louisianaMonroe",
+    "utsa": "texasSanAntonio",
+    "utmartin": "tennesseeMartin",
+    "mcneese": "mcNeeseState",
+    "nicholls": "nichollsState",
+    "samhouston": "samHoustonState",
+    "selouisiana": "southeasternLouisiana",
+    "thecitadel": "citadel",
+    "ualbany": "albany",
+    "grambling": "gramblingState",
+    "presbyterian": "presbyterianCollege",
+    "easttexasam": "eastTexasAAndM",
+    "sanjosestate": "sanJoseState",
+    "sanjosstate": "sanJoseState",  # "San Jos� State": an upstream decode lost the accent
+}
 # A 1x1 transparent PNG. The studio requires an image for every team; a team
 # with no committed artwork gets this and is listed in the edition's warnings.
 BLANK_PNG = (
@@ -601,6 +626,11 @@ def _logo_index(logo_dir: Path, override_dir: Path | None = None) -> dict[str, P
     return index
 
 
+def _ascii(text: str) -> str:
+    """Drop accents so "San José" and "San Jose" share one slug."""
+    return unicodedata.normalize("NFKD", str(text)).encode("ascii", "ignore").decode("ascii")
+
+
 def logo_for(team: str, index: dict[str, Path]) -> Path | None:
     """Exact match on full or mascot-less name first, then the *longest* prefix.
 
@@ -609,7 +639,8 @@ def logo_for(team: str, index: dict[str, Path]) -> Path | None:
     graphic gets the wrong school's logo.
     """
     for candidate in (team, short(team)):
-        hit = index.get(social_export._slug(candidate))
+        slug = social_export._slug(_ascii(candidate))
+        hit = index.get(slug) or index.get(social_export._slug(LOGO_ALIASES.get(slug, "")))
         if hit:
             return hit
     slug = social_export._slug(team)

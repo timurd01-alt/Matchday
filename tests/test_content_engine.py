@@ -331,6 +331,30 @@ class Studio(Workspace):
         missing = [t for t in TEAMS if ce.logo_for(t, index) is None]
         self.assertEqual(missing, [])
 
+    def test_brand_names_reach_the_full_school_logo(self):
+        # "UConn" shares no prefix with "connecticut", so only an alias finds it.
+        index = ce._logo_index(ce.LOGO_DIR)
+        cases = {
+            "UConn Huskies": "connecticut",
+            "App State Mountaineers": "appalachianState",
+            "Louisiana Ragin' Cajuns": "louisianaLafayette",
+            "UL Monroe Warhawks": "louisianaMonroe",
+            "UTSA Roadrunners": "texasSanAntonio",
+            "Sam Houston Bearkats": "samHoustonState",
+            "San José State Spartans": "sanJoseState",
+            "UAlbany Great Danes": "albany",
+            # aliases must not capture the schools they sit next to
+            "Washington Huskies": "washington",
+            "Louisiana Tech Bulldogs": "LouisianaTech",
+        }
+        for team, stem in cases.items():
+            with self.subTest(team=team):
+                self.assertEqual(ce.logo_for(team, index).stem, stem)
+
+    def test_every_alias_points_at_a_real_logo(self):
+        stems = {p.stem for p in ce.LOGO_DIR.glob("*.png")}
+        self.assertEqual(sorted(set(ce.LOGO_ALIASES.values()) - stems), [])
+
 
 class Determinism(unittest.TestCase):
     def test_digest_ignores_key_order_but_not_values(self):
