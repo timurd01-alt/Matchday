@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1108J",
+  "tag": "Fix",
+  "title": "Social graphics find UConn's logo",
+  "items": [
+   "UConn, App State, UTSA, UL Monroe, Sam Houston and about a dozen other schools that go by a short brand name now get their real logos on social graphics and videos instead of initials."
+  ]
+ },
+ {
   "date": "Build 1108I",
   "tag": "Fix",
   "title": "Social posts shorten team names correctly",
