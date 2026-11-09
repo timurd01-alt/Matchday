@@ -2,182 +2,200 @@
 // Every number here comes from trdlab_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF NOV 03",
+  "week": "WEEK OF NOV 09",
   "season": "2026 SEASON",
-  "published": "2026-11-01",
-  "generated_at": "2026-11-03T19:55:53Z",
+  "published": "2026-11-08",
+  "generated_at": "2026-11-09T02:11:53Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
     "Notre Dame": "logos/notreDame.png",
+    "Georgia Bulldogs": "logos/georgia.png",
+    "GEORGIA": "logos/georgia.png",
+    "Georgia": "logos/georgia.png",
     "Miami Hurricanes": "logos/miami.png",
     "MIAMI": "logos/miami.png",
     "Miami": "logos/miami.png",
+    "Alabama Crimson Tide": "logos/alabama.png",
+    "ALABAMA": "logos/alabama.png",
+    "Alabama": "logos/alabama.png",
     "Ohio State Buckeyes": "logos/ohioState.png",
     "OHIO STATE": "logos/ohioState.png",
     "Ohio State": "logos/ohioState.png",
     "Indiana Hoosiers": "logos/indiana.png",
     "INDIANA": "logos/indiana.png",
     "Indiana": "logos/indiana.png",
-    "Georgia Bulldogs": "logos/georgia.png",
-    "GEORGIA": "logos/georgia.png",
-    "Georgia": "logos/georgia.png",
-    "Alabama Crimson Tide": "logos/alabama.png",
-    "ALABAMA": "logos/alabama.png",
-    "Alabama": "logos/alabama.png",
-    "LSU Tigers": "logos/lsu.png",
-    "LSU": "logos/lsu.png",
-    "Ole Miss Rebels": "logos/oleMiss.png",
-    "OLE MISS": "logos/oleMiss.png",
-    "Ole Miss": "logos/oleMiss.png",
-    "Utah Utes": "logos/utah.png",
-    "UTAH": "logos/utah.png",
-    "Utah": "logos/utah.png",
     "Texas Longhorns": "logos/texas.png",
     "TEXAS": "logos/texas.png",
     "Texas": "logos/texas.png",
+    "Utah Utes": "logos/utah.png",
+    "UTAH": "logos/utah.png",
+    "Utah": "logos/utah.png",
     "Wake Forest Demon Deacons": "logos/wakeForest.png",
     "WAKE FOREST": "logos/wakeForest.png",
     "Wake Forest": "logos/wakeForest.png",
     "Oregon Ducks": "logos/oregon.png",
     "OREGON": "logos/oregon.png",
     "Oregon": "logos/oregon.png",
-    "Texas Tech Red Raiders": "logos/texasTech.png",
-    "TEXAS TECH": "logos/texasTech.png",
-    "Texas Tech": "logos/texasTech.png",
+    "LSU Tigers": "logos/lsu.png",
+    "LSU": "logos/lsu.png",
     "Tennessee Volunteers": "logos/tennessee.png",
     "TENNESSEE": "logos/tennessee.png",
     "Tennessee": "logos/tennessee.png",
+    "Ole Miss Rebels": "logos/oleMiss.png",
+    "OLE MISS": "logos/oleMiss.png",
+    "Ole Miss": "logos/oleMiss.png",
     "Iowa Hawkeyes": "logos/iowa.png",
     "IOWA": "logos/iowa.png",
     "Iowa": "logos/iowa.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
+    "TEXAS TECH": "logos/texasTech.png",
+    "Texas Tech": "logos/texasTech.png",
     "USC Trojans": "logos/usc.png",
     "USC": "logos/usc.png",
-    "Arizona Wildcats": "logos/arizona.png",
-    "ARIZONA": "logos/arizona.png",
-    "Arizona": "logos/arizona.png",
-    "Missouri Tigers": "logos/missouri.png",
-    "MISSOURI": "logos/missouri.png",
-    "Missouri": "logos/missouri.png",
-    "Houston Cougars": "logos/houston.png",
-    "HOUSTON": "logos/houston.png",
-    "Houston": "logos/houston.png",
     "Louisville Cardinals": "logos/louisville.png",
     "LOUISVILLE": "logos/louisville.png",
     "Louisville": "logos/louisville.png",
+    "Arizona Wildcats": "logos/arizona.png",
+    "ARIZONA": "logos/arizona.png",
+    "Arizona": "logos/arizona.png",
+    "Houston Cougars": "logos/houston.png",
+    "HOUSTON": "logos/houston.png",
+    "Houston": "logos/houston.png",
+    "Duke Blue Devils": "logos/duke.png",
+    "DUKE": "logos/duke.png",
+    "Duke": "logos/duke.png",
+    "UCLA Bruins": "logos/ucla.png",
+    "UCLA": "logos/ucla.png",
+    "BYU Cougars": "logos/byu.png",
+    "BYU": "logos/byu.png",
+    "South Carolina Gamecocks": "logos/southCarolina.png",
+    "SOUTH CAROLINA": "logos/southCarolina.png",
+    "South Carolina": "logos/southCarolina.png",
+    "Missouri Tigers": "logos/missouri.png",
+    "MISSOURI": "logos/missouri.png",
+    "Missouri": "logos/missouri.png",
     "Texas A&M Aggies": "logos/texasAM.png",
     "TEXAS A&M": "logos/texasAM.png",
     "Texas A&M": "logos/texasAM.png",
-    "Northwestern Wildcats": "logos/northwestern.png",
-    "NORTHWESTERN": "logos/northwestern.png",
-    "Northwestern": "logos/northwestern.png",
-    "BYU Cougars": "logos/byu.png",
-    "BYU": "logos/byu.png",
-    "Nebraska Cornhuskers": "logos/nebraska.png",
-    "NEBRASKA CORNHUSKERS": "logos/nebraska.png",
-    "UCLA Bruins": "logos/ucla.png",
-    "UCLA": "logos/ucla.png"
+    "Syracuse Orange": "logos/syracuse.png",
+    "SYRACUSE ORANGE": "logos/syracuse.png",
+    "Marshall Thundering Herd": "logos/marshall.png",
+    "MARSHALL": "logos/marshall.png",
+    "Marshall": "logos/marshall.png",
+    "Wichita State Shockers": "logos/wichitaState.png",
+    "WICHITA STATE SHOCKERS": "logos/wichitaState.png",
+    "Hawai'i Rainbow Warriors": "logos/hawaii.png",
+    "HAWAI'I": "logos/hawaii.png",
+    "Hawai'i": "logos/hawaii.png",
+    "UT Arlington Mavericks": "logos/utArlington.png",
+    "UT ARLINGTON MAVERICKS": "logos/utArlington.png",
+    "Charlotte 49ers": "logos/charlotte.png",
+    "CHARLOTTE 49ERS": "logos/charlotte.png",
+    "Seton Hall Pirates": "logos/setonHall.png",
+    "SETON HALL": "logos/setonHall.png",
+    "Seton Hall": "logos/setonHall.png"
   },
   "top25": [
     [
       "Notre Dame Fighting Irish",
-      40.49
-    ],
-    [
-      "Miami Hurricanes",
-      40.37
-    ],
-    [
-      "Ohio State Buckeyes",
-      39.84
-    ],
-    [
-      "Indiana Hoosiers",
-      38.44
+      41.01
     ],
     [
       "Georgia Bulldogs",
-      38.13
+      40.78
+    ],
+    [
+      "Miami Hurricanes",
+      40.26
     ],
     [
       "Alabama Crimson Tide",
-      36.75
+      38.5
     ],
     [
-      "LSU Tigers",
-      36.44
+      "Ohio State Buckeyes",
+      38.08
     ],
     [
-      "Ole Miss Rebels",
-      35.46
-    ],
-    [
-      "Utah Utes",
-      35.36
+      "Indiana Hoosiers",
+      37.9
     ],
     [
       "Texas Longhorns",
+      35.27
+    ],
+    [
+      "Utah Utes",
       35.03
     ],
     [
       "Wake Forest Demon Deacons",
-      33.24
+      34.96
     ],
     [
       "Oregon Ducks",
-      32.64
+      34.66
     ],
     [
-      "Texas Tech Red Raiders",
-      31.72
+      "LSU Tigers",
+      34.23
     ],
     [
       "Tennessee Volunteers",
-      31.35
+      33.24
+    ],
+    [
+      "Ole Miss Rebels",
+      32.12
     ],
     [
       "Iowa Hawkeyes",
-      30.89
+      31.69
+    ],
+    [
+      "Texas Tech Red Raiders",
+      30.31
     ],
     [
       "USC Trojans",
-      29.62
-    ],
-    [
-      "Arizona Wildcats",
-      29.39
-    ],
-    [
-      "Missouri Tigers",
-      29.23
-    ],
-    [
-      "Houston Cougars",
-      29.16
+      29.45
     ],
     [
       "Louisville Cardinals",
-      28.34
+      29.37
     ],
     [
-      "Texas A&M Aggies",
-      28.14
+      "Arizona Wildcats",
+      28.7
     ],
     [
-      "Northwestern Wildcats",
-      28.07
+      "Houston Cougars",
+      28.63
     ],
     [
-      "BYU Cougars",
-      28.02
-    ],
-    [
-      "Nebraska Cornhuskers",
-      27.95
+      "Duke Blue Devils",
+      28.52
     ],
     [
       "UCLA Bruins",
-      27.65
+      28.52
+    ],
+    [
+      "BYU Cougars",
+      28.1
+    ],
+    [
+      "South Carolina Gamecocks",
+      27.91
+    ],
+    [
+      "Missouri Tigers",
+      27.67
+    ],
+    [
+      "Texas A&M Aggies",
+      27.29
     ]
   ],
   "upset": {
@@ -192,38 +210,38 @@ window.MATCHDAY_SOCIAL = {
   "slate": [
     {
       "rank": 1,
-      "away": "MIAMI",
-      "home": "NOTRE DAME",
-      "time": "SAT · 7:30 PM ET",
-      "hook": "#2 vs #1"
+      "away": "SYRACUSE ORANGE",
+      "home": "INDIANA",
+      "time": "MON · 6:30 PM ET",
+      "hook": "RANKED #6 AT HOME"
     },
     {
       "rank": 2,
-      "away": "ALABAMA",
-      "home": "LSU",
-      "time": "SAT · 3:30 PM ET",
-      "hook": "#6 vs #7"
+      "away": "MARSHALL",
+      "home": "OHIO STATE",
+      "time": "MON · 6:00 PM ET",
+      "hook": "RANKED #5 AT HOME"
     },
     {
       "rank": 3,
-      "away": "GEORGIA",
-      "home": "OLE MISS",
-      "time": "SAT · 7:30 PM ET",
-      "hook": "#5 vs #8"
+      "away": "USC",
+      "home": "WICHITA STATE SHOCKERS",
+      "time": "SUN · 11:00 PM ET",
+      "hook": "RANKED #16 ON THE ROAD"
     },
     {
       "rank": 4,
-      "away": "OREGON",
-      "home": "OHIO STATE",
-      "time": "SAT · 3:30 PM ET",
-      "hook": "#12 vs #3"
+      "away": "UT ARLINGTON MAVERICKS",
+      "home": "HAWAI'I",
+      "time": "SUN · 11:00 PM ET",
+      "hook": "MON KICKOFF"
     },
     {
       "rank": 5,
-      "away": "TEXAS",
-      "home": "MISSOURI",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "#10 vs #18"
+      "away": "SETON HALL",
+      "home": "CHARLOTTE 49ERS",
+      "time": "MON · 12:00 AM ET",
+      "hook": "MON KICKOFF"
     }
   ]
 };
