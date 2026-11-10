@@ -2,10 +2,10 @@
 // Every number here comes from trdlab_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF NOV 09",
+  "week": "WEEK OF NOV 10",
   "season": "2026 SEASON",
-  "published": "2026-11-08",
-  "generated_at": "2026-11-09T02:11:53Z",
+  "published": "2026-11-09",
+  "generated_at": "2026-11-10T20:10:12Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
@@ -77,125 +77,108 @@ window.MATCHDAY_SOCIAL = {
     "Missouri": "logos/missouri.png",
     "Texas A&M Aggies": "logos/texasAM.png",
     "TEXAS A&M": "logos/texasAM.png",
-    "Texas A&M": "logos/texasAM.png",
-    "Syracuse Orange": "logos/syracuse.png",
-    "SYRACUSE ORANGE": "logos/syracuse.png",
-    "Marshall Thundering Herd": "logos/marshall.png",
-    "MARSHALL": "logos/marshall.png",
-    "Marshall": "logos/marshall.png",
-    "Wichita State Shockers": "logos/wichitaState.png",
-    "WICHITA STATE SHOCKERS": "logos/wichitaState.png",
-    "Hawai'i Rainbow Warriors": "logos/hawaii.png",
-    "HAWAI'I": "logos/hawaii.png",
-    "Hawai'i": "logos/hawaii.png",
-    "UT Arlington Mavericks": "logos/utArlington.png",
-    "UT ARLINGTON MAVERICKS": "logos/utArlington.png",
-    "Charlotte 49ers": "logos/charlotte.png",
-    "CHARLOTTE 49ERS": "logos/charlotte.png",
-    "Seton Hall Pirates": "logos/setonHall.png",
-    "SETON HALL": "logos/setonHall.png",
-    "Seton Hall": "logos/setonHall.png"
+    "Texas A&M": "logos/texasAM.png"
   },
   "top25": [
     [
       "Notre Dame Fighting Irish",
-      41.01
+      40.98
     ],
     [
       "Georgia Bulldogs",
-      40.78
+      40.75
     ],
     [
       "Miami Hurricanes",
-      40.26
+      40.24
     ],
     [
       "Alabama Crimson Tide",
-      38.5
+      38.47
     ],
     [
       "Ohio State Buckeyes",
-      38.08
+      38.05
     ],
     [
       "Indiana Hoosiers",
-      37.9
+      37.87
     ],
     [
       "Texas Longhorns",
-      35.27
+      35.24
     ],
     [
       "Utah Utes",
-      35.03
+      35.0
     ],
     [
       "Wake Forest Demon Deacons",
-      34.96
+      34.94
     ],
     [
       "Oregon Ducks",
-      34.66
+      34.63
     ],
     [
       "LSU Tigers",
-      34.23
+      34.2
     ],
     [
       "Tennessee Volunteers",
-      33.24
+      33.22
     ],
     [
       "Ole Miss Rebels",
-      32.12
+      32.09
     ],
     [
       "Iowa Hawkeyes",
-      31.69
+      31.66
     ],
     [
       "Texas Tech Red Raiders",
-      30.31
+      30.29
     ],
     [
       "USC Trojans",
-      29.45
+      29.43
     ],
     [
       "Louisville Cardinals",
-      29.37
+      29.35
     ],
     [
       "Arizona Wildcats",
-      28.7
+      28.68
     ],
     [
       "Houston Cougars",
-      28.63
+      28.61
     ],
     [
       "Duke Blue Devils",
-      28.52
+      28.5
     ],
     [
       "UCLA Bruins",
-      28.52
+      28.5
     ],
     [
       "BYU Cougars",
-      28.1
+      28.08
     ],
     [
       "South Carolina Gamecocks",
-      27.91
+      27.89
     ],
     [
       "Missouri Tigers",
-      27.67
+      27.65
     ],
     [
       "Texas A&M Aggies",
-      27.29
+      27.27
     ]
   ],
   "upset": {
@@ -210,38 +193,38 @@ window.MATCHDAY_SOCIAL = {
   "slate": [
     {
       "rank": 1,
-      "away": "SYRACUSE ORANGE",
-      "home": "INDIANA",
-      "time": "MON · 6:30 PM ET",
-      "hook": "RANKED #6 AT HOME"
+      "away": "TEXAS",
+      "home": "LSU",
+      "time": "SAT · 7:30 PM ET",
+      "hook": "#7 vs #11"
     },
     {
       "rank": 2,
-      "away": "MARSHALL",
-      "home": "OHIO STATE",
-      "time": "MON · 6:00 PM ET",
-      "hook": "RANKED #5 AT HOME"
+      "away": "USC",
+      "home": "INDIANA",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#16 vs #6"
     },
     {
       "rank": 3,
-      "away": "USC",
-      "home": "WICHITA STATE SHOCKERS",
-      "time": "SUN · 11:00 PM ET",
-      "hook": "RANKED #16 ON THE ROAD"
+      "away": "DUKE",
+      "home": "MIAMI",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "#20 vs #3"
     },
     {
       "rank": 4,
-      "away": "UT ARLINGTON MAVERICKS",
-      "home": "HAWAI'I",
-      "time": "SUN · 11:00 PM ET",
-      "hook": "MON KICKOFF"
+      "away": "UTAH",
+      "home": "ARIZONA",
+      "time": "SAT · 7:30 PM ET",
+      "hook": "#8 vs #18"
     },
     {
       "rank": 5,
-      "away": "SETON HALL",
-      "home": "CHARLOTTE 49ERS",
-      "time": "MON · 12:00 AM ET",
-      "hook": "MON KICKOFF"
+      "away": "MISSOURI",
+      "home": "GEORGIA",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#24 vs #2"
     }
   ]
 };
