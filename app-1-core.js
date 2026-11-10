@@ -379,7 +379,7 @@ function teamRecordText(team){
 // from a cache built before the row existed.
 function listCache(store,list,make){let hit=store.get(list);if(!hit||hit.length!==list.length){hit={length:list.length,value:make()};store.set(list,hit)}return hit.value}
 const TEAM_POWER_RANK_CACHE=new WeakMap();
-function teamPowerRank(name,comp){
+function teamPowerRank(name,comp,record){
   const key=String(comp||DATA.comp_key||currentSportKey()).toLowerCase();
   const table=key==='ncaam'
     ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
@@ -388,9 +388,25 @@ function teamPowerRank(name,comp){
   // Asked twice per fixture card, each a scan of every ranked team; the answer
   // is a pure function of the table and the name, so it is kept per table.
   let cache=listCache(TEAM_POWER_RANK_CACHE,rows,()=>new Map());
-  const label=String(name||'');if(cache.has(label))return cache.get(label);
+  const label=String(name||'')+'|'+String(record||'');if(cache.has(label))return cache.get(label);
   const exact=rows.find(row=>teamKey(row.name)===teamKey(name));
-  const matches=exact?[exact]:rows.filter(row=>bbNameMatches(row.name,name));
+  let matches=exact?[exact]:rows.filter(row=>bbNameMatches(row.name,name));
+  // The fixture feed's short name can open two ranked names: "LSU" is both
+  // "LSU Tigers" and "LSU New Orleans Privateers", "Purdue" both Purdue and
+  // Purdue Fort Wayne. Giving up there left LSU and Purdue with no rank in
+  // the expanded view while their opponents showed one. Prefer the name that
+  // adds the fewest words (school + mascot), then the one with this record.
+  if(matches.length>1){
+    // Whole words before abbreviations: "Jackson State" is Jackson State, not
+    // "Jacksonville State", which matches only because "jackson" opens it.
+    const words=bbNameWords(name);
+    const whole=matches.filter(row=>{const w=bbNameWords(row.name);return words.every((word,i)=>w[i]===word)});
+    if(whole.length)matches=whole;
+    const extra=row=>bbNameWords(row.name).length;
+    const fewest=Math.min(...matches.map(extra));
+    matches=matches.filter(row=>extra(row)===fewest);
+    if(matches.length>1&&record)matches=matches.filter(row=>String(row.record||'')===String(record));
+  }
   const rank=matches.length===1?Number(matches[0].rank):NaN;
   const answer=Number.isInteger(rank)&&rank>0?rank:null;
   cache.set(label,answer);return answer;
@@ -398,7 +414,7 @@ function teamPowerRank(name,comp){
 function teamStandingsMeta(team,comp,opts){
   opts=opts||{};
   const parts=[];
-  const rank=teamPowerRank(team?.name,comp);
+  const rank=teamPowerRank(team?.name,comp,teamRecordText(team));
   if(rank!=null)parts.push(`#${rank}`);
   if(usesTablePoints(comp)){
     const pts=Number(team?.pts);

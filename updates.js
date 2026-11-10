@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1109A",
+  "tag": "Fix",
+  "title": "Basketball ratings ignore non-Division I games; ranks and arrows restored",
+  "items": [
+   "Basketball ratings no longer count games against non-Division I schools. A 76-17 win over a Division II side was being read as a rout of an average Division I team, which put Louisiana Tech and Illinois State far too close to LSU and Purdue. Those games still count in each team's record. Tested on four past seasons: predictions in the first month improve by about a quarter of a point per game.",
+   "The expanded game view shows a power rank for both teams again. Names like LSU, Purdue, Texas and Kansas also match another school (LSU New Orleans, Purdue Fort Wayne), and the rank was left blank instead of picking the right one.",
+   "Football power-ranking movement arrows are back. A mid-week update had been measuring movement against the day before rather than the previous week.",
+   "Football win probabilities use a measured 17-point spread around the projected margin; the old fitted value had drifted wider every season, making every football probability too cautious."
+  ]
+ },
+ {
   "date": "Build 1108K",
   "tag": "Fix",
   "title": "Faster first visits to Games, Standings and Research",
