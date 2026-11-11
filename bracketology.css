@@ -130,4 +130,3 @@
 .bkTopScroll{overflow-x:auto;overflow-y:hidden;height:16px;margin:0 4px 4px}.bkTopScroll>div{height:1px}
 .bkGameMini .bkTeam b{font-size:14px}.bkGameMini .bkGameTeam,.bkGameMini .bkTeam{min-height:32px}.bkGameMini .bkSeed{font-size:12px}
 @media(max-width:600px){.bkPicker select{min-width:0;flex:1}}
-.bkBasis{flex-basis:100%;order:-1;padding:10px 12px;border:1px solid var(--bk-gold);border-radius:6px;background:#1b1a14;color:var(--text);line-height:1.5}.bkBasis b{color:var(--bk-gold)}

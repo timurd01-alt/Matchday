@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111B",
+  "tag": "Update",
+  "title": "Bracketology: the notice box is gone",
+  "items": [
+   "The gold notice box at the top of the Bracketology tab has been removed. The one fact it carried, where team strength comes from, is now a short line in the footer."
+  ]
+ },
+ {
   "date": "Build 1111A",
   "tag": "Fix",
   "title": "Bracketology: steadier odds and a truer bubble",
