@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1110C",
+  "tag": "Update",
+  "title": "Contact Matchday by email",
+  "items": [
+   "Replaced social links with email contact at timurd01@gmail.com, including corrections and privacy requests."
+  ]
+ },
+ {
   "date": "Build 1109A",
   "tag": "Fix",
   "title": "Basketball ratings ignore non-Division I games; ranks and arrows restored",

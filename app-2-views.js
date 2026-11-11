@@ -545,7 +545,7 @@ function modBallot(){
   }).join('');
   return `<section class="boardMod modBallot"><header><h3>Personal Ballot</h3><span>a person's ranking, not the model · ${esc(b.published_on||'')}</span></header>`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">Original post on X</a>.`:' Full résumés on the Rankings tab.'}</p></section>`;
+    +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')} Full résumés on the Rankings tab.</p></section>`;
 }
 /* Upsets: the season's results the price said should not have happened.
    Recent finals on their own say nothing about which results mattered, so the
