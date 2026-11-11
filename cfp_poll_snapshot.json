@@ -3,183 +3,183 @@
   "season": 2026,
   "source": "CFP selection committee via ESPN public rankings",
   "source_url": "https://collegefootballplayoff.com/rankings",
-  "published_on": "2026-11-03",
-  "fetched_on": "2026-11-08",
+  "published_on": "2026-11-10",
+  "fetched_on": "2026-11-11",
   "rankings": [
     {
       "rank": 1,
-      "name": "Miami Hurricanes",
-      "previous_rank": null,
-      "movement": null,
-      "record": "8-0"
-    },
-    {
-      "rank": 2,
       "name": "Georgia Bulldogs",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 3,
-      "name": "Utah Utes",
-      "previous_rank": null,
-      "movement": null,
-      "record": "8-0"
-    },
-    {
-      "rank": 4,
-      "name": "Indiana Hoosiers",
-      "previous_rank": null,
-      "movement": null,
+      "previous_rank": 2,
+      "movement": 1,
       "record": "8-1"
     },
     {
-      "rank": 5,
+      "rank": 2,
+      "name": "Utah Utes",
+      "previous_rank": 3,
+      "movement": 1,
+      "record": "9-0"
+    },
+    {
+      "rank": 3,
       "name": "Alabama Crimson Tide",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 6,
-      "name": "Kentucky Wildcats",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 7,
-      "name": "Texas Longhorns",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 8,
-      "name": "UCLA Bruins",
-      "previous_rank": null,
-      "movement": null,
-      "record": "8-0"
-    },
-    {
-      "rank": 9,
-      "name": "BYU Cougars",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 10,
-      "name": "Ole Miss Rebels",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 11,
-      "name": "Notre Dame Fighting Irish",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 12,
-      "name": "Ohio State Buckeyes",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 13,
-      "name": "Tennessee Volunteers",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 14,
-      "name": "LSU Tigers",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 15,
-      "name": "Texas Tech Red Raiders",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 16,
-      "name": "Wake Forest Demon Deacons",
-      "previous_rank": null,
-      "movement": null,
-      "record": "7-1"
-    },
-    {
-      "rank": 17,
-      "name": "Houston Cougars",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 18,
-      "name": "Missouri Tigers",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 19,
-      "name": "Iowa Hawkeyes",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
-    },
-    {
-      "rank": 20,
-      "name": "USC Trojans",
-      "previous_rank": null,
-      "movement": null,
+      "previous_rank": 5,
+      "movement": 2,
       "record": "7-2"
     },
     {
-      "rank": 21,
+      "rank": 4,
+      "name": "UCLA Bruins",
+      "previous_rank": 8,
+      "movement": 4,
+      "record": "9-0"
+    },
+    {
+      "rank": 5,
+      "name": "Notre Dame Fighting Irish",
+      "previous_rank": 11,
+      "movement": 6,
+      "record": "8-1"
+    },
+    {
+      "rank": 6,
+      "name": "Texas Longhorns",
+      "previous_rank": 7,
+      "movement": 1,
+      "record": "7-2"
+    },
+    {
+      "rank": 7,
+      "name": "Miami Hurricanes",
+      "previous_rank": 1,
+      "movement": -6,
+      "record": "8-1"
+    },
+    {
+      "rank": 8,
+      "name": "Tennessee Volunteers",
+      "previous_rank": 13,
+      "movement": 5,
+      "record": "7-2"
+    },
+    {
+      "rank": 9,
+      "name": "Indiana Hoosiers",
+      "previous_rank": 4,
+      "movement": -5,
+      "record": "8-1"
+    },
+    {
+      "rank": 10,
+      "name": "BYU Cougars",
+      "previous_rank": 9,
+      "movement": -1,
+      "record": "7-2"
+    },
+    {
+      "rank": 11,
+      "name": "Kentucky Wildcats",
+      "previous_rank": 6,
+      "movement": -5,
+      "record": "7-2"
+    },
+    {
+      "rank": 12,
+      "name": "Texas Tech Red Raiders",
+      "previous_rank": 15,
+      "movement": 3,
+      "record": "8-1"
+    },
+    {
+      "rank": 13,
+      "name": "Wake Forest Demon Deacons",
+      "previous_rank": 16,
+      "movement": 3,
+      "record": "8-1"
+    },
+    {
+      "rank": 14,
+      "name": "Houston Cougars",
+      "previous_rank": 17,
+      "movement": 3,
+      "record": "7-2"
+    },
+    {
+      "rank": 15,
+      "name": "Iowa Hawkeyes",
+      "previous_rank": 19,
+      "movement": 4,
+      "record": "7-2"
+    },
+    {
+      "rank": 16,
+      "name": "Oregon Ducks",
+      "previous_rank": 23,
+      "movement": 7,
+      "record": "6-3"
+    },
+    {
+      "rank": 17,
       "name": "South Carolina Gamecocks",
-      "previous_rank": null,
-      "movement": null,
-      "record": "5-3"
+      "previous_rank": 21,
+      "movement": 4,
+      "record": "6-3"
+    },
+    {
+      "rank": 18,
+      "name": "USC Trojans",
+      "previous_rank": 20,
+      "movement": 2,
+      "record": "7-2"
+    },
+    {
+      "rank": 19,
+      "name": "Ole Miss Rebels",
+      "previous_rank": 10,
+      "movement": -9,
+      "record": "6-3"
+    },
+    {
+      "rank": 20,
+      "name": "Ohio State Buckeyes",
+      "previous_rank": 12,
+      "movement": -8,
+      "record": "6-3"
+    },
+    {
+      "rank": 21,
+      "name": "LSU Tigers",
+      "previous_rank": 14,
+      "movement": -7,
+      "record": "6-3"
     },
     {
       "rank": 22,
-      "name": "Arizona Wildcats",
-      "previous_rank": null,
-      "movement": null,
-      "record": "6-2"
+      "name": "Missouri Tigers",
+      "previous_rank": 18,
+      "movement": -4,
+      "record": "6-3"
     },
     {
       "rank": 23,
-      "name": "Oregon Ducks",
-      "previous_rank": null,
-      "movement": null,
-      "record": "5-3"
+      "name": "Arizona Wildcats",
+      "previous_rank": 22,
+      "movement": -1,
+      "record": "7-2"
     },
     {
       "rank": 24,
-      "name": "Florida Gators",
-      "previous_rank": null,
-      "movement": null,
-      "record": "5-3"
+      "name": "Boise State Broncos",
+      "previous_rank": 25,
+      "movement": 1,
+      "record": "8-1"
     },
     {
       "rank": 25,
-      "name": "Boise State Broncos",
+      "name": "Oklahoma State Cowboys",
       "previous_rank": null,
       "movement": null,
-      "record": "7-1"
+      "record": "6-3"
     }
   ]
 }
