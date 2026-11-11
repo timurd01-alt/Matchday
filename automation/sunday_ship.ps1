@@ -17,7 +17,7 @@
 # .worktrees/sunday-ship, reset to origin/main each run. If anything fails
 # before the push, nothing is published and the last good site stays up.
 # The owner's ballot is published here only when the owner has written this
-# week's file (Desktop button "Edit My Ballot"): TRDLab/ballots/ncaaf/<Sunday>.txt.
+# week's file (Desktop buttons "Edit My Ballot - ..."): TRDLab/ballots/<ncaaf|ncaam>/<Sunday>.txt.
 # No file means last week's ballot stays up; nothing is ever invented.
 param(
     [Alias('SigmaLab')][string]$TRDLab = '',
@@ -147,13 +147,15 @@ try {
         }
         Run 'upset settle' $TRDLab $PythonPath @('-m','trdlab','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $TRDLab $PythonPath @('-m','trdlab','upset','publish','--as-of',$asOf) -Soft
-        # The owner's ballot, dated this week's Sunday, if one has been written.
-        if ($Sport -ne 'ncaam') {
+        # The owner's ballots, dated this week's Sunday, for each sport being
+        # shipped that has one written (Desktop "Edit My Ballot" buttons).
         $ballotDay = (Get-Date).Date.AddDays(-[int](Get-Date).DayOfWeek).ToString('yyyy-MM-dd')
-        $ballotFile = Join-Path $TRDLab (Join-Path 'ballots' (Join-Path 'ncaaf' "$ballotDay.txt"))
-        if (Test-Path $ballotFile) {
-            Run "ballot publish ($ballotDay)" $TRDLab $PythonPath @('-m','trdlab','ballot','publish',$ballotFile,'--date',$ballotDay) -Soft
-        } else { Say "   no ballot file for $ballotDay; last week's ballot stays up" }
+        foreach ($ballotSport in @('ncaaf','ncaam')) {
+            if ($Sport -ne 'both' -and $Sport -ne $ballotSport) { continue }
+            $ballotFile = Join-Path $TRDLab (Join-Path 'ballots' (Join-Path $ballotSport "$ballotDay.txt"))
+            if (Test-Path $ballotFile) {
+                Run "$ballotSport ballot publish ($ballotDay)" $TRDLab $PythonPath @('-m','trdlab','ballot','publish',$ballotFile,'--sport',$ballotSport,'--date',$ballotDay) -Soft
+            } else { Say "   no $ballotSport ballot file for $ballotDay; last week's ballot stays up" }
         }
         Run 'matchday export' $TRDLab $PythonPath @('-m','trdlab','matchday','export','--sport','ncaaf','--sport','ncaam','--out','trdlab_picks.json')
     }

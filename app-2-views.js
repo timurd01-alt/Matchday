@@ -516,8 +516,14 @@ const MATCHDAY_PERSONAL_CFB_BALLOT={
   rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
 };
 function collegeBallot(){
+  const comp=String(DATA.comp_key||'').toUpperCase();
+  // Basketball has its own ballot and no X fallback: none published, none shown.
+  if(comp==='NCAAM'){
+    const m=typeof MATCHDAY_TRDLAB_BALLOT_NCAAM!=='undefined'?MATCHDAY_TRDLAB_BALLOT_NCAAM:null;
+    return m?.available&&(m.rankings||[]).length?m:null;
+  }
   const b=typeof MATCHDAY_TRDLAB_BALLOT!=='undefined'?MATCHDAY_TRDLAB_BALLOT:null;
-  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF')return null;
+  if(comp!=='NCAAF')return null;
   if(b?.available&&(b.rankings||[]).length)return b;
   return MATCHDAY_PERSONAL_CFB_BALLOT;
 }

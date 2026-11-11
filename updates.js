@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1110D",
+  "tag": "Update",
+  "title": "A personal basketball ballot",
+  "items": [
+   "The basketball Rankings tab can now show a personal Top 25 ballot, separate from the model's power ratings, the same way college football does.",
+   "Basketball ballots are judged on the basketball numbers: an 11-point margin spread, a 3.2-point home edge, and bad losses counted below the top 100."
+  ]
+ },
+ {
   "date": "Build 1110C",
   "tag": "Update",
   "title": "Contact Matchday by email",

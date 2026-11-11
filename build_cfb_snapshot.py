@@ -395,6 +395,12 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_TRDLAB_BALLOT="
                   + json.dumps((document.get("ballots") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
+    # The basketball ballot, cast from its own desktop button. {} until the
+    # first one, so the basketball Rankings tab shows no ballot rather than
+    # the football one.
+    blocks.append("  const MATCHDAY_TRDLAB_BALLOT_NCAAM="
+                  + json.dumps((document.get("ballots") or {}).get("ncaam") or {},
+                               ensure_ascii=False) + ";")
 
     blocks.append("  const MATCHDAY_TRDLAB_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
