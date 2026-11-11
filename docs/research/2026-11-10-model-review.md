@@ -66,3 +66,39 @@ The engineering is careful. No leakage was found, locks are append-only, CFB is 
 - NCAAM is ten days of November, dominated by mismatches.
 - Raw-model numbers exist only from 09-27, so September's damage is visible only in the published blend.
 - The home-edge fallback is inferred from the stored payload values and the code path, not from a log line.
+
+## Follow-up (same day): corrections, and what was done about it
+
+Detailed notes and scripts are in the engine: `docs/research/2026-11-10-ncaaf-replay-vs-market.md` and `docs/research/2026-11-10-hoops-early-season.md`.
+
+### Corrections to the findings above
+- **Finding 3 described the past.** Late and stale locks were fixed in the engine on 11-06 and 11-08. On 11-10 and 11-11, 1 of 100 basketball locks was written late and the median forecast was 8-15 minutes old at the deadline. The season-long totals are right; the "make the pre-lock refresh run" recommendation was already done.
+- **Finding 4 was wrong about scope.** It was not one Saturday. No stored football rating set before 11-08 carried a home edge, so cards used the basketball default (3.5 points) all season. The payload label read 2.42 only because it was computed with a basketball tempo. Fixed on 11-08 and covered by a test. This also explains most of finding 5's home lean in the published record.
+- **Finding 2, detail.** The baseline was voided by an edit to `hoops/ratings.py` at 16:20 local and then `poll.py` at 20:50, not by `hoops/cli.py`.
+
+### Football: today's procedure replayed over 2026
+Method: each Monday the production ratings are solved from earlier results and project the next 7 days, with the production tier and quarterback adjustments, sigma 17. 564 FBS-vs-FBS games, 454 with a lock-time market price. Not out of sample: the prior settings were tuned partly on 2026.
+
+| | n | Replay Brier | Market Brier | Difference (95% CI) |
+|---|---|---|---|---|
+| All priced | 454 | 0.1873 | 0.1784 | +0.0089 (+0.0024 to +0.0150) |
+| Weeks 1-5 | 146 | 0.1390 | 0.1237 | +0.0153 (+0.0095 to +0.0230) |
+| Weeks 6-9 | 197 | 0.2124 | 0.2123 | +0.0001 (-0.0075 to +0.0055) |
+| Weeks 10+ | 111 | 0.2062 | 0.1903 | +0.0159 (-0.0147 to +0.0247) |
+| Weeks 6+ together | 308 | | 0.2044 | +0.0058 (-0.0028 to +0.0138) |
+
+- Opposite sides of the market: 2-14 in weeks 1-5, 15-17 after.
+- From October the model is statistically level with the market. The point estimate is still behind.
+- Expressed as margins, the model's disagreement with the market averages 3.5 points, and from week 6 on none of it shows up in results (share -0.01; 0 means the market was right on average).
+- Two calibration changes were tested and rejected. Dropping the fitted intercept makes 2022-25 home games 0.7-2.1 points too low. A fixed FBS-only calibration won on the 2024-25 holdout (Brier -0.0018, -0.0033 to -0.0004) but not on the 2026 replay (+0.0004, -0.0013 to +0.0025; margin MAE +0.24).
+
+### Basketball: a real early-season effect, registered as an experiment
+- Walk-forward, 2024-25 and 2025-26: before mid-January home teams beat the projection by 4.3 points (4,365 games) and projected gaps are too small (slope 1.23-1.28). After mid-January both vanish (5,245 home games, shortfall 0.0), and neutral sites show neither.
+- A calibration fitted on one season and scored on the other: Brier -0.0018 (-0.0031 to -0.0006) backward, -0.0009 (-0.0023 to +0.0005) forward. The forward interval includes zero, so under the significant-or-research rule it is not applied.
+- Registered as `ncaam-early-season-calibration-v1` (slope 1.264, +2.83 home points, sigma 14.25, games before 2027-01-15). It is scored straight from scorecard locks; decision at 600 games.
+- Exploratory, not in the cohort: on the 36 priced games forecast since 11-09, candidate Brier 0.1268, market 0.1297, production 0.1361.
+
+### Changed in the engine
+- Basketball forecasts now store the model probability, the market at forecast time and the neutral flag, as football does. Published numbers are unchanged.
+- Football baseline refrozen as `ncaaf-2026-11-10` (`fd58b812e420`) after the full suite passed.
+- Not changed: the forecast modules were not split by sport. The edits that voided the last baseline were in rating code both sports share, so a split would not have prevented it.
