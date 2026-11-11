@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111C",
+  "tag": "Fix",
+  "title": "Basketball rankings: movement arrows corrected",
+  "items": [
+   "The arrows in the basketball power ratings compared this week's list of 357 teams with an earlier list of more than 430, so almost every team showed a climb and the last-place team read as up 72.",
+   "Movement is now measured among the teams ranked this week, for both the week-over-week and since-preseason arrows. Football was already consistent and is unchanged."
+  ]
+ },
+ {
   "date": "Build 1111B",
   "tag": "Update",
   "title": "Bracketology: the notice box is gone",
