@@ -1,7 +1,7 @@
 # Bracketology review: how the tab's odds are made, and four faults (2026-11-11)
 
-**Status:** review only. Nothing changed. Three fixes are proposed; one of them replaces an
-owner rule, so none was applied.
+**Status:** all four fixes applied 2026-11-11 (see the last section). Written as a review; one fix replaces an
+owner rule, which the owner approved.
 **Scripts and full notes:** engine `docs/research/2026-11-11-bracketology-*`.
 **Read:** `hoops/bracketology.py`, `simulate.py`, `committee.py`, `bracket.py`, `resume.py`,
 `bracketology_contract.py`; Matchday `app-bracketology.js`; the published
@@ -89,3 +89,20 @@ Fix: send an enum the page knows and add the "as drawn" wording.
   (`2026-11-10-hoops-early-season.md`), so 3.2 is the nearer of the two.
 - `calibrated` is false in the file, correctly: no stored test compares these odds with
   outcomes before Selection Sunday.
+
+## Applied 2026-11-11 (owner approved all four)
+Engine `0c6ed34`, site Build 1111A. The football baseline `ncaaf-2026-11-10` still matches: none of these files is in its fingerprint.
+
+1. **Rating basis.** `simulate.blended_power`: this season's box scores solved against the preseason prior, the same construction as the pick ratings (it matches the stored pick ratings to 0.12 points SD). This replaces the 2026-11-06 rule (preseason until 10 games, then this season only). The résumé is still this season only.
+2. **Last four in.** `bracketology.last_in_below_other_at_large` moves them below every other at-large team before seed lines are dealt.
+3. **Rating drift.** The bracket play-out gives each team a strength offset of 4.5 points at the opener, shrinking with the square root of the season remaining to 0 on Selection Sunday (4.36 on 11-10).
+4. **Label.** `odds_basis` is now the key `season_unconditional_rounds_as_drawn`; the tab prints the as-drawn sentence and a blended-strength line.
+
+Effect on the 11-11 rebuild against the 11-10 file:
+- 16 of 68 teams changed. Two to three games move the pick rating a long way for some teams (Missouri +9.3 points, LSU +8.8, TCU +7.0, Illinois +6.7; Oklahoma -4.5), and the old bracket ignored those games entirely. The preseason projection itself is unchanged (0.30 points SD against the stored 11-01 set).
+- One seeds: Duke, Illinois, Florida, Texas (were Duke, Florida, UConn, Texas Tech).
+- Duke's title chance 18.1% -> 14.6%; top eight share 75% -> 64%.
+- Play-in at-large teams are overall seeds 39-42, below the lowest bye at 38.
+- Sums still hold: 68.00 make-field, 32.00 auto bids, 1.000 title.
+
+Expect more week-to-week movement in November than before; that is the rating reacting to results, and it is the version that predicted better in the walk-forward.
