@@ -102,3 +102,13 @@ Method: each Monday the production ratings are solved from earlier results and p
 - Basketball forecasts now store the model probability, the market at forecast time and the neutral flag, as football does. Published numbers are unchanged.
 - Football baseline refrozen as `ncaaf-2026-11-10` (`fd58b812e420`) after the full suite passed.
 - Not changed: the forecast modules were not split by sport. The edits that voided the last baseline were in rating code both sports share, so a split would not have prevented it.
+
+## Follow-up 2 (2026-11-11): the September football gap
+Engine notes: `docs/research/2026-11-11-ncaaf-september-gap.md`. No change and no experiment.
+
+- Data: 1,317 FBS-vs-FBS games from weeks 1-6 of 2022-2026, each projected by today's procedure from earlier results, with every team's preseason facts attached. 187 of the 2026 games have a lock-time market price.
+- Against results, no pregame fact improves the September margin with a season held out: preseason rating, in-season update, talent, recruiting, returning share, quarterback, home field, programme history. Reacting faster or slower to the first games is significantly worse (Brier +0.0013, +0.0005 to +0.0021).
+- The market's 2026 disagreement lines up with programme history (R2 0.31 in weeks 1-3) and talent (0.17). Used as diagnosis only.
+- Programme history put inside the preseason rating and re-solved (1,042 games, 2023-26): projections move 0.41 points on average, Brier -0.0001 (-0.0006 to +0.0004), and the 2026 gap to the market is unchanged (+0.0119 to +0.0116). Rejected as immaterial.
+- First-year head coaches finish 1.16 points below the preseason rating (-2.35 to +0.05; 102 cases) against +0.62 for continuing coaches. The coach table only holds coaches still in the job, so this is a lead, not a test.
+- Reading: the model is about 4 points per game from the market in September, and nothing in the database explains more than a few tenths of it. What is missing is news: camp and depth-chart reports, injuries, staff changes.
