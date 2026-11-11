@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111A",
+  "tag": "Fix",
+  "title": "Bracketology: steadier odds and a truer bubble",
+  "items": [
+   "The bracket now plays out the rest of the season on the same team ratings as the game picks: the preseason projection, updated by every game played. It used to ignore this season's games until teams had played ten, then ignore the preseason entirely. Tested on the last two seasons, the combined rating predicts games better at every stage.",
+   "The last four teams in are now the four lowest at-large seeds, as on the committee's own list. Before, a play-in game could sit on the 9 line above teams with byes.",
+   "Title and round odds now allow for how much teams change between November and March. The early favourite's title chance drops from about 18% to about 15%, and the allowance shrinks to nothing by Selection Sunday.",
+   "The page now says what its odds assume: field and seed odds cover the whole season, while round and title odds are for the bracket as drawn."
+  ]
+ },
+ {
   "date": "Build 1110D",
   "tag": "Update",
   "title": "A personal basketball ballot",
