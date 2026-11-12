@@ -1200,10 +1200,10 @@ function renderMatches(){const M=DATA.matches||[];
 let _seasonFinalsCache=null;
 function seasonFinalMatches(M){
   const comp=String(DATA.comp_key||'').toLowerCase();
-  // Basketball only. Football's feed carries its own season, and its archive's
-  // handoff-seeded rows truncate FCS names ("Indiana" for Indiana State), which
-  // would publish results that never happened. Revisit once that is repaired.
-  if(comp!=='ncaam')return [];
+  // Both sports. Football was held back (Build 1112R) while its handoff-seeded
+  // rows cut FCS names to an FBS school ("Indiana" for Indiana State); those
+  // rows were corrected and the backfill fixed in Build 1112T.
+  if(comp!=='ncaam'&&comp!=='ncaaf')return [];
   const archived=(window.MATCHDAY_TEAM_FORM&&window.MATCHDAY_TEAM_FORM[comp])||[];
   if(!archived.length||typeof bbNameMatches!=='function')return [];
   const c=_seasonFinalsCache;

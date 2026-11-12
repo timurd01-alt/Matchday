@@ -6,7 +6,7 @@ already on disk or freely downloadable without a key:
 
   college        college_ncaa{m,f}_bundle_v*_cache.json  NCAAM / NCAAF seasons
   data           data_*.json                             the current build payloads
-  handoff        trdlab_picks.json -> results         every final this season
+  handoff        trdlab_picks.json -> results         every football final this season
 
 Every one of those files was already paid for by a previous run. Re-reading them costs
 nothing, which matters because the providers that hold this history are exactly
@@ -131,17 +131,100 @@ def _short_names(comp: str) -> list[str]:
     return sorted(names)
 
 
+# The word after a school's name that makes it a *different* school: "Texas"
+# + "Southern Tigers", "Alabama" + "State Hornets", "Utah" + "Tech Trailblazers",
+# "North Carolina" + "A&T Aggies". A mascot never starts with one of these, so
+# a pipeline name followed by one is the prefix of another school, not that
+# school with its mascot appended. Compared after `_normalize`, so "A&M" is
+# "am", "A&T" is "at" and "St." is "st".
+_SCHOOL_QUALIFIERS = frozenset({
+    "state", "st", "tech", "am", "at", "southern", "northern", "eastern", "western",
+    "central", "christian", "baptist", "poly", "international", "city", "valley",
+    "methodist", "wesleyan", "lutheran", "gulf", "coast", "southeastern",
+    "southwestern", "northeastern", "northwestern", "upstate", "mountain",
+})
+
+
+def _tokens(name: Any) -> list[str]:
+    import trdlab_handoff as handoff
+    return [token for token in (handoff._normalize(part) for part in str(name or "").split()) if token]
+
+
+def _short_for(full: Any, shorts: Sequence[str]) -> str | None:
+    """The pipeline's name for the handoff team `full`, or None if none fits.
+
+    A pipeline name fits only when its words are the leading *words* of `full`
+    and what follows reads as a mascot. Matching on characters, as this once
+    did, let "Texas" claim "Texas Southern Tigers" and "Utah" claim "Utah Tech
+    Trailblazers": the FCS school is absent from the pipeline's name list, so
+    the longest compatible prefix was the FBS school sharing its first word,
+    and a game against an FCS opponent was archived as a game against the FBS
+    one (Build 1112T).
+    """
+    words = str(full or "").split()
+    full_tokens = _tokens(full)
+    best: tuple[int, str] | None = None
+    for short in shorts:
+        short_tokens = _tokens(short)
+        if not short_tokens or full_tokens[:len(short_tokens)] != short_tokens:
+            continue
+        if len(short_tokens) < len(full_tokens):
+            following = full_tokens[len(short_tokens)]
+            raw = _raw_word_after(words, len(short_tokens))
+            if following in _SCHOOL_QUALIFIERS or raw.startswith("(") or "-" in raw:
+                continue
+        if best is None or len(short_tokens) > best[0]:
+            best = (len(short_tokens), short)
+    return best[1] if best else None
+
+
+def _raw_word_after(words: list[str], token_count: int) -> str:
+    """The raw word holding normalized token number `token_count` (0-based)."""
+    seen = 0
+    for word in words:
+        if not _tokens(word):
+            continue
+        if seen == token_count:
+            return word
+        seen += 1
+    return ""
+
+
+def handoff_name_map(full_names: Iterable[Any], shorts: Sequence[str]) -> dict[str, str]:
+    """Map every handoff team name to the name it is archived under.
+
+    A name with no fitting pipeline name keeps its full form. So does every
+    name in a set that would land on the *same* pipeline name: two schools
+    cannot both be "Alabama", and with no way to tell which one is, archiving
+    the full names is a cosmetic cost while guessing would record a game that
+    never happened.
+    """
+    names = sorted({str(name) for name in full_names if name})
+    proposed = {name: _short_for(name, shorts) for name in names}
+    claims: dict[str, int] = {}
+    for short in proposed.values():
+        if short:
+            claims[short] = claims.get(short, 0) + 1
+    return {name: (short if short and claims[short] == 1 else name) for name, short in proposed.items()}
+
+
 def source_handoff() -> list[dict[str, Any]]:
-    """Season finals from the engine's handoff (`trdlab_picks.json` -> results).
+    """Season football finals from the engine's handoff (`trdlab_picks.json` -> results).
 
     The handoff carries every final of the season, while `data_*.json` only
     holds the display window, so this is what covers the weeks before the
-    hourly archive hook was committed. Its event ids are CFBD/CBBD ids, the
-    same scheme the pipeline archives under, so `game_id` dedupes against
-    `record_build()` rows. It names teams with the mascot appended; each name
-    is mapped to the pipeline's short name by the longest compatible prefix
-    (so "Michigan State Spartans" is not taken as "Michigan"), and kept as-is
-    when no pipeline name matches.
+    hourly archive hook was committed. Its event ids are ESPN's. For football
+    those are also CFBD's ids, the scheme the pipeline archives under, so
+    `game_id` dedupes against `record_build()` rows. It names teams with the
+    mascot appended; `handoff_name_map` maps each name to the pipeline's short
+    name and keeps it as-is when no pipeline name fits.
+
+    Basketball is skipped on purpose. CBBD numbers its games itself (377909
+    where ESPN says 401920982), so a handoff NCAAM row can never dedupe
+    against the pipeline's, and archiving them put 523 ESPN-id rows beside
+    CBBD's in 2026-27 -- two providers in one season, 308 games stored twice
+    (Build 1112T). The pipeline's own hook now archives the whole fetched
+    season instead of the display window, which is the gap this was filling.
     """
     import trdlab_handoff as handoff
 
@@ -149,34 +232,36 @@ def source_handoff() -> list[dict[str, Any]]:
     if not isinstance(document, dict):
         print("  - no handoff present; skipping")
         return []
+    results = [result for result in document.get("results") or []
+               if str(result.get("competition") or "").upper() in HANDOFF_COMPETITIONS]
     rows: list[dict[str, Any]] = []
-    shorts: dict[str, list[tuple[str, str]]] = {}
-    for result in document.get("results") or []:
+    names: dict[str, dict[str, str]] = {}
+    for result in results:
         comp = str(result.get("competition") or "").upper()
-        if comp not in ("NCAAF", "NCAAM"):
-            continue
-        if comp not in shorts:
-            shorts[comp] = [(handoff._normalize(name), name) for name in _short_names(comp)]
-
-        def short(name: Any) -> str:
-            key = handoff._normalize(name)
-            fits = [(len(k), n) for k, n in shorts[comp] if handoff._compatible(k, key)]
-            return max(fits)[1] if fits else str(name or "")
-
+        if comp not in names:
+            names[comp] = handoff_name_map(
+                (r.get(side) for r in results
+                 if str(r.get("competition") or "").upper() == comp for side in ("home", "away")),
+                _short_names(comp))
         match = {
             "id": result.get("event_id"),
             "provider_id": result.get("event_id"),
             "kickoff": result.get("kickoff"),
             "status": "FINISHED",
             "score": {"home": result.get("home_score"), "away": result.get("away_score")},
-            "home": {"name": short(result.get("home"))},
-            "away": {"name": short(result.get("away"))},
+            "home": {"name": names[comp].get(str(result.get("home") or ""), str(result.get("home") or ""))},
+            "away": {"name": names[comp].get(str(result.get("away") or ""), str(result.get("away") or ""))},
         }
         normalized = game_archive.normalize_match(comp, match, source=comp.lower())
         if normalized:
             rows.append(normalized)
     print(f"  {handoff.DEFAULT_HANDOFF_PATH}: {len(rows)} finished")
     return rows
+
+
+# Competitions whose handoff event ids are the pipeline's own ids. See
+# `source_handoff` for why NCAAM is not one of them.
+HANDOFF_COMPETITIONS = frozenset({"NCAAF"})
 
 
 SOURCES: dict[str, Callable[[], list[dict[str, Any]]]] = {
@@ -224,12 +309,20 @@ def _precedence(source: str) -> int:
     return SOURCE_PRECEDENCE.get(source, _DEFAULT_PRECEDENCE)
 
 
-def resolve_overlaps(rows: Iterable[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[str]]:
+def resolve_overlaps(rows: Iterable[dict[str, Any]],
+                     archived: Callable[[str, str], Iterable[dict[str, Any]]] | None = None,
+                     ) -> tuple[list[dict[str, Any]], list[str]]:
     """Keep one provider per (competition, season). Returns (kept, notes).
 
     Scoped to the season rather than the whole competition on purpose: a source
     that covers only older seasons must not be discarded wholesale because
     another covers the current one.
+
+    `archived(comp, season)` returns the rows already on disk for a season.
+    They take part in choosing the season's provider but are never returned:
+    this decides what may be *added*. Without them the choice only saw one
+    run's rows, so an hourly run of a single source always found one provider
+    and resolved nothing, however many the season already held.
     """
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = {}
     for row in rows:
@@ -244,15 +337,23 @@ def resolve_overlaps(rows: Iterable[dict[str, Any]]) -> tuple[list[dict[str, Any
             # Deduped here as well as below, so a provider's row count reflects
             # distinct games and cannot be inflated by appearing in two caches.
             by_provider.setdefault(provider, {})[str(row["game_id"])] = row
-        if len(by_provider) == 1:
+        on_disk = {canonical_source(row.get("source"))
+                   for row in (archived(comp, season) if archived else ())}
+        providers = set(by_provider) | on_disk
+        if len(providers) == 1:
             kept.extend(next(iter(by_provider.values())).values())
             continue
-        winner = min(by_provider, key=lambda name: (_precedence(name), name))
-        kept.extend(by_provider[winner].values())
+        winner = min(providers, key=lambda name: (_precedence(name), name))
+        kept.extend(by_provider.get(winner, {}).values())
         dropped = {name: len(items) for name, items in by_provider.items() if name != winner}
-        notes.append(f"{comp} {season}: kept {len(by_provider[winner])} from {winner!r}; "
-                     f"dropped duplicates {dropped}")
+        if dropped:
+            notes.append(f"{comp} {season}: kept {len(by_provider.get(winner, {}))} from {winner!r}; "
+                         f"dropped duplicates {dropped}")
     return kept, notes
+
+
+def _archived_season(comp: str, season: str) -> list[dict[str, str]]:
+    return game_archive.read_partition(game_archive.partition_path("games", comp, season))
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -273,7 +374,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print("\nnothing to archive")
         return 0
 
-    resolved, notes = resolve_overlaps(collected)
+    resolved, notes = resolve_overlaps(collected, _archived_season)
     if notes:
         print("\noverlapping sources resolved:")
         for note in notes:

@@ -1588,6 +1588,11 @@ def fetch_college_bundle():
     # Retain the complete licensed season only in memory for local aggregate
     # model training; the public dashboard still receives the bounded window.
     adapter._model_history = all_matches + list(bundle.get("history") or [])
+    # The whole fetched season, for the game archive. The display window below
+    # keeps only the 40 most recent finals, so on a 150-game basketball night
+    # the archive saw a quarter of the slate and the rest was never recorded
+    # under the pipeline's own ids (Build 1112T).
+    adapter._season_matches = all_matches
     st = {norm(name): row for name, row in (bundle.get("standings_model") or {}).items()}
     tables = bundle.get("tables") or []
     if COMP_KEY == "NCAAM":
@@ -2377,7 +2382,10 @@ def build():
     # Archive the finished games before the payload that holds them is
     # overwritten. Costs no provider call -- these were already fetched -- and
     # record_build() swallows its own errors so the deploy never fails here.
-    archived = game_archive.record_build(COMP_KEY, matches, source_provider or "")
+    # The whole fetched season, not just the display window: a final that has
+    # scrolled out of the window is still a final the archive does not have.
+    season_matches = list(getattr(sports_adapter, "_season_matches", None) or [])
+    archived = game_archive.record_build(COMP_KEY, season_matches + list(matches), source_provider or "")
     if archived.get("added"):
         DIAG.append(f"archive: +{archived['added']} finished game(s) for {COMP_KEY}")
     if archived.get("conflicts"):

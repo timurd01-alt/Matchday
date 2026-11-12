@@ -95,6 +95,10 @@ CONFLICTS_PATH = ARCHIVE_ROOT / "conflicts.jsonl"
 
 # Only these are archived. LIVE and UPCOMING rows carry a score that is not the
 # final one, and writing them would defeat the whole point of a settled record.
+# Competitions in which a final of 0-0 cannot happen (overtime decides every
+# college football and basketball game).
+SCORELESS_IMPOSSIBLE = {"NCAAF", "NCAAM"}
+
 FINISHED_STATUSES = {"FINISHED", "FT", "FINAL", "COMPLETED", "AET", "PEN"}
 
 GAME_FIELDS: tuple[str, ...] = (
@@ -266,6 +270,11 @@ def normalize_match(comp: str, match: dict[str, Any], source: str = "") -> dict[
     home_score, away_score = score.get("home"), score.get("away")
     if home_score is None or away_score is None:
         return None
+    if comp.upper() in SCORELESS_IMPOSSIBLE and int(home_score) == 0 and int(away_score) == 0:
+        # A placeholder, not a result: CBBD has reported unplayed games as
+        # FINISHED 0-0. Archived, it would be settled, and the real score
+        # refused as a revision when it arrived.
+        return None
     home_name, away_name = str(home.get("name") or ""), str(away.get("name") or "")
     if not home_name or not away_name:
         return None
@@ -418,6 +427,60 @@ def _load(root: Path, comp: str | None, season: str | None) -> list[dict[str, st
     return rows
 
 
+def _name_tokens(name: Any) -> tuple[str, ...]:
+    import unicodedata
+    text = unicodedata.normalize("NFKD", str(name or ""))
+    text = "".join(ch for ch in text if not unicodedata.combining(ch)).lower()
+    return tuple(token for token in (re.sub(r"[^a-z0-9]+", "", part) for part in text.split()) if token)
+
+
+def _same_team(one: Any, other: Any) -> bool:
+    a, b = _name_tokens(one), _name_tokens(other)
+    shorter, longer = sorted((a, b), key=len)
+    return bool(shorter) and longer[:len(shorter)] == shorter
+
+
+def cross_id_duplicates(rows: Iterable[dict[str, Any]], window_hours: float = 36,
+                        ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
+    """Games stored twice under two ids. A game id dedupes one provider's rows;
+    it cannot see the same game reported by two providers, each under its own
+    id and its own team naming. That is the failure the one-provider-per-season
+    rule exists for, and labels alone cannot catch it: 2026-27 NCAAM held 308
+    such pairs while every row's source resolved to the same provider, because
+    the handoff's ESPN-id rows were labelled like the CBBD bundle's.
+
+    Same final score in the same orientation, kickoffs within `window_hours`,
+    and at least one side's name matching word for word (one name's words
+    leading the other's) -- the naming differs across providers ("Saint
+    Joseph's Long Island" against "St. Joseph's Long Island Golden Eagles"), so
+    both sides are not required.
+    """
+    by_score: dict[tuple[str, str], list[tuple[_dt.datetime, dict[str, Any]]]] = {}
+    for row in rows:
+        try:
+            when = _dt.datetime.fromisoformat(str(row.get("date_utc") or "").replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=_dt.timezone.utc)
+        key = (str(row.get("home_score")), str(row.get("away_score")))
+        by_score.setdefault(key, []).append((when, row))
+    found: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    window = _dt.timedelta(hours=window_hours)
+    for games in by_score.values():
+        games.sort(key=lambda item: item[0])
+        for index, (when, row) in enumerate(games):
+            for later, other in games[index + 1:]:
+                if later - when > window:
+                    break
+                if str(row.get("game_id")) == str(other.get("game_id")):
+                    continue
+                if (_same_team(row.get("home_name"), other.get("home_name"))
+                        or _same_team(row.get("away_name"), other.get("away_name"))):
+                    found.append((row, other))
+    return found
+
+
 def validate() -> dict[str, Any]:
     """Check every partition for the damage that would make the archive untrustworthy.
 
@@ -453,6 +516,10 @@ def validate() -> dict[str, Any]:
                         problems.append(f"{where}: unparseable {field} {row.get(field)!r}")
                 if not _is_finished(row.get("status")):
                     problems.append(f"{where}: archived a non-final status {row.get('status')!r}")
+            problems.extend(
+                f"{partition.as_posix()}: same game archived twice: {one.get('game_id')} "
+                f"({one.get('source')}) and {two.get('game_id')} ({two.get('source')})"
+                for one, two in cross_id_duplicates(read_partition(partition)))
 
     box_rows = 0
     box_seen: set[tuple[str, str]] = set()

@@ -108,11 +108,12 @@ class NormalizeTests(unittest.TestCase):
         broken["home"] = {"name": "", "code": ""}
         self.assertIsNone(game_archive.normalize_match("NCAAM", broken))
 
-    def test_a_zero_zero_draw_is_archived(self):
+    def test_a_shutout_is_archived(self):
         # Guards a falsy-vs-None slip: 0 is a real score, not a missing one.
-        row = game_archive.normalize_match("NCAAM", match(home_score=0, away_score=0))
+        # (0-0 itself cannot be a college final; see ScorelessPlaceholderTest.)
+        row = game_archive.normalize_match("NCAAF", match(home_score=0, away_score=21))
         self.assertIsNotNone(row)
-        self.assertEqual((row["home_score"], row["away_score"]), (0, 0))
+        self.assertEqual((row["home_score"], row["away_score"]), (0, 21))
 
 
 class UpsertTests(ArchiveTestCase):
@@ -322,6 +323,188 @@ class HandoffBackfillTest(ArchiveTestCase):
         self.assertEqual((rows[0]["home_name"], rows[0]["away_name"]), ("Texas A&M", "Robert Morris Colonials"))
         Path("trdlab_picks.json").unlink()
         self.assertEqual(archive_backfill.source_handoff(), [])
+
+
+class HandoffNameTruncationTest(ArchiveTestCase):
+    """Build 1112T: "UTEP 51-10 Texas" was UTEP against Texas Southern.
+
+    The FCS school is absent from the pipeline's names, so the character-prefix
+    match fell through to the FBS school sharing its first word.
+    """
+
+    SHORTS = ["Texas", "Alabama", "Utah", "Florida", "North Carolina", "Indiana",
+              "Miami", "Arkansas", "Michigan", "Michigan State", "Louisiana", "Hawai'i"]
+
+    def mapped(self, *names):
+        return archive_backfill.handoff_name_map(names, self.SHORTS)
+
+    def test_an_fcs_school_is_never_cut_to_the_fbs_school_it_starts_with(self):
+        names = self.mapped("Texas Southern Tigers", "Alabama State Hornets", "Utah Tech Trailblazers",
+                            "Florida A&M Rattlers", "Indiana State Sycamores",
+                            "North Carolina Central Eagles", "Arkansas-Pine Bluff Golden Lions",
+                            "Miami (OH) RedHawks")
+        for full, archived in names.items():
+            with self.subTest(full=full):
+                self.assertEqual(archived, full)
+
+    def test_the_fbs_school_itself_still_maps_to_its_short_name(self):
+        names = self.mapped("Texas Longhorns", "Texas Southern Tigers", "North Carolina Tar Heels",
+                            "North Carolina A&T Aggies", "Louisiana Ragin' Cajuns",
+                            "Hawai'i Rainbow Warriors", "Michigan State Spartans", "Michigan Wolverines")
+        self.assertEqual(names["Texas Longhorns"], "Texas")
+        self.assertEqual(names["North Carolina Tar Heels"], "North Carolina")
+        self.assertEqual(names["Louisiana Ragin' Cajuns"], "Louisiana")
+        self.assertEqual(names["Hawai'i Rainbow Warriors"], "Hawai'i")
+        self.assertEqual(names["Michigan State Spartans"], "Michigan State")
+        self.assertEqual(names["Michigan Wolverines"], "Michigan")
+
+    def test_two_names_landing_on_one_school_both_keep_their_full_form(self):
+        # Neither remainder reads as a qualifier, so only the collision shows
+        # that one of them is not Utah. Guessing would record a false game.
+        names = self.mapped("Utah Utes", "Utah Valiants")
+        self.assertEqual(names, {"Utah Utes": "Utah Utes", "Utah Valiants": "Utah Valiants"})
+
+    def test_a_short_name_must_end_on_a_word(self):
+        self.assertEqual(self.mapped("Texans Mascots"), {"Texans Mascots": "Texans Mascots"})
+
+
+class HandoffBasketballSkippedTest(ArchiveTestCase):
+    def test_ncaam_results_are_not_archived_from_the_handoff(self):
+        import os
+        cwd = os.getcwd()
+        work = Path(self._tmp.name) / "cwd"
+        work.mkdir()
+        (work / "trdlab_picks.json").write_text(json.dumps({"results": [
+            {"event_id": "401920982", "competition": "NCAAM", "kickoff": "2026-11-01T14:30Z",
+             "home": "Villanova Wildcats", "away": "Notre Dame Fighting Irish",
+             "home_score": 72.0, "away_score": 74.0}]}), encoding="utf-8")
+        os.chdir(work)
+        self.addCleanup(os.chdir, cwd)
+        # ESPN numbers the game 401920982, CBBD 377909: no row could dedupe.
+        self.assertEqual(archive_backfill.source_handoff(), [])
+
+
+class OverlapAgainstArchiveTest(unittest.TestCase):
+    """A run of one source used to see one provider and resolve nothing."""
+
+    def row(self, source, game_id):
+        return {"game_id": game_id, "comp": "NCAAM", "season": "2026-27",
+                "date_utc": "2026-11-03T00:00:00Z", "source": source}
+
+    def test_a_season_the_pipeline_already_owns_refuses_a_bulk_provider(self):
+        on_disk = [self.row("cbbd", "ncaam-377909")]
+        kept, notes = archive_backfill.resolve_overlaps(
+            [self.row("espn", "ncaam-401920982")], lambda comp, season: on_disk)
+        self.assertEqual(kept, [])
+        self.assertEqual(len(notes), 1)
+
+    def test_the_owning_provider_still_adds_games(self):
+        on_disk = [self.row("cbbd", "ncaam-377909")]
+        kept, notes = archive_backfill.resolve_overlaps(
+            [self.row("CollegeBasketballData", "ncaam-377910")], lambda comp, season: on_disk)
+        self.assertEqual([row["game_id"] for row in kept], ["ncaam-377910"])
+        self.assertEqual(notes, [])
+
+
+class CrossIdDuplicateTest(ArchiveTestCase):
+    def row(self, game_id, source, home, away, hs, as_, when="2026-11-02T16:30:00Z"):
+        return {"game_id": game_id, "comp": "NCAAM", "season": "2026-27", "date_utc": when,
+                "home_name": home, "away_name": away, "home_score": hs, "away_score": as_,
+                "status": "FINISHED", "source": source}
+
+    def test_one_game_under_two_providers_is_reported(self):
+        rows = [self.row("ncaam-1", "cbbd", "Hofstra", "Saint Joseph's Long Island", 97, 51),
+                self.row("ncaam-401", "ncaam", "Hofstra", "St. Joseph's Long Island Golden Eagles", 97, 51,
+                         when="2026-11-02T16:30Z")]
+        pairs = game_archive.cross_id_duplicates(rows)
+        self.assertEqual([(one["game_id"], two["game_id"]) for one, two in pairs], [("ncaam-1", "ncaam-401")])
+        game_archive._write_partition(game_archive.partition_path("games", "NCAAM", "2026-27"),
+                                      game_archive.GAME_FIELDS, rows)
+        self.assertTrue(any("archived twice" in p for p in game_archive.validate()["problems"]))
+
+    def test_same_score_same_day_different_teams_is_silent(self):
+        rows = [self.row("ncaam-1", "cbbd", "Duke", "Army", 84, 50),
+                self.row("ncaam-2", "cbbd", "Kansas", "Howard", 84, 50)]
+        self.assertEqual(game_archive.cross_id_duplicates(rows), [])
+
+    def test_a_rematch_days_later_is_silent(self):
+        rows = [self.row("ncaam-1", "cbbd", "Duke", "Army", 84, 50),
+                self.row("ncaam-2", "cbbd", "Duke", "Army", 84, 50, when="2026-11-09T16:30:00Z")]
+        self.assertEqual(game_archive.cross_id_duplicates(rows), [])
+
+
+class ArchiveRepairTest(ArchiveTestCase):
+    def write(self, comp, rows):
+        game_archive._write_partition(game_archive.partition_path("games", comp, "2026-27"),
+                                      game_archive.GAME_FIELDS, rows)
+
+    def read(self, comp):
+        return game_archive.read_partition(game_archive.partition_path("games", comp, "2026-27"))
+
+    def log(self):
+        path = game_archive.ARCHIVE_ROOT / "corrections.jsonl"
+        if not path.exists():
+            return []
+        return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+    def football(self, game_id, home, away, hs, as_, source="ncaaf"):
+        return {"game_id": game_id, "comp": "NCAAF", "season": "2026-27", "date_utc": "2026-09-06T17:00Z",
+                "home_name": home, "away_name": away, "home_score": hs, "away_score": as_,
+                "status": "FINISHED", "source": source, "first_seen": "2026-10-21T17:21:10+00:00"}
+
+    def test_names_are_corrected_scores_are_not_and_every_change_is_logged(self):
+        import archive_repair
+        self.write("NCAAF", [self.football("ncaaf-1", "UTEP", "Texas", 51, 10),
+                             self.football("ncaaf-2", "Texas", "Rice", 38, 7),
+                             self.football("ncaaf-3", "Troy", "Alabama", 34, 17)])
+        handoff = {"results": [
+            {"event_id": "1", "competition": "NCAAF", "home": "UTEP Miners", "away": "Texas Southern Tigers",
+             "home_score": 51.0, "away_score": 10.0},
+            {"event_id": "2", "competition": "NCAAF", "home": "Texas Longhorns", "away": "Rice Owls",
+             "home_score": 38.0, "away_score": 7.0},
+            # A different final than the archive's: the row is left alone.
+            {"event_id": "3", "competition": "NCAAF", "home": "Troy Trojans", "away": "Alabama State Hornets",
+             "home_score": 35.0, "away_score": 17.0}]}
+        shorts = ["UTEP", "Texas", "Rice", "Troy", "Alabama"]
+        result = archive_repair.correct_names([handoff], shorts=shorts)
+        self.assertEqual(result, {"checked": 3, "corrected": 1, "skipped": 1})
+        rows = {row["game_id"]: row for row in self.read("NCAAF")}
+        self.assertEqual((rows["ncaaf-1"]["away_name"], rows["ncaaf-1"]["home_score"],
+                          rows["ncaaf-1"]["away_score"]), ("Texas Southern Tigers", "51", "10"))
+        self.assertEqual(rows["ncaaf-2"]["home_name"], "Texas")
+        self.assertEqual(rows["ncaaf-3"]["away_name"], "Alabama")
+        kinds = sorted(entry["kind"] for entry in self.log())
+        self.assertEqual(kinds, ["name_correction_skipped", "team_name_correction"])
+        self.assertEqual(archive_repair.correct_names([handoff], shorts=shorts)["corrected"], 0)
+
+    def test_foreign_id_rows_are_removed_logged_and_the_pipeline_rows_kept(self):
+        import archive_repair
+        base = {"comp": "NCAAM", "season": "2026-27", "status": "FINISHED", "first_seen": "x"}
+        self.write("NCAAM", [
+            dict(base, game_id="ncaam-377909", date_utc="2026-11-01T14:30:00Z", home_name="Villanova",
+                 away_name="Notre Dame", home_score=72, away_score=74, source="cbbd"),
+            dict(base, game_id="ncaam-401920982", date_utc="2026-11-01T14:30Z", home_name="Villanova",
+                 away_name="Notre Dame", home_score=72, away_score=74, source="ncaam"),
+            dict(base, game_id="ncaam-401999999", date_utc="2026-11-02T23:00Z", home_name="Florida",
+                 away_name="Miami", home_score=77, away_score=67, source="ncaam")])
+        handoff = {"results": [{"event_id": "401920982", "competition": "NCAAM"},
+                               {"event_id": "401999999", "competition": "NCAAM"}]}
+        result = archive_repair.remove_foreign_ids([handoff])
+        self.assertEqual(result, {"removed": 2, "with_pipeline_twin": 1, "without": 1})
+        self.assertEqual([row["game_id"] for row in self.read("NCAAM")], ["ncaam-377909"])
+        twins = {entry["game_id"]: entry["pipeline_twin"] for entry in self.log()}
+        self.assertEqual(twins, {"ncaam-401920982": "ncaam-377909", "ncaam-401999999": None})
+        self.assertEqual(archive_repair.remove_foreign_ids([handoff])["removed"], 0)
+
+
+class ScorelessPlaceholderTest(unittest.TestCase):
+    def test_a_college_zero_zero_final_is_not_archived(self):
+        game = {"id": "cbbd-374807", "kickoff": "2026-11-10T00:00:00Z", "status": "FINISHED",
+                "score": {"home": 0, "away": 0}, "home": {"name": "Alabama State"},
+                "away": {"name": "Georgia College"}}
+        self.assertIsNone(game_archive.normalize_match("NCAAM", game, "cbbd"))
+        game["score"] = {"home": 81, "away": 60}
+        self.assertIsNotNone(game_archive.normalize_match("NCAAM", game, "cbbd"))
 
 
 if __name__ == "__main__":

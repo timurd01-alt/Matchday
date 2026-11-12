@@ -129,9 +129,23 @@ Two writers, deliberately separate:
   `archive/games/` — until 2026-10-21 it did not, so every hourly capture was
   discarded with the runner and no 2026 CFB partition ever reached `main`.
 - **Backward, occasional.** `archive_backfill.py` seeds history from sources
-  that cost no quota (the CFBD/CBBD caches already on disk). Safe to re-run
-  at any time. It reads only the college caches and the current
-  `data_<comp>.json` payloads.
+  that cost no quota (the CFBD/CBBD caches already on disk, the current
+  `data_<comp>.json` payloads, and -- hourly in `deploy.yml` -- the TRDLab
+  handoff's football `results`). Safe to re-run at any time. The handoff is
+  football-only because its ids are ESPN's: equal to CFBD's, never to CBBD's,
+  so its basketball rows put 523 second-provider rows in 2026-27 NCAAM until
+  Build 1112T removed them. Its mascot names map to a pipeline name only on
+  whole words not followed by a school qualifier ("Texas" never claims
+  "Texas Southern Tigers").
+
+`record_build()` archives the whole fetched season, not the display window:
+the window holds only the 40 newest finals, and on a busy basketball night
+that left most of the slate unrecorded under the pipeline's ids.
+`python game_archive.py validate` also reports any game stored twice under
+two ids (same final, kickoffs within 36h, one side's name matching), which
+labels alone cannot see. One-off repairs to existing rows go through
+`archive_repair.py`, which never touches a score and logs every change to
+`archive/corrections.jsonl`.
 
 Two rules the archive enforces, both learned the hard way:
 

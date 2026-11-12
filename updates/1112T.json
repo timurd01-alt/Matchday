@@ -1,0 +1,11 @@
+{
+  "rank": 591,
+  "date": "Build 1112T",
+  "tag": "Fix",
+  "title": "Results archive: football opponents corrected, basketball duplicates removed",
+  "items": [
+    "Fifteen early-season football results named the wrong opponent: an FCS school had been shortened to the FBS school sharing its first word (“UTEP 51-10 Texas” was Texas Southern, “BYU 63-7 Utah” was Utah Tech). The names are corrected; no score changed.",
+    "Football Results now lists the whole season, not just the most recent games.",
+    "Basketball games that were stored twice, once from each of two data sources, are now stored once, and new games are captured from the full season the site already downloads instead of only the latest forty."
+  ]
+}

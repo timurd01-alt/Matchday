@@ -1,5 +1,7 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-12 (Build 1112T: football Results now also lists archived finals -- teams and final scores already held in Matchday's game archive from the pipeline and the TRDLab handoff's `results`. Fifteen archived team names corrected to the handoff's own names; one tiny archive guard. No new provider calls, fields, sources or redistribution.)
+
 Reviewed: 2026-11-11 (daily scorecard publication reads only the engine’s existing frozen cards and grades. No new provider calls, raw odds, retained fields or redistribution. The existing derived market comparison and caveats are preserved.)
 
 Reviewed: 2026-11-08 (social posting schedule: up to twelve scheduled runs a
