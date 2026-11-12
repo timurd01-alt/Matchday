@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112W",
+  "tag": "Fix",
+  "title": "Basketball Research lists Division I teams only",
+  "items": [
+   "Pace, efficiency per 100 possessions, shooting defense and defensive rebounding listed every school a Division I team had played, so a Division III or NAIA side with one fast game against a D1 opponent could top the Pace table. They now list the 357 Division I teams only.",
+   "Games against non-Division I opponents still count in the D1 teams' own numbers; those opponents just no longer get a row."
+  ]
+ },
+ {
   "date": "Build 1112V",
   "tag": "Fix",
   "title": "Results keeps every final as the live feed rolls over",

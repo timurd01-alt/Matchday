@@ -1421,7 +1421,8 @@ const RS_ZOOM_CHARTS={
         t.poss+=(poss+opp[2])/2;t.drb+=own.drb;t.orb+=f.orb;totals.set(name,t);
       });
     }
-    const pts=[...totals].filter(([,t])=>t.fga>0&&t.poss>0&&t.drb+t.orb>0).map(([name,t])=>{
+    const d1=rsBasketballD1();
+    const pts=[...totals].filter(([name,t])=>d1(name)&&t.fga>0&&t.poss>0&&t.drb+t.orb>0).map(([name,t])=>{
       const x=100*(t.fgm+.5*t.threes)/t.fga,y=100*t.tov/t.poss,drb=100*t.drb/(t.drb+t.orb);
       return {name,row:{games:t.games,drb},x,y,
         data:`data-m1l="Opponent eFG%" data-m1="${x.toFixed(1)}%" data-m2l="Turnovers forced" data-m2="${y.toFixed(1)}%" data-m3l="Defensive rebound rate" data-m3="${drb.toFixed(1)}%" data-games="${t.games}"`};
@@ -1714,7 +1715,8 @@ function rsSchedules(){
   // per Research render; the finder asks only the plausible ones.
   const top40=hoops?bbNameFinder((table?.rankings||[]).filter(team=>Number(team.rank)<=40),team=>team.name||team.team_name):null;
   const pool=hoops?rows.filter(r=>top40(r.name)!==undefined):rows.filter(r=>(r.rank||999)<=40);
-  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
+  const d1=hoops?rsBasketballD1():null;
+  const top=(pool.length>=10?pool:hoops?rows.filter(r=>d1(r.name)):rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
   const shown=currentSportKey()==='ncaam'?8:6;
   const row=(r,i)=>`<li class="rsSchedRow${i>=shown?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
@@ -1835,6 +1837,15 @@ function rsPart(num,label,body){
 function rsWaiting(title,kind,span,note){
   return `<section class="rsBlock rsWaiting rsSpan${span}">${rsTop(title,kind)}<p class="rsWaitingNote">${esc(note)}</p></section>`;
 }
+/* Division I only (Build 1112W). Box scores include every game a D1 team
+   played, so the other side of a D1-v-D3 or NAIA game got its own row: one
+   game against Oregon made Willamette the fastest team in the country. The
+   NCAAM power rating is the D1 field, so membership in it decides. Opponents
+   still count inside the D1 teams' own totals; they just get no row. */
+function rsBasketballD1(){
+  const find=bbNameFinder(collegeRankingTable()?.rankings||[],team=>team.name||team.team_name);
+  return name=>find(name)!==undefined;
+}
 function rsBasketballTeams(){
   if(typeof MATCHDAY_BASKETBALL_BOX_TOTALS==='undefined')return [];
   const totals=new Map();
@@ -1846,7 +1857,8 @@ function rsBasketballTeams(){
       totals.set(name,t);
     });
   }
-  return [...totals.values()];
+  const d1=rsBasketballD1();
+  return [...totals.values()].filter(t=>d1(t.name));
 }
 function rsBasketballTempo(){
   const teams=rsBasketballTeams().sort((a,b)=>b.poss/b.minutes-a.poss/a.minutes);
