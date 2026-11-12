@@ -298,6 +298,89 @@ def normalize_match(comp: str, match: dict[str, Any], source: str = "") -> dict[
     }
 
 
+# Which source owns a (competition, season) when more than one covers it.
+# Lower number wins.
+#
+# This is an identity rule, not a quality judgement. Two sources describe the
+# same game with different ids and different team naming, so nothing downstream
+# can tell they are one game, and archiving both silently doubles the season.
+# The pipeline sources rank first because `record_build()` keeps collecting
+# those competitions every hour using *their* ids.
+SOURCE_PRECEDENCE: dict[str, int] = {
+    "cbbd": 0,
+    "cfbd": 0,
+}
+_DEFAULT_PRECEDENCE = 1   # an unrecognised source, e.g. "espn"
+
+# The same provider reaches the archive under several spellings: the caches are
+# labelled by the reader that loaded them ("ncaam"), while rows taken from a
+# `data_*.json` payload carry that payload's own `data_source`
+# ("CollegeBasketballData"). Those are one provider with one id scheme, so
+# `game_id` already dedupes them; resolving them as rivals would throw games away.
+_SOURCE_ALIASES: dict[str, str] = {
+    "ncaam": "cbbd",
+    "cbbd": "cbbd",
+    "collegebasketballdata": "cbbd",
+    "ncaaf": "cfbd",
+    "cfbd": "cfbd",
+    "collegefootballdata": "cfbd",
+}
+
+
+def canonical_source(source: Any) -> str:
+    """Collapse a source label to the provider whose id scheme it uses."""
+    key = str(source or "").strip().lower().replace(" ", "")
+    return _SOURCE_ALIASES.get(key, key or "unknown")
+
+
+def source_precedence(source: str) -> int:
+    return SOURCE_PRECEDENCE.get(source, _DEFAULT_PRECEDENCE)
+
+
+
+CORRECTIONS_NAME = "corrections.jsonl"   # beside conflicts.jsonl
+
+
+def record_corrections(entries: Sequence[dict[str, Any]]) -> None:
+    """Append audit entries for changes to rows already archived."""
+    if not entries:
+        return
+    path = Path(ARCHIVE_ROOT) / CORRECTIONS_NAME
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as handle:
+        for entry in entries:
+            handle.write(json.dumps(entry, sort_keys=True, ensure_ascii=False) + "\n")
+
+
+def retire_provisional(rows: Sequence[dict[str, Any]],
+                       ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Drop a non-owner row once the season's owning provider holds the same game.
+
+    One provider owns a (competition, season): the highest-precedence one
+    present. A row from any other provider stays only while it is the sole
+    record of its game -- a provisional placeholder, never a second copy.
+    Returns (kept, corrections); a one-provider season comes back unchanged.
+    """
+    providers = {canonical_source(row.get("source")) for row in rows}
+    if len(providers) < 2:
+        return list(rows), []
+    owner = min(providers, key=lambda name: (source_precedence(name), name))
+    retired: dict[str, str] = {}
+    for one, two in cross_id_duplicates(rows):
+        for mine, theirs in ((one, two), (two, one)):
+            if (canonical_source(mine.get("source")) != owner
+                    and canonical_source(theirs.get("source")) == owner):
+                retired.setdefault(str(mine["game_id"]), str(theirs["game_id"]))
+    if not retired:
+        return list(rows), []
+    stamp = _now()
+    corrections = [{"at": stamp, "kind": "provisional_row_retired", "game_id": str(row["game_id"]),
+                    "row": dict(row), "owner_copy": retired[str(row["game_id"])],
+                    "reason": f"the season's owning provider ({owner}) now holds this game"}
+                   for row in rows if str(row["game_id"]) in retired]
+    return [row for row in rows if str(row["game_id"]) not in retired], corrections
+
+
 def upsert_games(rows: Iterable[dict[str, Any]]) -> dict[str, int]:
     """Merge rows into their season partitions. Returns a counts summary.
 
@@ -333,7 +416,9 @@ def upsert_games(rows: Iterable[dict[str, Any]]) -> dict[str, int]:
                              "provider reported a different final score for a game already archived")
             conflicted += 1
         if changed:
-            _write_partition(path, GAME_FIELDS, existing.values())
+            rows, corrections = retire_provisional(list(existing.values()))
+            _write_partition(path, GAME_FIELDS, rows)
+            record_corrections(corrections)
     return {"added": added, "unchanged": kept, "conflicts": conflicted}
 
 

@@ -270,43 +270,11 @@ SOURCES: dict[str, Callable[[], list[dict[str, Any]]]] = {
     "handoff": source_handoff,
 }
 
-# Which source owns a (competition, season) when more than one covers it.
-# Lower number wins.
-#
-# This is an identity rule, not a quality judgement. Two sources describe the
-# same game with different ids and different team naming, so nothing downstream
-# can tell they are one game, and archiving both silently doubles the season.
-# The pipeline sources rank first because `record_build()` keeps collecting
-# those competitions every hour using *their* ids.
-SOURCE_PRECEDENCE: dict[str, int] = {
-    "cbbd": 0,
-    "cfbd": 0,
-}
-_DEFAULT_PRECEDENCE = 1   # an unrecognised source
-
-# The same provider reaches this script under several spellings: the caches are
-# labelled by the reader that loaded them ("ncaam"), while rows taken from a
-# `data_*.json` payload carry that payload's own `data_source`
-# ("CollegeBasketballData"). Those are one provider with one id scheme, so
-# `game_id` already dedupes them; resolving them as rivals would throw games away.
-_SOURCE_ALIASES: dict[str, str] = {
-    "ncaam": "cbbd",
-    "cbbd": "cbbd",
-    "collegebasketballdata": "cbbd",
-    "ncaaf": "cfbd",
-    "cfbd": "cfbd",
-    "collegefootballdata": "cfbd",
-}
-
-
-def canonical_source(source: Any) -> str:
-    """Collapse a source label to the provider whose id scheme it uses."""
-    key = str(source or "").strip().lower().replace(" ", "")
-    return _SOURCE_ALIASES.get(key, key or "unknown")
-
-
-def _precedence(source: str) -> int:
-    return SOURCE_PRECEDENCE.get(source, _DEFAULT_PRECEDENCE)
+# Provider identity (aliases, precedence) lives in game_archive, because the
+# write path needs it too: see `game_archive.retire_provisional`.
+SOURCE_PRECEDENCE = game_archive.SOURCE_PRECEDENCE
+canonical_source = game_archive.canonical_source
+_precedence = game_archive.source_precedence
 
 
 def resolve_overlaps(rows: Iterable[dict[str, Any]],
@@ -344,11 +312,35 @@ def resolve_overlaps(rows: Iterable[dict[str, Any]],
             kept.extend(next(iter(by_provider.values())).values())
             continue
         winner = min(providers, key=lambda name: (_precedence(name), name))
-        kept.extend(by_provider.get(winner, {}).values())
-        dropped = {name: len(items) for name, items in by_provider.items() if name != winner}
-        if dropped:
-            notes.append(f"{comp} {season}: kept {len(by_provider.get(winner, {}))} from {winner!r}; "
-                         f"dropped duplicates {dropped}")
+        winner_rows = list(by_provider.get(winner, {}).values())
+        kept.extend(winner_rows)
+        # A losing provider's game is dropped only where the winner already
+        # holds the same game. One the winner lacks is kept, provisionally:
+        # resolution decides which copy of a game stands, never whether the
+        # game is recorded. `upsert_games` retires it once the winner's copy
+        # arrives (Build 1112U -- 1112T dropped 215 games the winner lacked).
+        owned = winner_rows + [row for row in (archived(comp, season) if archived else ())
+                               if canonical_source(row.get("source")) == winner]
+        dropped: dict[str, int] = {}
+        provisional: dict[str, int] = {}
+        for name, items in sorted(by_provider.items()):
+            if name == winner:
+                continue
+            twinned: set[str] = set()
+            for one, two in game_archive.cross_id_duplicates(list(items.values()) + owned):
+                for row in (one, two):
+                    if canonical_source(row.get("source")) == name:
+                        twinned.add(str(row["game_id"]))
+            for game_id, row in items.items():
+                if game_id in twinned:
+                    dropped[name] = dropped.get(name, 0) + 1
+                else:
+                    kept.append(row)
+                    provisional[name] = provisional.get(name, 0) + 1
+        if dropped or provisional:
+            notes.append(f"{comp} {season}: {winner!r} owns the season ({len(winner_rows)} incoming); "
+                         f"dropped duplicates {dropped}; kept provisionally (no {winner} copy yet) "
+                         f"{provisional}")
     return kept, notes
 
 

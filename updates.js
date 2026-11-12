@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112U",
+  "tag": "Fix",
+  "title": "Basketball Results: 215 early-season finals restored",
+  "items": [
+   "Build 1112T removed 215 basketball results that only one of the site's two data sources had recorded. They are back, and basketball Results lists the full season again.",
+   "A game recorded by the secondary source is now kept until the primary source records it, and only then is the second copy removed."
+  ]
+ },
+ {
   "date": "Build 1112T",
   "tag": "Fix",
   "title": "Results archive: football opponents corrected, basketball duplicates removed",

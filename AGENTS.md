@@ -143,7 +143,12 @@ the window holds only the 40 newest finals, and on a busy basketball night
 that left most of the slate unrecorded under the pipeline's ids.
 `python game_archive.py validate` also reports any game stored twice under
 two ids (same final, kickoffs within 36h, one side's name matching), which
-labels alone cannot see. One-off repairs to existing rows go through
+labels alone cannot see. A row from a provider that does not own its season
+is kept while it is the only record of its game (a provisional placeholder,
+e.g. the 215 `espn` rows in 2026-27 NCAAM) and retired by `upsert_games` once
+the owner's copy lands -- resolution may choose which copy of a game stands,
+never whether the game is recorded (Build 1112T broke that and lost 215
+finals for a day). One-off repairs to existing rows go through
 `archive_repair.py`, which never touches a score and logs every change to
 `archive/corrections.jsonl`.
 

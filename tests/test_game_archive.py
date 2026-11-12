@@ -266,7 +266,9 @@ class OverlapResolutionTests(unittest.TestCase):
         self.assertEqual(notes, [])
 
     def test_two_real_providers_in_one_season_resolve_to_the_pipeline_one(self):
-        rows = [self.row("cbbd", "ncaam-1"), self.row("some-bulk-feed", "bulk-1")]
+        game = {"home_name": "Duke", "away_name": "Army", "home_score": 84, "away_score": 50}
+        rows = [dict(self.row("cbbd", "ncaam-1"), **game),
+                dict(self.row("some-bulk-feed", "bulk-1"), **game)]
         kept, notes = archive_backfill.resolve_overlaps(rows)
         self.assertEqual([row["game_id"] for row in kept], ["ncaam-1"])
         self.assertEqual(len(notes), 1)
@@ -391,12 +393,41 @@ class OverlapAgainstArchiveTest(unittest.TestCase):
         return {"game_id": game_id, "comp": "NCAAM", "season": "2026-27",
                 "date_utc": "2026-11-03T00:00:00Z", "source": source}
 
-    def test_a_season_the_pipeline_already_owns_refuses_a_bulk_provider(self):
-        on_disk = [self.row("cbbd", "ncaam-377909")]
+    def game(self, source, game_id, home, away, hs, as_):
+        return dict(self.row(source, game_id), home_name=home, away_name=away,
+                    home_score=hs, away_score=as_)
+
+    def test_a_bulk_copy_of_a_game_the_owner_holds_is_refused(self):
+        on_disk = [self.game("cbbd", "ncaam-377909", "Villanova", "Notre Dame", 72, 74)]
         kept, notes = archive_backfill.resolve_overlaps(
-            [self.row("espn", "ncaam-401920982")], lambda comp, season: on_disk)
+            [self.game("espn", "ncaam-401920982", "Villanova Wildcats", "Notre Dame Fighting Irish", 72, 74)],
+            lambda comp, season: on_disk)
         self.assertEqual(kept, [])
         self.assertEqual(len(notes), 1)
+
+    def test_a_bulk_game_the_owner_lacks_is_kept_provisionally(self):
+        on_disk = [self.game("cbbd", "ncaam-377909", "Villanova", "Notre Dame", 72, 74)]
+        kept, _ = archive_backfill.resolve_overlaps(
+            [self.game("espn", "ncaam-401999999", "Florida Gators", "Miami Hurricanes", 77, 67)],
+            lambda comp, season: on_disk)
+        self.assertEqual([row["game_id"] for row in kept], ["ncaam-401999999"])
+
+    def test_resolution_never_lowers_the_count_of_unique_games(self):
+        # Build 1112T removed 215 games the owning provider did not hold.
+        # Whatever resolution decides, every (date, teams) game in survives.
+        def key(row):
+            return (row["date_utc"][:10], row["home_name"].split()[0], row["away_name"].split()[0])
+        rows = [self.game("cbbd", "ncaam-1", "Duke", "Army", 84, 50),
+                self.game("espn", "ncaam-401", "Duke Blue Devils", "Army Black Knights", 84, 50),
+                self.game("espn", "ncaam-402", "Florida Gators", "Miami Hurricanes", 77, 67),
+                self.game("bulk", "bulk-9", "Kansas Jayhawks", "Howard Bison", 90, 61),
+                self.game("bulk", "bulk-10", "Duke", "Army", 84, 50)]
+        on_disk = [self.game("cbbd", "ncaam-0", "Gonzaga", "Oregon", 80, 70)]
+        kept, _ = archive_backfill.resolve_overlaps(rows, lambda comp, season: on_disk)
+        before = {key(row) for row in rows + on_disk}
+        after = {key(row) for row in kept + on_disk}
+        self.assertEqual(after, before)
+        self.assertEqual(len(kept) + len(on_disk), len(before), "and no game twice")
 
     def test_the_owning_provider_still_adds_games(self):
         on_disk = [self.row("cbbd", "ncaam-377909")]
@@ -490,10 +521,15 @@ class ArchiveRepairTest(ArchiveTestCase):
         handoff = {"results": [{"event_id": "401920982", "competition": "NCAAM"},
                                {"event_id": "401999999", "competition": "NCAAM"}]}
         result = archive_repair.remove_foreign_ids([handoff])
-        self.assertEqual(result, {"removed": 2, "with_pipeline_twin": 1, "without": 1})
-        self.assertEqual([row["game_id"] for row in self.read("NCAAM")], ["ncaam-377909"])
-        twins = {entry["game_id"]: entry["pipeline_twin"] for entry in self.log()}
-        self.assertEqual(twins, {"ncaam-401920982": "ncaam-377909", "ncaam-401999999": None})
+        # The game CBBD lacks stays, as the only record of it (Build 1112U).
+        self.assertEqual(result, {"removed": 1, "kept_without_twin": 1})
+        self.assertEqual(sorted(row["game_id"] for row in self.read("NCAAM")),
+                         ["ncaam-377909", "ncaam-401999999"])
+        twins = {entry["game_id"]: entry["pipeline_twin"] for entry in self.log()
+                 if entry["kind"] == "foreign_id_row_removed"}
+        self.assertEqual(twins, {"ncaam-401920982": "ncaam-377909"})
+        relabelled = [entry["game_id"] for entry in self.log() if entry["kind"] == "provisional_relabel"]
+        self.assertEqual(relabelled, ["ncaam-401999999"])
         self.assertEqual(archive_repair.remove_foreign_ids([handoff])["removed"], 0)
 
 
@@ -505,6 +541,34 @@ class ScorelessPlaceholderTest(unittest.TestCase):
         self.assertIsNone(game_archive.normalize_match("NCAAM", game, "cbbd"))
         game["score"] = {"home": 81, "away": 60}
         self.assertIsNotNone(game_archive.normalize_match("NCAAM", game, "cbbd"))
+
+
+class ProvisionalRetirementTest(ArchiveTestCase):
+    """A non-owner row stands in for its game until the owner's copy lands."""
+
+    def espn(self, game_id="ncaam-401999999"):
+        return {"game_id": game_id, "comp": "NCAAM", "season": "2026-27", "date_utc": "2026-11-02T23:00Z",
+                "stage": "", "venue": "", "home_name": "Florida Gators", "home_code": "",
+                "away_name": "Miami Hurricanes", "away_code": "", "home_score": 77, "away_score": 67,
+                "status": "FINISHED", "source": "espn", "first_seen": "2026-11-09T00:00:00+00:00"}
+
+    def test_the_placeholder_stays_until_the_owner_copy_arrives_then_is_retired_and_logged(self):
+        game_archive.upsert_games([self.espn()])
+        game_archive.record_build("NCAAM", [match(provider_id=377001, home="Kansas", away="Howard",
+                                                  home_score=90, away_score=61,
+                                                  kickoff="2026-11-03T00:00:00Z")], "cbbd")
+        ids = {row["game_id"] for row in game_archive.load_games("NCAAM")}
+        self.assertIn("ncaam-401999999", ids, "no owner copy yet: the placeholder stays")
+        game_archive.record_build("NCAAM", [match(provider_id=377002, home="Florida", away="Miami",
+                                                  home_score=77, away_score=67,
+                                                  kickoff="2026-11-02T23:00:00Z")], "cbbd")
+        ids = {row["game_id"] for row in game_archive.load_games("NCAAM")}
+        self.assertNotIn("ncaam-401999999", ids)
+        self.assertIn("ncaam-377002", ids)
+        log = (game_archive.ARCHIVE_ROOT / "corrections.jsonl").read_text(encoding="utf-8")
+        entry = json.loads(log.splitlines()[-1])
+        self.assertEqual((entry["kind"], entry["owner_copy"]), ("provisional_row_retired", "ncaam-377002"))
+        self.assertEqual(game_archive.validate()["problems"], [])
 
 
 if __name__ == "__main__":

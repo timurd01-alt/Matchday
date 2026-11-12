@@ -122,3 +122,23 @@ with `grep -c ',cbbd,' archive/games/ncaam/2026-27.csv`, which should rise from
 - FCS teams now appear under full handoff names ("Texas Southern Tigers"), while
   CFBD rows for the same school use the short form. That is correct but
   inconsistent, so team form for an FCS team can split across two spellings.
+
+## Addendum (Build 1112U): the 215 games were restored
+
+Removing the 215 ESPN-id rows with no CBBD twin was wrong. It made basketball
+Results depend on a future, quota-limited CBBD run (production fell from 627
+games to 414, and Nov 3 from 158 to 41). The rule is now that resolution
+never lowers the count of unique games:
+
+- `archive_repair.py restore` re-added the 215 from their own log entries,
+  unchanged except `source=espn`. The season holds 629 rows: 414 `cbbd` and 215 `espn`.
+- `game_archive.retire_provisional()`, run in `upsert_games`, drops a
+  non-owner row only once the owning provider (CBBD) holds the same game, and
+  logs `provisional_row_retired` with the owner's id.
+- `resolve_overlaps()` drops a losing provider's row only where the winner
+  already holds that game; otherwise it is kept provisionally.
+  `test_resolution_never_lowers_the_count_of_unique_games` pins this.
+- `remove_foreign_ids` now removes twinned rows only.
+
+Provider identity (`canonical_source`, `SOURCE_PRECEDENCE`) moved into
+`game_archive` so the write path can apply it; `archive_backfill` re-exports it.
