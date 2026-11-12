@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111SD",
+  "tag": "Fix",
+  "title": "Daily basketball scorecard task now starts and records each run",
+  "items": [
+   "The daily scorecard task failed to start because of its working-directory setting; it now launches from the publisher copy without one.",
+   "Each daily run writes a start and finish line with its result, since the windowless launcher does not report the script's own outcome."
+  ]
+ },
+ {
   "date": "Build 1111SC",
   "tag": "Fix",
   "title": "Basketball scorecard publication independent of weekly ratings",

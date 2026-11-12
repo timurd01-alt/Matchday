@@ -26,7 +26,9 @@ if ($LASTEXITCODE -ne 0) { throw 'Could not move the publisher clone to origin/m
 $script = Join-Path $Checkout 'automation\daily_scorecard.ps1'
 if (-not (Test-Path $script)) { throw "origin/main has no $script yet; merge the scorecard change first" }
 
-$action = New-ScheduledTaskAction -Execute 'conhost.exe' -WorkingDirectory $Checkout `
+# No -WorkingDirectory: with a space in the profile path the task fails to
+# start (0x8007010B). daily_scorecard.ps1 resolves its own root.
+$action = New-ScheduledTaskAction -Execute 'conhost.exe' `
     -Argument "--headless powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$script`""
 $trigger = New-ScheduledTaskTrigger -Daily -At $At
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew `
