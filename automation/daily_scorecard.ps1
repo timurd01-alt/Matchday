@@ -25,7 +25,13 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Could not fetch origin/main; nothing published' }
     git -C $root checkout -q --detach origin/main
     if ($LASTEXITCODE -ne 0) { throw 'Could not move the publisher clone to origin/main; nothing published' }
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'automation\sunday_ship.ps1') -Sport ncaam -ScorecardOnly
+    # The child's own output, errors included, goes to the run log: a thrown
+    # error otherwise reaches only stderr, which the headless launcher drops.
+    # 'Continue' here: under 'Stop', PowerShell 5.1 turns the first redirected
+    # stderr line of a native command into a terminating error.
+    $ErrorActionPreference = 'Continue'
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'automation\sunday_ship.ps1') -Sport ncaam -ScorecardOnly 2>&1 |
+        ForEach-Object { "  $_" } | Add-Content -Path $runLog -Encoding utf8
     $code = $LASTEXITCODE
     Note "finished exit=$code at $(git -C $root rev-parse --short origin/main)"
 } catch {

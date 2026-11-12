@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112SB",
+  "tag": "Fix",
+  "title": "Daily basketball scorecard task can commit its update",
+  "items": [
+   "The daily scorecard task’s working copy now carries the owner’s commit identity, which it previously lacked, so a run with new graded cards stopped just before publishing.",
+   "Errors from a daily run are now kept in its run log."
+  ]
+ },
+ {
   "date": "Build 1112SA",
   "tag": "Fix",
   "title": "Daily basketball scorecard task now actually runs",

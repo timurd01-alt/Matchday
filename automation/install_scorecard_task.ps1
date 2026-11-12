@@ -31,6 +31,15 @@ if (-not (Test-Path (Join-Path $Checkout '.git'))) {
     git clone -q $origin $Checkout
     if ($LASTEXITCODE -ne 0) { throw "Could not clone $origin into $Checkout" }
 }
+# The scheduled run commits as the owner. This machine has no global git
+# identity (the dev checkout sets it repo-locally), so a fresh clone could
+# stage a shipment and then fail at `git commit` (2026-11-12). Copy it over.
+foreach ($key in 'user.name', 'user.email') {
+    $value = git -C (Join-Path $PSScriptRoot '..') config --get $key
+    if (-not $value) { throw "No git $key in the installing checkout; set it there first" }
+    git -C $Checkout config $key $value
+    if ($LASTEXITCODE -ne 0) { throw "Could not set $key in the publisher clone" }
+}
 git -C $Checkout fetch -q origin main
 if ($LASTEXITCODE -ne 0) { throw 'Could not fetch origin/main into the publisher clone' }
 git -C $Checkout checkout -q --detach origin/main
