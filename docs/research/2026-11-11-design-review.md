@@ -27,3 +27,10 @@
 - The match window, team pages, account screens and the welcome page beyond a glance.
 - Basketball at phone width.
 - Contrast ratios and focus order. `ui_audit.py` ran but wrote no report in this checkout, so the automated accessibility findings are not included.
+
+## Applied 2026-11-11: findings 1, 2, 4 and 5 (Build 1111D, commit 39f8864)
+- **1, phone Rankings.** Rating and Record stay visible at 375px (`styles.css`, the `.powerTable` phone rules). Columns measure 40 / 44 / 166 / 58 / 46px with no sideways overflow. Nine of the top 25 names now end in an ellipsis ("Notre Dame Fig...").
+- **2, Standings.** P, W and L are gone for college tables; PF, PA and Diff appear only when every team that has played has them (`_collegeTable`, `_tableLacksPoints` in `app-3-panels.js`). Today that hides them in all 11 football tables. The cause of the zeros, team names not matching the results ledger, is not fixed.
+- **4, Results.** Finished games first; games past kickoff without a final follow under "Awaiting final score" (`renderResults` in `app-1-core.js`).
+- **5, Home vs Research.** Research's Featured Read now takes the engine's game of the week, as Home does (`featuredPick` in `app-2-views.js`). Home's largest-differences list states each gap from the side the model rates above the market (`gamesDifferencesHTML`), matching Research's Model-Market Watch. The two can still differ by a few tenths (35.2% vs 35.9% for Illinois) because Home reads the hourly payload and Research reads the weekly handoff.
+- Checked in the browser at 1700px and 375px with live data; Research blocks kept their 21px gaps. Findings 3 and 6 to 12 are untouched.
