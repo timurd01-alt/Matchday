@@ -1,0 +1,10 @@
+{
+  "rank": 586,
+  "date": "Build 1112R",
+  "tag": "Fix",
+  "title": "Basketball Results shows the whole season",
+  "items": [
+    "Basketball Results showed only the latest night's games because the live feed holds just a few days. It now also lists every earlier final from Matchday's game archive, newest first, with each game counted once.",
+    "Football Results is unchanged."
+  ]
+}

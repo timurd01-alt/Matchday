@@ -1189,9 +1189,49 @@ function renderMatches(){const M=DATA.matches||[];
   if(typeof collapseBoardNotes==='function')collapseBoardNotes($('#view-matches'));
   if(typeof fitRankingCard==='function')fitRankingCard();
   if(typeof balanceBoardMods==='function')balanceBoardMods();}
+/* Season finals for the Results tab (Build 1111SR). The hourly college feed
+   holds a window of a few days, so basketball Results showed only tonight's
+   22 games while the season had 600+. The game archive -- shipped as
+   team-form-history.js -- holds every final, but under a second provider's ids
+   and, for basketball, under two providers at once. A game is the same game
+   when both teams match within 18 hours, the rule teamOverallForm uses; the
+   feed's own copy wins, then the archive copy with the shorter (feed-style)
+   names. Cached per payload: the comparison is quadratic. */
+let _seasonFinalsCache=null;
+function seasonFinalMatches(M){
+  const comp=String(DATA.comp_key||'').toLowerCase();
+  // Basketball only. Football's feed carries its own season, and its archive's
+  // handoff-seeded rows truncate FCS names ("Indiana" for Indiana State), which
+  // would publish results that never happened. Revisit once that is repaired.
+  if(comp!=='ncaam')return [];
+  const archived=(window.MATCHDAY_TEAM_FORM&&window.MATCHDAY_TEAM_FORM[comp])||[];
+  if(!archived.length||typeof bbNameMatches!=='function')return [];
+  const c=_seasonFinalsCache;
+  const register=list=>{if(typeof BYID==='object'&&BYID)list.forEach(m=>{if(!BYID[m.id])BYID[m.id]=m});return list};
+  if(c&&c.data===DATA&&c.archived===archived)return register(c.games);
+  const cutoff=competitionSeasonCutoff(DATA.comp_key).getTime(),window18=18*3600000;
+  const kept=M.filter(m=>m.kickoff).map(m=>({m,t:Date.parse(m.kickoff)})).filter(x=>Number.isFinite(x.t));
+  // The archive only fills the days before the feed's own window. Inside it the
+  // feed is the authority.
+  const feedStart=kept.length?Math.min(...kept.map(x=>x.t)):Infinity;
+  const nameLen=g=>String(g.home?.name||'').length+String(g.away?.name||'').length;
+  const games=[];
+  archived.filter(g=>g.status==='FINISHED'&&Date.parse(g.kickoff)>=cutoff&&Date.parse(g.kickoff)<feedStart
+      &&Number.isFinite(Number(g.score?.home))&&Number.isFinite(Number(g.score?.away)))
+    .slice().sort((a,b)=>nameLen(a)-nameLen(b))
+    .forEach(g=>{
+      const t=Date.parse(g.kickoff);
+      const same=x=>Math.abs(x.t-t)<window18&&bbNameMatches(x.m.home?.name,g.home?.name)&&bbNameMatches(x.m.away?.name,g.away?.name);
+      if(kept.some(same))return;
+      const m={...g,stage:g.stage||'Regular',home:{code:'',...g.home},away:{code:'',...g.away},_archived:true};
+      kept.push({m,t});games.push(m);
+    });
+  _seasonFinalsCache={data:DATA,archived,games};
+  return register(games);
+}
 function renderResults(){const M=DATA.matches||[];
   // Strictly by date, newest first: favourites used to float to the top, out of order.
-  const past=M.filter(isCompleteOrPast).sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
+  const past=M.filter(isCompleteOrPast).concat(seasonFinalMatches(M)).sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
   // Finished games lead. A game past its kickoff with no final yet is not a
   // result: sorted by date alone, the newest of those sat above every score on
   // the page (Build 1111D), so they follow in their own short group.

@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112R",
+  "tag": "Fix",
+  "title": "Basketball Results shows the whole season",
+  "items": [
+   "Basketball Results showed only the latest night's games because the live feed holds just a few days. It now also lists every earlier final from Matchday's game archive, newest first, with each game counted once.",
+   "Football Results is unchanged."
+  ]
+ },
+ {
   "date": "Build 1111SD",
   "tag": "Fix",
   "title": "Daily basketball scorecard task now starts and records each run",
