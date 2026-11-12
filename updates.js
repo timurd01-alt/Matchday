@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112V",
+  "tag": "Fix",
+  "title": "Results keeps every final as the live feed rolls over",
+  "items": [
+   "Basketball Results lost some of the previous night's finals when the live feed dropped them from its window. Those games now come back from Matchday's game archive, with each game still counted once.",
+   "Football Results now also includes the early-season finals the live feed no longer carries."
+  ]
+ },
+ {
   "date": "Build 1112U",
   "tag": "Fix",
   "title": "Basketball Results: 215 early-season finals restored",

@@ -1211,12 +1211,13 @@ function seasonFinalMatches(M){
   if(c&&c.data===DATA&&c.archived===archived)return register(c.games);
   const cutoff=competitionSeasonCutoff(DATA.comp_key).getTime(),window18=18*3600000;
   const kept=M.filter(m=>m.kickoff).map(m=>({m,t:Date.parse(m.kickoff)})).filter(x=>Number.isFinite(x.t));
-  // The archive only fills the days before the feed's own window. Inside it the
-  // feed is the authority.
-  const feedStart=kept.length?Math.min(...kept.map(x=>x.t)):Infinity;
+  // No date cutoff against the feed's window: the feed drops finished games
+  // through the day while keeping others with the same tip time, so a cutoff at
+  // its earliest kickoff hid nine of one night's finals (Build 1112V). The
+  // same-game check below is what keeps the feed's copy.
   const nameLen=g=>String(g.home?.name||'').length+String(g.away?.name||'').length;
   const games=[];
-  archived.filter(g=>g.status==='FINISHED'&&Date.parse(g.kickoff)>=cutoff&&Date.parse(g.kickoff)<feedStart
+  archived.filter(g=>g.status==='FINISHED'&&Date.parse(g.kickoff)>=cutoff
       &&Number.isFinite(Number(g.score?.home))&&Number.isFinite(Number(g.score?.away)))
     .slice().sort((a,b)=>nameLen(a)-nameLen(b))
     .forEach(g=>{
