@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112SC",
+  "tag": "Fix",
+  "title": "Site updates recover after a failed run",
+  "items": [
+   "A site update that failed partway no longer blocks every later update; the next run starts from a clean copy and drops any half-written release note."
+  ]
+ },
+ {
   "date": "Build 1112SB",
   "tag": "Fix",
   "title": "Daily basketball scorecard task can commit its update",

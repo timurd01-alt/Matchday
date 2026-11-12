@@ -1,0 +1,9 @@
+{
+  "rank": 589,
+  "date": "Build 1112SC",
+  "tag": "Fix",
+  "title": "Site updates recover after a failed run",
+  "items": [
+    "A site update that failed partway no longer blocks every later update; the next run starts from a clean copy and drops any half-written release note."
+  ]
+}

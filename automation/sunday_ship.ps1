@@ -176,10 +176,16 @@ try {
 } finally { Pop-Location }
 Push-Location $tree
 try {
-    git checkout -q --detach origin/main
+    # -f: a run that failed after staging leaves changes behind, and a plain
+    # checkout refuses to overwrite them, so every later run failed too
+    # (2026-11-12). This tree is disposable; nothing in it is kept.
+    git checkout -q -f --detach origin/main
     if ($LASTEXITCODE -ne 0) { throw 'Could not select origin/main' }
     git reset -q --hard origin/main
     if ($LASTEXITCODE -ne 0) { throw 'Could not prepare publication checkout' }
+    # A failed run's unstaged release note would otherwise ship with the next one.
+    git clean -q -f -- updates
+    if ($LASTEXITCODE -ne 0) { throw 'Could not clear leftover release notes' }
     if ($ScorecardOnly) {
         Run 'refresh engine scorecard' $tree $PythonPath @('refresh_engine_scorecard.py','--engine',$TRDLab,'--sport',$Sport)
     } elseif ($Sport -eq 'both') {
