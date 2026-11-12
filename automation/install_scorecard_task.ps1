@@ -7,11 +7,23 @@
 # origin/main by daily_scorecard.ps1 before every run. Do not develop in it.
 #
 # Launched windowless (conhost --headless), like the other background tasks.
+#
+# The clone lives under the user profile, never under AppData. The Claude
+# desktop app is a packaged app, so a shell it runs that writes to AppData\Local
+# is silently redirected into the app's private storage: the first install put
+# the clone there, the folder existed for that shell, and Task Scheduler could
+# not see it, so every run failed while reporting success (2026-11-12).
+#
+# Runs on battery too. The default settings refuse to start on battery and the
+# task then sits Queued, never running; the other Matchday tasks allow it.
 param(
     [string]$At = '8:00AM',
-    [string]$Checkout = (Join-Path $env:LOCALAPPDATA 'Matchday\publisher')
+    [string]$Checkout = (Join-Path $env:USERPROFILE 'Matchday Publisher')
 )
 $ErrorActionPreference = 'Stop'
+if ($Checkout -like (Join-Path $env:USERPROFILE 'AppData') + '*') {
+    throw "Put the publisher clone outside AppData ($Checkout); packaged-app shells redirect writes there"
+}
 if (-not (Test-Path (Join-Path $Checkout '.git'))) {
     $origin = git -C (Join-Path $PSScriptRoot '..') remote get-url origin
     if ($LASTEXITCODE -ne 0 -or -not $origin) { throw 'Could not read the origin URL' }
@@ -32,7 +44,7 @@ $action = New-ScheduledTaskAction -Execute 'conhost.exe' `
     -Argument "--headless powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$script`""
 $trigger = New-ScheduledTaskTrigger -Daily -At $At
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew `
-    -ExecutionTimeLimit (New-TimeSpan -Hours 1)
+    -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Hours 1)
 Register-ScheduledTask -TaskName 'Matchday Daily NCAAM Scorecard' -Action $action `
     -Trigger $trigger -Settings $settings -Force `
     -Description "Publishes already-graded NCAAM cards daily from $Checkout; no additional provider requests." | Out-Null

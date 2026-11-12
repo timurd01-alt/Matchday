@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112SA",
+  "tag": "Fix",
+  "title": "Daily basketball scorecard task now actually runs",
+  "items": [
+   "The daily scorecard task’s working copy moved to a folder the Windows scheduler can see; the previous location was hidden from it, so runs did nothing while reporting success.",
+   "The task now also starts on battery power instead of waiting in the queue."
+  ]
+ },
+ {
   "date": "Build 1112R",
   "tag": "Fix",
   "title": "Basketball Results shows the whole season",
