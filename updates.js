@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111D",
+  "tag": "Fix",
+  "title": "Four fixes from the design review",
+  "items": [
+   "Rankings on a phone now shows each team's rating and record. It used to show only the rank, the move and the name.",
+   "Conference Standings no longer shows points for, against and difference as 0 for teams whose scores were not matched; those columns appear only when every team has them. The separate played, won and lost columns are gone because Overall already says it.",
+   "Results now leads with finished games. Games past kickoff that are still waiting on a final score follow in their own short group.",
+   "Home and Research now feature the same game, and both state a model-versus-market gap from the side Matchday rates higher, so the same game no longer reads as minus 11 on one tab and plus 11 on the other."
+  ]
+ },
+ {
   "date": "Build 1111C",
   "tag": "Fix",
   "title": "Basketball rankings: movement arrows corrected",

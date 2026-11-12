@@ -2783,6 +2783,12 @@ html{color-scheme:dark}
   .powerTable:not(.hasMove) th:first-child,.powerTable:not(.hasMove) td:first-child{width:40px}
   .powerTable:not(.hasMove) th:nth-child(2),.powerTable:not(.hasMove) td:nth-child(2){display:table-cell;text-align:left}
   .powerTable:not(.hasMove) th:nth-child(n+3),.powerTable:not(.hasMove) td:nth-child(n+3){display:none}
+  /* A ratings table has to show the rating. Build 1111D: Rating and Record stay
+     on a phone; Conference, SoS, Off and Def still wait for a wider screen. */
+  .powerTable.hasMove th:nth-child(5),.powerTable.hasMove td:nth-child(5),
+  .powerTable:not(.hasMove) th:nth-child(4),.powerTable:not(.hasMove) td:nth-child(4){display:table-cell;width:58px;text-align:right}
+  .powerTable.hasMove th:nth-child(9),.powerTable.hasMove td:nth-child(9),
+  .powerTable:not(.hasMove) th:nth-child(8),.powerTable:not(.hasMove) td:nth-child(8){display:table-cell;width:46px;text-align:right;padding-right:10px}
   .powerTable .pollTeamInner{max-width:100%;overflow:hidden;text-overflow:ellipsis}
   .powerTable .pollTeamInner>span:last-child{overflow:hidden;text-overflow:ellipsis}
 }

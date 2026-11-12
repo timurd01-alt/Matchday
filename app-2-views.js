@@ -621,6 +621,18 @@ function featuredPick(preferPriced=false){
     :(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]);
   const pollRank=name=>poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank||99;
   const available=attached.concat(baked).filter(x=>Number.isFinite(Number(x.p.model_pct)));
+  // One featured game for the whole site (Build 1111D). Home features the
+  // engine's game of the week; this used its own ranking and the two tabs named
+  // different games (LSU-Texas on Home, USC-Indiana on Research). The engine's
+  // choice wins whenever it is among this week's picks; the ranking below is
+  // the fallback.
+  const gotw=(typeof MATCHDAY_TRDLAB_GAME_OF_THE_WEEK!=='undefined'&&MATCHDAY_TRDLAB_GAME_OF_THE_WEEK.available)?MATCHDAY_TRDLAB_GAME_OF_THE_WEEK.game:null;
+  if(gotw){
+    const same=x=>{const h=x.m.home?.name||x.m.home,a=x.m.away?.name||x.m.away;
+      return (bbNameMatches(h,gotw.home?.team)&&bbNameMatches(a,gotw.away?.team))||(bbNameMatches(h,gotw.away?.team)&&bbNameMatches(a,gotw.home?.team))};
+    const chosen=available.find(same);
+    if(chosen)return chosen;
+  }
   const competitive=available.filter(x=>Number(x.p.model_pct)<90);
   const picks=(competitive.length?competitive:available)
     .map(x=>({...x,homeRank:pollRank(x.m.home?.name||x.m.home),awayRank:pollRank(x.m.away?.name||x.m.away)}))

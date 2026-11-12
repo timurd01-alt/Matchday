@@ -1032,9 +1032,16 @@ function openAllGames(){
 }
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
-    const m=read.match,d=read.difference;
+    const m=read.match;
+    // Stated from the side Matchday rates above the market, the way Research's
+    // Model-Market Watch states it (Build 1111D). From the pick's side the same
+    // gap read -11.4 here and +11.3 there.
+    const flip=read.difference<0,sameName=(a,b)=>typeof bbNameMatches==='function'?bbNameMatches(a,b):a===b;
+    const otherSide=sameName(m.home?.name,read.pick)?m.away?.name:m.home?.name;
+    const team=flip&&otherSide?otherSide:read.pick,turned=flip&&otherSide;
+    const model=turned?100-read.model:read.model,market=turned?100-read.market:read.market,d=turned?-read.difference:read.difference;
     const mk=n=>typeof teamMark==='function'?teamMark(n):'';
-    const content=`<i class="gdMarks">${mk(m.home?.name)}${mk(m.away?.name)}</i><span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(typeof rsShortName==='function'?rsShortName(read.pick):read.pick)} ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
+    const content=`<i class="gdMarks">${mk(m.home?.name)}${mk(m.away?.name)}</i><span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(typeof rsShortName==='function'?rsShortName(team):team)} ${modelPctLabel(model)} · market ${market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
   return `<section class="gamesDifferences${reads.length<4?' gamesDifferencesCompact':''}"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
@@ -1185,10 +1192,15 @@ function renderMatches(){const M=DATA.matches||[];
 function renderResults(){const M=DATA.matches||[];
   // Strictly by date, newest first: favourites used to float to the top, out of order.
   const past=M.filter(isCompleteOrPast).sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
-  const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);
+  // Finished games lead. A game past its kickoff with no final yet is not a
+  // result: sorted by date alone, the newest of those sat above every score on
+  // the page (Build 1111D), so they follow in their own short group.
+  const done=past.filter(m=>m.status==='FINISHED'),waiting=past.filter(m=>m.status!=='FINISHED');
+  const shown=done.slice(0,RESULT_VISIBLE),remaining=Math.max(0,done.length-shown.length);
   $('#view-results').innerHTML=`<div class="vhead">${t('Results')}</div>`+
     (shown.length?shown.map(m=>cardHTML(m,{hidePick:true})).join(''):`<div class="empty" style="grid-column:1/-1">No completed matches yet.</div>`)+
-    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${past.length} results</span><button class="actionbtn" onclick="RESULT_VISIBLE+=FIXTURE_PAGE_SIZE;renderResults()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');enhanceMatchCards($('#view-results'));}
+    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${done.length} results</span><button class="actionbtn" onclick="RESULT_VISIBLE+=FIXTURE_PAGE_SIZE;renderResults()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'')+
+    (waiting.length?`<div class="seclbl" style="grid-column:1/-1">Awaiting final score · ${waiting.length}</div>`+waiting.slice(0,12).map(m=>cardHTML(m,{hidePick:true})).join(''):'');enhanceMatchCards($('#view-results'));}
 function groupLetter(g){return String(g||'').replace(/^Group\s*/i,'').replace(/^GROUP_/i,'').trim()}
 function cleanGroup(g){g=String(g||'').trim();if(!g)return'';if(/^GROUP_/i.test(g))return g.replace('GROUP_','Group ').replaceAll('_',' ').replace(/\b\w/g,c=>c.toUpperCase());if(/^Group\s+/i.test(g))return 'Group '+groupLetter(g).toUpperCase();return g}
 function rowKey(n){return String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
