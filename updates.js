@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1111SC",
+  "tag": "Fix",
+  "title": "Basketball scorecard publication independent of weekly ratings",
+  "items": [
+   "Added a daily publication path for the engine’s already-graded basketball cards, with read-only database access and checks for stale feeds, overdue results and shrinking records.",
+   "The basketball record now includes every graded card through today, with the agreed-with-market and disagreed-with-market splits and the outright calls against the favourite refreshed alongside it; a card missing either split is not published.",
+   "The scorecard refresh preserves frozen market prices, football data and the original forecast timestamps."
+  ]
+ },
+ {
   "date": "Build 1111D",
   "tag": "Fix",
   "title": "Four fixes from the design review",

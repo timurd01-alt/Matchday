@@ -69267,83 +69267,83 @@
           "rule": "The scorecard freezes 60 minutes before kickoff. It stores the newest forecast generated at or before that moment, alongside the market price as it stood then, and is never rewritten afterwards."
         },
         "totals": {
-          "locked_events": 514,
+          "locked_events": 641,
           "duplicate_cards_not_counted": 0,
           "fbs_versus_fcs_not_counted": 0,
-          "locked_selections": 1028,
-          "graded_selections": 1026,
-          "awaiting_result": 2
+          "locked_selections": 1282,
+          "graded_selections": 1256,
+          "awaiting_result": 26
         },
         "record": {
-          "picks": 513,
-          "wins": 435,
-          "losses": 78,
-          "hit_rate_pct": 84.8,
-          "expected_hit_rate_pct": 86.5,
-          "calibration_gap_points": -1.7,
+          "picks": 628,
+          "wins": 528,
+          "losses": 100,
+          "hit_rate_pct": 84.1,
+          "expected_hit_rate_pct": 85.3,
+          "calibration_gap_points": -1.3,
           "confidence_interval_pct": [
-            81.4,
-            87.6
+            81.0,
+            86.7
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 236,
-          "beat_market_pct": 53.8,
+          "graded_priced_selections": 368,
+          "beat_market_pct": 46.5,
           "beat_market": {
-            "picks": 236,
-            "wins": 127,
-            "losses": 109,
+            "picks": 368,
+            "wins": 171,
+            "losses": 197,
             "ties": 0,
-            "hit_rate_pct": 53.8,
+            "hit_rate_pct": 46.5,
             "expected_hit_rate_pct": 50.0,
-            "calibration_gap_points": 3.8,
+            "calibration_gap_points": -3.5,
             "confidence_interval_pct": [
-              47.4,
-              60.1
+              41.4,
+              51.6
             ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 116,
-            "wins": 96,
-            "losses": 20,
-            "hit_rate_pct": 82.8,
-            "expected_hit_rate_pct": 84.8,
-            "calibration_gap_points": -2.0,
+            "picks": 178,
+            "wins": 148,
+            "losses": 30,
+            "hit_rate_pct": 83.1,
+            "expected_hit_rate_pct": 83.2,
+            "calibration_gap_points": -0.1,
             "confidence_interval_pct": [
-              74.9,
-              88.6
+              77.0,
+              87.9
             ]
           },
           "disagreed_with_market": {
-            "picks": 8,
-            "wins": 4,
-            "losses": 4,
-            "hit_rate_pct": 50.0,
-            "expected_hit_rate_pct": 67.2,
-            "calibration_gap_points": -17.2,
+            "picks": 21,
+            "wins": 12,
+            "losses": 9,
+            "hit_rate_pct": 57.1,
+            "expected_hit_rate_pct": 65.7,
+            "calibration_gap_points": -8.6,
             "confidence_interval_pct": [
-              21.5,
-              78.5
+              36.5,
+              75.5
             ]
           },
-          "disagreement_share_pct": 6.5,
+          "disagreement_share_pct": 10.6,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
           "available": true,
-          "underdog_lift_points": -6.4,
-          "contested_underdogs": 34,
+          "underdog_lift_points": -3.4,
+          "contested_underdogs": 55,
           "contested_band_pct": [
             30.0,
             50.0
           ],
-          "mean_divergence_points": 8.1,
+          "mean_divergence_points": 7.1,
           "outright_disagreements": {
-            "picks": 6,
-            "wins": 3,
-            "losses": 3,
-            "hit_rate_pct": 50.0
+            "picks": 11,
+            "wins": 5,
+            "losses": 6,
+            "hit_rate_pct": 45.5
           },
           "boldest_calls": [
             {
@@ -69374,6 +69374,24 @@
               "result": "loss"
             },
             {
+              "event_name": "Marquette Golden Eagles at Michigan Wolverines",
+              "selection": "Marquette Golden Eagles",
+              "starts_at": "2026-11-12T00:00:00Z",
+              "model_pct": 62.4,
+              "market_pct": 40.5,
+              "divergence_points": 21.9,
+              "result": "loss"
+            },
+            {
+              "event_name": "Charleston Cougars at Temple Owls",
+              "selection": "Temple Owls",
+              "starts_at": "2026-11-11T23:30:00Z",
+              "model_pct": 63.1,
+              "market_pct": 46.4,
+              "divergence_points": 16.7,
+              "result": "loss"
+            },
+            {
               "event_name": "Pittsburgh Panthers at Penn State Nittany Lions",
               "selection": "Penn State Nittany Lions",
               "starts_at": "2026-11-09T01:00:00Z",
@@ -69399,6 +69417,24 @@
               "market_pct": 48.3,
               "divergence_points": 10.8,
               "result": "win"
+            },
+            {
+              "event_name": "UNC Asheville Bulldogs at West Georgia Wolves",
+              "selection": "UNC Asheville Bulldogs",
+              "starts_at": "2026-11-12T00:00:00Z",
+              "model_pct": 54.3,
+              "market_pct": 44.8,
+              "divergence_points": 9.5,
+              "result": "win"
+            },
+            {
+              "event_name": "Santa Clara Broncos at North Texas Mean Green",
+              "selection": "North Texas Mean Green",
+              "starts_at": "2026-11-12T01:00:00Z",
+              "model_pct": 52.3,
+              "market_pct": 47.0,
+              "divergence_points": 5.3,
+              "result": "loss"
             }
           ],
           "basis": "no-vig consensus at the lock deadline, not the closing price"
@@ -69406,41 +69442,1311 @@
         "by_confidence": [
           {
             "band": "50–60%",
-            "picks": 42,
-            "hit_rate_pct": 59.5,
-            "expected_hit_rate_pct": 55.8,
-            "calibration_gap_points": 3.7
+            "picks": 59,
+            "hit_rate_pct": 57.6,
+            "expected_hit_rate_pct": 55.5,
+            "calibration_gap_points": 2.1
           },
           {
             "band": "60–70%",
-            "picks": 52,
-            "hit_rate_pct": 53.8,
-            "expected_hit_rate_pct": 64.5,
-            "calibration_gap_points": -10.7
+            "picks": 71,
+            "hit_rate_pct": 59.2,
+            "expected_hit_rate_pct": 64.7,
+            "calibration_gap_points": -5.6
           },
           {
             "band": "70–80%",
-            "picks": 55,
-            "hit_rate_pct": 63.6,
-            "expected_hit_rate_pct": 75.9,
-            "calibration_gap_points": -12.3
+            "picks": 71,
+            "hit_rate_pct": 63.4,
+            "expected_hit_rate_pct": 76.0,
+            "calibration_gap_points": -12.6
           },
           {
             "band": "80–90%",
-            "picks": 85,
-            "hit_rate_pct": 87.1,
-            "expected_hit_rate_pct": 85.9,
-            "calibration_gap_points": 1.1
+            "picks": 105,
+            "hit_rate_pct": 86.7,
+            "expected_hit_rate_pct": 85.8,
+            "calibration_gap_points": 0.8
           },
           {
             "band": "90–100%",
-            "picks": 279,
-            "hit_rate_pct": 97.8,
-            "expected_hit_rate_pct": 97.4,
-            "calibration_gap_points": 0.4
+            "picks": 322,
+            "hit_rate_pct": 98.1,
+            "expected_hit_rate_pct": 97.3,
+            "calibration_gap_points": 0.9
           }
         ],
         "recent": [
+          {
+            "event_name": "USC Trojans at California Golden Bears",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T04:00:00Z",
+            "selection": "USC Trojans",
+            "probability_pct": 72.3,
+            "market_probability_pct": 75.4,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "UTSA Roadrunners at Seattle U Redhawks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T03:00Z",
+            "selection": "Seattle U Redhawks",
+            "probability_pct": 87.6,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Pacific Tigers at Long Beach State Beach",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T03:00Z",
+            "selection": "Pacific Tigers",
+            "probability_pct": 53.6,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Chicago State Cougars at California Baptist Lancers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T03:00Z",
+            "selection": "California Baptist Lancers",
+            "probability_pct": 72.2,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Mississippi Valley State Delta Devils at Oregon Ducks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T03:00Z",
+            "selection": "Oregon Ducks",
+            "probability_pct": 98.8,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Lincoln (CA) Oaklanders at UC Irvine Anteaters",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T03:00Z",
+            "selection": "UC Irvine Anteaters",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Cal Poly Mustangs at Grand Canyon Lopes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00Z",
+            "selection": "Grand Canyon Lopes",
+            "probability_pct": 87.3,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Arkansas-Pine Bluff Golden Lions at UCLA Bruins",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00:00Z",
+            "selection": "UCLA Bruins",
+            "probability_pct": 99.9,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Portland St Vikings at Colorado St Rams",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00:00Z",
+            "selection": "Colorado State Rams",
+            "probability_pct": 89.5,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Oakland Golden Grizzlies at Boise State Broncos",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00:00Z",
+            "selection": "Boise State Broncos",
+            "probability_pct": 90.5,
+            "market_probability_pct": 91.5,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Lindenwood Lions at Nebraska Cornhuskers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00:00Z",
+            "selection": "Nebraska Cornhuskers",
+            "probability_pct": 99.2,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Nevada Wolf Pack at UC Santa Barbara Gauchos",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T02:00:00Z",
+            "selection": "Nevada Wolf Pack",
+            "probability_pct": 55.7,
+            "market_probability_pct": 51.6,
+            "result": "pending",
+            "score": null
+          },
+          {
+            "event_name": "Erskine Flying Fleet at Gardner-Webb Runnin' Bulldogs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00Z",
+            "selection": "Gardner-Webb Runnin' Bulldogs",
+            "probability_pct": 82.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "88–66"
+          },
+          {
+            "event_name": "Blackburn Beavers at Eastern Illinois Panthers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00Z",
+            "selection": "Eastern Illinois Panthers",
+            "probability_pct": 97.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "102–44"
+          },
+          {
+            "event_name": "Jackson St Tigers at Southern Miss Golden Eagles",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "Southern Miss Golden Eagles",
+            "probability_pct": 77.5,
+            "market_probability_pct": 77.9,
+            "result": "win",
+            "score": "84–80"
+          },
+          {
+            "event_name": "Oral Roberts Golden Eagles at Tulsa Golden Hurricane",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "Tulsa Golden Hurricane",
+            "probability_pct": 92.6,
+            "market_probability_pct": 93.3,
+            "result": "win",
+            "score": "80–71"
+          },
+          {
+            "event_name": "Jacksonville St Gamecocks at Houston Cougars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "Houston Cougars",
+            "probability_pct": 98.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "92–46"
+          },
+          {
+            "event_name": "Valparaiso Beacons at South Dakota St Jackrabbits",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "South Dakota State Jackrabbits",
+            "probability_pct": 52.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "81–69"
+          },
+          {
+            "event_name": "Santa Clara Broncos at North Texas Mean Green",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "North Texas Mean Green",
+            "probability_pct": 52.3,
+            "market_probability_pct": 47.0,
+            "result": "loss",
+            "score": "71–76"
+          },
+          {
+            "event_name": "Robert Morris Colonials at Arkansas Razorbacks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "Arkansas Razorbacks",
+            "probability_pct": 93.9,
+            "market_probability_pct": 98.0,
+            "result": "win",
+            "score": "76–53"
+          },
+          {
+            "event_name": "Stephen F. Austin Lumberjacks at Abilene Christian Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T01:00:00Z",
+            "selection": "Stephen F. Austin Lumberjacks",
+            "probability_pct": 56.3,
+            "market_probability_pct": 69.9,
+            "result": "win",
+            "score": "71–76"
+          },
+          {
+            "event_name": "Binghamton Bearcats at Misericordia Cougars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:30Z",
+            "selection": "Binghamton Bearcats",
+            "probability_pct": 67.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "62–87"
+          },
+          {
+            "event_name": "Friends Falcons at Wichita State Shockers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:30Z",
+            "selection": "Wichita State Shockers",
+            "probability_pct": 95.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "113–60"
+          },
+          {
+            "event_name": "Campbellsville Tigers at Western Kentucky Hilltoppers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:30Z",
+            "selection": "Western Kentucky Hilltoppers",
+            "probability_pct": 98.4,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "78–51"
+          },
+          {
+            "event_name": "Pepperdine Waves at Sam Houston St Bearkats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:30:00Z",
+            "selection": "Sam Houston Bearkats",
+            "probability_pct": 66.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "85–77"
+          },
+          {
+            "event_name": "Bryant & Stratton-Albany Bobcats at Wagner Seahawks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00Z",
+            "selection": "Wagner Seahawks",
+            "probability_pct": 91.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "117–51"
+          },
+          {
+            "event_name": "Franklin Grizzlies at Bellarmine Knights",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00Z",
+            "selection": "Bellarmine Knights",
+            "probability_pct": 82.5,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "99–82"
+          },
+          {
+            "event_name": "American University Eagles at Drexel Dragons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00Z",
+            "selection": "American University Eagles",
+            "probability_pct": 53.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "64–66"
+          },
+          {
+            "event_name": "Kent State Golden Flashes at UNC Wilmington Seahawks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "UNC Wilmington Seahawks",
+            "probability_pct": 69.6,
+            "market_probability_pct": 74.1,
+            "result": "win",
+            "score": "91–73"
+          },
+          {
+            "event_name": "UNC Asheville Bulldogs at West Georgia Wolves",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "UNC Asheville Bulldogs",
+            "probability_pct": 54.3,
+            "market_probability_pct": 44.8,
+            "result": "win",
+            "score": "70–73"
+          },
+          {
+            "event_name": "UMass Lowell River Hawks at Massachusetts Minutemen",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Massachusetts Minutemen",
+            "probability_pct": 64.2,
+            "market_probability_pct": 75.0,
+            "result": "win",
+            "score": "72–62"
+          },
+          {
+            "event_name": "Cornell Big Red at St. Bonaventure Bonnies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "St. Bonaventure Bonnies",
+            "probability_pct": 65.9,
+            "market_probability_pct": 74.5,
+            "result": "win",
+            "score": "88–64"
+          },
+          {
+            "event_name": "Campbell Fighting Camels at East Tennessee St Buccaneers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "East Tennessee State Buccaneers",
+            "probability_pct": 81.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "68–53"
+          },
+          {
+            "event_name": "Stony Brook Seawolves at Princeton Tigers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Princeton Tigers",
+            "probability_pct": 63.1,
+            "market_probability_pct": 65.5,
+            "result": "win",
+            "score": "69–59"
+          },
+          {
+            "event_name": "Milwaukee Panthers at Indiana St Sycamores",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Indiana State Sycamores",
+            "probability_pct": 73.1,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "73–82"
+          },
+          {
+            "event_name": "James Madison Dukes at Delaware Blue Hens",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "James Madison Dukes",
+            "probability_pct": 53.0,
+            "market_probability_pct": 58.4,
+            "result": "win",
+            "score": "61–71"
+          },
+          {
+            "event_name": "NJIT Highlanders at VCU Rams",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "VCU Rams",
+            "probability_pct": 98.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "87–49"
+          },
+          {
+            "event_name": "Furman Paladins at Holy Cross Crusaders",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Furman Paladins",
+            "probability_pct": 91.1,
+            "market_probability_pct": 86.5,
+            "result": "win",
+            "score": "67–80"
+          },
+          {
+            "event_name": "William & Mary Tribe at Florida Atlantic Owls",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Florida Atlantic Owls",
+            "probability_pct": 55.8,
+            "market_probability_pct": 66.2,
+            "result": "win",
+            "score": "95–90"
+          },
+          {
+            "event_name": "Saint Peter's Peacocks at South Carolina Gamecocks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "South Carolina Gamecocks",
+            "probability_pct": 92.0,
+            "market_probability_pct": 94.8,
+            "result": "win",
+            "score": "77–41"
+          },
+          {
+            "event_name": "Old Dominion Monarchs at Norfolk St Spartans",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Old Dominion Monarchs",
+            "probability_pct": 69.0,
+            "market_probability_pct": 70.0,
+            "result": "win",
+            "score": "60–71"
+          },
+          {
+            "event_name": "Marquette Golden Eagles at Michigan Wolverines",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Marquette Golden Eagles",
+            "probability_pct": 62.4,
+            "market_probability_pct": 40.5,
+            "result": "loss",
+            "score": "84–70"
+          },
+          {
+            "event_name": "Colgate Raiders at St. John's Red Storm",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "St. John's Red Storm",
+            "probability_pct": 96.1,
+            "market_probability_pct": 97.3,
+            "result": "win",
+            "score": "90–59"
+          },
+          {
+            "event_name": "South Carolina St Bulldogs at Notre Dame Fighting Irish",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "Notre Dame Fighting Irish",
+            "probability_pct": 93.3,
+            "market_probability_pct": 96.3,
+            "result": "win",
+            "score": "99–59"
+          },
+          {
+            "event_name": "Southern Indiana Screaming Eagles at IU Indianapolis Jaguars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:30Z",
+            "selection": "IU Indianapolis Jaguars",
+            "probability_pct": 61.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "74–70"
+          },
+          {
+            "event_name": "Bob Jones Bruins at South Carolina Upstate Spartans",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:30Z",
+            "selection": "South Carolina Upstate Spartans",
+            "probability_pct": 99.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "104–49"
+          },
+          {
+            "event_name": "Charleston Cougars at Temple Owls",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:30:00Z",
+            "selection": "Temple Owls",
+            "probability_pct": 63.1,
+            "market_probability_pct": 46.4,
+            "result": "loss",
+            "score": "81–91"
+          },
+          {
+            "event_name": "Voorhees Tigers at Wofford Terriers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:00Z",
+            "selection": "Wofford Terriers",
+            "probability_pct": 98.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "91–47"
+          },
+          {
+            "event_name": "Virginia Lynchburg Dragons at Western Carolina Catamounts",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:00Z",
+            "selection": "Western Carolina Catamounts",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "136–68"
+          },
+          {
+            "event_name": "North Carolina Central Eagles at VMI Keydets",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:00Z",
+            "selection": "VMI Keydets",
+            "probability_pct": 55.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "65–51"
+          },
+          {
+            "event_name": "Thomas College Terriers at New Hampshire Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T23:00Z",
+            "selection": "New Hampshire Wildcats",
+            "probability_pct": 88.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "114–55"
+          },
+          {
+            "event_name": "Pennsylvania Quakers at Navy Midshipmen",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T22:30Z",
+            "selection": "Pennsylvania Quakers",
+            "probability_pct": 73.0,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "81–76"
+          },
+          {
+            "event_name": "Bethune-Cookman Wildcats at San Diego State Aztecs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T22:00Z",
+            "selection": "San Diego State Aztecs",
+            "probability_pct": 90.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "88–75"
+          },
+          {
+            "event_name": "North Carolina A&T Aggies at East Carolina Pirates",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T21:00:00Z",
+            "selection": "East Carolina Pirates",
+            "probability_pct": 75.9,
+            "market_probability_pct": 83.9,
+            "result": "win",
+            "score": "72–67"
+          },
+          {
+            "event_name": "Loyola Chicago Ramblers at Air Force Falcons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T20:00Z",
+            "selection": "Loyola Chicago Ramblers",
+            "probability_pct": 84.4,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "107–93"
+          },
+          {
+            "event_name": "South Florida Bulls at Saint Joseph's Hawks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T20:00Z",
+            "selection": "South Florida Bulls",
+            "probability_pct": 79.8,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "83–80"
+          },
+          {
+            "event_name": "Saint Joseph's Hawks at South Florida Bulls",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T20:00:48Z",
+            "selection": "South Florida Bulls",
+            "probability_pct": 79.8,
+            "market_probability_pct": 72.4,
+            "result": "loss",
+            "score": "80–83"
+          },
+          {
+            "event_name": "Incarnate Word Cardinals at UC Davis Aggies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T19:11:00Z",
+            "selection": "UC Davis Aggies",
+            "probability_pct": 83.2,
+            "market_probability_pct": 85.1,
+            "result": "win",
+            "score": "81–69"
+          },
+          {
+            "event_name": "Dartmouth Big Green at UAlbany Great Danes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T18:00Z",
+            "selection": "UAlbany Great Danes",
+            "probability_pct": 56.0,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "76–85"
+          },
+          {
+            "event_name": "Kansas City Roos at Florida A&M Rattlers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T17:00Z",
+            "selection": "Kansas City Roos",
+            "probability_pct": 73.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "65–87"
+          },
+          {
+            "event_name": "Fairleigh Dickinson Knights at East Texas A&M Lions",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T16:30Z",
+            "selection": "East Texas A&M Lions",
+            "probability_pct": 89.2,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "76–80"
+          },
+          {
+            "event_name": "Montana Grizzlies at San Francisco Dons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T03:00:00Z",
+            "selection": "San Francisco Dons",
+            "probability_pct": 67.2,
+            "market_probability_pct": 84.4,
+            "result": "win",
+            "score": "63–58"
+          },
+          {
+            "event_name": "Kansas Jayhawks at Kentucky Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:35:00Z",
+            "selection": "Kansas Jayhawks",
+            "probability_pct": 66.2,
+            "market_probability_pct": 65.7,
+            "result": "win",
+            "score": "69–89"
+          },
+          {
+            "event_name": "Little Rock Trojans at New Mexico Lobos",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00Z",
+            "selection": "New Mexico Lobos",
+            "probability_pct": 94.5,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "94–69"
+          },
+          {
+            "event_name": "Creighton Bluejays at Kansas St Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Creighton Bluejays",
+            "probability_pct": 66.8,
+            "market_probability_pct": 59.7,
+            "result": "loss",
+            "score": "89–82"
+          },
+          {
+            "event_name": "Georgia St Panthers at Fresno St Bulldogs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Georgia State Panthers",
+            "probability_pct": 50.3,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "95–92"
+          },
+          {
+            "event_name": "Utah Tech Trailblazers at Utah State Aggies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Utah State Aggies",
+            "probability_pct": 97.8,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "118–86"
+          },
+          {
+            "event_name": "Queens University Royals at BYU Cougars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "BYU Cougars",
+            "probability_pct": 97.9,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "98–82"
+          },
+          {
+            "event_name": "San Diego Toreros at Colorado Buffaloes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Colorado Buffaloes",
+            "probability_pct": 84.4,
+            "market_probability_pct": 87.1,
+            "result": "win",
+            "score": "83–75"
+          },
+          {
+            "event_name": "Hofstra Pride at Arizona St Sun Devils",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Arizona State Sun Devils",
+            "probability_pct": 85.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "85–63"
+          },
+          {
+            "event_name": "Northern Arizona Lumberjacks at Arizona Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Arizona Wildcats",
+            "probability_pct": 98.0,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "90–59"
+          },
+          {
+            "event_name": "UL Monroe Warhawks at TCU Horned Frogs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "TCU Horned Frogs",
+            "probability_pct": 99.6,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "100–92"
+          },
+          {
+            "event_name": "Bucknell Bison at Virginia Cavaliers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Virginia Cavaliers",
+            "probability_pct": 99.7,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "95–61"
+          },
+          {
+            "event_name": "Weber State Wildcats at Utah Utes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T02:00:00Z",
+            "selection": "Utah Utes",
+            "probability_pct": 87.9,
+            "market_probability_pct": 92.3,
+            "result": "win",
+            "score": "85–64"
+          },
+          {
+            "event_name": "SE Louisiana Lions at Ole Miss Rebels",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:30:00Z",
+            "selection": "Ole Miss Rebels",
+            "probability_pct": 96.7,
+            "market_probability_pct": 96.7,
+            "result": "win",
+            "score": "91–51"
+          },
+          {
+            "event_name": "Fairfield Stags at Wisconsin Badgers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:30:00Z",
+            "selection": "Wisconsin Badgers",
+            "probability_pct": 90.4,
+            "market_probability_pct": 96.8,
+            "result": "win",
+            "score": "89–42"
+          },
+          {
+            "event_name": "York (NE) Panthers at Omaha Mavericks",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "Omaha Mavericks",
+            "probability_pct": 96.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "78–66"
+          },
+          {
+            "event_name": "UT Martin Skyhawks at Arkansas State Red Wolves",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "Arkansas State Red Wolves",
+            "probability_pct": 76.4,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "65–82"
+          },
+          {
+            "event_name": "Northern New Mexico Eagles at Northern Colorado Bears",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "Northern Colorado Bears",
+            "probability_pct": 99.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "102–52"
+          },
+          {
+            "event_name": "Dallas Christian Crusaders at Texas A&M-Corpus Christi Islanders",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "Texas A&M-Corpus Christi Islanders",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "102–58"
+          },
+          {
+            "event_name": "Prairie View A&M Panthers at SMU Mustangs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "SMU Mustangs",
+            "probability_pct": 95.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "98–63"
+          },
+          {
+            "event_name": "Livingstone Blue Bears at Austin Peay Governors",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00Z",
+            "selection": "Austin Peay Governors",
+            "probability_pct": 89.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "82–61"
+          },
+          {
+            "event_name": "Yale Bulldogs at Baylor Bears",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Baylor Bears",
+            "probability_pct": 88.5,
+            "market_probability_pct": 94.3,
+            "result": "win",
+            "score": "90–61"
+          },
+          {
+            "event_name": "Alcorn St Braves at Murray St Racers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Murray State Racers",
+            "probability_pct": 97.9,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "94–57"
+          },
+          {
+            "event_name": "Green Bay Phoenix at Northern Iowa Panthers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Northern Iowa Panthers",
+            "probability_pct": 64.8,
+            "market_probability_pct": 60.1,
+            "result": "win",
+            "score": "89–76"
+          },
+          {
+            "event_name": "Northern Kentucky Norse at Saint Louis Billikens",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Saint Louis Billikens",
+            "probability_pct": 94.0,
+            "market_probability_pct": 95.3,
+            "result": "win",
+            "score": "125–63"
+          },
+          {
+            "event_name": "Southern Jaguars at Iowa State Cyclones",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Iowa State Cyclones",
+            "probability_pct": 99.3,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "84–47"
+          },
+          {
+            "event_name": "Belmont Bruins at Lipscomb Bisons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Belmont Bruins",
+            "probability_pct": 56.8,
+            "market_probability_pct": 60.8,
+            "result": "loss",
+            "score": "88–75"
+          },
+          {
+            "event_name": "Houston Christian Huskies at South Dakota Coyotes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "South Dakota Coyotes",
+            "probability_pct": 66.1,
+            "market_probability_pct": 61.8,
+            "result": "loss",
+            "score": "76–87"
+          },
+          {
+            "event_name": "Illinois Fighting Illini at Texas Tech Red Raiders",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T01:00:00Z",
+            "selection": "Illinois Fighting Illini",
+            "probability_pct": 64.8,
+            "market_probability_pct": 56.3,
+            "result": "loss",
+            "score": "84–78"
+          },
+          {
+            "event_name": "Ecclesia Royals at Central Arkansas Bears",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:30Z",
+            "selection": "Central Arkansas Bears",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "127–54"
+          },
+          {
+            "event_name": "Millsaps Majors at Northwestern State Demons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:30Z",
+            "selection": "Northwestern State Demons",
+            "probability_pct": 78.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "77–49"
+          },
+          {
+            "event_name": "Evansville Purple Aces at Middle Tennessee Blue Raiders",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:30:00Z",
+            "selection": "Middle Tennessee Blue Raiders",
+            "probability_pct": 64.1,
+            "market_probability_pct": 79.9,
+            "result": "win",
+            "score": "73–68"
+          },
+          {
+            "event_name": "Texas State Bobcats at UT Rio Grande Valley Vaqueros",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:30:00Z",
+            "selection": "Texas State Bobcats",
+            "probability_pct": 72.2,
+            "market_probability_pct": 67.0,
+            "result": "win",
+            "score": "65–72"
+          },
+          {
+            "event_name": "Nicholls St Colonels at Tulane Green Wave",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:30:00Z",
+            "selection": "Tulane Green Wave",
+            "probability_pct": 63.7,
+            "market_probability_pct": 78.2,
+            "result": "win",
+            "score": "77–63"
+          },
+          {
+            "event_name": "Memphis Tigers at Vanderbilt Commodores",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:15:00Z",
+            "selection": "Vanderbilt Commodores",
+            "probability_pct": 84.7,
+            "market_probability_pct": 89.7,
+            "result": "win",
+            "score": "105–81"
+          },
+          {
+            "event_name": "Elon Phoenix at George Washington Revolutionaries",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "George Washington Revolutionaries",
+            "probability_pct": 82.3,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "69–50"
+          },
+          {
+            "event_name": "Army Black Knights at New Haven Chargers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "New Haven Chargers",
+            "probability_pct": 53.6,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "63–55"
+          },
+          {
+            "event_name": "St. Mary's (MD) Seahawks at Longwood Lancers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "Longwood Lancers",
+            "probability_pct": 99.2,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "101–45"
+          },
+          {
+            "event_name": "Virginia Lynchburg Dragons at The Citadel Bulldogs",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "The Citadel Bulldogs",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "131–50"
+          },
+          {
+            "event_name": "Apprentice School Builders at Hampton Pirates",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "Hampton Pirates",
+            "probability_pct": 92.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "67–56"
+          },
+          {
+            "event_name": "College of Biblical Studies Ambassadors at Texas Southern Tigers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00Z",
+            "selection": "Texas Southern Tigers",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "98–78"
+          },
+          {
+            "event_name": "Wright St Raiders at Toledo Rockets",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Wright State Raiders",
+            "probability_pct": 63.8,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "68–76"
+          },
+          {
+            "event_name": "Loyola Marymount Lions at Troy Trojans",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Troy Trojans",
+            "probability_pct": 51.7,
+            "market_probability_pct": 48.8,
+            "result": "win",
+            "score": "74–69"
+          },
+          {
+            "event_name": "Presbyterian Blue Hose at NC State Wolfpack",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "NC State Wolfpack",
+            "probability_pct": 86.6,
+            "market_probability_pct": 93.6,
+            "result": "win",
+            "score": "94–60"
+          },
+          {
+            "event_name": "Charleston Southern Buccaneers at Wake Forest Demon Deacons",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Wake Forest Demon Deacons",
+            "probability_pct": 88.6,
+            "market_probability_pct": 93.5,
+            "result": "win",
+            "score": "82–64"
+          },
+          {
+            "event_name": "Washington St Cougars at Duquesne Dukes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Duquesne Dukes",
+            "probability_pct": 73.7,
+            "market_probability_pct": 59.7,
+            "result": "win",
+            "score": "72–71"
+          },
+          {
+            "event_name": "Virginia Tech Hokies at Iowa Hawkeyes",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Iowa Hawkeyes",
+            "probability_pct": 59.3,
+            "market_probability_pct": 62.4,
+            "result": "loss",
+            "score": "88–93"
+          },
+          {
+            "event_name": "Harvard Crimson at Northeastern Huskies",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Harvard Crimson",
+            "probability_pct": 55.1,
+            "market_probability_pct": 54.1,
+            "result": "loss",
+            "score": "74–70"
+          },
+          {
+            "event_name": "Maryland-Eastern Shore Hawks at Boston College Eagles",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Boston College Eagles",
+            "probability_pct": 94.1,
+            "market_probability_pct": 97.2,
+            "result": "win",
+            "score": "82–54"
+          },
+          {
+            "event_name": "Eastern Kentucky Colonels at Georgia Tech Yellow Jackets",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Georgia Tech Yellow Jackets",
+            "probability_pct": 79.7,
+            "market_probability_pct": 90.6,
+            "result": "win",
+            "score": "85–71"
+          },
+          {
+            "event_name": "Michigan St Spartans at Duke Blue Devils",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Duke Blue Devils",
+            "probability_pct": 70.5,
+            "market_probability_pct": 74.2,
+            "result": "loss",
+            "score": "73–79"
+          },
+          {
+            "event_name": "Mercer Bears at Georgia Southern Eagles",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Georgia Southern Eagles",
+            "probability_pct": 56.5,
+            "market_probability_pct": 52.4,
+            "result": "loss",
+            "score": "91–97"
+          },
+          {
+            "event_name": "La Salle Explorers at Villanova Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Villanova Wildcats",
+            "probability_pct": 94.5,
+            "market_probability_pct": 94.5,
+            "result": "win",
+            "score": "80–59"
+          },
+          {
+            "event_name": "Youngstown St Penguins at Central Michigan Chippewas",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Youngstown State Penguins",
+            "probability_pct": 57.1,
+            "market_probability_pct": null,
+            "result": "loss",
+            "score": "91–78"
+          },
+          {
+            "event_name": "Iona Gaels at Fordham Rams",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Fordham Rams",
+            "probability_pct": 79.5,
+            "market_probability_pct": 84.7,
+            "result": "win",
+            "score": "78–72"
+          },
+          {
+            "event_name": "Bradley Braves at Davidson Wildcats",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Davidson Wildcats",
+            "probability_pct": 82.1,
+            "market_probability_pct": 82.0,
+            "result": "win",
+            "score": "62–45"
+          },
+          {
+            "event_name": "Wyoming Cowboys at North Carolina Tar Heels",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "North Carolina Tar Heels",
+            "probability_pct": 84.7,
+            "market_probability_pct": 86.5,
+            "result": "win",
+            "score": "76–63"
+          },
+          {
+            "event_name": "Winthrop Eagles at Kennesaw St Owls",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Kennesaw State Owls",
+            "probability_pct": 79.1,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "88–79"
+          },
+          {
+            "event_name": "South Alabama Jaguars at UCF Knights",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "UCF Knights",
+            "probability_pct": 87.1,
+            "market_probability_pct": 88.5,
+            "result": "win",
+            "score": "76–69"
+          },
+          {
+            "event_name": "Detroit Mercy Titans at Xavier Musketeers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Xavier Musketeers",
+            "probability_pct": 99.4,
+            "market_probability_pct": 97.1,
+            "result": "win",
+            "score": "100–55"
+          },
+          {
+            "event_name": "Siena Saints at Dayton Flyers",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Dayton Flyers",
+            "probability_pct": 87.9,
+            "market_probability_pct": 88.4,
+            "result": "loss",
+            "score": "89–99"
+          },
+          {
+            "event_name": "Bryant Bulldogs at Providence Friars",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Providence Friars",
+            "probability_pct": 94.6,
+            "market_probability_pct": 97.4,
+            "result": "win",
+            "score": "78–55"
+          },
+          {
+            "event_name": "Maine Black Bears at Rhode Island Rams",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Rhode Island Rams",
+            "probability_pct": 93.8,
+            "market_probability_pct": 94.6,
+            "result": "win",
+            "score": "71–65"
+          },
+          {
+            "event_name": "NJIT Highlanders at Rutgers Scarlet Knights",
+            "sport": "ncaam",
+            "starts_at": "2026-11-10T23:30:00Z",
+            "selection": "Rutgers Scarlet Knights",
+            "probability_pct": 97.2,
+            "market_probability_pct": 96.6,
+            "result": "win",
+            "score": "101–64"
+          },
+          {
+            "event_name": "Delaware St Hornets at Georgetown Hoyas",
+            "sport": "ncaam",
+            "starts_at": "2026-11-10T23:30:00Z",
+            "selection": "Georgetown Hoyas",
+            "probability_pct": 94.4,
+            "market_probability_pct": 97.6,
+            "result": "win",
+            "score": "83–78"
+          },
+          {
+            "event_name": "Florida Gators at Florida St Seminoles",
+            "sport": "ncaam",
+            "starts_at": "2026-11-10T23:00:00Z",
+            "selection": "Florida Gators",
+            "probability_pct": 78.0,
+            "market_probability_pct": 79.0,
+            "result": "win",
+            "score": "72–81"
+          },
           {
             "event_name": "Portland Pilots at Hawai'i Rainbow Warriors",
             "sport": "ncaam",
@@ -74594,6 +75900,16 @@
             "score": "86–85"
           },
           {
+            "event_name": "UNC Asheville Bulldogs at West Georgia Wolves",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T00:00:00Z",
+            "selection": "UNC Asheville Bulldogs",
+            "probability_pct": 54.3,
+            "market_probability_pct": 44.8,
+            "result": "win",
+            "score": "70–73"
+          },
+          {
             "event_name": "Ohio Bobcats at South Alabama Jaguars",
             "sport": "ncaam",
             "starts_at": "2026-11-03T01:00:00Z",
@@ -74602,6 +75918,16 @@
             "market_probability_pct": 48.3,
             "result": "win",
             "score": "77–86"
+          },
+          {
+            "event_name": "Loyola Marymount Lions at Troy Trojans",
+            "sport": "ncaam",
+            "starts_at": "2026-11-11T00:00:00Z",
+            "selection": "Troy Trojans",
+            "probability_pct": 51.7,
+            "market_probability_pct": 48.8,
+            "result": "win",
+            "score": "74–69"
           },
           {
             "event_name": "Miami (OH) RedHawks at James Madison Dukes",
@@ -74615,7 +75941,8 @@
           }
         ],
         "reportable": true,
-        "minimum_picks_to_read": 50
+        "minimum_picks_to_read": 50,
+        "refreshed_at": "2026-11-12T03:57:47.980185+00:00"
       },
       "ncaaf": {
         "available": true,

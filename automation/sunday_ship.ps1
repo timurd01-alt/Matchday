@@ -24,6 +24,8 @@ param(
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [ValidateSet('both','ncaaf','ncaam')][string]$Sport = 'both',
     [switch]$NoPush,
+    # Publish the poller's graded cards without rerunning weekly ratings.
+    [switch]$ScorecardOnly,
     # Ship the handoff already on disk; skip the TRDLab refresh.
     [switch]$SkipRefresh,
     # Run even if this week was already shipped (the desktop button uses this).
@@ -31,6 +33,7 @@ param(
 )
 . (Join-Path $PSScriptRoot 'engine_paths.ps1')
 $TRDLab = Resolve-TRDLabRoot -Root $TRDLab
+if ($ScorecardOnly -and $Sport -eq 'both') { throw '-ScorecardOnly requires -Sport ncaam or ncaaf' }
 $ErrorActionPreference = 'Stop'
 $matchday = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $logDir = Join-Path $matchday 'automation\logs'
@@ -83,7 +86,7 @@ function RunForecastSlate([string]$sportKey) {
 $monday = (Get-Date).Date.AddDays(((8 - [int](Get-Date).DayOfWeek) % 7))
 $asOf = $monday.ToString('yyyy-MM-dd')
 $marker = Join-Path $logDir 'last-shipped-week.txt'
-if (-not $Force -and -not $SkipRefresh -and (Test-Path $marker) -and ((Get-Content $marker -Raw).Trim() -eq $asOf)) {
+if (-not $ScorecardOnly -and -not $Force -and -not $SkipRefresh -and (Test-Path $marker) -and ((Get-Content $marker -Raw).Trim() -eq $asOf)) {
     Say "week of $asOf already shipped; nothing to do"
     exit 0
 }
@@ -100,14 +103,14 @@ try {
 $poller = Resolve-TRDLabRefreshTask
 $pollerPaused = $false
 try {
-    if (-not $SkipRefresh -and (Get-ScheduledTask -TaskName $poller -ErrorAction SilentlyContinue)) {
+    if (-not $ScorecardOnly -and -not $SkipRefresh -and (Get-ScheduledTask -TaskName $poller -ErrorAction SilentlyContinue)) {
         Stop-ScheduledTask -TaskName $poller -ErrorAction SilentlyContinue
         Disable-ScheduledTask -TaskName $poller | Out-Null
         $pollerPaused = $true
         Start-Sleep -Seconds 5
     }
 
-    if ($SkipRefresh) { Say 'skipping TRDLab refresh (-SkipRefresh)' } else {
+    if ($ScorecardOnly) { Say 'reading graded cards from the poller; no weekly refresh' } elseif ($SkipRefresh) { Say 'skipping TRDLab refresh (-SkipRefresh)' } else {
         # refresh exits 1 when a backlog remains (e.g. a late game with no
         # play-by-play yet); that is reported, not fatal.
         # The five-minute poller is paused for the run, and it is what fetches
@@ -168,35 +171,54 @@ $tree = Join-Path $matchday '.worktrees\sunday-ship'
 Push-Location $matchday
 try {
     git fetch -q origin main
+    if ($LASTEXITCODE -ne 0) { throw 'Could not update from origin/main; nothing published' }
     if (-not (Test-Path $tree)) { git worktree add -q --detach $tree origin/main }
 } finally { Pop-Location }
 Push-Location $tree
 try {
     git checkout -q --detach origin/main
+    if ($LASTEXITCODE -ne 0) { throw 'Could not select origin/main' }
     git reset -q --hard origin/main
-    if ($Sport -eq 'both') {
+    if ($LASTEXITCODE -ne 0) { throw 'Could not prepare publication checkout' }
+    if ($ScorecardOnly) {
+        Run 'refresh engine scorecard' $tree $PythonPath @('refresh_engine_scorecard.py','--engine',$TRDLab,'--sport',$Sport)
+    } elseif ($Sport -eq 'both') {
         Copy-Item -Force (Join-Path $TRDLab 'trdlab_picks.json') (Join-Path $tree 'trdlab_picks.json')
     } else {
         Run 'merge selected sport into published handoff' $tree $PythonPath @((Join-Path $PSScriptRoot 'merge_sport.py'), $Sport, (Join-Path $TRDLab 'trdlab_picks.json'), (Join-Path $tree 'trdlab_picks.json'))
     }
     $bk = Join-Path $TRDLab 'output\bracketology_ncaam.json'
-    if ($Sport -ne 'ncaaf' -and (Test-Path $bk)) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
+    if (-not $ScorecardOnly -and $Sport -ne 'ncaaf' -and (Test-Path $bk)) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
 
     Run 'validate handoff' $tree $PythonPath @('-c', "import trdlab_handoff as h, json, sys; d=json.load(open('trdlab_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
     # Stop before publishing if this week's picks fell sharply against what is live.
+    if (-not $ScorecardOnly) {
     Run 'check pick coverage' $tree $PythonPath @('check_pick_coverage.py')
     # Stop before publishing on missing results, wrong records, or projected
     # scores drifting from the model line (2026-10-18).
     Run 'check handoff integrity' $tree $PythonPath @('check_handoff_integrity.py')
-    Run 'rebuild snapshot + AP poll' $tree $PythonPath @('build_cfb_snapshot.py')
+    }
+    if ($ScorecardOnly) {
+        Run 'rebuild scorecard snapshot' $tree $PythonPath @('build_cfb_snapshot.py','--scorecard-only')
+    } else {
+        Run 'rebuild snapshot + AP poll' $tree $PythonPath @('build_cfb_snapshot.py')
+    }
+    git diff --quiet -- trdlab_picks.json matchday-cfb-snapshot.js ap_poll_snapshot.json bracketology_ncaam.json
+    if ($LASTEXITCODE -eq 1) {
+        Run 'shipment release note' $tree $PythonPath @('write_ship_release.py')
+        Run 'rebuild release notes' $tree $PythonPath @('build_updates.py')
+    } elseif ($LASTEXITCODE -ne 0) { throw 'Could not inspect shipment changes' }
     Run 'test suite' $tree $PythonPath @('-m','unittest','discover','-p','test_*.py')
 
-    git add -- trdlab_picks.json matchday-cfb-snapshot.js
-    if (Test-Path ap_poll_snapshot.json) { git add -- ap_poll_snapshot.json }
-    if (Test-Path bracketology_ncaam.json) { git add -- bracketology_ncaam.json }
+    git add -- trdlab_picks.json matchday-cfb-snapshot.js updates updates.js
+    if ($LASTEXITCODE -ne 0) { throw 'Could not stage shipment' }
+    if (Test-Path ap_poll_snapshot.json) { git add -- ap_poll_snapshot.json; if ($LASTEXITCODE -ne 0) { throw 'Could not stage AP snapshot' } }
+    if (Test-Path bracketology_ncaam.json) { git add -- bracketology_ncaam.json; if ($LASTEXITCODE -ne 0) { throw 'Could not stage bracketology' } }
     git diff --cached --quiet
-    if ($LASTEXITCODE -eq 0) { Say 'nothing changed; site already current'; if (-not $SkipRefresh) { Set-Content $marker $asOf }; return }
-    git -c core.autocrlf=false commit -q -m "Sunday ship: ratings, results, AP poll and next week's picks ($asOf week)"
+    if ($LASTEXITCODE -eq 0) { Say 'nothing changed; site already current'; if (-not $ScorecardOnly -and -not $SkipRefresh) { Set-Content $marker $asOf }; return }
+    $message = if ($ScorecardOnly) { "Daily scorecard: $Sport graded cards ($((Get-Date).ToString('yyyy-MM-dd')))" } else { "Sunday ship: ratings, results, AP poll and next week's picks ($asOf week)" }
+    git -c core.autocrlf=false commit -q -m $message
+    if ($LASTEXITCODE -ne 0) { throw 'Could not commit shipment; nothing pushed' }
     if ($NoPush) { Say 'committed in worktree, not pushed (-NoPush)'; return }
     $pushed = $false
     foreach ($i in 1..3) {
@@ -207,7 +229,7 @@ try {
         if ($LASTEXITCODE -ne 0) { cmd /c 'git rebase --abort 2>nul' }
     }
     if (-not $pushed) { throw "could not push after 3 attempts; see $log" }
-    if (-not $SkipRefresh) { Set-Content $marker $asOf }
+    if (-not $ScorecardOnly -and -not $SkipRefresh) { Set-Content $marker $asOf }
     Say "shipped $(git rev-parse --short HEAD); deploy.yml publishes the site"
 } finally { Pop-Location }
 

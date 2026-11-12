@@ -1,5 +1,7 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-11 (daily scorecard publication reads only the engine’s existing frozen cards and grades. No new provider calls, raw odds, retained fields or redistribution. The existing derived market comparison and caveats are preserved.)
+
 Reviewed: 2026-11-08 (social posting schedule: up to twelve scheduled runs a
 week, at most one X post and one TikTok draft per run, at most three a day per
 platform, plus Top 25 reply threads on X built from Matchday's own ratings. The

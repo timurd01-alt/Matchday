@@ -443,6 +443,20 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     return f"regenerated {sum(len(b) for b in blocks)} bytes of rankings"
 
 
+def build_scorecard(path: pathlib.Path = SNAPSHOT) -> str:
+    """Update only graded cards; daily publication needs no AP/CFP fetch."""
+    document = trdlab_handoff.load()
+    if not document or not document.get('scorecard'):
+        raise ValueError('No engine scorecard; snapshot left unchanged')
+    text = path.read_text(encoding='utf-8')
+    replacement = '  const MATCHDAY_TRDLAB_SCORECARD=' + json.dumps(document['scorecard'], ensure_ascii=False) + ';'
+    updated, count = re.subn(r'^  const MATCHDAY_TRDLAB_SCORECARD=.*;$', lambda _: replacement, text, flags=re.MULTILINE)
+    if count != 1:
+        raise ValueError('Expected exactly one generated scorecard block')
+    path.write_text(updated, encoding='utf-8', newline='\n')
+    return 'regenerated engine scorecard only'
+
+
 if __name__ == "__main__":
-    print(build())
+    print(build_scorecard() if '--scorecard-only' in sys.argv else build())
     sys.exit(0)
