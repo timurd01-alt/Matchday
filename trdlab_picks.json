@@ -69267,52 +69267,52 @@
           "rule": "The scorecard freezes 60 minutes before kickoff. It stores the newest forecast generated at or before that moment, alongside the market price as it stood then, and is never rewritten afterwards."
         },
         "totals": {
-          "locked_events": 641,
+          "locked_events": 642,
           "duplicate_cards_not_counted": 0,
           "fbs_versus_fcs_not_counted": 0,
-          "locked_selections": 1282,
-          "graded_selections": 1256,
-          "awaiting_result": 26
+          "locked_selections": 1284,
+          "graded_selections": 1280,
+          "awaiting_result": 4
         },
         "record": {
-          "picks": 628,
-          "wins": 528,
-          "losses": 100,
-          "hit_rate_pct": 84.1,
+          "picks": 640,
+          "wins": 536,
+          "losses": 104,
+          "hit_rate_pct": 83.8,
           "expected_hit_rate_pct": 85.3,
-          "calibration_gap_points": -1.3,
+          "calibration_gap_points": -1.6,
           "confidence_interval_pct": [
-            81.0,
-            86.7
+            80.7,
+            86.4
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 368,
-          "beat_market_pct": 46.5,
+          "graded_priced_selections": 374,
+          "beat_market_pct": 45.7,
           "beat_market": {
-            "picks": 368,
+            "picks": 374,
             "wins": 171,
-            "losses": 197,
+            "losses": 203,
             "ties": 0,
-            "hit_rate_pct": 46.5,
+            "hit_rate_pct": 45.7,
             "expected_hit_rate_pct": 50.0,
-            "calibration_gap_points": -3.5,
+            "calibration_gap_points": -4.3,
             "confidence_interval_pct": [
-              41.4,
-              51.6
+              40.7,
+              50.8
             ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 178,
-            "wins": 148,
-            "losses": 30,
-            "hit_rate_pct": 83.1,
-            "expected_hit_rate_pct": 83.2,
-            "calibration_gap_points": -0.1,
+            "picks": 181,
+            "wins": 150,
+            "losses": 31,
+            "hit_rate_pct": 82.9,
+            "expected_hit_rate_pct": 83.1,
+            "calibration_gap_points": -0.2,
             "confidence_interval_pct": [
-              77.0,
-              87.9
+              76.7,
+              87.7
             ]
           },
           "disagreed_with_market": {
@@ -69327,13 +69327,13 @@
               75.5
             ]
           },
-          "disagreement_share_pct": 10.6,
+          "disagreement_share_pct": 10.4,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
           "available": true,
-          "underdog_lift_points": -3.4,
-          "contested_underdogs": 55,
+          "underdog_lift_points": -3.5,
+          "contested_underdogs": 56,
           "contested_band_pct": [
             30.0,
             50.0
@@ -69442,10 +69442,10 @@
         "by_confidence": [
           {
             "band": "50–60%",
-            "picks": 59,
-            "hit_rate_pct": 57.6,
+            "picks": 61,
+            "hit_rate_pct": 55.7,
             "expected_hit_rate_pct": 55.5,
-            "calibration_gap_points": 2.1
+            "calibration_gap_points": 0.3
           },
           {
             "band": "60–70%",
@@ -69456,27 +69456,37 @@
           },
           {
             "band": "70–80%",
-            "picks": 71,
-            "hit_rate_pct": 63.4,
-            "expected_hit_rate_pct": 76.0,
-            "calibration_gap_points": -12.6
+            "picks": 73,
+            "hit_rate_pct": 63.0,
+            "expected_hit_rate_pct": 75.9,
+            "calibration_gap_points": -12.9
           },
           {
             "band": "80–90%",
-            "picks": 105,
-            "hit_rate_pct": 86.7,
-            "expected_hit_rate_pct": 85.8,
-            "calibration_gap_points": 0.8
+            "picks": 108,
+            "hit_rate_pct": 86.1,
+            "expected_hit_rate_pct": 85.9,
+            "calibration_gap_points": 0.2
           },
           {
             "band": "90–100%",
-            "picks": 322,
-            "hit_rate_pct": 98.1,
+            "picks": 327,
+            "hit_rate_pct": 98.2,
             "expected_hit_rate_pct": 97.3,
             "calibration_gap_points": 0.9
           }
         ],
         "recent": [
+          {
+            "event_name": "Kansas City Roos at George Mason Patriots",
+            "sport": "ncaam",
+            "starts_at": "2026-11-12T20:00Z",
+            "selection": "George Mason Patriots",
+            "probability_pct": 87.2,
+            "market_probability_pct": null,
+            "result": "pending",
+            "score": null
+          },
           {
             "event_name": "USC Trojans at California Golden Bears",
             "sport": "ncaam",
@@ -69484,8 +69494,8 @@
             "selection": "USC Trojans",
             "probability_pct": 72.3,
             "market_probability_pct": 75.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "65–77"
           },
           {
             "event_name": "UTSA Roadrunners at Seattle U Redhawks",
@@ -69494,8 +69504,8 @@
             "selection": "Seattle U Redhawks",
             "probability_pct": 87.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "59–86"
           },
           {
             "event_name": "Pacific Tigers at Long Beach State Beach",
@@ -69504,8 +69514,8 @@
             "selection": "Pacific Tigers",
             "probability_pct": 53.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "62–59"
           },
           {
             "event_name": "Chicago State Cougars at California Baptist Lancers",
@@ -69514,8 +69524,8 @@
             "selection": "California Baptist Lancers",
             "probability_pct": 72.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "62–81"
           },
           {
             "event_name": "Mississippi Valley State Delta Devils at Oregon Ducks",
@@ -69524,8 +69534,8 @@
             "selection": "Oregon Ducks",
             "probability_pct": 98.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "100–66"
           },
           {
             "event_name": "Lincoln (CA) Oaklanders at UC Irvine Anteaters",
@@ -69534,8 +69544,8 @@
             "selection": "UC Irvine Anteaters",
             "probability_pct": 100.0,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "90–40"
           },
           {
             "event_name": "Cal Poly Mustangs at Grand Canyon Lopes",
@@ -69544,8 +69554,8 @@
             "selection": "Grand Canyon Lopes",
             "probability_pct": 87.3,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "99–71"
           },
           {
             "event_name": "Arkansas-Pine Bluff Golden Lions at UCLA Bruins",
@@ -69554,8 +69564,8 @@
             "selection": "UCLA Bruins",
             "probability_pct": 99.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "106–37"
           },
           {
             "event_name": "Portland St Vikings at Colorado St Rams",
@@ -69564,8 +69574,8 @@
             "selection": "Colorado State Rams",
             "probability_pct": 89.5,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "87–71"
           },
           {
             "event_name": "Oakland Golden Grizzlies at Boise State Broncos",
@@ -69574,8 +69584,8 @@
             "selection": "Boise State Broncos",
             "probability_pct": 90.5,
             "market_probability_pct": 91.5,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "111–79"
           },
           {
             "event_name": "Lindenwood Lions at Nebraska Cornhuskers",
@@ -69584,8 +69594,8 @@
             "selection": "Nebraska Cornhuskers",
             "probability_pct": 99.2,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "94–60"
           },
           {
             "event_name": "Nevada Wolf Pack at UC Santa Barbara Gauchos",
@@ -69594,8 +69604,8 @@
             "selection": "Nevada Wolf Pack",
             "probability_pct": 55.7,
             "market_probability_pct": 51.6,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "76–63"
           },
           {
             "event_name": "Erskine Flying Fleet at Gardner-Webb Runnin' Bulldogs",
@@ -75942,7 +75952,7 @@
         ],
         "reportable": true,
         "minimum_picks_to_read": 50,
-        "refreshed_at": "2026-11-12T03:57:47.980185+00:00"
+        "refreshed_at": "2026-11-12T21:03:48.469549+00:00"
       },
       "ncaaf": {
         "available": true,

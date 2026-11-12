@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1112S590",
+  "tag": "Data",
+  "title": "Engine publication refreshed",
+  "items": [
+   "Refreshed the engine publication. Market comparisons use the probabilities frozen before the game; missing historical prices remain unavailable."
+  ]
+ },
+ {
   "date": "Build 1112SC",
   "tag": "Fix",
   "title": "Site updates recover after a failed run",
