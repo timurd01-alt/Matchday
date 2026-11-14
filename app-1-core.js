@@ -457,6 +457,19 @@ function marketPanel(m){
     if(x.confidence){
       h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
     }
+  }else if(String(m.status||'').toUpperCase()==='FINISHED'){
+    // The live feed drops a game's prices once it kicks off, so a final used to
+    // read "No market price available yet". The price that counts is the one
+    // frozen with the locked pick, kept in the scorecard.
+    const lock=typeof bbLockedPickFor==='function'?bbLockedPickFor(m):null;
+    const price=lock?.market_probability_pct==null?NaN:Number(lock.market_probability_pct);
+    if(Number.isFinite(price)&&price>=0&&price<=100){
+      const model=Number(lock.probability_pct);
+      h+=`<div class="readSide"><span>${esc(lock.selection||'Locked pick')}</span><strong>${Math.min(99.9,price).toFixed(1)}%</strong></div>`
+        +`<div class="faintline">Market probability at lock, an hour before kickoff${Number.isFinite(model)?` · model ${Math.min(99.9,model).toFixed(1)}%`:''}. Recorded with the pick and never changed.</div>`;
+    }else{
+      h+=`<div class="nomk">No market price was recorded before kickoff.</div>`;
+    }
   }else{
     const read=typeof trdlabReadFor==='function'?trdlabReadFor(m):null;
     const price=read?.market_pct==null?NaN:Number(read.market_pct);

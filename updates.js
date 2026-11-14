@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1114E",
+  "tag": "Fix",
+  "title": "Finished games keep their market price",
+  "items": [
+   "Opening a finished game used to show \"No market price available yet\", because the odds feed drops a game's prices once it kicks off. The Market section now shows the price frozen with the locked pick an hour before kickoff, with the model's number beside it.",
+   "A finished game with no recorded price now says so plainly instead of suggesting one is on the way.",
+   "Basketball forecasts now cover the whole week: the weekly update loads every day's schedule before forecasting, instead of stopping about four days out."
+  ]
+ },
+ {
   "date": "Build 1114D",
   "tag": "Content",
   "title": "Bigger glossary, basketball picks unblocked",
