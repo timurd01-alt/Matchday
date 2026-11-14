@@ -30,7 +30,7 @@
      sections:()=>{const top=cfb().slice(0,10),a=top[0],b=cfb()[24];return [
       ['The idea','A rating is how many points a team is better than an average FBS team, on a neutral field. A team rated +20 would be expected to beat an average opponent by about 20. It is built from every game the team has played, with each result adjusted for how strong the opponent was.'],
       ['The top of the board right now',top.length?bars(top.map(t=>({label:short(t.name),team:t.name,value:t.rating}))):''],
-      ['Reading two ratings together',a&&b?`Subtract one rating from another to get the expected margin on a neutral field. ${esc(short(a.name))} (${f1(a.rating)}) against ${esc(short(b.name))} (${f1(b.rating)}) works out to about ${f1(a.rating-b.rating)} points. Add roughly three points for the home team.`:'Subtract one rating from another to get the expected margin on a neutral field, then add roughly three points for the home team.'],
+      ['Reading two ratings together',a&&b?`Subtract one rating from another to get the expected margin on a neutral field. ${esc(short(a.name))} (${f1(a.rating)}) against ${esc(short(b.name))} (${f1(b.rating)}) works out to about ${f1(a.rating-b.rating)} points. Add about three and a half points for the home team.`:'Subtract one rating from another to get the expected margin on a neutral field, then add about three and a half points for the home team.'],
       ['What it is not','A rating is not a ranking of résumés. A team can rate highly after a narrow loss to a great opponent, and lower after a sloppy win over a weak one. It answers one question: how good is this team now?'],
       ['',go('groups','Open the ratings')]]}},
     {id:'sos',title:'Strength of schedule',hook:'Why a 5-0 team can rank below a 4-1 team.',
@@ -52,9 +52,9 @@
     {id:'market',title:'Model vs market',hook:'The betting market is the toughest benchmark there is.',
      figure:()=>{const v=card()?.versus_market?.disagreed_with_market;return v?{big:`${v.wins}–${v.losses}`,cap:'against the market'}:null},
      sections:()=>{const vm=card()?.versus_market||{},rows=[['Agreed with the market',vm.agreed_with_market,'win'],['Disagreed with the market',vm.disagreed_with_market,'muted']].filter(([,b])=>b&&b.picks);return [
-      ['The idea','Sportsbook prices, with the bookmaker\'s margin taken out, are the market\'s own win probabilities. A lot of money and information goes into them, so they are very hard to beat. Matchday compares against them as a test of the model, not as betting advice.'],
+      ['The idea','Sportsbook prices, with the bookmaker\'s margin taken out, are the market\'s own win probabilities. A lot of money and information goes into them, so they are very hard to beat. Where a price exists, the published win probability takes some account of it, and the model-only number is shown beside it. Matchday compares against the market as a test of the model, not as betting advice.'],
       ['The record so far',rows.length?bars(rows.map(([l,b,t])=>({label:`${l} · ${b.wins}–${b.losses}`,value:b.hit_rate_pct,tone:t})),{max:100,fmt:v=>`${Math.round(v)}%`}):''],
-      ['How to read a disagreement','When the model and the market agree, the model mostly inherits the market\'s record: favorites win. The interesting games are the disagreements, and so far they have gone worse than the agreements. That is why Matchday shows them as games to watch and grade, not as tips.'],
+      ['How to read a disagreement',`When the model and the market agree, the model mostly inherits the market's record: favorites win. The interesting games are the disagreements: they show what the model adds, or costs, beyond backing the favorite.${vm.disagreed_with_market?.picks&&vm.agreed_with_market?.picks?` So far they have won ${Math.round(vm.disagreed_with_market.hit_rate_pct)}% of the time, against ${Math.round(vm.agreed_with_market.hit_rate_pct)}% when the two agreed.`:''} That is why Matchday shows them as games to watch and grade, not as tips.`],
       ['',go('news','See Model–market watch')]]}},
     {id:'efficiency',title:'Football efficiency',hook:'EPA and success rate: who actually played better.',
      figure:()=>{const r=results()[0];if(!r)return null;const v=Number(r.play_metrics.home.epa_per_play);return {big:`${v>=0?'+':''}${v.toFixed(2)}`,cap:`${short(r.home)}, EPA per play`}},
@@ -91,13 +91,13 @@
   ];
 
   const GLOSSARY=[
-    ['Rating','Points better than an average FBS team on a neutral field, schedule-adjusted.'],
+    ['Rating','Points better than an average opponent on a neutral field, schedule-adjusted.'],
     ['Strength of schedule','The average rating of the opponents a team has played.'],
     ['Adjusted offense / defense','Points a team would score / allow against an average opponent.'],
     ['Win probability','How often a team would win the same game played many times.'],
     ['Calibration','Whether picks at a given probability won about that often.'],
     ['Market','The sportsbook price with its margin removed, read as a win probability.'],
-    ['Projected score','The most likely final score from many simulated games.'],
+    ['Projected score','A typical final: in football, the middle of thousands of simulated games; in basketball, the projected margin and total split into two scores.'],
     ['EPA per play','Expected points added per play: how much each play changed the expected score.'],
     ['Success rate','Share of plays that kept the offense on schedule.'],
     ['Efficiency','Basketball points scored or allowed per 100 possessions.'],

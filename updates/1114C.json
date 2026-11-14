@@ -1,0 +1,13 @@
+{
+  "rank": 598,
+  "date": "Build 1114C",
+  "tag": "Content",
+  "title": "Q&A, Legal and Learn now say the same thing",
+  "items": [
+    "The Legal page no longer says a preseason rating describes last season: it is a preseason estimate built from last season and roster changes, as the Q&A and Learn already said.",
+    "The projected score is described the same way everywhere: in football, the typical final across thousands of simulated games; in basketball, the projected margin and total split into two scores.",
+    "The Personal Ballot is described as one person's weekly ranking, not the model's. Legal now says bookmaker prices are one of the model's inputs where a game has one, matching the Q&A, and that FBS-versus-FCS games are not graded.",
+    "Learn's home-field figure now matches the football model (about three and a half points), and its model-versus-market lesson reads the current record instead of a fixed claim.",
+    "Legal no longer repeats the betting-advice disclaimer twice, and the Q&A links to the Learn tab for worked examples."
+  ]
+}
