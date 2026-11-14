@@ -138,7 +138,7 @@ function renderAccountRow(){
 //      model, and your own pick. Picks are a draft until "Submit picks".
 //   2. Leaderboard      -- This week | Season, W-L only.
 //   3. Recent activity  -- who picked what, and yesterday's records.
-let COMM_ALL=false,COMM_FLASH='',COMM_OPEN='',COMM_CONSENSUS={},COMM_ACTIVITY=null,COMM_FETCHED='';
+let COMM_ALL=false,COMM_FLASH='',COMM_OPEN='',COMM_CONSENSUS={},COMM_ACTIVITY=null,COMM_FETCHED='',COMM_FRESH=false;
 function btmDraft(){try{return JSON.parse(localStorage.getItem('matchday.btmDraft')||'{}')||{}}catch(e){return {}}}
 function btmDraftSave(d){try{localStorage.setItem('matchday.btmDraft',JSON.stringify(d))}catch(e){}}
 // Tapping the team you already submitted is not a change: it clears any
@@ -176,20 +176,27 @@ async function submitDraft(){
     }
   }finally{COMM_SUBMITTING=false}
   btmDraftSave(left);
+  // The feed and the split are edge-cached for up to three minutes, and the
+  // redraw at the start of a submit fetched them mid-way: eight picks went
+  // in and Recent activity kept showing the first three (2026-11-14). The
+  // read after a submit goes past the cache.
+  if(done)COMM_FRESH=true;
   COMM_FLASH=failed?`${done} of ${done+failed} picks submitted. ${failed===1?'1 did not go through; it is':`${failed} did not go through; they are`} still in your draft, so submit again.`
     :done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
   COMM_FETCHED='';renderCommunity();
 }
-async function commFetch(action,comp){
+async function commFetch(action,comp,fresh=false){
   if(!LEADERBOARD_URL)return null;
   // c=2: browsers that cached these URLs while the edge echoed a localhost
   // origin keep that copy for good -- Vercel's 304 carries no Allow-Origin, so
   // revalidation never replaces it. A new URL is a new cache entry.
-  try{const r=await fetch(`${LEADERBOARD_URL}?action=${action}&comp=${encodeURIComponent(comp)}&c=2`);const d=await r.json();return d.ok?d:null}catch(e){return null}
+  try{const r=await fetch(`${LEADERBOARD_URL}?action=${action}&comp=${encodeURIComponent(comp)}&c=2${fresh?`&t=${Date.now()}`:''}`,fresh?{cache:'no-store'}:undefined);const d=await r.json();return d.ok?d:null}catch(e){return null}
 }
 function commLoad(comp){
-  const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp)return;COMM_FETCHED=stamp;
-  Promise.all([commFetch('consensus',comp),commFetch('activity',comp),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
+  if(COMM_SUBMITTING)return; // read once the picks are in, not half-way through
+  const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp&&!COMM_FRESH)return;COMM_FETCHED=stamp;
+  const fresh=COMM_FRESH;COMM_FRESH=false;
+  Promise.all([commFetch('consensus',comp,fresh),commFetch('activity',comp,fresh),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
     COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;
     if(c&&c.ok)commForgetStalePicks(COMM_CONSENSUS);
     // A Pick 'Em view built before these arrived is out of date even if the

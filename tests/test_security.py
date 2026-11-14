@@ -137,7 +137,8 @@ class DeploymentSecurityTests(unittest.TestCase):
         # Allow-Origin, so revalidation never replaces the stored header. The
         # client asks for a fresh URL; dropping the bust brings them back.
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
-        self.assertIn("&comp=${encodeURIComponent(comp)}&c=2`", views)
+        # (A read right after a submit may add &t=..., past the edge cache.)
+        self.assertIn("&comp=${encodeURIComponent(comp)}&c=2", views)
         accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
         self.assertNotIn("s-maxage", accounts)
         self.assertIn('res.setHeader("Cache-Control", "no-store")', accounts)

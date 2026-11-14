@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1114G",
+  "tag": "Fix",
+  "title": "Pick 'Em activity shows every pick you submit",
+  "items": [
+   "Submitting several picks could leave Recent activity showing only the first few: the page read the feed while the picks were still going in, and that partial copy was cached for up to three minutes. All the picks were saved; the feed just showed an old copy.",
+   "The page now waits until every pick is in, then reads the activity feed and the pick split straight from the server."
+  ]
+ },
+ {
   "date": "Build 1114F",
   "tag": "Fix",
   "title": "\"Games this week\" counts this week",
