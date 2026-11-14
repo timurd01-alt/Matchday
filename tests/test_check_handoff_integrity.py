@@ -28,6 +28,16 @@ class IntegrityTests(unittest.TestCase):
         self.assertFalse(ok)
         self.assertIn("poller", lines[0])
 
+    def test_basketball_only_ship_ignores_carried_over_football(self):
+        unscored_week = doc(fixtures=[fixture(i) for i in range(29)])
+        self.assertFalse(chi.check(unscored_week, NOW, {"ncaaf"})[0])
+        self.assertTrue(chi.check(unscored_week, NOW, {"ncaam"})[0])
+
+    def test_basketball_only_ship_still_checks_projected_scores(self):
+        far = doc(fixtures=[fixture(i) for i in range(29)])
+        far["picks"] = [{"projected_score": {"home": 40, "away": 10}, "model_line": {"home_margin": 3.0}}]
+        self.assertFalse(chi.check(far, NOW, {"ncaam"})[0])
+
     def test_scored_and_future_games_pass(self):
         fx = [fixture(1), fixture(2, kickoff="2026-10-24T19:30Z")]
         ok, _ = chi.check(doc(fixtures=fx, results=[result(1, "Home 1", "Away 1", 21, 14)]), NOW)

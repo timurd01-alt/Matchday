@@ -17,11 +17,19 @@ Each check is a failure that reached the site without anything stopping it:
 
 Run with no arguments it checks trdlab_picks.json next to it and exits
 non-zero on a failure, which stops the Sunday ship before the push.
+
+A single-sport ship (`sunday_ship.ps1 -Sport ncaam`) sets TRDLAB_SPORTS and
+copies the other sport's rows unchanged from what is already live, so the
+football-only checks (unscored, records) are skipped when football is not
+being shipped. 2026-11-14: midweek MAC finals missing from the live football
+rows refused every basketball update, leaving the site with no basketball
+forecasts for the weekend.
 """
 from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import pathlib
 import sys
 
@@ -88,8 +96,17 @@ def margin_gap(doc: dict) -> tuple[float, int]:
     return (sum(gaps) / len(gaps) if gaps else 0.0), len(gaps)
 
 
-def check(doc: dict, now: dt.datetime) -> tuple[bool, list[str]]:
+def check(doc: dict, now: dt.datetime, sports: set[str] | None = None) -> tuple[bool, list[str]]:
+    """`sports` is what this ship publishes; None means every sport."""
     problems, notes = [], []
+    if sports is not None and "ncaaf" not in sports:
+        notes.append("football rows are carried over unchanged; football checks skipped")
+        gap, n = margin_gap(doc)
+        notes.append(f"projected-score margin is {gap:.1f} pts from the model line on average ({n} games)")
+        if n and gap > MAX_MEAN_MARGIN_GAP:
+            problems.append(f"projected scores sit {gap:.1f} pts from the model line on average "
+                            f"(limit {MAX_MEAN_MARGIN_GAP}); the score is no longer drawn from the model")
+        return not problems, problems or notes
     missing = unscored(doc, now)
     notes.append(f"{len(missing)} games past kickoff without a result")
     if len(missing) > MAX_UNSCORED:
@@ -109,7 +126,8 @@ def check(doc: dict, now: dt.datetime) -> tuple[bool, list[str]]:
 
 def main() -> int:
     doc = json.loads((ROOT / "trdlab_picks.json").read_text(encoding="utf-8"))
-    ok, lines = check(doc, dt.datetime.now(dt.timezone.utc))
+    shipped = {s.strip() for s in os.environ.get("TRDLAB_SPORTS", "").split(",") if s.strip()}
+    ok, lines = check(doc, dt.datetime.now(dt.timezone.utc), shipped or None)
     for line in lines:
         print(("REFUSING TO SHIP: " if not ok else "") + line)
     return 0 if ok else 1
