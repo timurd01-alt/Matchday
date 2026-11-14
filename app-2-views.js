@@ -507,17 +507,16 @@ function modTop25(){
 /* My Top 25: the owner's ballot, beside the power rating rather than instead of
    it. The order is a person's call; what travels with each team is the résumé
    it was judged on (record, strength of record, best win, power rating rank),
-   so a reader can see why and argue with it. The owner's published X ballot
-   remains the fallback until the richer data-backed ballot exists. */
+   so a reader can see why and argue with it. The owner's first hand-published
+   ballot remains the fallback until the richer data-backed ballot exists. */
 const MATCHDAY_PERSONAL_CFB_BALLOT={
-  available:true,source:'x',published_on:'2026-09-20',
-  source_url:'https://x.com/MatchdayTRM/status/2101747002237210721',
+  available:true,source:'personal',published_on:'2026-09-20',
   note:'My first personal ranking after watching three weeks of college football.',
   rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
 };
 function collegeBallot(){
   const comp=String(DATA.comp_key||'').toUpperCase();
-  // Basketball has its own ballot and no X fallback: none published, none shown.
+  // Basketball has its own ballot and no hand-published fallback: none published, none shown.
   if(comp==='NCAAM'){
     const m=typeof MATCHDAY_TRDLAB_BALLOT_NCAAM!=='undefined'?MATCHDAY_TRDLAB_BALLOT_NCAAM:null;
     return m?.available&&(m.rankings||[]).length?m:null;
@@ -948,7 +947,7 @@ ${picks.map(one).join('')}
 </section>`;
 }
 
-/* @MatchdayTRM's picks, against the model and the market.
+/* The owner's picks, against the model and the market.
    Three honesty constraints ship with this data and all three are obeyed:
    `reportable` false means the sample is too small to state a record as though
    it meant something; `excluded` counts picks recorded after kickoff, which are

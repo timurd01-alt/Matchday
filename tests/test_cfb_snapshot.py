@@ -117,11 +117,13 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
         self.assertIn("collegeBallotTableHTML()", panels)
 
-    def test_the_owners_public_x_ballot_is_the_rankings_fallback(self):
+    def test_the_owners_first_ballot_is_the_rankings_fallback(self):
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("MATCHDAY_PERSONAL_CFB_BALLOT", views)
-        self.assertIn("2101747002237210721", views)
+        # The X account is gone (Build 1114B); the ballot stays, its link does not.
+        self.assertNotIn("x.com/", views)
+        self.assertIn("source:'personal'", views)
         self.assertIn("'Texas Longhorns','Georgia Bulldogs','Miami Hurricanes'", views)
         self.assertIn("'Michigan Wolverines','Duke Blue Devils'", views)
         self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)

@@ -2,8 +2,7 @@
 
 A personal analytics hub for college football and men's college basketball.
 
-Live at [matchdayterminal.com](https://matchdayterminal.com) · by
-[@MatchdayTRM](https://x.com/MatchdayTRM)
+Live at [matchdayterminal.com](https://matchdayterminal.com).
 
 ## What this is
 

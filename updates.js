@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1114B",
+  "tag": "Maintenance",
+  "title": "Old X account removed",
+  "items": [
+   "Matchday no longer points to an X account. The last references, in the project description and behind the first hand-published football ballot, are gone; the ballot itself is unchanged.",
+   "Email remains the way to get in touch."
+  ]
+ },
+ {
   "date": "Build 1114S596",
   "tag": "Data",
   "title": "Engine publication refreshed",

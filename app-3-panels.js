@@ -1522,7 +1522,7 @@ function collegeRankingTableHTML(){
 function collegeBallotTableHTML(){
   const b=typeof collegeBallot==='function'?collegeBallot():null;
   if(!b)return '';
-  if(b.source==='x'){
+  if(b.source==='personal'){
     const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></span></td></tr>`).join('');
     return `<section class="pollSection ballotSection personalBallot"><div class="groupHead">Personal Ballot<span>not the model · published ${esc(b.published_on||'')}</span></div>
       <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
