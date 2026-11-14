@@ -743,6 +743,7 @@ ncaam-372780,NCAAM,2026-27,2026-11-14T00:30:00Z,Regular,XL Center,UConn,U,Ohio S
 ncaam-374922,NCAAM,2026-27,2026-11-14T00:30:00Z,Regular,Murphy Center,Middle Tennessee,MT,Southeast Missouri State,SMS,88,75,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-378010,NCAAM,2026-27,2026-11-14T00:30:00Z,Regular,Knapp Center,Drake,D,South Dakota,SD,81,72,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-378014,NCAAM,2026-27,2026-11-14T00:30:00Z,Regular,Liberty Arena,Liberty,L,North Carolina Central,NCC,74,66,FINISHED,cbbd,2026-11-14T03:18:00+00:00
+ncaam-372781,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,XFINITY Center,Maryland,M,Virginia,V,83,87,FINISHED,cbbd,2026-11-14T17:06:08+00:00
 ncaam-372788,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Cameron Indoor Stadium,Duke,D,SIU Edwardsville,SE,90,47,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-372792,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Lloyd Noble Center,Oklahoma,O,Fairleigh Dickinson,FD,74,58,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-374927,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,ECCU Center,Tarleton State,TS,Alcorn State,AS,73,69,FINISHED,cbbd,2026-11-14T03:18:00+00:00
@@ -751,5 +752,22 @@ ncaam-374938,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Addition Financial Arena
 ncaam-374945,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Schollmaier Arena,TCU,T,Milwaukee,M,76,64,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-374948,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Bud Walton Arena,Arkansas,A,Central Arkansas,CA,79,66,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-374951,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Pete Hanna Center,Samford,S,Wright State,WS,66,90,FINISHED,cbbd,2026-11-14T03:18:00+00:00
+ncaam-378008,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Strahan Arena at the University Events Center,Texas State,TXST,Southern Miss,SM,85,65,FINISHED,cbbd,2026-11-14T17:06:08+00:00
 ncaam-378009,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,CFSB Center,Murray State,MS,Texas Southern,TS,99,78,FINISHED,cbbd,2026-11-14T03:18:00+00:00
 ncaam-378015,NCAAM,2026-27,2026-11-14T01:00:00Z,Regular,Scheels Center,North Dakota State,NDS,Illinois State,IS,82,81,FINISHED,cbbd,2026-11-14T03:18:00+00:00
+ncaam-378016,NCAAM,2026-27,2026-11-14T01:45:00Z,Regular,Baxter Arena,Omaha,O,Lindenwood,L,67,56,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-372785,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Moody Coliseum,SMU,S,Ball State,BALL,90,65,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-372786,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Neville Arena,Auburn,A,Arizona,A,69,80,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-372790,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Welsh-Ryan Arena,Northwestern,N,DePaul,D,47,67,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-372793,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Colonial Hall,Mississippi State,MSST,Xavier,X,63,81,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-372796,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Coleman Coliseum,Alabama,A,Seton Hall,SH,82,76,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374934,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Thomas & Mack Center,UNLV,U,Stanford,S,76,68,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374941,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Reese Court,Eastern Washington,EW,Corban College,CC,102,68,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374944,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,ICCU Arena,Idaho,I,Cal Poly,CP,74,83,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374947,NCAAM,2026-27,2026-11-14T02:00:00Z,Regular,Desert Financial Arena,Arizona State,ASU,UL Monroe,UM,92,62,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374926,NCAAM,2026-27,2026-11-14T02:30:00Z,Regular,Gill Coliseum,Oregon State,ORST,Mississippi Valley State,MVS,81,65,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374949,NCAAM,2026-27,2026-11-14T02:30:00Z,Regular,Jenny Craig Pavilion,San Diego,SD,Chicago State,CS,87,67,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374943,NCAAM,2026-27,2026-11-14T03:00:00Z,Regular,Dee Glen Smith Spectrum,Utah State,USU,UC San Diego,USD,120,82,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374950,NCAAM,2026-27,2026-11-14T03:00:00Z,Regular,University Credit Union Pavilion,Saint Mary's,SM,UIC,U,84,61,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374953,NCAAM,2026-27,2026-11-14T03:00:00Z,Regular,Chiles Center,Portland,P,East Texas A&M,ETA,88,94,FINISHED,cbbd,2026-11-14T17:06:08+00:00
+ncaam-374954,NCAAM,2026-27,2026-11-14T03:30:00Z,Regular,Dale E. and Sarah Ann Fowler Events Center,California Baptist,CB,Arkansas-Pine Bluff,APB,74,60,FINISHED,cbbd,2026-11-14T17:06:08+00:00
