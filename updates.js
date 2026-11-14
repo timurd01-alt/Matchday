@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1114F",
+  "tag": "Fix",
+  "title": "\"Games this week\" counts this week",
+  "items": [
+   "The home page's Games this week counted unplayed games in the next seven days, so on a Saturday it mixed what was left of this week with most of next week (football showed 100; Week 11 has 67 games).",
+   "It now counts the calendar week, Monday to Sunday in Central time, finished games included. Basketball's finished games come from the season's full results, since the live board keeps only the newest finals.",
+   "Model / market gaps uses the same week, counting the games still to be played."
+  ]
+ },
+ {
   "date": "Build 1114E",
   "tag": "Fix",
   "title": "Finished games keep their market price",

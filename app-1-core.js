@@ -1008,14 +1008,40 @@ function homeLatestReactionHTML(){
   const href='reactions/'+encodeURIComponent(post.slug)+'.html';
   return `<section class="homeLatestReaction reactionCard" aria-labelledby="homeReactionTitle"><div class="reactionKicker">LATEST REACTION · <time datetime="${esc(post.date)}">${esc(date)}</time></div><h2 id="homeReactionTitle"><a href="${esc(href)}">${esc(post.title)}</a></h2><p>${esc(post.summary)}</p><div class="homeReactionLinks"><a class="reactionRead" href="${esc(href)}" aria-label="Read reaction: ${esc(post.title)}">Read reaction <span aria-hidden="true">↗</span></a><a class="reactionRead" href="?view=reactions">All reactions <span aria-hidden="true">→</span></a></div></section>`;
 }
+/* "This week" is the calendar week, Monday to Sunday in Central time, the same
+   week the weekly update publishes. It used to be the next seven rolling days
+   of unfinished games: on a Saturday that counted 43 games left in Week 11
+   plus 57 of Week 12 and showed 100. */
+function centralDayKey(ms){return new Date(ms).toLocaleDateString('en-CA',{timeZone:'America/Chicago'})}
+function centralWeekKeys(now=Date.now()){
+  const today=new Date(centralDayKey(now)+'T12:00:00Z'),back=(today.getUTCDay()+6)%7;
+  return new Set(Array.from({length:7},(_,i)=>new Date(today.getTime()+(i-back)*86400000).toISOString().slice(0,10)));
+}
+function inCentralWeek(kickoff,keys){const t=Date.parse(kickoff||'');return Number.isFinite(t)&&keys.has(centralDayKey(t))}
+/* Every game this week, finished ones included. The hourly feed keeps only the
+   newest finals (40 for basketball, against ~280 a week), so finished games the
+   board no longer lists come from the engine's results for the season. */
+function weekGameCount(matches,keys=centralWeekKeys()){
+  const listed=(matches||[]).filter(m=>inCentralWeek(m.kickoff,keys));
+  const same=(a,b)=>typeof bbNameMatches==='function'?bbNameMatches(a,b):String(a||'').toLowerCase()===String(b||'').toLowerCase();
+  const sport=currentSportKey();
+  const results=typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_RESULTS)?MATCHDAY_TRDLAB_RESULTS:[];
+  const extra=results.filter(r=>r.sport===sport&&inCentralWeek(r.kickoff,keys)).filter(r=>{
+    const day=centralDayKey(Date.parse(r.kickoff));
+    return !listed.some(m=>centralDayKey(kickMs(m))===day&&(
+      (same(r.home,m.home?.name||m.home)&&same(r.away,m.away?.name||m.away))||
+      (same(r.home,m.away?.name||m.away)&&same(r.away,m.home?.name||m.home))));
+  });
+  return listed.length+extra.length;
+}
 function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
-  const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
+  const weekKeys=centralWeekKeys(),week=active.filter(m=>m.status==='LIVE'||inCentralWeek(m.kickoff,weekKeys));
   const reads=week.map(gamesBoardRead).filter(Boolean),priced=reads.filter(r=>r.market!=null&&r.difference!=null);
   const edges=priced.filter(r=>Math.abs(r.difference)>=5).length;
   const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
-    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +`<section class="homeKpis" aria-label="This week's overview"><div title="Monday to Sunday, Central time, finished games included"><strong>${weekGameCount(DATA.matches,weekKeys)}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +homeLatestReactionHTML()
     +gamesSummaryHTML(active);
   const seedsHost=host.querySelector('[data-home-basketball-seeds]');
