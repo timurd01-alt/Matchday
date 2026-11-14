@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1114A",
+  "tag": "Maintenance",
+  "title": "Engine automation names updated",
+  "items": [
+   "The weekly and daily publication scripts now look for the prediction engine only under its current folder and scheduled-task names. Nothing on the site changes."
+  ]
+ },
+ {
   "date": "Build 1112W",
   "tag": "Fix",
   "title": "Basketball Research lists Division I teams only",

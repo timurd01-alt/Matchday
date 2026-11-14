@@ -1,4 +1,5 @@
-# Resolve current engine names while existing local installations are migrated.
+# Resolve the TRDLab engine folder and its poller task (the Sigma Lab and Bet
+# Better names were retired on 2026-11-14).
 # Dot-source this file; loading it performs no work and changes no scheduled jobs.
 
 function Resolve-TRDLabRoot {
@@ -15,7 +16,7 @@ function Resolve-TRDLabRoot {
         return (Resolve-Path -LiteralPath $Root).Path
     }
 
-    foreach ($name in @('TRDLab', 'Sigma Lab', 'Bet Better')) {
+    foreach ($name in @('TRDLab')) {
         $candidate = Join-Path $DesktopPath $name
         if (Test-Path -LiteralPath $candidate -PathType Container) {
             return (Resolve-Path -LiteralPath $candidate).Path
@@ -29,9 +30,7 @@ function Resolve-TRDLabRefreshTask {
     param()
 
     $names = @(
-        'TRDLab Personal Data Refresh',
-        'Sigma Lab Personal Data Refresh',
-        'BetBetter Personal Data Refresh'
+        'TRDLab Personal Data Refresh'
     )
     if (Get-Command Get-ScheduledTask -ErrorAction SilentlyContinue) {
         foreach ($name in $names) {

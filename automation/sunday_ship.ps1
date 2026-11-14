@@ -20,7 +20,7 @@
 # week's file (Desktop buttons "Edit My Ballot - ..."): TRDLab/ballots/<ncaaf|ncaam>/<Sunday>.txt.
 # No file means last week's ballot stays up; nothing is ever invented.
 param(
-    [Alias('SigmaLab')][string]$TRDLab = '',
+    [string]$TRDLab = '',
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [ValidateSet('both','ncaaf','ncaam')][string]$Sport = 'both',
     [switch]$NoPush,
