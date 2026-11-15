@@ -1514,7 +1514,13 @@ def fetch_college_bundle():
     # recruiting alone. The cached ranking must be recomputed immediately.
     # Bumped v7 -> v8 2026-08-23: poll rows now retain their real poll name so
     # the UI can show AP/CFP separately from Matchday's model Top 25.
-    cache_file = f"college_{COMP_KEY.lower()}_bundle_v8_cache.json"
+    # NCAAM v9 2026-11-15 (Build 1115A follow-up): CBBD's impossible tied
+    # finals are now dropped in the adapter, but the v8 bundle still carried
+    # standings computed with game 378673's 0-0 booked as a loss to both
+    # Towson and Morgan State. NCAAF is unchanged, so it keeps v8 and spends
+    # none of CFBD's monthly quota on a rebuild.
+    cache_version = "v9" if COMP_KEY == "NCAAM" else "v8"
+    cache_file = f"college_{COMP_KEY.lower()}_bundle_{cache_version}_cache.json"
     bundle = None
     try:
         if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < COLLEGE_CACHE_MIN * 60:
