@@ -4,11 +4,21 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
-  "date": "Build 1115C",
+  "date": "Build 1115D",
   "tag": "Fix",
   "title": "Basketball records drop the loss from the game that never happened",
   "items": [
    "Towson and Morgan State each still had a loss on their record, and a draw in their form, from the Morgan State vs Towson game the data feed invented. Basketball standings are now recalculated without it."
+  ]
+ },
+ {
+  "date": "Build 1115C",
+  "tag": "Fix",
+  "title": "Faster switching between pages",
+  "items": [
+   "Home took several seconds to build on the basketball board, every time you opened it after a minute away and whenever the data refreshed. It now builds in well under a tenth of a second.",
+   "Going back to Games or Results no longer lays out every game card again, so those switches take about half as long.",
+   "Nothing on any page looks or reads differently."
   ]
  },
  {

@@ -1,0 +1,1 @@
+{"rank": 606, "date": "Build 1115D", "tag": "Fix", "title": "Basketball records drop the loss from the game that never happened", "items": ["Towson and Morgan State each still had a loss on their record, and a draw in their form, from the Morgan State vs Towson game the data feed invented. Basketball standings are now recalculated without it."]}
