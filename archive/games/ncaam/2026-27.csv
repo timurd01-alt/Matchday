@@ -806,6 +806,7 @@ ncaam-378676,NCAAM,2026-27,2026-11-14T21:00:00Z,Regular,Trask Coliseum,UNC Wilmi
 ncaam-374972,NCAAM,2026-27,2026-11-14T21:30:00Z,Regular,John W. Pope Jr. Convocation Center,Campbell,C,South Carolina Upstate,SCU,93,77,FINISHED,cbbd,2026-11-15T01:54:09+00:00
 ncaam-374979,NCAAM,2026-27,2026-11-14T22:00:00Z,Regular,Haas Pavilion,California,C,Utah Tech,UT,79,73,FINISHED,cbbd,2026-11-15T01:54:09+00:00
 ncaam-378022,NCAAM,2026-27,2026-11-14T22:00:00Z,Regular,OU Credit Union O'rena,Oakland,O,Northern Iowa,NI,80,76,FINISHED,cbbd,2026-11-15T01:54:09+00:00
+ncaam-378673,NCAAM,2026-27,2026-11-14T22:00:00Z,Regular,TU Arena,Loyola Maryland,LM,Morgan State,MS,61,63,FINISHED,cbbd,2026-11-15T21:47:24+00:00
 ncaam-372809,NCAAM,2026-27,2026-11-14T23:00:00Z,Regular,Amica Mutual Pavilion,Providence,P,Colorado,C,67,53,FINISHED,cbbd,2026-11-15T01:54:09+00:00
 ncaam-374955,NCAAM,2026-27,2026-11-14T23:00:00Z,Regular,Dee Events Center,Weber State,WS,Lincoln University (CA),LU(,80,57,FINISHED,cbbd,2026-11-15T01:54:09+00:00
 ncaam-374957,NCAAM,2026-27,2026-11-14T23:00:00Z,Regular,The Super Pit,North Texas,NT,South Alabama,SA,66,65,FINISHED,cbbd,2026-11-15T01:54:09+00:00
@@ -838,3 +839,22 @@ ncaam-375001,NCAAM,2026-27,2026-11-15T01:30:00Z,Regular,Curb Event Center Arena,
 ncaam-374965,NCAAM,2026-27,2026-11-15T02:00:00Z,Regular,Betty Engelstad Sioux Center,North Dakota,ND,Montana,M,71,80,FINISHED,cbbd,2026-11-15T17:09:17+00:00
 ncaam-372799,NCAAM,2026-27,2026-11-15T03:00:00Z,Regular,Lawlor Events Center,Nevada,N,Utah Valley,UV,71,73,FINISHED,cbbd,2026-11-15T17:09:17+00:00
 ncaam-374981,NCAAM,2026-27,2026-11-15T03:00:00Z,Regular,Leavey Center,Santa Clara,SC,New Mexico,NM,90,85,FINISHED,cbbd,2026-11-15T17:09:17+00:00
+ncaam-375009,NCAAM,2026-27,2026-11-15T17:00:00Z,Regular,Detrick Gymnasium,Central Connecticut,CC,Quinnipiac,Q,70,67,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-378031,NCAAM,2026-27,2026-11-15T17:00:00Z,Regular,Alico Arena,Florida Gulf Coast,FGC,Abraham Baldwin Agricultural College,ABAC,99,31,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-372817,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,Hilton Coliseum,Iowa State,ISU,Niagara,N,66,45,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-372822,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,Bender Arena,American University,AU,Harvard,H,70,64,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375003,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,Sanford Pentagon,Nebraska,N,Boise State,BSU,102,75,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375006,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,GSU Convocation Center,Georgia State,GAST,Norfolk State,NS,78,53,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375014,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,Case Gym,Boston University,BU,Dartmouth,D,90,75,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375016,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,FedExForum,Memphis,M,Louisville,L,98,78,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375020,NCAAM,2026-27,2026-11-15T18:00:00Z,Regular,Bob Carpenter Center,Delaware,D,Colgate,C,64,58,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-372818,NCAAM,2026-27,2026-11-15T18:30:00Z,Regular,Conte Forum,Boston College,BC,New Hampshire,NH,67,55,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375005,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,TD Arena,Charleston,C,South Carolina State,SCS,90,66,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375007,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,John Glaser Arena,La Salle,LS,Temple,T,71,84,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375010,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,Hart Center,Holy Cross,HC,UAlbany,U,60,62,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375017,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,Crisler Center,Michigan,M,William & Mary,W&M,123,79,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375021,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,John J. Lee Amphitheater,Yale,Y,Emmanuel (MA),E(,103,58,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375022,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,Scheels Center,North Dakota State,NDS,Cal State Bakersfield,CSB,69,73,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375023,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,Thomas M. Ryan Center,Rhode Island,RI,Princeton,P,79,72,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-378032,NCAAM,2026-27,2026-11-15T19:00:00Z,Regular,UPMC Events Center,Robert Morris,RM,Capital,C,94,45,FINISHED,cbbd,2026-11-15T21:47:24+00:00
+ncaam-375024,NCAAM,2026-27,2026-11-15T20:00:00Z,Regular,Hooper Eblen Center,Tennessee Tech,TT,Wright State - Lake,WSL,101,34,FINISHED,cbbd,2026-11-15T21:47:24+00:00
