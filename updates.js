@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1115C",
+  "tag": "Fix",
+  "title": "Faster switching between pages",
+  "items": [
+   "Home took several seconds to build on the basketball board, every time you opened it after a minute away and whenever the data refreshed. It now builds in well under a tenth of a second.",
+   "Going back to Games or Results no longer lays out every game card again, so those switches take about half as long.",
+   "Nothing on any page looks or reads differently."
+  ]
+ },
+ {
   "date": "Build 1115B",
   "tag": "Fix",
   "title": "Pick 'Em: season leaderboard grades every pick and lists everyone",
