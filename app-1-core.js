@@ -1012,7 +1012,21 @@ function homeLatestReactionHTML(){
    week the weekly update publishes. It used to be the next seven rolling days
    of unfinished games: on a Saturday that counted 43 games left in Week 11
    plus 57 of Week 12 and showed 100. */
-function centralDayKey(ms){return new Date(ms).toLocaleDateString('en-CA',{timeZone:'America/Chicago'})}
+// toLocaleDateString() builds a new Intl formatter on every call, and Home's
+// week count calls this for every result of the season against every listed
+// game: 6.5s of an 8s Home render on the basketball board. One formatter, and
+// a cache per clock hour -- Central's UTC offsets are whole hours, so every
+// instant in an hour falls on the same Central date.
+const _CENTRAL_DAY_FMT=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'});
+const _CENTRAL_DAY_CACHE=new Map();
+function centralDayKey(ms){
+  const t=new Date(ms).getTime();
+  if(!Number.isFinite(t))return new Date(ms).toLocaleDateString('en-CA',{timeZone:'America/Chicago'});
+  const hour=Math.floor(t/3600000);
+  let key=_CENTRAL_DAY_CACHE.get(hour);
+  if(key===undefined){key=_CENTRAL_DAY_FMT.format(t);if(_CENTRAL_DAY_CACHE.size>20000)_CENTRAL_DAY_CACHE.clear();_CENTRAL_DAY_CACHE.set(hour,key)}
+  return key;
+}
 function centralWeekKeys(now=Date.now()){
   const today=new Date(centralDayKey(now)+'T12:00:00Z'),back=(today.getUTCDay()+6)%7;
   return new Set(Array.from({length:7},(_,i)=>new Date(today.getTime()+(i-back)*86400000).toISOString().slice(0,10)));

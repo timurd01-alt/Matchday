@@ -975,7 +975,10 @@ function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDo
   // showing it again recalculated style and layout for the whole subtree
   // (~500ms for Rankings on a full basketball board); a parked view keeps that
   // rendering state and costs nothing while hidden. See .viewParked.
-  document.querySelectorAll('.view').forEach(el=>{const on=el.id==='view-'+v;el.classList.toggle('viewParked',!on);el.style.display=on?((v==='matches'||v==='results')?'grid':'block'):VIEW_PARK_DISPLAY});if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');if(reuse){captureSignalsIfFresh();renderViewChrome()}else paintCurrentView();
+  // A parked view keeps its own display type. Games and Results are grids, and
+  // parking them as display:block threw their layout away, so every return to
+  // either re-laid out every card (~60ms of a ~110ms switch).
+  document.querySelectorAll('.view').forEach(el=>{const on=el.id==='view-'+v;el.classList.toggle('viewParked',!on);el.style.display=(on||VIEW_PARK_DISPLAY!=='none')?((el.id==='view-matches'||el.id==='view-results')?'grid':'block'):'none'});if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');if(reuse){captureSignalsIfFresh();renderViewChrome()}else paintCurrentView();
   // A new view opens at its top. The scroll position used to carry over from
   // the previous view, so the CFP bracket opened scrolled to the bottom.
   const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}
@@ -1728,6 +1731,20 @@ ${lead}
    engine covers both, so there is no sport left for a second forecast to serve.
    A fixture it has not modeled gets an empty state rather than another model's
    number under the engine's heading. */
+function _bbFirstLetter(name){const first=bbNameWords(name)[0];return first?first[0]:''}
+// Positions in the picks list keyed "<kickoff day>|<first letter of a team>".
+// Rebuilt when the list is replaced or grows in place.
+let _TRDLAB_PICK_INDEX={list:null,length:-1,map:null};
+function _trdlabPickIndex(list){
+  if(_TRDLAB_PICK_INDEX.list===list&&_TRDLAB_PICK_INDEX.length===list.length)return _TRDLAB_PICK_INDEX.map;
+  const map=new Map();
+  list.forEach((p,i)=>{
+    const d=String(p?.kickoff||'').slice(0,10);
+    for(const c of new Set([_bbFirstLetter(p?.home),_bbFirstLetter(p?.away)])){const k=d+'|'+c;if(!map.has(k))map.set(k,[]);map.get(k).push(i)}
+  });
+  _TRDLAB_PICK_INDEX={list,length:list.length,map};
+  return map;
+}
 function trdlabReadFor(m){
   // Only UPCOMING, matching what the handoff itself will attach: a live
   // forecast on a played game reads as a call that was made in advance.
@@ -1742,10 +1759,18 @@ function trdlabReadFor(m){
   // A day either side, for the same reason the results settling allows it: a
   // late kickoff and its listed date land on opposite sides of midnight UTC.
   const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
-  const candidates=list.filter(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
+  // Same filter as list.filter(), over only the picks that could pass it: a
+  // name match needs the first characters to agree (see bbNameFinder), so the
+  // index holds each pick under its kickoff day and both teams' first letters.
+  // Scanning the whole list put ~1s of name matching into every Home render.
+  const homeName=m.home?.name||m.home,awayName=m.away?.name||m.away;
+  const pool=new Set();
+  const index=_trdlabPickIndex(list),letter=_bbFirstLetter(homeName);
+  for(const d of days)for(const i of index.get(d+'|'+letter)||[])pool.add(i);
+  const candidates=[...pool].sort((a,b)=>a-b).map(i=>list[i]).filter(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
     &&days.includes(String(p.kickoff||'').slice(0,10))
-    &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
-      ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))));
+    &&((bbNameMatches(p.home,homeName)&&bbNameMatches(p.away,awayName))
+      ||(bbNameMatches(p.home,awayName)&&bbNameMatches(p.away,homeName))));
   if(m.trdlab_pick)candidates.push(m.trdlab_pick);
   return basketballMarketPick(candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null,m);
 }
