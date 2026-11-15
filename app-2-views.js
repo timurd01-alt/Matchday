@@ -196,7 +196,11 @@ function commLoad(comp){
   if(COMM_SUBMITTING)return; // read once the picks are in, not half-way through
   const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp&&!COMM_FRESH)return;COMM_FETCHED=stamp;
   const fresh=COMM_FRESH;COMM_FRESH=false;
-  Promise.all([commFetch('consensus',comp,fresh),commFetch('activity',comp,fresh),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
+  // A guest's picks used to reach the server's grader only when the browser
+  // graded one itself, so a pick the browser settled earlier never counted on
+  // the board. Sync on opening Pick 'Em (at most every ten minutes) first.
+  const synced=COMM_SYNCED&&Date.now()-COMM_SYNCED<6e5?Promise.resolve():(COMM_SYNCED=Date.now(),pushScore().catch(()=>{}));
+  synced.then(()=>Promise.all([commFetch('consensus',comp,fresh),commFetch('activity',comp,fresh),fetchLeaderboard(lbPeriod())])).then(([c,a,board])=>{
     COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;
     if(c&&c.ok)commForgetStalePicks(COMM_CONSENSUS);
     // A Pick 'Em view built before these arrived is out of date even if the
@@ -205,7 +209,7 @@ function commLoad(comp){
     if(VIEW==='community')renderCommunity(true);
   });
 }
-let COMM_BOARD=null;
+let COMM_BOARD=null,COMM_SYNCED=0;
 /* The browser keeps its own copy of each submitted pick. If the server has no
    pick on that side for a still-open game, the local copy is stale (the pick
    never reached the server, or the server's picks were cleared) and it is
@@ -279,8 +283,20 @@ function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH=
   h+=`<section class="commBox" aria-labelledby="commBoardTitle"><div class="commHead"><h2 id="commBoardTitle">Leaderboard</h2><div class="lbTabs"><button class="lbTab ${period==='week'?'on':''}" onclick="setLbPeriod('week')">This week</button><button class="lbTab ${period==='all'?'on':''}" onclick="setLbPeriod('all')">Season</button></div></div>`;
   if(!LEADERBOARD_URL)h+=`<div class="empty">Coming soon.</div>`;
   else if(COMM_BOARD===null)h+=`<div class="empty">Loading…</div>`;
-  else if(!COMM_BOARD.length)h+=`<div class="empty">${period==='week'?'No one has 3 graded picks this week yet.':'No one has 10 graded picks yet.'}</div>`;
-  else h+=`<ol class="commBoard">${COMM_BOARD.slice(0,10).map((r,i)=>`<li${r.handle===myHandle()?' class="me"':''}><span>${i+1}</span><b>${esc(r.handle)}</b><em>${r.hits}–${Math.max(0,r.graded-r.hits)}</em></li>`).join('')}</ol>`;
+  else if(!COMM_BOARD.length)h+=`<div class="empty">${period==='week'?'No graded picks this week yet.':'No graded picks yet this season.'}</div>`;
+  else{
+    // Players under the minimum are listed, unranked, below those past it: a
+    // Season board that hid them read as broken to a player with ten picks in
+    // and five still to be played (2026-11-15). Older servers send no
+    // `qualified`; everything they send already met the minimum.
+    const need=period==='week'?3:10,me=myHandle(),ranked=COMM_BOARD.filter(r=>r.qualified!==false);
+    const waiting=COMM_BOARD.filter(r=>r.qualified===false);
+    const rows=[...ranked.slice(0,10),...waiting.slice(0,Math.max(0,10-ranked.length))];
+    const mine=waiting.find(r=>r.handle===me);if(mine&&!rows.includes(mine))rows.push(mine);
+    const row=r=>{const rank=ranked.indexOf(r);return `<li class="${[r.handle===me?'me':'',rank<0?'provisional':''].filter(Boolean).join(' ')}"${rank<0?` title="${need-r.graded} more graded pick${need-r.graded===1?'':'s'} to be ranked"`:''}><span>${rank<0?'–':rank+1}</span><b>${esc(r.handle)}</b><em>${r.hits}–${Math.max(0,r.graded-r.hits)}</em></li>`};
+    h+=`<ol class="commBoard">${rows.map(row).join('')}</ol>`;
+    if(rows.some(r=>r.qualified===false))h+=`<p class="commBoardNote">Ranked from ${need} graded picks${period==='week'?' this week':''}; players marked – are still qualifying.</p>`;
+  }
   h+=`<p class="commYou">You are <b>${esc(myHandle()||'')}</b> · ${s.you}–${Math.max(0,(s.n||0)-s.you)}${canReshuffleHandle()?` · <button type="button" class="gamesTextLink" onclick="reshuffleHandle()">new name</button>`:''}</p>${renderAccountRow()}</section>`;
   // Recent activity.
   const byId=new Map((DATA.matches||[]).map(m=>[String(m.id),m]));

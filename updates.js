@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1115B",
+  "tag": "Fix",
+  "title": "Pick 'Em: season leaderboard grades every pick and lists everyone",
+  "items": [
+   "Picks whose games had dropped off this week's slate were never graded by the server, so they never counted toward the leaderboard. They now settle from the season's final scores.",
+   "Opening Pick 'Em now sends your picks to be graded, so a pick your browser settled earlier counts on the board too.",
+   "The Season board no longer hides players under ten graded picks: they are listed below the ranked players, marked – until they qualify."
+  ]
+ },
+ {
   "date": "Build 1115A",
   "tag": "Fix",
   "title": "Basketball ignores impossible tied finals from the data feed",

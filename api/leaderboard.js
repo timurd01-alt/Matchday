@@ -56,6 +56,48 @@ function findMatch(data, matchId) {
   return (data?.matches || []).find(match => String(match.id) === matchId) || null;
 }
 
+// data_<comp>.json holds only the current slate, so a pick whose game rolled
+// off it before its owner next synced could never be graded: a player with ten
+// picks sat on five graded ones and missed the season board (2026-11-15). The
+// season's finals are published from the game archive; its ids carry the same
+// provider number under the competition's prefix (cfbd-401858521 is
+// ncaaf-401858521), so a pick is matched on that number within its sport.
+async function loadSeasonFinals() {
+  try {
+    const response = await fetch(`${PUBLIC_DATA_ORIGIN}/team-form-history.json`, {
+      headers: { Accept: "application/json" }, redirect: "error",
+    });
+    if (!response.ok) return {};
+    const history = await response.json();
+    const finals = {};
+    for (const comp of ALLOWED_COMPS) {
+      const byNumber = new Map();
+      for (const game of history?.[comp] || []) {
+        const number = numericId(game?.id);
+        const winner = finalWinner(game?.score);
+        if (number && winner && game?.status === "FINISHED") byNumber.set(number, winner);
+      }
+      finals[comp] = byNumber;
+    }
+    return finals;
+  } catch (_) {
+    return {};
+  }
+}
+
+function numericId(id) {
+  const match = /-(\d+)$/.exec(String(id || ""));
+  return match ? match[1] : "";
+}
+
+// College games cannot end level; a tied "final" is a provider placeholder
+// (Build 1115A), never a result to grade.
+function finalWinner(score) {
+  const home = Number(score?.home), away = Number(score?.away);
+  if (!Number.isFinite(home) || !Number.isFinite(away) || home === away) return "";
+  return home > away ? "h" : "a";
+}
+
 async function lockPick(db, body) {
   const owner = await resolveOwner(db, body);
   const comp = String(body?.comp || "").toLowerCase();
@@ -90,9 +132,14 @@ async function gradeAndCount(db, owner) {
   );
   const datasets = new Map();
   for (const comp of new Set(pending.rows.map(row => row.comp))) datasets.set(comp, await loadCompetition(comp));
+  let finals = null;
   for (const row of pending.rows) {
     const match = findMatch(datasets.get(row.comp), row.match_id);
-    const result = match?.status === "FINISHED" ? String(match.score?.winner || "") : "";
+    let result = match?.status === "FINISHED" ? String(match.score?.winner || "") : "";
+    if (!match) {
+      finals = finals || await loadSeasonFinals();
+      result = finals[row.comp]?.get(numericId(row.match_id)) || "";
+    }
     if (["h", "d", "a"].includes(result)) {
       await db.query(
         "UPDATE verified_picks SET result=$1,graded_at=$2 WHERE device_id=$3 AND comp=$4 AND match_id=$5 AND result IS NULL",
@@ -186,6 +233,11 @@ async function leaderboard(db, period) {
   const since = allowedPeriod === "week" ? Date.now() - 7 * 86400000
     : allowedPeriod === "month" ? Date.now() - 30 * 86400000 : 0;
   const minimum = allowedPeriod === "all" ? 10 : 3;
+  // Everyone with a graded pick is listed; only those past the minimum are
+  // ranked. A Season board that hid everyone under ten graded picks showed
+  // "No one has 10 graded picks yet" to a player with ten picks in, five of
+  // them still to be played (2026-11-15).
+
   // An account's live handle wins over the one stamped on the row, so a
   // reshuffle renames the player everywhere at once.
   const rows = await db.query(
@@ -197,12 +249,15 @@ async function leaderboard(db, period) {
      LEFT JOIN accounts a ON a.owner_key = v.device_id
      WHERE v.result IS NOT NULL AND v.graded_at >= $1 AND v.comp IN ('ncaaf','ncaam')
      GROUP BY v.device_id
-     HAVING COUNT(*) >= $2
-     ORDER BY (COUNT(*) FILTER (WHERE v.result=v.pick))::float / COUNT(*) DESC, COUNT(*) DESC
+     ORDER BY (COUNT(*) >= $2) DESC,
+              (COUNT(*) FILTER (WHERE v.result=v.pick))::float / COUNT(*) DESC, COUNT(*) DESC
      LIMIT 100`,
     [since, minimum]
   );
-  return { ok: true, board: rows.rows.map(row => ({ ...row, handle: collegeHandle(row.handle), streak: 0 })), period: allowedPeriod };
+  return {
+    ok: true, minimum, period: allowedPeriod,
+    board: rows.rows.map(row => ({ ...row, handle: collegeHandle(row.handle), qualified: row.graded >= minimum, streak: 0 })),
+  };
 }
 
 // What the community is picking: per-match counts for one competition's games

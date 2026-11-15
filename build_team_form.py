@@ -28,6 +28,10 @@ def build(output=ROOT, root=ROOT, today=None):
                     games.append(dict(id=row['game_id'], kickoff=row['date_utc'], status='FINISHED', home={'name':row['home_name']}, away={'name':row['away_name']}, score={'home':home,'away':away}))
         result[comp] = games
     Path(output).mkdir(parents=True, exist_ok=True)
+    # The same finals as plain JSON for the Pick 'Em server, which cannot read
+    # a script: data_<comp>.json holds only the current slate, so a pick whose
+    # game rolled off it before its owner synced was never graded (2026-11-15).
+    (Path(output) / 'team-form-history.json').write_text(json.dumps(result, separators=(',',':'), ensure_ascii=True), encoding='utf-8', newline='\n')
     (Path(output) / 'team-form-history.js').write_text('/* Generated from Matchday game archive. */\nwindow.MATCHDAY_TEAM_FORM = '+json.dumps(result, separators=(',',':'), ensure_ascii=True)+';\n', encoding='utf-8', newline='\n')
     return result
 
