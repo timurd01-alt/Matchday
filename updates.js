@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1115A",
+  "tag": "Fix",
+  "title": "Basketball ignores impossible tied finals from the data feed",
+  "items": [
+   "The basketball feed listed a Morgan State vs Towson game as finished 0-0. That game never happened: Morgan State played Loyola Maryland that night. The site showed it as a draw and counted it as a loss for both teams.",
+   "A finished basketball game with a tied or missing score is now left out until the feed corrects it, since a real game can't end level."
+  ]
+ },
+ {
   "date": "Build 1114G",
   "tag": "Fix",
   "title": "Pick 'Em activity shows every pick you submit",

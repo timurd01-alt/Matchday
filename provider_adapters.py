@@ -1044,6 +1044,14 @@ class CollegeFootballDataAdapter:
         return venues
 
 
+def _impossible_basketball_final(row):
+    """True for a CBBD row marked final whose score cannot be a real result."""
+    if str(row.get("status") or "").lower() != "final":
+        return False
+    home, away = _number(row.get("homePoints"), None), _number(row.get("awayPoints"), None)
+    return home is None or away is None or home == away
+
+
 class CollegeBasketballDataAdapter:
     BASE = "https://api.collegebasketballdata.com"
 
@@ -1061,6 +1069,7 @@ class CollegeBasketballDataAdapter:
         self._games = []
         self._d1_teams = set()
         self._cached_rankings = None
+        self.rejected_finals = []
 
     def _get(self, path, params=None):
         url = self.BASE + path
@@ -1080,8 +1089,17 @@ class CollegeBasketballDataAdapter:
             for row in chunk if isinstance(chunk, list) else []:
                 by_id[str(row.get("id"))] = row
         rows = list(by_id.values())
+        # A basketball game cannot end level -- it goes to overtime -- so a
+        # "final" row with a tied or missing score is a broken provider record,
+        # not a result. CBBD served game 378673 as "Morgan State vs Towson,
+        # final 0-0" on 2026-11-14 when Morgan State actually played Loyola
+        # Maryland; kept, it rendered as a draw, booked a loss to both teams
+        # in standings(), and failed the freshness gate every hour. Drop such
+        # rows (ids kept on the adapter) until the provider corrects them.
+        self.rejected_finals = [str(row.get("id")) for row in rows if _impossible_basketball_final(row)]
         return [row for row in rows
-                if row.get("homeTeam") in self._d1_teams or row.get("awayTeam") in self._d1_teams]
+                if (row.get("homeTeam") in self._d1_teams or row.get("awayTeam") in self._d1_teams)
+                and not _impossible_basketball_final(row)]
 
     def schedule(self):
         team_rows = self._get("/teams")

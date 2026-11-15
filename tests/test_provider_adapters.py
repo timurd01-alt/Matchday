@@ -481,6 +481,38 @@ class CollegeBasketballDataTests(unittest.TestCase):
         self.assertEqual(ranks[1]["name"], "North Carolina")
         self.assertTrue(all(row["poll_name"] == "AP Top 25" for row in ranks))
 
+    def test_tied_or_scoreless_final_is_dropped_not_booked_as_a_result(self):
+        # CBBD served game 378673 as "final 0-0". Basketball cannot end level,
+        # so the row must not become a draw, a loss for both teams, or a
+        # played-without-result fixture that fails the freshness gate.
+        def getter(url, headers):
+            if url.endswith("/teams"):
+                return [{"school": "Duke", "conference": "ACC"},
+                        {"school": "North Carolina", "conference": "ACC"},
+                        {"school": "Towson", "conference": "CAA"},
+                        {"school": "Morgan State", "conference": "MEAC"}]
+            if "/games?" not in url:
+                return []
+            base = {"season": 2027, "seasonType": "regular", "status": "final",
+                    "homeConference": "x", "awayConference": "y", "venue": "Arena"}
+            return [
+                {**base, "id": 1, "startDate": "2026-11-14T00:00:00Z", "homeTeam": "Duke",
+                 "homePoints": 82, "awayTeam": "North Carolina", "awayPoints": 77},
+                {**base, "id": 378673, "startDate": "2026-11-14T22:00:00Z", "homeTeam": "Morgan State",
+                 "homePoints": 0, "awayTeam": "Towson", "awayPoints": 0},
+                {**base, "id": 3, "startDate": "2026-11-15T00:00:00Z", "homeTeam": "Towson",
+                 "homePoints": None, "awayTeam": "Duke", "awayPoints": None},
+            ]
+        adapter = CollegeBasketballDataAdapter("shared-key", getter=getter,
+                                               today=dt.date(2026, 11, 15))
+        ids = [m["provider_id"] for m in adapter.schedule()]
+        self.assertEqual(ids, [1])
+        self.assertEqual(sorted(adapter.rejected_finals), ["3", "378673"])
+        model, _ = adapter.standings()
+        self.assertNotIn("towson", model)
+        self.assertNotIn("morgan state", model)
+        self.assertEqual(model["duke"]["record"], "1-0")
+
     def test_rankings_season_rolls_over_in_august(self):
         # CBBD numbers a season by its ENDING year -- a July date should
         # request the season that just concluded, but from August onward it
