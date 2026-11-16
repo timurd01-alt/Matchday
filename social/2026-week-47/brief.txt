@@ -1,0 +1,50 @@
+COLLEGE MATCHDAY -- WEEK OF 2026-11-16
+Games from 2026-11-16T02:28Z to 2026-11-23T23:59Z (UTC).
+70 of 228 picks in the handoff fall in this window; the rest are later dates and are excluded.
+Ratings published 2026-11-15 -- Opponent-adjusted scoring margin.
+
+== TOP 25 ==
+#    TEAM                           RATING   CONFERENCE           SoS
+1    Georgia Bulldogs               +42.0    SEC                  22.15
+2    Notre Dame Fighting Irish      +41.3    FBS Independents     19.5
+3    Miami Hurricanes               +40.1    ACC                  21.68
+4    Wake Forest Demon Deacons      +37.8    ACC                  14.75
+5    Indiana Hoosiers               +37.8    Big Ten              20.46
+6    Alabama Crimson Tide           +37.7    SEC                  25.94
+7    Ohio State Buckeyes            +37.6    Big Ten              23.98
+8    Oregon Ducks                   +35.3    Big Ten              23.9
+9    Texas Longhorns                +35.1    SEC                  26.56
+10   Utah Utes                      +35.0    Big 12               19.78
+11   Tennessee Volunteers           +34.3    SEC                  21.54
+12   LSU Tigers                     +33.6    SEC                  23.37
+13   Texas Tech Red Raiders         +31.9    Big 12               17.87
+14   Ole Miss Rebels                +31.6    SEC                  26.2
+15   Iowa Hawkeyes                  +31.6    Big Ten              19.17
+16   Louisville Cardinals           +29.5    ACC                  18.76
+17   BYU Cougars                    +29.4    Big 12               20.74
+18   Duke Blue Devils               +29.2    ACC                  16.9
+19   Arizona Wildcats               +29.2    Big 12               19.95
+20   USC Trojans                    +29.1    Big Ten              25.05
+21   UCLA Bruins                    +28.5    Big Ten              19.22
+22   Nebraska Cornhuskers           +28.4    Big Ten              19.22
+23   Penn State Nittany Lions       +27.9    Big Ten              19.23
+24   Northwestern Wildcats          +27.3    Big Ten              22.03
+25   Oklahoma Sooners               +27.2    SEC                  25.12
+
+== THIS WEEK'S GAMES ==
+DAY   HOME                             AWAY                             MODEL    MARKET   PICK
+Sat   #11 Tennessee Volunteers         #12 LSU Tigers                   50.5%    50.5%    LSU Tigers
+Sat   #22 Nebraska Cornhuskers         #7 Ohio State Buckeyes           59.2%    57.7%    Ohio State Buckeyes
+Sun   South Carolina Gamecocks         #1 Georgia Bulldogs              81.8%    85.8%    Georgia Bulldogs
+Sun   #2 Notre Dame Fighting Irish     SMU Mustangs                     88.4%    89.2%    Notre Dame Fighting Irish
+Sun   #3 Miami Hurricanes              Virginia Tech Hokies             93.1%    89.4%    Miami Hurricanes
+Sat   Georgia Tech Yellow Jackets      #4 Wake Forest Demon Deacons     89.3%    90.2%    Wake Forest Demon Deacons
+Sat   Washington Huskies               #5 Indiana Hoosiers              71.2%    72.9%    Indiana Hoosiers
+Sat   Michigan State Spartans          #8 Oregon Ducks                  78.2%    82.4%    Oregon Ducks
+Sat   #9 Texas Longhorns               Arkansas Razorbacks              87.6%    90.9%    Texas Longhorns
+Sat   TCU Horned Frogs                 #10 Utah Utes                    67.4%    68.1%    Utah Utes
+
+== UPSET WATCH ==
+No game this week has the model backing a side the market has as an underdog.
+
+Data: CollegeFootballData. Ratings solved by Matchday. Editorial, not advice.
