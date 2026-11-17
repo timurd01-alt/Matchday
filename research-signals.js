@@ -51,12 +51,6 @@
       ['power_success','Power success','Short-yardage runs converted','percent',true],
       ['stuff_rate','Stuff rate','Runs stopped at or behind the line','percent',false]
     ]],
-    ['Ratings',[
-      ['rating','Adjusted margin','Points better than an average team, schedule-adjusted','points',true],
-      ['adj_o','Adjusted offense','Points scored against an average defense','points',true],
-      ['adj_d','Adjusted defense','Points allowed against an average offense','points',false],
-      ['sos','Strength of schedule','How hard the schedule has been','points',true]
-    ]],
     ['Defense',[
       ['def_ppa_allowed','PPA allowed','Opponent quality allowed per play','number',false],
       ['def_success_rate_allowed','Success allowed','Opponent plays kept on schedule','percent',false],
@@ -111,7 +105,7 @@
   function cfbSignalsPanel(m,meta,sport='cfb'){
     const hoops=sport==='hoops';
     const raw=m?.advanced_metrics||{},profiles={home:cfbProfile(raw.home),away:cfbProfile(raw.away)},home=profiles.home||{},away=profiles.away||{};
-    const homeName=m?.home?.code||m?.home?.name||'Home',awayName=m?.away?.code||m?.away?.name||'Away';
+    const homeName=m?.home?.name||m?.home?.code||'Home',awayName=m?.away?.name||m?.away?.code||'Away';
     const groups=(hoops?hoopsGroups:cfbGroups).map(([title,items])=>{
       const rows=items.map(metric=>cfbMetricRow(metric,home,away)).filter(Boolean);
       if(!rows.length)return '';
@@ -120,7 +114,30 @@
     }).join('');
     const missing=[];if(!profiles.home)missing.push(homeName);if(!profiles.away)missing.push(awayName);
     const missingNote=missing.length?`<p class="cfbMissing">Profile unavailable for ${esc(missing.join(' and '))}. Available data is shown without inventing a replacement.</p>`:'';
-    return `<section class="analystPanel researchPanel cfbResearch" aria-labelledby="cfbResearchTitle"><div class="cfbResearchTop"><div><span class="cfbEyebrow">Team profile</span><h3 id="cfbResearchTitle">${hoops?'Basketball team profile':'Advanced CFB profile'}</h3><p>${esc(hoops?hoopsSeasonLabel(meta):cfbSeasonLabel(meta))}</p></div></div><p class="cfbIntro">A side-by-side profile of how each team played, from the same opponent-adjusted work the ratings are solved from.</p>${groups||'<p class="cfbMissing">No matchup-linked advanced metrics are available for either team.</p>'}${missingNote}<div class="cfbReceipt"><span>${esc(meta?.source||'Approved research source')}</span><span>${esc(meta?.generated_at?`Built ${String(meta.generated_at).slice(0,10)}`:'Build date unavailable')}</span></div></section>`;
+    return `<section class="analystPanel researchPanel cfbResearch" aria-labelledby="cfbResearchTitle"><div class="cfbResearchTop"><div><span class="cfbEyebrow">Team profile</span><h3 id="cfbResearchTitle">${hoops?'Basketball team profile':'Advanced CFB profile'}</h3><p>${esc(hoops?hoopsSeasonLabel(meta):cfbSeasonLabel(meta))}</p></div></div>${groups||'<p class="cfbMissing">No matchup-linked advanced metrics are available for either team.</p>'}${missingNote}<div class="cfbReceipt"><span>${esc(meta?.source||'Approved research source')}</span><span>${esc(meta?.generated_at?`Built ${String(meta.generated_at).slice(0,10)}`:'Build date unavailable')}</span></div></section>`;
+  }
+  /* How each team plays, as rows of the head to head (matchupTape in
+     app-3-panels.js). Three a side in football, the four factors in
+     basketball: the rows a reader can act on, not every field on file. */
+  const tapeGroups={
+    cfb:[
+      ['Offense',[['ppa','EPA per play','number',true],['success_rate','Success rate','percent',true],['explosiveness','Explosiveness','number',true]]],
+      ['Defense',[['def_ppa_allowed','EPA allowed per play','number',false],['def_success_rate_allowed','Success rate allowed','percent',false],['def_explosiveness_allowed','Explosiveness allowed','number',false]]]
+    ],
+    hoops:[
+      ['Offense',[['efg','Effective FG%','percent',true],['tov_rate','Turnover rate','percent',false],['orb_rate','Offensive rebound rate','percent',true],['ft_rate','Free-throw rate','percent',true]]],
+      ['Defense',[['def_efg','Effective FG% allowed','percent',false],['def_tov_rate','Turnovers forced','percent',true],['def_orb_rate','Offensive rebounds allowed','percent',false],['def_ft_rate','Free-throw rate allowed','percent',false]]],
+      ['Pace',[['tempo','Possessions per 40 minutes','plain',null]]]
+    ]
+  };
+  function advancedTape(m){
+    const comp=String(m?._comp||DATA?.comp_key||'').toUpperCase();
+    if(!m?.advanced_metrics_meta||!['NCAAF','NCAAM'].includes(comp)||typeof tapeRow!=='function')return '';
+    const raw=m.advanced_metrics||{},home=cfbProfile(raw.home)||{},away=cfbProfile(raw.away)||{};
+    return tapeGroups[comp==='NCAAM'?'hoops':'cfb'].map(([title,items])=>tapeGroup(title,items.map(([key,label,type,higher])=>{
+      const hv=finite(home[key]),av=finite(away[key]);
+      return hv==null&&av==null?'':tapeRow(label,format(hv,type),format(av,type),hv,av,higher);
+    }).join(''))).join('');
   }
   function coverageText(meta){
     const coverage=meta?.coverage||{},parts=[];
@@ -147,12 +164,11 @@
   if(typeof details==='function'){
     const priorDetails=details;
     details=function(m){
-      const html=String(priorDetails(m)||''),panel=researchSignalsPanel(m);
-      if(!panel)return html;
-      const slot='<!-- matchday-advanced-profile -->';
-      if(html.includes(slot))return html.replace(slot,panel);
-      const end=html.lastIndexOf('</div>');
-      return end<0?html+panel:html.slice(0,end)+panel+html.slice(end);
+      // How each team plays goes inside the head to head, between its ratings
+      // and roster rows. Without that slot there is no head to head to join,
+      // and nothing is added.
+      const html=String(priorDetails(m)||''),slot='<!-- matchday-advanced-profile -->';
+      return html.includes(slot)?html.replace(slot,advancedTape(m)):html;
     };
   }
   window.researchSignalsPanel=researchSignalsPanel;

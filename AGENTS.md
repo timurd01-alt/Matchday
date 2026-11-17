@@ -314,8 +314,17 @@ the app down.
 - **A finished game has a page only if its pick was graded.** The results
   window in the snapshot slides (600 games a sport), so a page built from it
   would stop existing within days. The graded record does not slide.
-- Styling is `pages.css`: the same tokens and three type roles as `styles.css`,
-  copied so a page loads one small stylesheet. `ui_audit.py` audits it.
+- Styling is `pages.css`. Its sizes are the app's own, read off the live app
+  (top strip, page title and tag, section labels, the rankings table, the Home
+  stat strip, the Learn cards and lesson text), with tokens copied from
+  `styles.css` so a page loads one small stylesheet. A size that differs from
+  the app is a bug: the owner asked for one set of sizes across the board
+  (2026-11-16). `ui_audit.py` audits the file.
+- **One name per thing, one link per place.** The lessons are "Learn"
+  everywhere, as in the app's tab. The welcome footer is one short row (the two
+  sport hubs, Learn, How it works, Roadmap, Legal); the cards above it already
+  open the app's views. "Open the app" on a page lands on the matching view,
+  and a link that names a `?view=` skips the welcome page.
 
 To look at the pages locally, build them and serve the folder:
 

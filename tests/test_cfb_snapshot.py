@@ -43,11 +43,12 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("completedRecord(r.name,played)", panels)
         self.assertIn("const current=recordFor(team.name)", panels)
 
-    def test_advanced_profile_stays_inside_supporting_detail(self):
+    def test_advanced_profile_sits_inside_the_head_to_head(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         signals = (ROOT / "research-signals.js").read_text(encoding="utf-8")
-        self.assertIn('rosterPanel(m)}<!-- matchday-advanced-profile -->', panels)
-        self.assertIn('if(html.includes(slot))return html.replace(slot,panel)', signals)
+        # Between the ratings rows and the roster row, in the same columns.
+        self.assertIn("${ratings}<!-- matchday-advanced-profile -->${roster}", panels)
+        self.assertIn("html.includes(slot)?html.replace(slot,advancedTape(m)):html", signals)
 
     def test_home_skips_empty_market_comparison_section(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -275,24 +276,34 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('</svg>atchday</span>', html)
         self.assertIn('<span class="wx-word" aria-hidden="true">Terminal</span>', html)
         self.assertIn("Enter Matchday Terminal", html)
-        self.assertIn('<span class="pip"></span>Matchday Terminal', html)
+        # The top strip carries the same mark as the welcome page, not a dot.
+        self.assertIn('<img src="icon-192.png?v=4" class="ls-logo" alt="" width="22" height="22">Matchday Terminal', html)
         self.assertIn(".welcomeLogo{width:104px;height:104px", styles)
         self.assertIn(".welcomeBrand h1{color:#fff;letter-spacing:-.025em", styles)
 
-    def test_expanded_matchup_leads_with_prediction_then_progressive_evidence(self):
+    def test_expanded_matchup_is_one_head_to_head_not_collapsed_boxes(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
+        # The forecast leads, then everything else in the same columns, open.
         self.assertIn('class="expandedDecision"', details)
-        self.assertNotIn("matchupWhyPanel", details)
-        # Every evidence section starts closed; the pick leads (owner request 2026-09-27).
-        self.assertNotIn("comparison,true", details)
-        for section in ("Team comparison", "Market", "More detail"):
-            self.assertIn(section, details)
-        self.assertIn('details class="matchEvidence"', panels)
+        self.assertIn("matchupTape(m)", details)
+        self.assertNotIn("matchEvidence", details)
+        self.assertNotIn("<details", details)
+        self.assertIn('class="h2h" role="table"', panels)
         self.assertIn("teamMarkHTML(m.home)", features)
-        self.assertIn(".matchEvidenceList", styles)
+        self.assertIn(".tapeRow{", styles)
+        self.assertIn(".h2hRow{", styles)
+
+    def test_head_to_head_never_prints_a_missing_number_as_zero(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        read = panels[panels.index("function trdlabModelRead(m,p){"):panels.index("function details(m){")]
+        # Number(null) is 0; a game with no market once showed "0.0%".
+        self.assertIn("const num=v=>v==null||v===''||!Number.isFinite(Number(v))?null:Number(v);", read)
+        self.assertNotIn("_bbNum(p.market_pct)", read)
+        # Oriented by the forecast's own home/away flags, not by spelling.
+        self.assertIn("s.is_home===h", read)
 
     def test_ranked_team_profile_uses_published_metrics_not_missing_zeros(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

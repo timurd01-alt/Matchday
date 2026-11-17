@@ -184,17 +184,11 @@ document.addEventListener('click',function(event){
     <footer class="wx-foot">
       <span class="wx-brand"><img src="icon-192.png?v=4" class="wx-logo" alt="" width="24" height="24">Matchday Terminal</span>
       <nav class="wx-footLinks" aria-label="Site">
-        <button type="button" onclick="matchdayEnterNow('matches')">Games</button>
-        <button type="button" onclick="matchdayEnterNow('groups')">Rankings</button>
-        <button type="button" onclick="matchdayEnterNow('score')">Scorecard</button>
-        <button type="button" onclick="matchdayEnterNow('community')">Pick 'Em</button>
-        <button type="button" onclick="matchdayEnterNow('news')">Research</button>
-        <button type="button" onclick="matchdayEnterNow('learn')">Learn</button>
-        <a href="learn/">Field guide</a>
-        <a href="college-football/">College football teams</a>
-        <a href="college-basketball/">College basketball teams</a>
-        <a href="qa.html">How it works (Q&amp;A)</a>
-        <a href="roadmap.html">Roadmap &amp; limits</a>
+        <a href="college-football/">College football</a>
+        <a href="college-basketball/">College basketball</a>
+        <a href="learn/">Learn</a>
+        <a href="qa.html">How it works</a>
+        <a href="roadmap.html">Roadmap</a>
         <a href="legal.html">Legal &amp; data sources</a>
       </nav>
       <p class="wx-volunteer">Volunteer-run and unpaid · No sponsors, ads or affiliate links · <a href="legal.html#independent">Independent</a></p>
@@ -203,7 +197,7 @@ document.addEventListener('click',function(event){
 </section>
 <section class="alertCenter" id="alertCenter" aria-label="Alert center" hidden></section>
 <div class="app" id="app">
-  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday Terminal</button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
+  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><img src="icon-192.png?v=4" class="ls-logo" alt="" width="22" height="22">Matchday Terminal</button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
   <nav class="sidebar" id="nav">
     <div class="navGroup" data-group="home">
     <button class="navbtn" data-primary data-mobile-primary data-v="home" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span class="lbl">Home</span></button>
@@ -270,6 +264,11 @@ window.warmMatchdayApp=function(){
   });
 };
 try{
+  // A link that names a view -- from a team or lesson page, or one a fan
+  // shared -- goes straight to it. The welcome page is the front door, not a
+  // stop on the way to a page somebody asked for by name; without this the
+  // link landed on the welcome page and Enter then opened Home instead.
+  if(new URLSearchParams(window.location.search).get('view'))sessionStorage.setItem('matchday.welcome.entered','1');
   if(sessionStorage.getItem('matchday.welcome.entered')==='1'){
     document.body.classList.remove('welcomeOpen');
     window.startMatchdayApp();

@@ -4333,3 +4333,48 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 
 .rsSchedHead.rsEfficiencyColumns,.rsSchedRow.rsEfficiencyColumns{grid-template-columns:24px minmax(180px,1fr) 52px 72px 72px 72px;min-width:560px}
 .rsSchedHead.rsEfficiencyColumns span:nth-child(3){display:block}
+
+/* The Matchday mark in the top strip, the same image the welcome page and the
+   team pages carry beside the name. It replaced an 8px lime dot. */
+.livestrip .ls-logo{width:22px;height:22px;flex:0 0 22px;border-radius:6px}
+
+/* Expanded matchup: the forecast as a head to head. Three columns -- home
+   value, what the row is, away value -- in the same left-to-right order as
+   the header above, so each number sits under its own team. Lime marks the
+   model's favourite (the Games model-read role); the market row stays plain. */
+.h2h{display:grid;gap:10px}
+.h2hRow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:baseline;gap:12px}
+.h2hRow>b{min-width:0;font-weight:var(--fw-bold)}
+.h2hRow>b:last-child{text-align:right}
+.h2hRow>span{color:var(--muted);font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;text-align:center;white-space:nowrap}
+.h2hTeams>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-family:var(--display);font-size:var(--fs-lg);letter-spacing:.02em;text-transform:uppercase}
+.h2hWin>b{color:var(--text);font-family:var(--mono);font-size:var(--fs-hero);line-height:1}
+.h2hWin>b.lead{color:var(--signal)}
+.h2hBar{display:flex;gap:3px;height:6px}
+.h2hBar i{min-width:0;border-radius:3px;background:var(--line2)}
+.h2hBar i.lead{background:var(--signal)}
+.h2hScore>b{color:var(--muted);font-family:var(--mono);font-size:var(--fs-2xl)}
+.h2hScore>b.lead{color:var(--text)}
+.h2hMarket>b{color:var(--text);font-family:var(--mono);font-size:var(--fs-lg);font-weight:var(--fw-medium)}
+.h2hScore,.h2hMarket{padding-top:10px;border-top:1px solid var(--line)}
+.h2hNote{margin-top:12px;color:var(--muted);font-size:var(--fs-sm)}
+
+/* The head to head under the forecast (matchupTape). Same three columns as
+   the forecast above: home value, the row, away value. The stronger side of a
+   row is drawn in full text, the other muted; no colour of its own, so lime
+   stays the model's and green the results'. */
+.mTape{margin-top:14px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.mTapeHead,.tapeRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr);align-items:baseline;gap:12px}
+.mTapeHead{padding-bottom:10px}
+.mTapeHead>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-family:var(--display);font-size:var(--fs-lg);font-weight:var(--fw-bold);letter-spacing:.02em;text-transform:uppercase}
+.mTapeHead>b:last-child,.tapeRow>b:last-child{text-align:right}
+.mTapeHead>span{color:var(--signal);font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.tapeGroup+.tapeGroup{margin-top:14px}
+.tapeGroup>h4{margin:0;padding:8px 0 6px;border-top:1px solid var(--line2);color:var(--faint);font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.tapeRow{padding:7px 0;border-top:1px solid var(--line)}
+.tapeGroup>h4+.tapeRow{border-top:0}
+.tapeRow>b{color:var(--muted);font-family:var(--mono);font-size:var(--fs-md);font-weight:var(--fw-medium);white-space:nowrap}
+.tapeRow>b.lead{color:var(--text);font-weight:var(--fw-bold)}
+.tapeRow>span{color:var(--text);font-family:var(--sans);font-size:var(--fs-sm);text-align:center}
+.mTapeNote{margin-top:12px;color:var(--faint);font-size:var(--fs-xs);line-height:1.5}
+@media(max-width:560px){.mTape{padding:14px 12px}.mTapeHead,.tapeRow{gap:8px}}

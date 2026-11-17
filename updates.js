@@ -4,6 +4,19 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1117A",
+  "tag": "Improvement",
+  "title": "The game window is now one head to head",
+  "items": [
+   "Opening a game shows each team's win chance, projected score and market price side by side, each number under its own team.",
+   "Below it, one open comparison replaces the three boxes you had to click: ratings, how each team plays, and roster talent, in the same two columns, with the stronger side of each row highlighted.",
+   "Fixed basketball games where the engine spells a school differently (Murray St, Michigan St): one team's win chance and the market price had gone missing, and a game with no market price showed 0.0%.",
+   "The Matchday logo now sits in the top bar.",
+   "The welcome page footer is one short row, and the lessons are called Learn everywhere.",
+   "Team, game and Learn pages now use the app's exact text sizes, and their Open the app link goes to the matching view."
+  ]
+ },
+ {
   "date": "Build 1116A",
   "tag": "New",
   "title": "Every team, game and lesson now has its own page",

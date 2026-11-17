@@ -1408,6 +1408,14 @@ function rosterPlayer(p){
 function rosterTeamCard(team,players,summary){
   return `<section class="rosterTeam"><div class="rosterTeamHead"><div><span>${esc(team?.code||'TEAM')}</span><b>${esc(team?.name||'Team')}</b></div><em>${players.length?`${players.length} listed`:'Roster profile'}</em></div>${players.length?`<div class="rosterPlayers">${players.map(rosterPlayer).join('')}</div>`:`<div class="rosterSummary"><b>${esc(summary.title)}</b>${summary.note?`<span>${esc(summary.note)}</span>`:''}</div>`}</section>`;
 }
+/* Closest match wins: "Florida" must find Florida Gators, not the first
+   "Florida ..." key (Florida Atlantic). Fewest words, and only if unique. */
+function rosterTierFor(name){
+  const RT=(typeof MATCHDAY_ROSTER_TIERS!=='undefined'&&MATCHDAY_ROSTER_TIERS)||{};
+  const tiers=RT.tiers||{};const hits=Object.keys(tiers).filter(k=>bbNameMatches(k,name||''));
+  if(!hits.length)return null;const len=k=>k.split(/\s+/).length,min=Math.min(...hits.map(len)),best=hits.filter(k=>len(k)===min);
+  return best.length===1?tiers[best[0]]:null;
+}
 function rosterPanel(m){
   const depth=m.personnel?.depth_chart||{},lineups=m.lineups||{};
   const rosterPlayers=raw=>(raw||[]).map(p=>({...normalizePlayer(p),position:p?.position||'',roster_status:p?.roster_status||''})).filter(p=>p.name);
@@ -1418,11 +1426,7 @@ function rosterPanel(m){
   // Composite (roster_talent.py). The old card compared an edge hard-coded to
   // zero, so every game read "Even roster grade".
   const RT=(typeof MATCHDAY_ROSTER_TIERS!=='undefined'&&MATCHDAY_ROSTER_TIERS)||{};
-  // Closest match wins: "Florida" must find Florida Gators, not the first
-  // "Florida ..." key (Florida Atlantic). Fewest words, and only if unique.
-  const tierFor=name=>{const tiers=RT.tiers||{};const hits=Object.keys(tiers).filter(k=>bbNameMatches(k,name||''));
-    if(!hits.length)return null;const len=k=>k.split(/\s+/).length,min=Math.min(...hits.map(len)),best=hits.filter(k=>len(k)===min);
-    return best.length===1?tiers[best[0]]:null};
+  const tierFor=rosterTierFor;
   const label=meta.label||'Roster profile';
   const source=RT.source?`${RT.source}, ${RT.composite_season||RT.season}.`:'Roster grade unavailable for this game.';
   const homeTier=tierFor(m.home?.name),awayTier=tierFor(m.away?.name);
@@ -1694,27 +1698,50 @@ function trdlabTeamRow(name){
     return rk===want||rk.startsWith(want+' ')||want.startsWith(rk+' ');
   })||null;
 }
-function trdlabMatchupPanel(m){
-  const h=trdlabTeamRow(m?.home?.name||m?.home),a=trdlabTeamRow(m?.away?.name||m?.away);
-  if(!h&&!a)return '';
-  const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
-  const rows=[
-    ['Rank',h?('#'+h.rank):'—',a?('#'+a.rank):'—'],
-    ['Rating',num(h?.rating),num(a?.rating)],
-    ['Offence',num(h?.adj_o,1),num(a?.adj_o,1)],
-    ['Defence',num(h?.adj_d,1),num(a?.adj_d,1)],
-    ['Strength of schedule',num(h?.sos),num(a?.sos)],
-    ['Conference',h?.conference||'—',a?.conference||'—'],
-  ];
-  const gap=(Number.isFinite(Number(h?.rating))&&Number.isFinite(Number(a?.rating)))
-    ?Number(h.rating)-Number(a.rating):null;
-  const lead=gap==null?'':`<div class="bbGap">${esc(gap>=0?(m?.home?.name||'Home'):(m?.away?.name||'Away'))} by <b>${Math.abs(gap).toFixed(2)}</b> on rating</div>`;
-  return `<div class="readCard bbMatchupCard"><div class="readHead"><span>Model</span><b>Opponent-adjusted matchup</b></div>
-${lead}
-<table class="bbTable"><thead><tr><th></th><th>${esc(m?.home?.name||'Home')}</th><th>${esc(m?.away?.name||'Away')}</th></tr></thead>
-<tbody>${rows.map(([k,x,y])=>`<tr><td class="bbKey">${esc(k)}</td><td>${esc(x)}</td><td>${esc(y)}</td></tr>`).join('')}</tbody></table>
-<p class="bbNote">Opponent-adjusted scoring margin and the schedule it was earned against, from the same table the ranking is drawn from. A rating difference is not a prediction.</p>
-</div>`;
+/* The head to head below the forecast: every comparison in one place, in the
+   same three columns as the forecast above it -- home value, what the row
+   is, away value -- so a reader never has to match a number to a team.
+
+   It replaced three collapsed boxes ("Team comparison", "Market", "More
+   detail") that each restated part of the others in a different layout: the
+   ratings appeared twice, the market's price sat apart from the forecast it
+   is compared with, and nothing showed until a box was opened. The owner
+   asked for one flowing view (2026-11-17).
+
+   `higher` says which direction is stronger for that row (null: neither, as
+   with schedule strength or a record), and the stronger side is the one
+   drawn in full text. */
+function tapeRow(label,left,right,lv,rv,higher){
+  const lead=higher==null||lv==null||rv==null||lv===rv?'':((higher?lv>rv:lv<rv)?'l':'r');
+  return `<div class="tapeRow" role="row"><b role="cell"${lead==='l'?' class="lead"':''}>${esc(left)}</b><span role="rowheader">${esc(label)}</span><b role="cell"${lead==='r'?' class="lead"':''}>${esc(right)}</b></div>`;
+}
+function tapeGroup(title,rows){return rows?`<div class="tapeGroup" role="rowgroup"><h4>${esc(title)}</h4>${rows}</div>`:''}
+function matchupTape(m){
+  const homeName=m?.home?.name||'Home',awayName=m?.away?.name||'Away';
+  const h=trdlabTeamRow(homeName),a=trdlabTeamRow(awayName);
+  const n=v=>v==null||v===''||!Number.isFinite(Number(v))?null:Number(v);
+  const f=(v,d)=>n(v)==null?'\u2014':n(v).toFixed(d);
+  const ratings=h||a?tapeGroup('Ratings',[
+    tapeRow('Power rank',h?.rank?'#'+h.rank:'\u2014',a?.rank?'#'+a.rank:'\u2014',n(h?.rank),n(a?.rank),false),
+    tapeRow('Rating',f(h?.rating,2),f(a?.rating,2),n(h?.rating),n(a?.rating),true),
+    tapeRow('Offense',f(h?.adj_o,1),f(a?.adj_o,1),n(h?.adj_o),n(a?.adj_o),true),
+    tapeRow('Defense',f(h?.adj_d,1),f(a?.adj_d,1),n(h?.adj_d),n(a?.adj_d),false),
+    tapeRow('Schedule strength',f(h?.sos,2),f(a?.sos,2),null,null,null),
+    tapeRow('Record',h?.record||'\u2014',a?.record||'\u2014',null,null,null),
+  ].join('')):'';
+  // Talent tiers exist for football programmes only; a basketball game would
+  // otherwise borrow the football tier of the same school.
+  const football=String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAF';
+  const ht=football?rosterTierFor(homeName):null,at=football?rosterTierFor(awayName):null;
+  const roster=ht||at?tapeGroup('Roster',tapeRow('Talent',ht||'\u2014',at||'\u2014',null,null,null)):'';
+  const advanced=!!m?.advanced_metrics_meta;
+  if(!ratings&&!roster&&!advanced)return '';
+  const RT=(typeof MATCHDAY_ROSTER_TIERS!=='undefined'&&MATCHDAY_ROSTER_TIERS)||{};
+  const notes=['Rating: points better than an average team, schedule-adjusted. Offense and defense: points scored and allowed against an average opponent.'];
+  if(roster&&RT.source)notes.push(`Talent: ${RT.source}, ${RT.composite_season||RT.season}.`);
+  return `<section class="mTape" aria-label="Head to head"><div class="mTapeHead"><b>${esc(homeName)}</b><span>Head to head</span><b>${esc(awayName)}</b></div>`
+    +`<div role="table" aria-label="Head to head: ratings, play and roster">${ratings}<!-- matchday-advanced-profile -->${roster}</div>`
+    +`<p class="mTapeNote">${esc(notes.join(' '))}</p></section>`;
 }
 /* The model read, from the engine the rest of this board already quotes.
 
@@ -1911,55 +1938,77 @@ function trdlabNoReadPanel(){
 function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
 function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':Math.min(99.9,n).toFixed(d)+'%';}
 function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
-function trdlabModelRead(m,p){
-  const model=_bbNum(p.model_pct);
-  const engine=p.model_name||'Matchday model';
-  const when=_bbStamp(p.generated_at);
-  // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
-  // other side's number is the only thing on the panel that says so.
-  const rows=(p.sides||[]).map(s=>`<div class="readSide"><span>${esc(s.selection||'')}</span>`
-    +`<strong>${_bbPct(s.model_pct)}</strong></div>`).join('');
-  const sideBox=rows
-    ?`<div class="readSides" aria-label="Both teams' win chances">${rows}</div>`
-    :'';
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Live model read</div>`
-    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. ${esc(p.integrity_note||'This read may change before kickoff and is not a locked, graded pick.')}</p></details></div>`
-    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Favored team</div>`
-    +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
-    +`<p class="analystNote">Live forecast · not locked yet</p></div>`
-    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
-    +(projectedScoreLine(m,p)||`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details>`)+`</section>`;
-}
 /* TRDLab's projected final, oriented to this fixture by team name (the
-   handoff's home/away can be the reverse of the board's). Replaces the
-   both-teams'-chances dropdown when present. */
-function projectedScoreLine(m,p){
-  const s=p?.projected_score;if(!s||!Number.isFinite(Number(s.home))||!Number.isFinite(Number(s.away)))return '';
+   handoff's home/away can be the reverse of the board's). */
+function projectedPoints(m,p){
+  const s=p?.projected_score;if(!s||!Number.isFinite(Number(s.home))||!Number.isFinite(Number(s.away)))return null;
   const homeName=s.home_name||p.home;
   const flipped=homeName&&m.home?.name&&!bbNameMatches(homeName,m.home.name)&&bbNameMatches(homeName,m.away?.name);
-  const home=flipped?s.away:s.home,away=flipped?s.home:s.away;
-  // Same left-to-right order as the header above it (home, then away), with
-  // the projected winner highlighted. Listing away first read as "the first
-  // team wins" (Western Kentucky 28 · New Mexico State 30).
-  const side=(name,pts,win)=>`<b class="${win?'psWin':'psLose'}"><em>${esc(name)}</em><strong>${Number(pts)}</strong></b>`;
-  // The margin and combined points come from the projected score itself, so
-  // the window never shows two different margins. Plain words, whole numbers:
-  // not a spread or an over/under.
-  const by=Math.abs(Number(home)-Number(away)),winner=Number(home)>Number(away)?(m.home?.name||'Home'):(m.away?.name||'Away');
-  const meta=`<span class="psMeta">${by?`${esc(winner)} by ${by}`:'Level'} · ${Number(home)+Number(away)} points</span>`;
-  return `<div class="projectedScore"><span>Projected score</span>`
-    +side(m.home?.name||'Home',home,Number(home)>Number(away))+`<i aria-hidden="true">·</i>`
-    +side(m.away?.name||'Away',away,Number(away)>Number(home))+meta+`</div>`;
+  return {home:Number(flipped?s.away:s.home),away:Number(flipped?s.home:s.away)};
 }
-function matchupEvidence(label,note,html,open=false){
-  if(!html)return '';
-  return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
+/* The forecast as a head to head. Each number sits under its own team, in the
+   header's order (home on the left, away on the right), so nothing has to be
+   matched to a name by reading: win chance, projected score and the market's
+   price for the same game, one row each.
+
+   It used to show the favoured team's name in headline type with one number
+   beside it. A 50.7% pick is a coin flip, and the other side's 49.3% is the
+   only thing on the panel that says so. */
+function trdlabModelRead(m,p){
+  const engine=p.model_name||'Matchday model',when=_bbStamp(p.generated_at);
+  const homeName=m.home?.name||'Home',awayName=m.away?.name||'Away';
+  // A missing number stays missing: Number(null) is 0, which once printed a
+  // "0.0%" market price for a game that had none.
+  const num=v=>v==null||v===''||!Number.isFinite(Number(v))?null:Number(v);
+  // Oriented by the forecast's own home/away flags, not by spelling. The
+  // engine can write "Murray St" where the board says "Murray State", and a
+  // name lookup then lost one team's number and the market row with it. The
+  // forecast's home is matched to this game's home once, as trdlabReadFor did.
+  const same=!(p.home&&bbNameMatches(p.home,awayName)&&!bbNameMatches(p.home,homeName));
+  const flag=h=>(p.sides||[]).find(s=>s.is_home===h);
+  let fh=num(flag(true)?.model_pct),fa=num(flag(false)?.model_pct);
+  if(fh==null&&fa!=null)fh=100-fa;
+  if(fa==null&&fh!=null)fa=100-fh;
+  const pickFH=p.pick==='h'?true:p.pick==='a'?false:(bbNameMatches(p.pick_name,p.home)?true:bbNameMatches(p.pick_name,p.away)?false:null);
+  const model=num(p.model_pct);
+  if(fh==null&&model!=null&&pickFH!=null){fh=pickFH?model:100-model;fa=100-fh}
+  let hp=same?fh:fa,ap=same?fa:fh;
+  const pickHome=pickFH==null?null:(pickFH===same);
+  // The market price belongs to the picked team; without knowing which side
+  // that is, it is left off rather than put under the wrong name.
+  const price=pickHome==null?null:num(p.market_pct);
+  const hm=price==null?null:(pickHome?price:100-price),am=price==null?null:100-hm;
+  const pts=projectedPoints(m,p);
+  const fav=hp!=null&&ap!=null&&hp!==ap?(hp>ap?'home':'away'):'';
+  const cell=(text,lead)=>`<b role="cell"${lead?' class="lead"':''}>${text}</b>`;
+  const row=(cls,left,label,right,leftLeads,rightLeads)=>`<div class="h2hRow ${cls}" role="row">${cell(left,leftLeads)}<span role="rowheader">${label}</span>${cell(right,rightLeads)}</div>`;
+  const rows=[
+    `<div class="h2hRow h2hTeams" role="row"><b role="columnheader">${esc(homeName)}</b><span></span><b role="columnheader">${esc(awayName)}</b></div>`,
+    row('h2hWin',_bbPct(hp),'Win chance',_bbPct(ap),fav==='home',fav==='away'),
+    hp!=null&&ap!=null?`<div class="h2hBar" aria-hidden="true"><i${fav==='home'?' class="lead"':''} style="flex-basis:${hp.toFixed(1)}%"></i><i${fav==='away'?' class="lead"':''} style="flex-basis:${ap.toFixed(1)}%"></i></div>`:'',
+    pts?row('h2hScore',pts.home,'Projected score',pts.away,pts.home>pts.away,pts.away>pts.home):'',
+    hm!=null?row('h2hMarket',_bbPct(hm),'Market',_bbPct(am)):'',
+  ].join('');
+  // Margin and combined points come from the projected score itself, so the
+  // window never shows two different margins. Plain words, whole numbers: not
+  // a spread or an over/under.
+  const by=pts?Math.abs(pts.home-pts.away):0;
+  const x=m.markets?.['1x2']||{},arrow=v=>v>0?`▲${v}`:`▼${Math.abs(v)}`;
+  const moves=[[homeName,num(x.move?.h)],[awayName,num(x.move?.a)]].filter(([,v])=>v);
+  const note=[
+    pts?`${by?`${esc(pts.home>pts.away?homeName:awayName)} by ${by}`:'Level'} · ${pts.home+pts.away} points`:'',
+    hm!=null&&num(x.books)?`market from ${num(x.books)} books`:'',
+    hm!=null&&moves.length?`since open: ${moves.map(([t,v])=>`${esc(t)} ${arrow(v)}`).join(', ')}`:'',
+  ].filter(Boolean).join(' · ');
+  return `<section class="analystPanel h2hPanel"><div class="analystTop"><div class="analystTitle">Live forecast · not locked yet</div>`
+    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. ${esc(p.integrity_note||'This read may change before kickoff and is not a locked, graded pick.')}${hm!=null?' Market is the sportsbook price with its margin removed, read as a win chance.':''}</p></details></div>`
+    +`<div class="h2h" role="table" aria-label="Head to head: win chance, projected score and market">${rows}</div>`
+    +(note?`<p class="h2hNote">${note}</p>`:'')+`</section>`;
 }
 function details(m){
   const bb=trdlabReadFor(m);
   const read=bb?trdlabModelRead(m,bb):(finishedPanel(m)||trdlabNoReadPanel());
-  const comparison=trdlabMatchupPanel(m)||matchProfilePanel(m);
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupTape(m)||matchProfilePanel(m)}</div>`;
 }
 /* dedup */
 

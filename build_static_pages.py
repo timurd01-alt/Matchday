@@ -7,7 +7,7 @@ anyone to for a team, a game or a term.
 
 This writes a plain HTML page for each of those at deploy time:
 
-    /learn/                               the field guide and its lessons
+    /learn/                               Learn: the lessons
     /learn/glossary/                      every term, each with an anchor
     /college-football/                    hub, plus /teams/ and /games/
     /college-football/teams/<team>/       one page per rated team
@@ -189,7 +189,7 @@ class Site:
         self.pages: dict[str, str] | None = {} if keep else None
 
     def write(self, path: str, *, title: str, description: str, crumbs: list[tuple[str, str]],
-              heading: str, tag: str, body: str, schema: list[dict] | None = None,
+              heading: str, tag: str, body: str, schema: list[dict] | None = None, app: str = "/",
               lastmod: str = "", changefreq: str = "daily", priority: str = "0.6") -> None:
         url = BASE_URL + path
         trail = [("Matchday", "")] + crumbs
@@ -227,12 +227,12 @@ class Site:
 </head>
 <body>
 <header class="pgTop">
-  <a class="pgBrand" href="/"><img src="/icon-192.png?v=4" alt="" width="24" height="24">Matchday Terminal</a>
+  <a class="pgBrand" href="/"><img src="/icon-192.png?v=4" alt="" width="22" height="22">Matchday Terminal</a>
   <nav class="pgNav" aria-label="Site">
     <a href="/college-football/">College football</a>
     <a href="/college-basketball/">College basketball</a>
-    <a href="/learn/">Field guide</a>
-    <a class="pgOpen" href="/">Open the app</a>
+    <a href="/learn/">Learn</a>
+    <a class="pgOpen" href="{_esc(app)}">Open the app</a>
   </nav>
 </header>
 <main class="pgMain">
@@ -242,7 +242,7 @@ class Site:
 </main>
 <footer class="pgFoot">
   <p>Free · No account · No ads. {_esc(NOT_ADVICE)}</p>
-  <nav aria-label="More"><a href="/qa.html">How it works</a><a href="/legal.html">Legal &amp; data sources</a></nav>
+  <nav aria-label="More"><a href="/qa.html">How it works</a><a href="/roadmap.html">Roadmap</a><a href="/legal.html">Legal &amp; data sources</a></nav>
 </footer>
 </body>
 </html>
@@ -306,6 +306,7 @@ class Sport:
         self.results = [r for r in snap.get("MATCHDAY_TRDLAB_RESULTS") or [] if r.get("sport") == key]
         self.rank = {k: _ranks(self.teams, k, hi) for k, hi in
                      (("sos", True), ("adj_o", True), ("adj_d", False))}
+        self.app = f"/?view=home&sport={key}"
         self.games = self._games(snap)
         self._upcoming = sorted((g for g in self.games.values() if "pick" in g and g["when"] > self.now),
                                 key=lambda g: g["when"])
@@ -462,7 +463,7 @@ def _team_page(site: Site, sport: Sport) -> None:
             body=body,
             schema=[{"@type": "SportsTeam", "name": name, "sport": sport.cfg["label"],
                      **({"memberOf": {"@type": "SportsOrganization", "name": conf}} if conf else {})}],
-            lastmod=edition, priority="0.7",
+            lastmod=edition, priority="0.7", app=f"/?view=rankings&sport={sport.key}",
         )
 
 
@@ -530,6 +531,7 @@ def _game_page(site: Site, sport: Sport, game: dict, generated: str) -> None:
             crumbs=crumbs, heading=f"{away} at {home}",
             tag=f"{_day(when)} · {'locked' if pending else 'final'}",
             body=body, lastmod=f"{when:%Y-%m-%d}", changefreq="monthly" if not pending else "daily", priority="0.4",
+            app=f"/?view=score&sport={sport.key}",
         )
         return
 
@@ -568,6 +570,7 @@ def _game_page(site: Site, sport: Sport, game: dict, generated: str) -> None:
         crumbs=crumbs, heading=f"{away} at {home}",
         tag=f"{_day(when)} · {_clock(when)} · " + ("live forecast" if when > sport.now else "forecast, awaiting result"),
         body=body, lastmod=generated[:10], changefreq="hourly", priority="0.6",
+        app=f"/?view=games&sport={sport.key}",
     )
 
 
@@ -638,7 +641,7 @@ def _sport_pages(site: Site, sport: Sport, generated: str) -> None:
         description=(f"Free {label.lower()} research: power ratings for {len(sport.teams)} teams, a win probability "
                      f"for every upcoming game, and every locked pick graded in public."),
         crumbs=[(label, f"{sport.path}/")], heading=label, tag=f"{season} ratings · predictions",
-        body=body, lastmod=generated[:10], changefreq="hourly", priority="0.9",
+        body=body, lastmod=generated[:10], changefreq="hourly", priority="0.9", app=sport.app,
     )
 
     site.write(
@@ -649,7 +652,7 @@ def _sport_pages(site: Site, sport: Sport, generated: str) -> None:
         crumbs=[(label, f"{sport.path}/"), ("Teams", f"{sport.path}/teams/")],
         heading=f"{label} teams", tag=f"power ratings · edition {edition}",
         body=_section("Power ratings", _table(head, _ratings_rows(sport, sport.teams), {0, 3, 4, 5})),
-        lastmod=edition, priority="0.8",
+        lastmod=edition, priority="0.8", app=f"/?view=rankings&sport={sport.key}",
     )
 
     body = _section("Upcoming", _table(["When", "Game", "Model pick", "Win chance", "Market"],
@@ -664,6 +667,7 @@ def _sport_pages(site: Site, sport: Sport, generated: str) -> None:
         crumbs=[(label, f"{sport.path}/"), ("Games", f"{sport.path}/games/")],
         heading=f"{label} games", tag="forecasts · graded picks",
         body=body, lastmod=generated[:10], changefreq="hourly", priority="0.8",
+        app=f"/?view=games&sport={sport.key}",
     )
 
 
@@ -741,27 +745,28 @@ def _learn_pages(site: Site, sports: dict[str, Sport], generated: str) -> None:
     body += _section("Glossary", f'<p class="pgMore"><a href="/learn/glossary/">All {len(glossary)} terms, defined in a sentence each</a></p>')
     site.write(
         "learn/",
-        title="The Matchday field guide: ratings, win probability and efficiency explained",
+        title="Learn: ratings, win probability and efficiency explained",
         description=("Plain-language lessons on the numbers behind college football and basketball: power ratings, "
                      "strength of schedule, win probability, EPA, tempo and how a prediction is graded."),
-        crumbs=[("Field guide", "learn/")], heading="The Matchday field guide", tag="know what you're looking at",
-        body=body, lastmod=today, changefreq="weekly", priority="0.8",
+        crumbs=[("Learn", "learn/")], heading="Learn", tag="the Matchday field guide",
+        body=body, lastmod=today, changefreq="weekly", priority="0.8", app="/?view=learn",
     )
 
     for i, lesson in enumerate(lessons):
-        body = "".join(_section(t, f"<p>{_esc(b)}</p>") for t, b in lesson["sections"])
+        body = '  <div class="pgLesson">\n'
+        body += "".join(_section(t, f"<p>{_esc(b)}</p>") for t, b in lesson["sections"])
         body += "".join(_section(t, b) for t, b in _lesson_data(lesson["id"], sports))
         prev, nxt = (lessons[i - 1] if i else None), (lessons[i + 1] if i + 1 < len(lessons) else None)
         body += '  <nav class="pgPager" aria-label="Lessons">' + (
             f'<a href="/learn/{prev["slug"]}/">← {_esc(prev["title"])}</a>' if prev else "<span></span>") + (
-            f'<a href="/learn/{nxt["slug"]}/">{_esc(nxt["title"])} →</a>' if nxt else "") + "</nav>\n"
+            f'<a href="/learn/{nxt["slug"]}/">{_esc(nxt["title"])} →</a>' if nxt else "") + "</nav>\n  </div>\n"
         site.write(
             f"learn/{lesson['slug']}/",
             title=f"{lesson['title']}: {lesson['hook']}",
             description=(lesson["sections"][0][1] if lesson["sections"] else lesson["hook"])[:300],
-            crumbs=[("Field guide", "learn/"), (lesson["title"], f"learn/{lesson['slug']}/")],
+            crumbs=[("Learn", "learn/"), (lesson["title"], f"learn/{lesson['slug']}/")],
             heading=lesson["title"], tag=f"lesson {i + 1} of {len(lessons)}",
-            body=body, lastmod=today, changefreq="weekly", priority="0.7",
+            body=body, lastmod=today, changefreq="weekly", priority="0.7", app="/?view=learn",
         )
 
     terms = "".join(f'<div id="{slug(t)}"><dt>{_esc(t)}</dt><dd>{_esc(d)}</dd></div>' for t, d in glossary)
@@ -770,13 +775,13 @@ def _learn_pages(site: Site, sports: dict[str, Sport], generated: str) -> None:
         title="College sports analytics glossary: every term on Matchday, defined",
         description=("Short definitions of the terms used across Matchday: rating, strength of schedule, EPA per play, "
                      "success rate, tempo, the four factors, calibration, lock, bubble and more."),
-        crumbs=[("Field guide", "learn/"), ("Glossary", "learn/glossary/")],
+        crumbs=[("Learn", "learn/"), ("Glossary", "learn/glossary/")],
         heading="Glossary", tag=f"{len(glossary)} terms",
         body=f'  <dl class="pgGlossary">{terms}</dl>\n',
         schema=[{"@type": "DefinedTermSet", "name": "Matchday glossary", "hasDefinedTerm": [
             {"@type": "DefinedTerm", "name": t, "description": d,
              "url": f"{BASE_URL}learn/glossary/#{slug(t)}"} for t, d in glossary]}],
-        lastmod=today, changefreq="monthly", priority="0.6",
+        lastmod=today, changefreq="monthly", priority="0.6", app="/?view=learn",
     )
 
 

@@ -447,15 +447,15 @@ function marketPanel(m){
   const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);
   let h='<div class="seclbl">Market price</div>';
   if(x.home_pct!=null){
-    h+=`<div class="problbl"><span>${esc(m.home.code||m.home.name)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.code||m.away.name)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">1X2 market · ${x.books||'?'} books</div>`;
+    h+=`<div class="problbl"><span>${esc(m.home.name||m.home.code)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.name||m.away.code)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">${twoWay?'Win market':'1X2 market'} · ${x.books||'?'} books</div>`;
     const arr=v=>v>0?`<span class="up">▲${v}</span>`:v<0?`<span class="down">▼${Math.abs(v)}</span>`:`<span class="flat">·</span>`;
     if(x.move&&(x.move.h||(!twoWay&&x.move.d)||x.move.a)){
-      h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.code)} ${arr(x.move.a)}</span></div>`;
+      h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.name||m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.name||m.away.code)} ${arr(x.move.a)}</span></div>`;
     }else if(x.open){
-      h+=`<div class="faintline" style="margin-top:4px">No line movement logged yet — it builds as the fetcher keeps running.</div>`;
+      h+=`<div class="faintline" style="margin-top:4px">No line movement recorded yet.</div>`;
     }
     if(x.confidence){
-      h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
+      h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.name||m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
     }
   }else if(String(m.status||'').toUpperCase()==='FINISHED'){
     // The live feed drops a game's prices once it kicks off, so a final used to

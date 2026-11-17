@@ -74,7 +74,9 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("Overall roster", panels)
         self.assertIn("m.personnel?.depth_chart", panels)
         details = panels[panels.index("function details(m){"):]
-        self.assertIn("${rosterPanel(m)}", details)
+        # The expanded view shows each team's talent tier as a head-to-head row.
+        tape = panels[panels.index("function matchupTape(m){"):panels.index("function details(m){")]
+        self.assertIn("rosterTierFor(homeName)", tape)
         self.assertNotIn("${statsPanel(m)}", details)
         self.assertNotIn("${lineupsPanel(m)}", details)
         fallback = features[features.index("function simpleMatchFallbackPanel(m){"):features.index("/* ===== BRACKET V11")]
