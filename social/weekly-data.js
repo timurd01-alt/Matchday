@@ -2,10 +2,10 @@
 // Every number here comes from trdlab_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF NOV 16",
+  "week": "WEEK OF NOV 17",
   "season": "2026 SEASON",
-  "published": "2026-11-15",
-  "generated_at": "2026-11-16T02:28:00Z",
+  "published": "2026-11-16",
+  "generated_at": "2026-11-17T21:28:47Z",
   "logos": {
     "Georgia Bulldogs": "logos/georgia.png",
     "GEORGIA": "logos/georgia.png",
@@ -42,7 +42,7 @@ window.MATCHDAY_SOCIAL = {
     "Tennessee": "logos/tennessee.png",
     "LSU Tigers": "logos/lsu.png",
     "LSU": "logos/lsu.png",
-    "Texas Tech Red Raiders": "logos/texasTech.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
     "Ole Miss Rebels": "logos/oleMiss.png",
@@ -77,114 +77,115 @@ window.MATCHDAY_SOCIAL = {
     "Oklahoma Sooners": "logos/oklahoma.png",
     "OKLAHOMA": "logos/oklahoma.png",
     "Oklahoma": "logos/oklahoma.png",
+    "Georgia Tech Yellow Jackets": "logos/georgia.png",
+    "GEORGIA TECH": "logos/georgiaTech.png",
+    "Georgia Tech": "logos/georgiaTech.png",
     "South Carolina Gamecocks": "logos/southCarolina.png",
     "SOUTH CAROLINA": "logos/southCarolina.png",
     "South Carolina": "logos/southCarolina.png",
-    "SMU Mustangs": "logos/smu.png",
-    "SMU": "logos/smu.png",
-    "Virginia Tech Hokies": "logos/virginia.png",
-    "VIRGINIA TECH HOKIES": "logos/virginia.png"
+    "Florida Gators": "logos/florida.png",
+    "FLORIDA GATORS": "logos/florida.png"
   },
   "top25": [
     [
       "Georgia Bulldogs",
-      42.0
+      41.97
     ],
     [
       "Notre Dame Fighting Irish",
-      41.29
+      41.26
     ],
     [
       "Miami Hurricanes",
-      40.08
+      40.06
     ],
     [
       "Wake Forest Demon Deacons",
-      37.82
-    ],
-    [
-      "Indiana Hoosiers",
       37.8
     ],
     [
+      "Indiana Hoosiers",
+      37.77
+    ],
+    [
       "Alabama Crimson Tide",
-      37.73
+      37.69
     ],
     [
       "Ohio State Buckeyes",
-      37.57
+      37.55
     ],
     [
       "Oregon Ducks",
-      35.26
+      35.23
     ],
     [
       "Texas Longhorns",
-      35.09
+      35.06
     ],
     [
       "Utah Utes",
-      35.05
+      35.02
     ],
     [
       "Tennessee Volunteers",
-      34.26
+      34.24
     ],
     [
       "LSU Tigers",
-      33.56
+      33.53
     ],
     [
       "Texas Tech Red Raiders",
-      31.89
+      31.87
     ],
     [
       "Ole Miss Rebels",
-      31.61
+      31.58
     ],
     [
       "Iowa Hawkeyes",
-      31.57
+      31.55
     ],
     [
       "Louisville Cardinals",
-      29.49
+      29.47
     ],
     [
       "BYU Cougars",
-      29.4
+      29.38
     ],
     [
       "Duke Blue Devils",
-      29.25
+      29.23
     ],
     [
       "Arizona Wildcats",
-      29.16
+      29.13
     ],
     [
       "USC Trojans",
-      29.09
+      29.07
     ],
     [
       "UCLA Bruins",
-      28.5
+      28.48
     ],
     [
       "Nebraska Cornhuskers",
-      28.44
+      28.42
     ],
     [
       "Penn State Nittany Lions",
-      27.9
+      27.88
     ],
     [
       "Northwestern Wildcats",
-      27.29
+      27.26
     ],
     [
       "Oklahoma Sooners",
-      27.23
+      27.21
     ]
   ],
   "upset": {
@@ -208,29 +209,29 @@ window.MATCHDAY_SOCIAL = {
       "rank": 2,
       "away": "OHIO STATE",
       "home": "NEBRASKA CORNHUSKERS",
-      "time": "SAT · 3:30 PM ET",
+      "time": "SAT · 12:00 PM ET",
       "hook": "#7 vs #22"
     },
     {
       "rank": 3,
+      "away": "GEORGIA",
+      "home": "GEORGIA TECH",
+      "time": "FRI · 8:00 PM ET",
+      "hook": "RANKED #1 ON THE ROAD"
+    },
+    {
+      "rank": 4,
       "away": "GEORGIA",
       "home": "SOUTH CAROLINA",
       "time": "SAT · 7:30 PM ET",
       "hook": "RANKED #1 ON THE ROAD"
     },
     {
-      "rank": 4,
-      "away": "SMU",
-      "home": "NOTRE DAME",
-      "time": "SAT · 7:30 PM ET",
-      "hook": "RANKED #2 AT HOME"
-    },
-    {
       "rank": 5,
-      "away": "VIRGINIA TECH HOKIES",
-      "home": "MIAMI",
-      "time": "SAT · 7:00 PM ET",
-      "hook": "RANKED #3 AT HOME"
+      "away": "NOTRE DAME",
+      "home": "FLORIDA GATORS",
+      "time": "TUE · 4:30 PM ET",
+      "hook": "RANKED #2 ON THE ROAD"
     }
   ]
 };
