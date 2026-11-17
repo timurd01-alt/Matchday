@@ -290,6 +290,40 @@ to, so it is git-tracked and committed back hourly; never move it back behind
 `.gitignore`. It is the evidence any future closing-line comparison of Bet
 Better's picks would need.
 
+## Static pages: what a search engine can read
+
+The app is one document. Every view is `/?view=...` and the HTML a crawler
+receives is the welcome copy followed by "Loading...", so until Build 1116A
+nothing on the site had an address: the sitemap listed five URLs.
+
+`build_static_pages.py` writes a plain page for every rated team, every game
+with a live forecast or a locked pick, and every field-guide lesson, under
+`/college-football/`, `/college-basketball/` and `/learn/`. `deploy.yml` runs it
+into `_site` after the sitemap is copied, because it appends its pages to that
+sitemap. It warns instead of failing: these pages must never be able to take
+the app down.
+
+- **It forecasts nothing.** Every number is read from
+  `matchday-cfb-snapshot.js`, the file the app renders, so a page cannot
+  disagree with the app. Lesson and glossary copy is read from `app-learn.js`
+  for the same reason. Edit the copy there, not in the generator.
+- **A live forecast is never shown as a locked pick.** Forecast pages carry the
+  pick's own `integrity_note`; `test_static_pages.py` enforces it.
+- **A hit rate never appears without the expected rate beside it**, per the
+  scorecard's own caveat.
+- **A finished game has a page only if its pick was graded.** The results
+  window in the snapshot slides (600 games a sport), so a page built from it
+  would stop existing within days. The graded record does not slide.
+- Styling is `pages.css`: the same tokens and three type roles as `styles.css`,
+  copied so a page loads one small stylesheet. `ui_audit.py` audits it.
+
+To look at the pages locally, build them and serve the folder:
+
+```bash
+python build_static_pages.py _site
+python -m http.server 8746 --directory _site
+```
+
 ## Tests
 
 Run before considering prediction/data/provider changes complete:

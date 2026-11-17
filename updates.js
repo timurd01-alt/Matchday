@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1116A",
+  "tag": "New",
+  "title": "Every team, game and lesson now has its own page",
+  "items": [
+   "Each of the 134 football and 363 basketball teams has a page with its rating, rank, record, schedule strength, upcoming win chances and recent results.",
+   "Every upcoming game has a forecast page, and every locked pick has a page showing what was picked and how it turned out.",
+   "The field guide's eight lessons and the glossary are now pages you can link to, each with this week's numbers as the example.",
+   "Search engines can now find all of these. Until today the whole site was a single address."
+  ]
+ },
+ {
   "date": "Build 1115D",
   "tag": "Fix",
   "title": "Basketball records drop the loss from the game that never happened",

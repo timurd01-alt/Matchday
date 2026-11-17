@@ -402,6 +402,13 @@ jobs:
               if source.is_file():
                   shutil.copy2(source, pathlib.Path("_site/posts") / source.name)
           EOF
+          # Crawlable pages for every team, game and field-guide lesson, and
+          # their sitemap entries. The app is one URL and its HTML is
+          # "Loading..." until scripts run, so without these nothing on the
+          # site has an address a search engine can index. Runs after the
+          # sitemap is copied because it appends to it. A failure here must
+          # not take the app down with it, so it warns instead of failing.
+          python build_static_pages.py _site || echo "::warning::static pages were not built; the app itself is unaffected"
 
       - name: Stamp asset URLs with this commit's SHA (cache-busting)
         run: |

@@ -37,7 +37,7 @@ SCHEMA_VERSION = 1
 
 # The pages a visitor actually loads.
 AUDITED_HTML = ("index.html", "legal.html", "qa.html", "roadmap.html")
-AUDITED_CSS = ("styles.css", "content.css", "research-signals.css")
+AUDITED_CSS = ("styles.css", "content.css", "research-signals.css", "pages.css")
 
 # Most of this interface is rendered from template literals in these files, not
 # from the .html shells, so an audit that reads only HTML sees a fraction of
