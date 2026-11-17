@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1117B",
+  "tag": "Improvement",
+  "title": "Learn pages use the whole width",
+  "items": [
+   "A lesson now reads across the page, with every lesson listed in a column on the right: the one you are on is marked, and the glossary is one click away.",
+   "The Learn page shows its eight lessons four across, as the app does, instead of five and three.",
+   "On a phone the lesson list moves below the lesson."
+  ]
+ },
+ {
   "date": "Build 1117A",
   "tag": "Improvement",
   "title": "The game window is now one head to head",

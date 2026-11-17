@@ -732,6 +732,9 @@ def _lesson_data(lesson_id: str, sports: dict[str, Sport]) -> list[tuple[str, st
     return []
 
 
+CURRENT = ' aria-current="page"'
+
+
 def _learn_pages(site: Site, sports: dict[str, Sport], generated: str) -> None:
     lessons, glossary = load_learn()
     for lesson in lessons:
@@ -753,13 +756,21 @@ def _learn_pages(site: Site, sports: dict[str, Sport], generated: str) -> None:
     )
 
     for i, lesson in enumerate(lessons):
-        body = '  <div class="pgLesson">\n'
+        # The lesson reads down the left; every lesson is listed on the right,
+        # so the page uses its width and the next read is one click away.
+        body = '  <div class="pgLessonWrap">\n  <div class="pgLesson">\n'
         body += "".join(_section(t, f"<p>{_esc(b)}</p>") for t, b in lesson["sections"])
         body += "".join(_section(t, b) for t, b in _lesson_data(lesson["id"], sports))
         prev, nxt = (lessons[i - 1] if i else None), (lessons[i + 1] if i + 1 < len(lessons) else None)
-        body += '  <nav class="pgPager" aria-label="Lessons">' + (
+        body += '  <nav class="pgPager" aria-label="Previous and next lesson">' + (
             f'<a href="/learn/{prev["slug"]}/">← {_esc(prev["title"])}</a>' if prev else "<span></span>") + (
             f'<a href="/learn/{nxt["slug"]}/">{_esc(nxt["title"])} →</a>' if nxt else "") + "</nav>\n  </div>\n"
+        rail = "".join(
+            f'<li><a href="/learn/{l["slug"]}/"{CURRENT if j == i else ""}>'
+            f'<span>{j + 1}</span><strong>{_esc(l["title"])}</strong></a></li>'
+            for j, l in enumerate(lessons))
+        body += (f'  <aside class="pgRail" aria-label="All lessons"><h2 class="seclbl">All lessons</h2><ol>{rail}</ol>'
+                 f'<p class="pgMore"><a href="/learn/glossary/">Glossary: {len(glossary)} terms</a></p></aside>\n  </div>\n')
         site.write(
             f"learn/{lesson['slug']}/",
             title=f"{lesson['title']}: {lesson['hook']}",

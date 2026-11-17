@@ -153,6 +153,15 @@ class EmptySnapshot(unittest.TestCase):
             self.assertTrue((out / "learn" / "index.html").is_file())
             self.assertTrue((out / "learn" / "glossary" / "index.html").is_file())
             self.assertFalse(any(s.teams or s.games for s in sports.values()))
+            # Every lesson lists every lesson beside it, marking the one open,
+            # so a lesson page uses its width instead of leaving half empty.
+            lessons, _ = bsp.load_learn()
+            for i, lesson in enumerate(lessons):
+                html = (out / "learn" / bsp.slug(lesson["title"]) / "index.html").read_text(encoding="utf-8")
+                self.assertIn('<aside class="pgRail"', html)
+                self.assertEqual(html.count("<li><a "), len(lessons))
+                self.assertEqual(html.count('aria-current="page"'), 1)
+                self.assertIn(f'<li><a href="/learn/{bsp.slug(lesson["title"])}/" aria-current="page">', html)
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 
