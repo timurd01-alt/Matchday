@@ -1615,8 +1615,8 @@ renderGroups=function(){
       cell.appendChild(tag);
     }
   });
-  // Order is fixed: the model.s power rating first, the official AP poll
-  // second, the personal ballot last. Sections are inserted by separate renderers, so
+  // Order is fixed: the model's power rating first, the CFP committee
+  // rankings second, the official AP poll third, the personal ballot last. Sections are inserted by separate renderers, so
   // they are moved into place here rather than relying on insertion order.
   // When the poll was last released, so a Sunday-morning visitor can tell
   // last week's poll from this week's (the AP releases Sunday afternoon).
@@ -1631,7 +1631,10 @@ renderGroups=function(){
   if(cfpTable&&!host.querySelector('[data-ranking-section="cfp"]'))cfpTable.insertAdjacentHTML('beforebegin','<div class="seclbl" data-ranking-section="cfp">CFP Committee Rankings</div>');
   const group=key=>{const lbl=host.querySelector(`[data-ranking-section="${key}"]`);if(!lbl)return[];const out=[lbl];let n=lbl.nextElementSibling;while(n&&!n.dataset.rankingSection&&!n.classList.contains('vhead')){out.push(n);n=n.nextElementSibling;if(out.length>2)break;}return out;};
   const intro=host.querySelector('.rankingsIntro');
-  if(intro){let at=intro;['power','ap','top25'].forEach(k=>group(k).forEach(el=>{at.after(el);at=el;}));}
+  // The CFP committee table sits directly under the power rating so the two
+  // rankings that decide the playoff picture read together, ahead of the AP
+  // poll and the personal ballot.
+  if(intro){let at=intro;['power','cfp','ap','top25'].forEach(k=>group(k).forEach(el=>{at.after(el);at=el;}));}
   decorateRankingTeamMarks(host);
   const standingsHost=$('#view-standings');
   const conferenceTables=[...host.querySelectorAll('.tablewrap:not(.officialPoll)')];

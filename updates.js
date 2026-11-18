@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1117C",
+  "tag": "Improvement",
+  "title": "CFP rankings sit right under the power ratings",
+  "items": [
+   "On the football Rankings page the CFP committee rankings now come straight after the power ratings, so the two can be read together without scrolling past the AP poll and the ballot.",
+   "The AP Top 25 and the personal ballot follow in that order; basketball's Rankings page is unchanged."
+  ]
+ },
+ {
   "date": "Build 1117B",
   "tag": "Improvement",
   "title": "Learn pages use the whole width",
