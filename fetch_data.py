@@ -1571,7 +1571,7 @@ def fetch_college_bundle():
     # A cached bundle never learns a result, and CFBD's quota can be spent for
     # weeks. Final scores only, for fixtures already on this schedule -- see
     # score_fallback.py and the 2026-09-12 amendment in PROVIDER_COMPLIANCE.md.
-    if COMP_KEY == "NCAAF":
+    if COMP_KEY in ("NCAAF", "NCAAM"):
         try:
             import score_fallback
             filled = score_fallback.settle(all_matches, COMP_KEY)
@@ -1582,7 +1582,7 @@ def fetch_college_bundle():
             DIAG.append(f"final-score fallback: skipped ({exc})")
         # A stale schedule also keeps the kickoff times it had when it froze --
         # often the placeholder used before a time is announced.
-        if bundle.get("_stale"):
+        if COMP_KEY == "NCAAF" and bundle.get("_stale"):
             try:
                 import schedule_fallback
                 moved = schedule_fallback.refresh_kickoffs(all_matches, COMP_KEY)

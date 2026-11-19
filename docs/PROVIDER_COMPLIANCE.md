@@ -1,5 +1,7 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-18 (Build 1118B: the ESPN final-score fallback already used for football now also settles men's basketball games that CollegeBasketballData still lists as live or unplayed 2.5 hours after tip. Same approved public-facts scope as the 2026-09-12 amendment: home score, away score and "finished" only, for fixtures already on Matchday's schedule, from ESPN's public Division I scoreboard. No statistics, odds, team data or raw payload is taken or stored, and the scoreboard never adds a fixture.)
+
 Reviewed: 2026-11-12 (Build 1112T: football Results now also lists archived finals -- teams and final scores already held in Matchday's game archive from the pipeline and the TRDLab handoff's `results`. Fifteen archived team names corrected to the handoff's own names; one tiny archive guard. No new provider calls, fields, sources or redistribution.)
 
 Reviewed: 2026-11-11 (daily scorecard publication reads only the engine’s existing frozen cards and grades. No new provider calls, raw odds, retained fields or redistribution. The existing derived market comparison and caveats are preserved.)

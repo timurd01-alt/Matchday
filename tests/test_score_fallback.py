@@ -105,7 +105,33 @@ class ScoreFallbackTests(unittest.TestCase):
 
     def test_competitions_without_a_scoreboard_are_untouched(self):
         match = fixture("A", "B")
-        report = score_fallback.settle([match], "NCAAM", now=NOW, fetch=lambda url: 1 / 0)
+        report = score_fallback.settle([match], "OTHER", now=NOW, fetch=lambda url: 1 / 0)
+        self.assertEqual(report["candidates"], 0)
+
+    def test_basketball_settles_from_the_division_one_scoreboard(self):
+        # Houston's 86-76 win at Florida was final on the scoreboard while the feed
+        # still had it LIVE with no score (2026-11-18).
+        match = fixture("Florida", "Houston", kickoff="2026-11-18T21:48:00Z", status="LIVE")
+        asked = []
+
+        def fetch(url):
+            asked.append(url)
+            return {"events": [event(team("Florida", "Florida Gators"), team("Houston", "Houston Cougars"),
+                                     76, 86, date="2026-11-18T21:48Z")]}
+        now = dt.datetime(2026, 11, 19, 0, 30, tzinfo=dt.timezone.utc)
+        report = score_fallback.settle([match], "NCAAM", now=now, fetch=fetch)
+        self.assertEqual(report["settled"], 1)
+        self.assertEqual((match["status"], match["score"]["home"], match["score"]["away"]),
+                         ("FINISHED", 76, 86))
+        self.assertEqual(len(asked), 1)
+        self.assertIn("mens-college-basketball", asked[0])
+        self.assertIn("dates=20261118", asked[0])
+        self.assertIn("groups=50", asked[0])
+
+    def test_basketball_waits_for_a_game_to_be_long_enough_past_tip(self):
+        match = fixture("Florida", "Houston", kickoff="2026-11-18T21:48:00Z")
+        now = dt.datetime(2026, 11, 18, 23, 30, tzinfo=dt.timezone.utc)
+        report = score_fallback.settle([match], "NCAAM", now=now, fetch=lambda url: 1 / 0)
         self.assertEqual(report["candidates"], 0)
 
 

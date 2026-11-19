@@ -29,11 +29,20 @@ import urllib.request
 SCOREBOARD = {
     "NCAAF": ("https://site.api.espn.com/apis/site/v2/sports/football/"
               "college-football/scoreboard?dates={day}&groups=80&limit=300"),
+    # Division I (group 50). CollegeBasketballData settles a night's games
+    # hours after they end, and the hourly refresh often runs only every few
+    # hours, so a finished game sat on the site as "live" or 0-0 well into the
+    # next day (Houston 86-76 at Florida, 2026-11-18).
+    "NCAAM": ("https://site.api.espn.com/apis/site/v2/sports/basketball/"
+              "mens-college-basketball/scoreboard?dates={day}&groups=50&limit=500"),
 }
 
 # A game is not expected to be final until well after kickoff; asking sooner
 # spends a request on a game that is still being played.
 SETTLE_AFTER_HOURS = 4.0
+# A basketball game runs about two hours; the scoreboard must still call it
+# completed, so asking at 2.5 hours never settles a game in progress.
+SETTLE_AFTER_HOURS_BY_COMP = {"NCAAM": 2.5}
 # Nothing older than this is looked up. A final that has been missing for
 # longer is a real problem to investigate, not something to paper over.
 LOOKBACK_DAYS = 10
@@ -103,14 +112,15 @@ def _finals(payload) -> list[dict]:
     return finals
 
 
-def _unsettled(match: dict, now: dt.datetime) -> dt.datetime | None:
+def _unsettled(match: dict, now: dt.datetime,
+               settle_after: float = SETTLE_AFTER_HOURS) -> dt.datetime | None:
     if match.get("status") == "FINISHED":
         return None
     kickoff = _parse(match.get("kickoff"))
     if kickoff is None:
         return None
     age = (now - kickoff).total_seconds() / 3600.0
-    return kickoff if SETTLE_AFTER_HOURS <= age <= LOOKBACK_DAYS * 24 else None
+    return kickoff if settle_after <= age <= LOOKBACK_DAYS * 24 else None
 
 
 def settle(matches: list[dict], competition: str, now: dt.datetime | None = None,
@@ -123,8 +133,9 @@ def settle(matches: list[dict], competition: str, now: dt.datetime | None = None
     if not template:
         return report
     now = now or dt.datetime.now(dt.timezone.utc)
+    settle_after = SETTLE_AFTER_HOURS_BY_COMP.get(competition, SETTLE_AFTER_HOURS)
     pending = [(match, kickoff) for match in matches or []
-               if (kickoff := _unsettled(match, now)) is not None]
+               if (kickoff := _unsettled(match, now, settle_after)) is not None]
     report["candidates"] = len(pending)
     if not pending:
         return report

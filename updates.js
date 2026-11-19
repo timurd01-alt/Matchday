@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1118B",
+  "tag": "Fix",
+  "title": "Basketball finals appear the same night",
+  "items": [
+   "Finished basketball games no longer sit as live or 0-0 while the schedule provider catches up. Their final scores now come from the public scoreboard once a game has ended."
+  ]
+ },
+ {
   "date": "Build 1118A",
   "tag": "Fix",
   "title": "Results now show every recent final",

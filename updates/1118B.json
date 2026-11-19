@@ -1,0 +1,9 @@
+{
+  "rank": 612,
+  "date": "Build 1118B",
+  "tag": "Fix",
+  "title": "Basketball finals appear the same night",
+  "items": [
+    "Finished basketball games no longer sit as live or 0-0 while the schedule provider catches up. Their final scores now come from the public scoreboard once a game has ended."
+  ]
+}
