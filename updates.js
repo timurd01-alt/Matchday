@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1118A",
+  "tag": "Fix",
+  "title": "Results now show every recent final",
+  "items": [
+   "College basketball Results now include every game from the last three days instead of only the latest 40, so busy nights no longer drop finals.",
+   "College football Results keep the full previous week, from midweek games through Saturday."
+  ]
+ },
+ {
   "date": "Build 1117C",
   "tag": "Improvement",
   "title": "CFP rankings sit right under the power ratings",

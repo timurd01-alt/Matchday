@@ -1621,7 +1621,7 @@ def fetch_college_bundle():
     # fixture serializes to ~2KB that gzips heavily, so this stays a modest
     # transfer cost for a much larger published schedule.
     future_window = {"NCAAF": 420, "NCAAM": 300}.get(COMP_KEY, 160)
-    matches = [match for _, match in sorted(past, key=lambda item: item[0])[-40:]]
+    matches = [match for _, match in recent_past_window(past, COMP_KEY, now)]
     matches += [match for _, match in sorted(future, key=lambda item: item[0])[:future_window]]
     matches.sort(key=lambda match: match.get("kickoff") or "")
     try:
@@ -1634,6 +1634,34 @@ def fetch_college_bundle():
     DIAG.append(f"{provider_name} fixtures: {len(matches)} in display window ({len(all_matches)} season total)")
     DIAG.append(f"{provider_name} standings: {sum(len(g.get('teams') or []) for g in tables)} teams")
     return adapter, matches, st, tables
+
+
+# Past fixtures published for the Results page, as (lookback, hard cap).
+# The window used to be the last 40 past fixtures for every sport, which is
+# less than one evening of college basketball (100+ games on a busy night), so
+# the Results page silently dropped most of yesterday's finals. A time window
+# keeps whole days; the cap bounds the payload. NCAAF's eight days cover the
+# full previous week from Tuesday MACtion through Saturday.
+PAST_WINDOW = {
+    "NCAAM": (datetime.timedelta(days=3), 450),
+    "NCAAF": (datetime.timedelta(days=8), 240),
+}
+
+
+def recent_past_window(past, comp_key, now):
+    """Return the (kickoff, match) pairs from `past` to publish, oldest first."""
+    ordered = sorted(past, key=lambda item: item[0])
+    window = PAST_WINDOW.get(comp_key)
+    if not window:
+        return ordered[-40:]
+    lookback, cap = window
+    cutoff = now - lookback
+    recent = [item for item in ordered if item[0] >= cutoff]
+    # Never publish fewer than the old fixed window: a quiet stretch (a bye
+    # week, the holiday break) should still show the last results played.
+    if len(recent) < 40:
+        recent = ordered[-40:]
+    return recent[-cap:]
 
 
 COLLEGE_HISTORY_SEASONS = 3   # the season in progress plus two completed ones
