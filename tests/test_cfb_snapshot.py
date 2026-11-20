@@ -173,8 +173,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
         render = core[core.index("function renderMatches(){"):]
         render = render[:render.index(chr(10) + "function ", 1)]
-        self.assertIn("gamesSummaryHTML(active)", home)
-        self.assertNotIn("gamesSummaryHTML(active)", render)
+        self.assertIn("gamesSummaryHTML(active", home)
+        self.assertNotIn("gamesSummaryHTML(active", render)
         self.assertIn("groupedBoardHTML(shown)", render)
         self.assertNotIn("collegeModules", render)
         summary = core[core.index("function gamesSummaryHTML("):

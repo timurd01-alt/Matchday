@@ -117,7 +117,7 @@ window.matchdayEnterNow=function(targetView){
     try{if(typeof setView==='function')setView(target,{replace:!targetView});else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
   },0);
   window.setTimeout(function(){
-    var waiting=home&&home.querySelector('.empty');
+    var home=document.getElementById('view-home'),waiting=home&&home.querySelector('.empty');
     if(waiting&&waiting.textContent.trim()==='Loading…')waiting.innerHTML='The page is taking too long to load.<br><button class="actionbtn" type="button" onclick="location.reload()">Retry loading</button>';
   },15000);
 };

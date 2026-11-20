@@ -1,0 +1,13 @@
+{
+  "rank": 613,
+  "date": "Build 1120A",
+  "tag": "Feature",
+  "title": "Last week and Games that matter on Home",
+  "items": [
+    "Home has a new section with two tabs. Sunday to Wednesday it opens on Last week; Thursday to Saturday it opens on Games that matter. Either tab can be picked at any time.",
+    "Last week shows the model's locked-pick record for the week beside what it expected, its best call and worst miss, the other upsets, the biggest ranking moves, and how your followed teams did.",
+    "Games that matter lists the next seven days' games with playoff stakes. Football labels them from the CFP committee ranking and the projected bracket: playoff teams meeting, a playoff team at risk, bubble teams and ranked meetings. Basketball lists games involving bubble teams, with each team's chance of making the field from bracketology.",
+    "While Last week is showing, the side panel's recent best call and miss steps aside, so the same calls are not shown twice.",
+    "Fixed a script error on every page load that stopped the slow-loading retry message from ever appearing."
+  ]
+}

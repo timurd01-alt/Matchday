@@ -278,5 +278,8 @@ connectBracket(host,d);if(typeof ResizeObserver!=='undefined'){state.observer=ne
     sorted.basis=data.power_basis?.basis||null;
     return sorted;
   }
-  return {render:load,validate,formatOdds:odds,projectedTopSeeds};
+  // The current projection for other views (Home's bubble games), or null
+  // when it is missing or past its valid_until.
+  async function snapshot(){const data=await loadData();return data&&!expired()?data:null}
+  return {render:load,validate,formatOdds:odds,projectedTopSeeds,snapshot};
 })();

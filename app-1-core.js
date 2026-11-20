@@ -982,7 +982,7 @@ function teamMark(name,extra=''){
   const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
   return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${esc(file)}" data-logo-fallback="${esc(candidates.join('|'))}" alt="" width="32" height="32" loading="lazy" onerror="teamLogoFallback(this)"><span class="teamMonogramText" hidden aria-hidden="true">${esc(letters)}</span></span>`;
 }
-function gamesSummaryHTML(active){
+function gamesSummaryHTML(active,options={}){
   const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';
   const weekEnd=Date.now()+7*86400000;
   const week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
@@ -996,7 +996,7 @@ function gamesSummaryHTML(active){
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${options.hideNotable?'':gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and polls</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function homeLatestReactionHTML(){
@@ -1056,8 +1056,10 @@ function renderHome(){
   const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
   host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
     +`<section class="homeKpis" aria-label="This week's overview"><div title="Monday to Sunday, Central time, finished games included"><strong>${weekGameCount(DATA.matches,weekKeys)}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +homeWeekHTML()
     +homeLatestReactionHTML()
-    +gamesSummaryHTML(active);
+    +gamesSummaryHTML(active,{hideNotable:homeWeekShowsCalls()});
+  homeWeekHydrate();
   const seedsHost=host.querySelector('[data-home-basketball-seeds]');
   if(seedsHost&&window.MatchdayBracketology)window.MatchdayBracketology.projectedTopSeeds().then(seeds=>{
     if(!seedsHost.isConnected||DATA.comp_key!=='NCAAM')return;
@@ -1065,6 +1067,222 @@ function renderHome(){
     if(seeds.basis==='preseason'){const label=seedsHost.parentElement?.querySelector('span');if(label)label.textContent='Projected No. 1 seeds · preseason'}
     seedsHost.innerHTML=`<ul class="gamesSeeds">${seeds.map(team=>`<li>${teamMark(team.team_name)}<span><b>${esc(typeof rsShortName==='function'?rsShortName(team.team_name):team.team_name)}</b><small>${esc(team.region)}</small></span></li>`).join('')}</ul>`;
   });
+}
+/* The week on Home (Build 1120A). One section, two tabs:
+   - "Last week": the most recent Monday-to-Sunday week whose Saturday is over:
+     the model's locked-pick record that week, its best call and worst miss,
+     the other upsets, the biggest ranking moves, and the visitor's own teams.
+   - "Games that matter": the next seven days ranked by playoff stakes.
+   Sunday to Wednesday opens on the recap and Thursday to Saturday on the games
+   (Central time, the week the Sunday update publishes). Every number is read
+   from what the page already has: the graded scorecard, the engine's results,
+   rankings and picks, the CFP committee ranking, the projected bracket and, for
+   basketball, the bracketology file Home already loads. Nothing here forecasts.
+   Football stakes are labels from public rankings, never invented odds. */
+let HOME_WEEK_TAB='';
+function homeWeekDefaultTab(now=Date.now()){
+  const day=new Date(centralDayKey(now)+'T12:00:00Z').getUTCDay();
+  return day<=3?'recap':'stakes';
+}
+function homeWeekTab(){return HOME_WEEK_TAB||homeWeekDefaultTab()}
+// The Saturday the recap is about: the most recent one that is over. On a
+// Saturday that is the previous one, because today's games are still going.
+function homeRecapAnchor(now=Date.now()){
+  const today=new Date(centralDayKey(now)+'T12:00:00Z'),day=today.getUTCDay();
+  return today.getTime()-(day===6?7:day+1)*86400000;
+}
+function homeWeekLabel(keys){
+  const days=[...keys].sort(),first=days[0],last=days[days.length-1];
+  const fmt=k=>new Date(k+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+  return first.slice(0,7)===last.slice(0,7)?`${fmt(first)}–${Number(last.slice(8))}`:`${fmt(first)} – ${fmt(last)}`;
+}
+function homeShort(name){return typeof rsShortName==='function'?rsShortName(name):String(name||'')}
+function homeSame(a,b){return typeof bbNameMatches==='function'?bbNameMatches(a,b):String(a||'').toLowerCase()===String(b||'').toLowerCase()}
+function homeNum(v){return v==null||v===''||!Number.isFinite(Number(v))?null:Number(v)}
+function homeRankingTable(){
+  const key=currentSportKey();
+  const t=key==='ncaaf'?(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null)
+    :key==='ncaam'?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null):null;
+  return t?.available&&Array.isArray(t.rankings)?t:null;
+}
+// A market value of 0 or 100 is a missing price, not a real probability.
+function homeMarket(r){const v=homeNum(r.market_probability_pct);return v!=null&&v>0&&v<100?v:null}
+function homeRecapData(now=Date.now()){
+  const anchor=homeRecapAnchor(now),keys=centralWeekKeys(anchor);
+  const sc=typeof trdlabScorecard==='function'?trdlabScorecard():null;
+  const graded=(sc?.recent||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase())
+    &&homeNum(r.probability_pct)!=null&&inCentralWeek(r.starts_at,keys));
+  const won=r=>String(r.result).toLowerCase()==='win',p=r=>homeNum(r.probability_pct);
+  const wins=graded.filter(won),losses=graded.filter(r=>!won(r));
+  const expected=graded.length?graded.reduce((s,r)=>s+p(r),0)/graded.length:null;
+  // The record counts every graded row, as the Scorecard does; a named call
+  // needs a real final to print (a 0-0 row is a game graded without a score).
+  const scored=r=>{const [h,a]=String(r.score||'').split(/[–-]/).map(x=>homeNum(String(x).trim()));return h!=null&&a!=null&&h+a>0};
+  // Best call: the win where the model stood furthest above the market. With no
+  // priced win that week, its least confident win.
+  const priced=wins.filter(r=>scored(r)&&homeMarket(r)!=null&&p(r)>homeMarket(r)).sort((a,b)=>(p(b)-homeMarket(b))-(p(a)-homeMarket(a)));
+  const best=priced[0]||wins.filter(scored).sort((a,b)=>p(a)-p(b))[0]||null;
+  const miss=losses.filter(scored).sort((a,b)=>p(b)-p(a))[0]||null;
+  // An upset is a loss on a pick the model gave 60% or more: the winner had 40% or less.
+  const upsets=losses.filter(r=>r!==miss&&scored(r)&&p(r)>=60).sort((a,b)=>p(b)-p(a)).slice(0,2);
+  return {anchor,keys,graded,wins:wins.length,losses:losses.length,expected,best,miss,upsets};
+}
+function homeWeekShowsCalls(){
+  if(homeWeekTab()!=='recap'||!['ncaaf','ncaam'].includes(currentSportKey()))return false;
+  const d=homeRecapData();return !!(d.best||d.miss);
+}
+// "Oklahoma 24, Ole Miss 17" from a graded row: event "Away at Home", score home–away.
+function homeGradedGame(r){
+  const [away,home]=String(r.event_name||'').split(' at ');
+  const [hs,as]=String(r.score||'').split(/[–-]/).map(x=>homeNum(String(x).trim()));
+  if(!home||hs==null||as==null)return esc(r.event_name||'');
+  const [w,ws,l,ls]=hs>as?[home,hs,away,as]:[away,as,home,hs];
+  return `${esc(homeShort(w))} ${ws}, ${esc(homeShort(l))} ${ls}`;
+}
+// Ranking movement is the change at the last publication. It belongs to the
+// recap week only if that publication came after the Saturday and before the next.
+function homeRankingsFresh(t,anchor){
+  const pub=Date.parse(String(t?.published_on||'')+'T12:00:00Z');
+  return Number.isFinite(pub)&&pub>=anchor&&pub<anchor+7*86400000;
+}
+function homeMovers(anchor){
+  const t=homeRankingTable();if(!t||!homeRankingsFresh(t,anchor))return null;
+  const rows=t.rankings.map(r=>({name:r.name||r.team_name,rank:homeNum(r.rank),prev:homeNum(r.previous_rank)})).filter(r=>r.name&&r.rank!=null&&r.prev!=null);
+  const up=rows.filter(r=>r.rank<=25&&r.prev>r.rank).sort((a,b)=>(b.prev-b.rank)-(a.prev-a.rank)||a.rank-b.rank).slice(0,3);
+  const down=rows.filter(r=>r.prev<=25&&r.rank>r.prev).sort((a,b)=>(b.rank-b.prev)-(a.rank-a.prev)||a.prev-b.prev).slice(0,3);
+  return up.length||down.length?{up,down}:null;
+}
+function homeYourTeams(keys,anchor){
+  const favs=favoriteTeams().slice(0,3);if(!favs.length)return [];
+  const sport=currentSportKey(),t=homeRankingTable(),fresh=homeRankingsFresh(t,anchor);
+  const results=typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_RESULTS)?MATCHDAY_TRDLAB_RESULTS:[];
+  return favs.map(team=>{
+    const row=t?.rankings.find(r=>homeSame(r.name||r.team_name,team));
+    const games=results.filter(r=>r.sport===sport&&inCentralWeek(r.kickoff,keys)&&(homeSame(r.home,team)||homeSame(r.away,team)))
+      .sort((a,b)=>String(a.kickoff).localeCompare(String(b.kickoff)));
+    if(!row&&!games.length)return null; // followed in the other sport
+    const lines=games.slice(-3).map(g=>{
+      const home=homeSame(g.home,team),us=home?g.home_score:g.away_score,them=home?g.away_score:g.home_score;
+      return `${us>them?'Beat':'Lost to'} ${esc(homeShort(home?g.away:g.home))} ${us}–${them}`;
+    });
+    return {team:row?.name||team,lines,rank:homeNum(row?.rank),prev:fresh?homeNum(row?.previous_rank):null};
+  }).filter(Boolean);
+}
+function homeMoveTag(prev,rank){
+  if(prev==null||rank==null||prev===rank)return '';
+  const up=prev>rank,n=Math.abs(prev-rank);
+  return `<span class="homeWeekMove ${up?'up':'down'}" aria-label="${up?'up':'down'} ${n}">${up?'▲':'▼'}${n}</span>`;
+}
+function homeRecapHTML(){
+  const d=homeRecapData(),movers=homeMovers(d.anchor),yours=homeYourTeams(d.keys,d.anchor);
+  if(!d.graded.length&&!movers&&!yours.length)return `<div class="gamesEmpty">No graded games in the week of ${esc(homeWeekLabel(d.keys))}.</div>`;
+  const hit=d.graded.length?d.wins/d.graded.length*100:null;
+  const record=d.graded.length
+    ?`<div class="homeWeekRecord"><span>Model's week</span><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p><button type="button" class="gamesTextLink" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></div>`
+    :`<div class="homeWeekRecord"><span>Model's week</span><p>No locked picks were graded this week.</p></div>`;
+  const mine=yours.length?`<div class="homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li>${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}${y.rank!=null?` · ranked ${y.rank}`:''}</small></span>${homeMoveTag(y.prev,y.rank)}</li>`).join('')}</ul></div>`:'';
+  const calls=[];
+  if(d.best)calls.push(`<li class="hit"><em>Best call</em><b>${teamMark(d.best.selection)}${esc(homeShort(d.best.selection))} <i aria-label="correct">✓</i></b><small>Model ${modelPctLabel(d.best.probability_pct)}${homeMarket(d.best)!=null?` · market ${modelPctLabel(homeMarket(d.best))}`:''} · ${homeGradedGame(d.best)}</small></li>`);
+  if(d.miss)calls.push(`<li class="miss"><em>Worst miss</em><b>${teamMark(d.miss.selection)}${esc(homeShort(d.miss.selection))} <i aria-label="missed">✗</i></b><small>Model ${modelPctLabel(d.miss.probability_pct)} · ${homeGradedGame(d.miss)}</small></li>`);
+  if(d.upsets.length)calls.push(`<li><em>Other upsets</em>${d.upsets.map(r=>`<small>${homeGradedGame(r)} · model had ${esc(homeShort(r.selection))} ${modelPctLabel(r.probability_pct)}</small>`).join('')}</li>`);
+  const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></li>`;
+  const moves=movers?`<div class="homeWeekCol"><span>Ranking moves</span>${movers.up.length?`<ul class="homeWeekMovers">${movers.up.map(mv).join('')}</ul>`:''}${movers.down.length?`<ul class="homeWeekMovers">${movers.down.map(mv).join('')}</ul>`:''}<button type="button" class="gamesTextLink" onclick="setView('groups')">View rankings <span aria-hidden="true">→</span></button></div>`:'';
+  return `<div class="homeWeekRecap"><div class="homeWeekCol">${record}${mine}</div>`
+    +(calls.length?`<div class="homeWeekCol"><span>Calls</span><ul class="homeWeekCalls">${calls.join('')}</ul></div>`:'')
+    +moves+`</div>`;
+}
+/* Games in the next seven days that carry a published read for this sport. */
+function homeStakesGames(now=Date.now()){
+  const sport=currentSportKey(),end=now+7*86400000;
+  const picks=typeof MATCHDAY_TRDLAB_PICKS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_PICKS)?MATCHDAY_TRDLAB_PICKS:[];
+  return picks.filter(p=>{const t=Date.parse(p.kickoff);return p.sport===sport&&Number.isFinite(t)&&t>now&&t<=end});
+}
+function homeSidePct(p,name){
+  const side=(p.sides||[]).find(s=>homeSame(s.selection,name)),v=homeNum(side?.model_pct);
+  if(v!=null)return v;
+  const m=homeNum(p.model_pct);if(m==null)return null;
+  return homeSame(p.pick_name,name)?m:100-m;
+}
+function homeFindMatch(p){
+  const day=centralDayKey(Date.parse(p.kickoff));
+  return (DATA.matches||[]).find(m=>String(m.id)===String(p.event_id))
+    ||(DATA.matches||[]).find(m=>centralDayKey(kickMs(m))===day&&homeSame(m.home?.name,p.home)&&homeSame(m.away?.name,p.away))||null;
+}
+function homeFootballStakes(){
+  const cfp=typeof MATCHDAY_CFB_CFP_POLL!=='undefined'&&Array.isArray(MATCHDAY_CFB_CFP_POLL?.rankings)&&MATCHDAY_CFB_CFP_POLL.rankings.length?MATCHDAY_CFB_CFP_POLL:null;
+  if(!cfp)return {rows:[],empty:'Playoff stakes appear once the CFP committee publishes its ranking.'};
+  const rankOf=name=>homeNum(cfp.rankings.find(r=>homeSame(r.name,name))?.rank);
+  const seeds=[];
+  (typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&Array.isArray(MATCHDAY_CFB_AP_BRACKET)?MATCHDAY_CFB_AP_BRACKET:[]).forEach(round=>(round.matches||[]).forEach(m=>
+    [[m.home,m.home_slot],[m.away,m.away_slot]].forEach(([team,slot])=>{if(team&&/^\d+$/.test(String(slot||''))&&!/^winner/i.test(team))seeds.push([team,Number(slot)])})));
+  const seedOf=name=>seeds.find(([team])=>homeSame(team,name))?.[1]??null;
+  const rows=homeStakesGames().map(p=>{
+    const teams=[p.home,p.away].map(name=>({name,rank:rankOf(name),seed:seedOf(name),pct:homeSidePct(p,name)}));
+    const field=teams.filter(t=>t.seed!=null),ranked=teams.filter(t=>t.rank!=null);
+    let tier=0,label='';
+    if(field.length===2){tier=1;label='Playoff teams meet'}
+    else if(field.length===1&&field[0].pct!=null&&field[0].pct<70){tier=2;label='Playoff team at risk'}
+    else if(ranked.some(t=>t.rank>=9&&t.rank<=16)){tier=3;label='Bubble'}
+    else if(ranked.length===2){tier=4;label='Ranked meeting'}
+    if(!tier)return null;
+    const why=teams.filter(t=>t.rank!=null||t.seed!=null).map(t=>`${esc(homeShort(t.name))}: ${t.rank!=null?`CFP #${t.rank}`:'unranked'}, ${t.seed!=null?`projected ${t.seed} seed`:'outside the projected field'}`).join(' · ');
+    return {p,tier,label,why,order:Math.abs((homeNum(p.model_pct)??50)-50)};
+  }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
+  return {rows,empty:'No games in the next seven days involve a CFP-ranked team.'};
+}
+async function homeBasketballStakes(){
+  const data=window.MatchdayBracketology?.snapshot?await window.MatchdayBracketology.snapshot():null;
+  if(!data)return {rows:[],empty:'Bracketology is not available right now.'};
+  const teams=Object.values(data.teams||{});
+  const odds=v=>window.MatchdayBracketology.formatOdds(v);
+  const rows=homeStakesGames().map(p=>{
+    const bubble=[p.home,p.away].map(name=>({name,t:teams.find(t=>homeSame(t.team_name,name))}))
+      .filter(s=>s.t?.status==='bubble'&&homeNum(s.t?.odds?.make_field)!=null);
+    if(!bubble.length)return null;
+    return {p,tier:bubble.length===2?1:2,label:bubble.length===2?'Bubble teams meet':'Bubble',
+      why:bubble.map(s=>`${esc(homeShort(s.name))}: ${odds(s.t.odds.make_field)} to make the field`).join(' · '),
+      order:Math.min(...bubble.map(s=>Math.abs(s.t.odds.make_field-.5)))};
+  }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
+  return {rows,empty:'No bubble teams play in the next seven days.'};
+}
+function homeStakesRowsHTML(result){
+  if(!result.rows.length)return `<div class="gamesEmpty">${esc(result.empty)}</div>`;
+  return `<div class="gamesDifferenceRows homeStakesRows">`+result.rows.slice(0,6).map(r=>{
+    const p=r.p,match=homeFindMatch(p);
+    const body=`<i class="gdMarks">${teamMark(p.home)}${teamMark(p.away)}</i><span><em>${esc(r.label)} · ${esc(kickIn(p.kickoff))}</em><b>${esc(homeShort(p.home))} vs ${esc(homeShort(p.away))}</b><small>${r.why}</small></span><strong title="Model's pick">${esc(homeShort(p.pick_name))} ${modelPctLabel(p.model_pct)}</strong>`;
+    return match?`<button type="button" onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="gamesDifferenceRow">${body}</div>`;
+  }).join('')+`</div>`+(result.rows.length>6?`<button type="button" class="gamesTextLink homeWeekMore" onclick="setView('matches')">View all games <span aria-hidden="true">→</span></button>`:'');
+}
+function homeWeekHTML(){
+  const sport=currentSportKey();if(!['ncaaf','ncaam'].includes(sport))return '';
+  const tab=homeWeekTab();
+  const meta=tab==='recap'?homeWeekLabel(centralWeekKeys(homeRecapAnchor()))
+    :sport==='ncaaf'?'Next 7 days · CFP ranking':'Next 7 days · bracketology';
+  const body=tab==='recap'?homeRecapHTML()
+    :sport==='ncaaf'?homeStakesRowsHTML(homeFootballStakes())
+    :`<div data-home-stakes><div class="gamesEmpty">Loading bracketology…</div></div>`;
+  const tabs=[['recap','Last week'],['stakes','Games that matter']].map(([key,label])=>
+    `<button type="button" role="tab" id="homeWeekTab-${key}" aria-selected="${key===tab}" aria-controls="homeWeekPanel" tabindex="${key===tab?0:-1}" onclick="setHomeWeekTab('${key}')" onkeydown="homeWeekTabKey(event)">${label}</button>`).join('');
+  return `<section class="homeWeek" data-home-week><div class="gamesSectionHead homeWeekHead"><div class="homeWeekTabs" role="tablist" aria-label="The week">${tabs}</div><small>${esc(meta)}</small></div>`
+    +`<div id="homeWeekPanel" role="tabpanel" aria-labelledby="homeWeekTab-${tab}">${body}</div></section>`;
+}
+function homeWeekHydrate(){
+  const host=document.querySelector('[data-home-stakes]');
+  if(!host||currentSportKey()!=='ncaam')return;
+  homeBasketballStakes().then(result=>{if(host.isConnected)host.innerHTML=homeStakesRowsHTML(result)})
+    .catch(()=>{if(host.isConnected)host.innerHTML=`<div class="gamesEmpty">Bracketology is not available right now.</div>`});
+}
+function setHomeWeekTab(tab){
+  HOME_WEEK_TAB=tab==='stakes'?'stakes':'recap';
+  // Redrawn with Home, because the recap's best call and worst miss replace the
+  // side panel's recent calls while it is showing.
+  renderHome();
+  document.getElementById('homeWeekTab-'+HOME_WEEK_TAB)?.focus();
+}
+function homeWeekTabKey(event){
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  event.preventDefault();
+  setHomeWeekTab(event.key==='Home'?'recap':event.key==='End'?'stakes':homeWeekTab()==='recap'?'stakes':'recap');
 }
 function gamesFeaturedHTML(read){
   const m=read.match;
