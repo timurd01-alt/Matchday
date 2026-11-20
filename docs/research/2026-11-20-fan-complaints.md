@@ -86,3 +86,27 @@ Common complaints: names scroll away from the numbers, tables that scroll separa
 - Most evidence is media roundups and opinion pieces, which pick the loudest reactions. The surveys are larger but paid for by the industry, and none is about college sports specifically.
 - Several sources are from earlier seasons (2016 to 2021 for paywalls and columns). The FPI backlash is from the 2025 season.
 - Nothing here measures Matchday's own visitors. No analytics source was checked.
+
+## Addendum: review of an outside report, "What Sports Fans Want From Digital Sports Experiences"
+The owner pasted this report into the session the same day. Its sources are IBM, Capgemini, S&P Global, WSC Sports, Deloitte, Nexxen, Horowitz, SSRS and CableTV.com. Its thesis: Matchday Terminal should become a live second-screen "cockpit", with a live game page, spoiler delay, catch-up recaps, smart alerts, game rooms, multi-game tiles and fantasy.
+
+**Agrees with the searches above:** the IBM figures (67% want faster recaps, 65% personalisation), the Capgemini figures (64% want personalised updates, 67% want sports information in one place) and WSC's overload findings. It also warns that innovation is not the same as visual complexity (Capgemini: nearly three in five fans worry that technology gets in the way).
+**Not verified here:** Nexxen's 76% second-screen use, Deloitte's 77%, the CableTV.com spoiler figures.
+
+**Why its main thesis doesn't fit Matchday:**
+- **Scope.** Most segment rows cover soccer, F1, NFL, NBA, MLB, tennis and golf, all of which Matchday removed on 2026-09-13 (`AGENTS.md`).
+- **Data.** Matchday has no live feed. Data refreshes hourly (`deploy.yml`), finals arrive through the TRDLab poller, ESPN supplies final scores only, and CFBD gives about 1,000 calls a month. A live timeline, spoiler delay, in-game alerts, live catch-up, fantasy and highlights all need licensed real-time data or video rights. The report says as much for the NFL (Genius Sports is the exclusive distributor) and rates video as "very high" rights complexity.
+- **Positioning.** A free research site with no social push (`fan-research-positioning`). Pick 'Em already reads as empty (11-11 review), so live game rooms would look emptier still.
+
+**What carries over, at a weekly pace instead of a live one:**
+| Report idea | Matchday version, buildable from data already on hand |
+|---|---|
+| "Catch me up" | A Sunday recap: results against the model, biggest rating moves and why, playoff and bracket effects |
+| "Attention routing" | A Saturday list of the games that matter, ranked by how much they move CFP or bracket odds, before kickoff |
+| "Why it matters" explanations | The one-sentence "why" for each rating and probability (opportunity 1 above) |
+| Favourites and personalisation | "Your team this week" (opportunity 4); "My teams" today only reorders lists |
+| Mobile performance (P0) | The 2.4 MB football snapshot and 387 KB stylesheet (11-16 note) |
+| Accessibility | Already audited hourly by `ui_audit.py` |
+| Official "where to watch" links | TV network per game is a public fact; whether a current provider response already carries it is unchecked |
+
+**Conclusion:** both pieces of research point the same way. Matchday's opening is the weekly companion that explains (what happened, why, and what matters next for my team), not a live cockpit it has no feed for.
