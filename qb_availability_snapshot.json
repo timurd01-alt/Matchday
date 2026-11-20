@@ -1,40 +1,40 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T11:35:17.569246+00:00",
+  "generated_at": "2026-11-20T20:14:36.997366+00:00",
   "prediction_weight": 0,
   "sources": {
     "SEC": {
       "source_url": "https://www.secsports.com/fbreports",
-      "checked_at": "2026-11-20T11:35:17.569246+00:00",
+      "checked_at": "2026-11-20T20:14:36.997366+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-20T11:35:17.569246+00:00",
+      "last_success_at": "2026-11-20T20:14:36.997366+00:00",
       "current_reports": 6,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B10": {
       "source_url": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "checked_at": "2026-11-20T11:35:17.569246+00:00",
+      "checked_at": "2026-11-20T20:14:36.997366+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-20T11:35:17.569246+00:00",
+      "last_success_at": "2026-11-20T20:14:36.997366+00:00",
       "current_reports": 9,
       "error_kind": null,
       "rejected_reports": 0
     },
     "ACC": {
       "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "checked_at": "2026-11-20T11:35:17.569246+00:00",
+      "checked_at": "2026-11-20T20:14:36.997366+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-20T11:35:17.569246+00:00",
+      "last_success_at": "2026-11-20T20:14:36.997366+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
     },
     "B12": {
       "source_url": "https://big12sports.com/FBReporting",
-      "checked_at": "2026-11-20T11:35:17.569246+00:00",
+      "checked_at": "2026-11-20T20:14:36.997366+00:00",
       "state": "ok",
-      "last_success_at": "2026-11-20T11:35:17.569246+00:00",
+      "last_success_at": "2026-11-20T20:14:36.997366+00:00",
       "current_reports": 8,
       "error_kind": null,
       "rejected_reports": 0
@@ -36535,43 +36535,46 @@
     },
     {
       "conference": "ACC",
-      "report_id": "10003339",
-      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "report_type": "Update 1",
-      "published_at": "2026-11-20T04:00:00+00:00",
+      "content_sha256": "f944a6161a6af61b8f3330b1974c12061081feb8a69fe864ea06923279e1be18",
+      "first_observed_at": "2026-11-20T11:35:17.569246+00:00",
       "kickoff": "2026-11-22T00:30:00+00:00",
+      "observed_before_kickoff": true,
+      "published_at": "2026-11-20T04:00:00+00:00",
       "published_local": "2026-11-19 23:00:00 ET",
+      "report_id": "10003339",
+      "report_type": "Update 1",
+      "source_url": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
       "teams": [
         {
           "name": "Stanford",
           "quarterbacks": [
             {
-              "name": "Davis Warren",
               "jersey": "8",
+              "name": "Davis Warren",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Michael Mitchell Jr.",
               "jersey": "9",
+              "name": "Michael Mitchell Jr.",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dylan Rizk",
               "jersey": "10",
+              "name": "Dylan Rizk",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Charlie Mirer",
               "jersey": "17",
+              "name": "Charlie Mirer",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Devin Mignery",
               "jersey": "27",
+              "name": "Devin Mignery",
               "position": "QB",
               "status": "Available"
             }
@@ -36581,47 +36584,44 @@
           "name": "California",
           "quarterbacks": [
             {
-              "name": "EJ Caminong",
               "jersey": "2",
+              "name": "EJ Caminong",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Jaron-Keawe Sagapolutele",
               "jersey": "3",
+              "name": "Jaron-Keawe Sagapolutele",
               "position": "QB",
               "status": "Probable"
             },
             {
-              "name": "Jackson Brousseau",
               "jersey": "11",
+              "name": "Jackson Brousseau",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Dominic Ingrassia",
               "jersey": "14",
+              "name": "Dominic Ingrassia",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Alonzo Esparza",
               "jersey": "17",
+              "name": "Alonzo Esparza",
               "position": "QB",
               "status": "Available"
             },
             {
-              "name": "Nainoa Lopes",
               "jersey": "18",
+              "name": "Nainoa Lopes",
               "position": "QB",
               "status": "Available"
             }
           ]
         }
-      ],
-      "content_sha256": "f944a6161a6af61b8f3330b1974c12061081feb8a69fe864ea06923279e1be18",
-      "first_observed_at": "2026-11-20T11:35:17.569246+00:00",
-      "observed_before_kickoff": true
+      ]
     },
     {
       "conference": "SEC",
