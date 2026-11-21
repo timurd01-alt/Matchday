@@ -1389,7 +1389,7 @@ function homeYourTeamData(){
     const conf=homeConferenceSpot(name);
     const seen=new Set(next.map(p=>String(p.event_id)));
     const involves=(p,n)=>homeSame(p.home,n)||homeSame(p.away,n);
-    const gameOf=team=>homeUpcomingFor(team).find(p=>p.sides?.length&&!seen.has(String(p.event_id))&&!involves(p,name));
+    const gameOf=(team,before=Infinity)=>homeUpcomingFor(team).find(p=>p.sides?.length&&!seen.has(String(p.event_id))&&!involves(p,name)&&Date.parse(p.kickoff)<before);
     const day=iso=>new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const kinds=[];
     // Playoff race: CFP neighbours within three places, nearest first.
@@ -1405,6 +1405,12 @@ function homeYourTeamData(){
         kinds.push(rivals.map(tm=>({team:tm.name,label:'Conference race',why:`${esc(homeShort(tm.name))} is ${spot(tm,conf.teams.indexOf(tm))}; ${esc(short)} is ${spot(me,conf.index)}.`})));
       }
     }
+    // Next opponent: its game before it meets this team (a bye week, or a
+    // basketball opponent that plays in between).
+    kinds.push(next.map(p=>homeSame(p.home,name)?p.away:p.home).filter(Boolean).map(opp=>{
+      const at=next.find(p=>involves(p,opp));
+      return {team:opp,before:Date.parse(at.kickoff),label:'Next opponent',why:`${esc(homeShort(opp))} plays this game before it meets ${esc(short)} on ${esc(day(at.kickoff))}.`};
+    }));
     // Future opponent: a team still on the schedule after the next seven days.
     const soon=Date.now()+7*86400000,sportPicks=typeof MATCHDAY_TRDLAB_PICKS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_PICKS)?MATCHDAY_TRDLAB_PICKS.filter(p=>p.sport===sport):[];
     const later=[...sportPicks.map(p=>({home:p.home,away:p.away,kickoff:p.kickoff})),...(DATA.matches||[]).filter(m=>m.status!=='FINISHED').map(m=>({home:m.home?.name,away:m.away?.name,kickoff:m.kickoff}))]
@@ -1431,15 +1437,15 @@ function homeYourTeamData(){
     const watch=[];
     const take=c=>{
       if(c.used)return false;
-      const p=c.p?(!seen.has(String(c.p.event_id))?c.p:null):gameOf(c.team);
+      const p=c.p?(!seen.has(String(c.p.event_id))?c.p:null):gameOf(c.team,c.before);
       if(!p)return false;
       c.used=true;seen.add(String(p.event_id));
       watch.push({p,label:c.label,why:c.why,teams:[p.home,p.away].map(n=>({name:n,pct:side(p,n),meta:meta(n)}))});
       return true;
     };
-    // One of each kind first; a second of a kind only if fewer than three apply.
+    // One game per kind, never two of a kind (owner, 2026-11-20): fewer cards
+    // when fewer kinds apply.
     for(const list of kinds){if(watch.length>=3)break;list.some(take)}
-    for(const list of kinds){while(watch.length<3&&list.some(take));}
     return {row,name,short,cfp:mine,conf,changed,cards,watch};
   });
   return {teams,followed:favoriteTeams().length};
