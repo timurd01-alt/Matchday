@@ -85,3 +85,37 @@ class HomeWeekTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HomeYourTeamTests(unittest.TestCase):
+    """The "Your team" tab (Build 1120F)."""
+
+    @classmethod
+    def setUpClass(cls):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        cls.week = _section(core, "let HOME_WEEK_TAB=", "function gamesFeaturedHTML(")
+        cls.yours = _section(cls.week, "function homeOrdinal(", "function homeWeekHTML(")
+
+    def test_tab_is_third_and_the_default_tab_is_unchanged(self):
+        self.assertIn("['yours','Your team']]", self.week)
+        default = _section(self.week, "function homeWeekDefaultTab(", "function homeWeekTab(")
+        self.assertNotIn("yours", default)
+
+    def test_reads_published_data_only(self):
+        for banned in ("predict(", "picks_log", "Math.random"):
+            self.assertNotIn(banned, self.yours)
+        # Neighbours come from the CFP committee ranking and the conference table.
+        self.assertIn("MATCHDAY_CFB_CFP_POLL", self.yours)
+        self.assertIn("conf?.started", self.yours)
+
+    def test_conference_race_waits_for_conference_play(self):
+        spot = _section(self.yours, "function homeConferenceSpot(", "function homeYourTeamData(")
+        self.assertIn("(Number(t.cw)||0)+(Number(t.cl)||0)>0", spot)
+
+    def test_watch_list_is_capped_and_excludes_the_teams_own_games(self):
+        data = _section(self.yours, "function homeYourTeamData(", "function homeYourChangedHTML(")
+        self.assertIn("watch.length>=3", data)
+        self.assertIn("!homeSame(p.home,name)&&!homeSame(p.away,name)", data)
+
+    def test_rating_is_labelled_as_strength_not_resume(self):
+        self.assertIn("How good the team is now, not what it has earned.", self.yours)

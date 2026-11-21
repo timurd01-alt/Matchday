@@ -1080,6 +1080,7 @@ function renderHome(){
    basketball, the bracketology file Home already loads. Nothing here forecasts.
    Football stakes are labels from public rankings, never invented odds. */
 let HOME_WEEK_TAB='';
+const HOME_WEEK_TABS=[['recap','Last week'],['stakes','Games that matter'],['yours','Your team']];
 function homeWeekDefaultTab(now=Date.now()){
   const day=new Date(centralDayKey(now)+'T12:00:00Z').getUTCDay();
   return day<=3?'recap':'stakes';
@@ -1257,8 +1258,11 @@ async function homeBasketballStakes(){
    three-by-two grid; full-width rows left the middle of the line empty. */
 function homeStakesRowsHTML(result){
   if(!result.rows.length)return `<div class="gamesEmpty">${esc(result.empty)}</div>`;
+  return `<div class="homeStakesGrid">`+result.rows.slice(0,6).map(homeStakesCardHTML).join('')+`</div>`+(result.rows.length>6?`<button type="button" class="gamesTextLink homeWeekMore" onclick="setView('matches')">View all games <span aria-hidden="true">→</span></button>`:'');
+}
+function homeStakesCardHTML(r){
   const pickSide=r=>{const a=homeNum(r.teams[0]?.pct),b=homeNum(r.teams[1]?.pct);return a!=null&&b!=null&&a!==b?(a>b?0:1):r.teams.findIndex(t=>homeSame(t.name,r.p.pick_name))};
-  return `<div class="homeStakesGrid">`+result.rows.slice(0,6).map(r=>{
+  {
     const p=r.p,match=homeFindMatch(p),pick=pickSide(r);
     // Away team on top, home below, the usual scoreboard order.
     const order=[...r.teams].sort((a,b)=>(homeSame(a.name,p.away)?0:1)-(homeSame(b.name,p.away)?0:1));
@@ -1268,17 +1272,125 @@ function homeStakesRowsHTML(result){
     const body=`<span class="homeStakesHead"><em>${esc(r.label)}</em><small>${esc(kickIn(p.kickoff))}</small></span><ul>${order.map(line).join('')}</ul><small class="homeStakesWhy">${r.why}</small>`;
     const name=`${homeShort(p.away)} at ${homeShort(p.home)}`;
     return match?`<button type="button" class="homeStakesGame" aria-label="${esc(name)}: open match" onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="homeStakesGame">${body}</div>`;
-  }).join('')+`</div>`+(result.rows.length>6?`<button type="button" class="gamesTextLink homeWeekMore" onclick="setView('matches')">View all games <span aria-hidden="true">→</span></button>`:'');
+  }
+}
+/* "Your team" (Build 1120F): each followed team in this sport, as three
+   things -- what moved its rating, its next game, and the games around it
+   that bear on it. Fans asked for relevance, not more data
+   (docs/research/2026-11-20-fan-complaints.md, finding 7), so this reads only
+   what the page already holds and says nothing where nothing applies:
+   - What changed: its finals in the week to the ratings edition, with the
+     model's locked-pick chance, and the power-rating move.
+   - Next: its games in the next seven days, with the model's and market's chance.
+   - Games to watch: football teams within three places of it in the CFP
+     ranking, then the conference teams directly ahead of it once conference
+     play has begun (directly behind if it leads). Never invented odds. */
+function homeOrdinal(n){const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
+function homeUpcomingFor(name,now=Date.now()){
+  const picks=homeStakesGames(now).filter(p=>homeSame(p.home,name)||homeSame(p.away,name));
+  if(picks.length)return picks.sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff));
+  // No published read yet: the fixture still counts as the next game.
+  const end=now+7*86400000;
+  return (DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&(homeSame(m.home?.name,name)||homeSame(m.away?.name,name)))
+    .filter(m=>{const t=kickMs(m);return t>now&&t<=end})
+    .sort((a,b)=>kickMs(a)-kickMs(b))
+    .map(m=>({event_id:m.id,home:m.home?.name,away:m.away?.name,kickoff:m.kickoff,sides:[]}));
+}
+function homeConferenceSpot(name){
+  const groups=(DATA.standings||[]).filter(g=>!(typeof isPollTable==='function'&&isPollTable(g))&&Array.isArray(g.teams));
+  for(const g of groups){
+    const i=g.teams.findIndex(t=>homeSame(t.name,name));
+    if(i<0)continue;
+    const started=g.teams.some(t=>(Number(t.cw)||0)+(Number(t.cl)||0)>0);
+    return {group:g.group,teams:g.teams,index:i,started};
+  }
+  return null;
+}
+function homeYourTeamData(){
+  const sport=currentSportKey(),t=homeRankingTable();if(!t)return {teams:[],followed:favoriteTeams().length};
+  const cfp=sport==='ncaaf'&&typeof MATCHDAY_CFB_CFP_POLL!=='undefined'&&Array.isArray(MATCHDAY_CFB_CFP_POLL?.rankings)?MATCHDAY_CFB_CFP_POLL.rankings:[];
+  const cfpRank=name=>homeNum(cfp.find(r=>homeSame(r.name,name))?.rank);
+  const powerRank=name=>homeNum(t.rankings.find(r=>homeSame(r.name||r.team_name,name))?.rank);
+  const meta=name=>{const c=cfpRank(name);return c!=null?`CFP #${c}`:(powerRank(name)!=null?`Power #${powerRank(name)}`:'')};
+  const side=(p,name)=>{const v=homeSidePct(p,name);return v};
+  const teams=favoriteTeams().map(fav=>t.rankings.find(r=>homeSame(r.name||r.team_name,fav))).filter(Boolean)
+    .filter((row,i,all)=>all.indexOf(row)===i).slice(0,3).map(row=>{
+    const name=row.name||row.team_name,short=homeShort(name),mine=cfpRank(name);
+    const changed=typeof ratingWeekGames==='function'?ratingWeekGames(name,t):[];
+    const next=homeUpcomingFor(name);
+    const cards=next.map(p=>{
+      const opp=homeSame(p.home,name)?p.away:p.home,mkt=homeNum(p.market_pct);
+      const ours=mkt==null||!p.pick_name?null:homeSame(p.pick_name,name)?mkt:100-mkt;
+      return {p,label:'Next game',why:ours!=null&&ours>0&&ours<100?`Market gives ${esc(short)} ${modelPctLabel(ours)}.`:(p.sides?.length||p.model_pct!=null?'No market price yet.':'No model read yet.'),
+        teams:[name,opp].map(n=>({name:n,pct:p.sides?.length||p.model_pct!=null?side(p,n):null,meta:meta(n)}))};
+    });
+    // The teams whose results move this one's standing, nearest first.
+    const watchTeams=[];
+    if(mine!=null)cfp.filter(r=>!homeSame(r.name,name)&&Math.abs(homeNum(r.rank)-mine)<=3)
+      .sort((a,b)=>Math.abs(a.rank-mine)-Math.abs(b.rank-mine)||a.rank-b.rank)
+      .forEach(r=>watchTeams.push({name:r.name,why:`${esc(homeShort(r.name))} is CFP #${r.rank}, ${Math.abs(r.rank-mine)} ${r.rank<mine?'above':'below'} ${esc(short)}.`}));
+    const conf=homeConferenceSpot(name);
+    if(conf?.started){
+      const ahead=conf.index>0?conf.teams.slice(0,conf.index).reverse():conf.teams.slice(1,3);
+      const spot=(tm,i)=>`${homeOrdinal(i+1)} in the ${esc(conf.group)}${tm.conf_record?` at ${esc(tm.conf_record)}`:''}`;
+      ahead.forEach(tm=>watchTeams.push({name:tm.name,why:`${esc(homeShort(tm.name))} is ${spot(tm,conf.teams.indexOf(tm))}; ${esc(short)} is ${spot(conf.teams[conf.index],conf.index)}.`,label:'Conference race'}));
+    }
+    // Two playoff neighbours at most, so the conference race keeps a place.
+    const race=watchTeams.filter(w=>w.label),playoff=watchTeams.filter(w=>!w.label);
+    const ordered=[...playoff.slice(0,2),...race,...playoff.slice(2)];
+    const seen=new Set(next.map(p=>String(p.event_id))),watch=[];
+    for(const w of ordered){
+      if(watch.length>=3)break;
+      const p=homeUpcomingFor(w.name).find(p=>p.sides?.length&&!seen.has(String(p.event_id))&&!homeSame(p.home,name)&&!homeSame(p.away,name));
+      if(!p)continue;
+      seen.add(String(p.event_id));
+      watch.push({p,label:w.label||'Playoff race',why:w.why,teams:[p.home,p.away].map(n=>({name:n,pct:side(p,n),meta:meta(n)}))});
+    }
+    return {row,name,short,cfp:mine,conf,changed,cards,watch};
+  });
+  return {teams,followed:favoriteTeams().length};
+}
+function homeYourChangedHTML(y,edition){
+  const m=homeNum(y.row.movement),rank=homeNum(y.row.rank);
+  const move=m==null?'':m>0?`<span class="homeWeekMove up">▲${m}</span> to #${rank} in the power rating`:m<0?`<span class="homeWeekMove down">▼${-m}</span> to #${rank} in the power rating`:`Unchanged at #${rank} in the power rating`;
+  const pct=c=>typeof ratingChancePct==='function'?ratingChancePct(c):Math.round(c)+'%';
+  const games=y.changed.map(g=>`<li><b>${g.won?'Beat':'Lost to'} ${esc(homeShort(g.opponent))} ${g.mine}–${g.theirs}</b><small>${g.chance!=null?`Model gave ${esc(y.short)} ${pct(g.chance)} before kickoff`:'No locked pick'}</small></li>`).join('');
+  const quiet=!y.changed.length?`<li><small>${m?'Did not play; teams around it moved.':'Did not play this week.'}</small></li>`:'';
+  const rating=homeNum(y.row.rating),pre=homeNum(y.row.preseason_rank);
+  const foot=[rating!=null?`Rating ${rating.toFixed(1)}`:'',pre!=null?`preseason #${pre}`:''].filter(Boolean).join(' · ');
+  return `<div class="homeStakesGame homeYourChanged"><span class="homeStakesHead"><em>What changed</em><small>${esc(edition||'')}</small></span><p>${move}</p><ul>${games}${quiet}</ul>${foot?`<small class="homeStakesWhy">${foot}. How good the team is now, not what it has earned.</small>`:''}</div>`;
+}
+function homeYourTeamHTML(){
+  const d=homeYourTeamData(),sport=currentSportKey()==='ncaam'?'college basketball':'college football';
+  if(!d.teams.length){
+    const lead=d.followed?`None of the teams you follow play ${sport}. Add one to see its next game, what moved its rating, and the games around it.`:`Follow a team to see its next game, what moved its rating, and the games around it.`;
+    // Rated teams only, by their full names: the Settings list also holds every
+    // feed's short name, so each school appears there twice.
+    const names=(homeRankingTable()?.rankings||[]).map(r=>r.name||r.team_name).filter(Boolean).sort((a,b)=>a.localeCompare(b));
+    const picker=`<select class="favAdd" onchange="if(this.value){toggleFavoriteTeam(this.value);this.value=''}" aria-label="Choose a team to follow"><option value="">Choose a team…</option>${names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('')}</select>`;
+    return `<div class="homeYourEmpty"><p>${lead}</p>${picker}</div>`;
+  }
+  const edition=homeRankingTable()?.published_on;
+  const fmt=edition?new Date(edition+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}):'';
+  return `<div class="homeYour">`+d.teams.map(y=>{
+    const rec=y.row.record?` · ${esc(y.row.record)}`:'';
+    const conf=y.conf?.started?` · ${homeOrdinal(y.conf.index+1)} in the ${esc(y.conf.group)}`:'';
+    const head=`<div class="homeYourHead">${teamMark(y.name)}<b>${esc(y.name)}</b><small>Power #${y.row.rank}${y.cfp!=null?` · CFP #${y.cfp}`:''}${rec}${conf}</small></div>`;
+    const next=y.cards.length?y.cards.map(homeStakesCardHTML).join(''):`<div class="homeStakesGame"><span class="homeStakesHead"><em>Next game</em></span><small class="homeStakesWhy">No game in the next seven days.</small></div>`;
+    return `<section class="homeYourTeam" aria-label="${esc(y.name)}">${head}<div class="homeStakesGrid">${homeYourChangedHTML(y,fmt)}${next}${y.watch.map(homeStakesCardHTML).join('')}</div></section>`;
+  }).join('')+`<div class="homeWeekLinks"><button type="button" class="gamesTextLink" onclick="setView('customize')">Change teams <span aria-hidden="true">→</span></button></div></div>`;
 }
 function homeWeekHTML(){
   const sport=currentSportKey();if(!['ncaaf','ncaam'].includes(sport))return '';
   const tab=homeWeekTab();
   const meta=tab==='recap'?homeWeekLabel(centralWeekKeys(homeRecapAnchor()))
+    :tab==='yours'?'Teams you follow · next 7 days'
     :sport==='ncaaf'?'Next 7 days · CFP ranking':'Next 7 days · bracketology';
   const body=tab==='recap'?homeRecapHTML()
+    :tab==='yours'?homeYourTeamHTML()
     :sport==='ncaaf'?homeStakesRowsHTML(homeFootballStakes())
     :`<div data-home-stakes><div class="gamesEmpty">Loading bracketology…</div></div>`;
-  const tabs=[['recap','Last week'],['stakes','Games that matter']].map(([key,label])=>
+  const tabs=HOME_WEEK_TABS.map(([key,label])=>
     `<button type="button" role="tab" id="homeWeekTab-${key}" aria-selected="${key===tab}" aria-controls="homeWeekPanel" tabindex="${key===tab?0:-1}" onclick="setHomeWeekTab('${key}')" onkeydown="homeWeekTabKey(event)">${label}</button>`).join('');
   return `<section class="homeWeek" data-home-week><div class="gamesSectionHead homeWeekHead"><div class="homeWeekTabs" role="tablist" aria-label="The week">${tabs}</div><small>${esc(meta)}</small></div>`
     +`<div id="homeWeekPanel" role="tabpanel" aria-labelledby="homeWeekTab-${tab}">${body}</div></section>`;
@@ -1290,7 +1402,7 @@ function homeWeekHydrate(){
     .catch(()=>{if(host.isConnected)host.innerHTML=`<div class="gamesEmpty">Bracketology is not available right now.</div>`});
 }
 function setHomeWeekTab(tab){
-  HOME_WEEK_TAB=tab==='stakes'?'stakes':'recap';
+  HOME_WEEK_TAB=HOME_WEEK_TABS.some(([key])=>key===tab)?tab:'recap';
   // Redrawn with Home, because the recap's best call and worst miss replace the
   // side panel's recent calls while it is showing.
   renderHome();
@@ -1299,7 +1411,8 @@ function setHomeWeekTab(tab){
 function homeWeekTabKey(event){
   if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
   event.preventDefault();
-  setHomeWeekTab(event.key==='Home'?'recap':event.key==='End'?'stakes':homeWeekTab()==='recap'?'stakes':'recap');
+  const keys=HOME_WEEK_TABS.map(([key])=>key),i=keys.indexOf(homeWeekTab()),n=keys.length;
+  setHomeWeekTab(event.key==='Home'?keys[0]:event.key==='End'?keys[n-1]:keys[(i+(event.key==='ArrowRight'?1:n-1))%n]);
 }
 function gamesFeaturedHTML(read){
   const m=read.match;
