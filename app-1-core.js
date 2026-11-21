@@ -1173,27 +1173,24 @@ function homeMoveTag(prev,rank){
   const up=prev>rank,n=Math.abs(prev-rank);
   return `<span class="homeWeekMove ${up?'up':'down'}" aria-label="${up?'up':'down'} ${n}">${up?'▲':'▼'}${n}</span>`;
 }
+/* One row of tiles -- the model's week, best call, worst miss, other upsets --
+   then the six ranking moves in a compact row under it. Two wide columns left
+   most of each line empty at desktop widths (owner, 2026-11-20). */
 function homeRecapHTML(){
   const d=homeRecapData(),movers=homeMovers(d.anchor),yours=homeYourTeams(d.keys,d.anchor);
   if(!d.graded.length&&!movers&&!yours.length)return `<div class="gamesEmpty">No graded games in the week of ${esc(homeWeekLabel(d.keys))}.</div>`;
   const hit=d.graded.length?d.wins/d.graded.length*100:null;
-  const record=d.graded.length
-    ?`<div class="homeWeekRecord"><span>Model's week</span><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p><button type="button" class="gamesTextLink" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></div>`
-    :`<div class="homeWeekRecord"><span>Model's week</span><p>No locked picks were graded this week.</p></div>`;
-  const mine=yours.length?`<div class="homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li>${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}${y.rank!=null?` · ranked ${y.rank}`:''}</small></span>${homeMoveTag(y.prev,y.rank)}</li>`).join('')}</ul></div>`:'';
-  const calls=[];
-  if(d.best)calls.push(`<li class="hit"><em>Best call</em><b>${teamMark(d.best.selection)}${esc(homeShort(d.best.selection))} <i aria-label="correct">✓</i></b><small>Model ${modelPctLabel(d.best.probability_pct)}${homeMarket(d.best)!=null?` · market ${modelPctLabel(homeMarket(d.best))}`:''} · ${homeGradedGame(d.best)}</small></li>`);
-  if(d.miss)calls.push(`<li class="miss"><em>Worst miss</em><b>${teamMark(d.miss.selection)}${esc(homeShort(d.miss.selection))} <i aria-label="missed">✗</i></b><small>Model ${modelPctLabel(d.miss.probability_pct)} · ${homeGradedGame(d.miss)}</small></li>`);
-  if(d.upsets.length)calls.push(`<li><em>Other upsets</em>${d.upsets.map(r=>`<small>${homeGradedGame(r)} · model had ${esc(homeShort(r.selection))} ${modelPctLabel(r.probability_pct)}</small>`).join('')}</li>`);
+  const tiles=[d.graded.length
+    ?`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p></div>`
+    :`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><p>No locked picks were graded this week.</p></div>`];
+  if(d.best)tiles.push(`<div class="homeWeekTile hit"><span>Best call</span><b>${teamMark(d.best.selection)}${esc(homeShort(d.best.selection))} <i aria-label="correct">✓</i></b><small>Model ${modelPctLabel(d.best.probability_pct)}${homeMarket(d.best)!=null?` · market ${modelPctLabel(homeMarket(d.best))}`:''}</small><small>${homeGradedGame(d.best)}</small></div>`);
+  if(d.miss)tiles.push(`<div class="homeWeekTile miss"><span>Worst miss</span><b>${teamMark(d.miss.selection)}${esc(homeShort(d.miss.selection))} <i aria-label="missed">✗</i></b><small>Model ${modelPctLabel(d.miss.probability_pct)}</small><small>${homeGradedGame(d.miss)}</small></div>`);
+  if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li><b>${homeGradedGame(r)}</b><small>Model had ${esc(homeShort(r.selection))} ${modelPctLabel(r.probability_pct)}</small></li>`).join('')}</ul></div>`);
   const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></li>`;
-  const moves=movers?`<div class="homeWeekCol"><span>Ranking moves</span>${movers.up.length?`<ul class="homeWeekMovers">${movers.up.map(mv).join('')}</ul>`:''}${movers.down.length?`<ul class="homeWeekMovers">${movers.down.map(mv).join('')}</ul>`:''}<button type="button" class="gamesTextLink" onclick="setView('groups')">View rankings <span aria-hidden="true">→</span></button></div>`:'';
-  // The record is a strip across the top; Calls and Ranking moves sit side by
-  // side under it so neither column is left half empty. With only one of the
-  // two, it takes the full width.
-  const single=!(calls.length&&moves);
-  return `<div class="homeWeekRecap${single?' single':''}">${record}`
-    +(calls.length?`<div class="homeWeekCol"><span>Calls</span><ul class="homeWeekCalls">${calls.join('')}</ul></div>`:'')
-    +moves+mine+`</div>`;
+  const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
+  const mine=yours.length?`<div class="homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li>${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}${y.rank!=null?` · ranked ${y.rank}`:''}</small></span>${homeMoveTag(y.prev,y.rank)}</li>`).join('')}</ul></div>`:'';
+  const links=`<div class="homeWeekLinks"><button type="button" class="gamesTextLink" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button>${movers?`<button type="button" class="gamesTextLink" onclick="setView('groups')">View rankings <span aria-hidden="true">→</span></button>`:''}</div>`;
+  return `<div class="homeWeekRecap"><div class="homeWeekTiles">${tiles.join('')}</div>${moves}${mine}${links}</div>`;
 }
 /* Games in the next seven days that carry a published read for this sport. */
 function homeStakesGames(now=Date.now()){
@@ -1229,8 +1226,13 @@ function homeFootballStakes(){
     else if(ranked.some(t=>t.rank>=9&&t.rank<=16)){tier=3;label='Bubble'}
     else if(ranked.length===2){tier=4;label='Ranked meeting'}
     if(!tier)return null;
-    const why=teams.filter(t=>t.rank!=null||t.seed!=null).map(t=>`${esc(homeShort(t.name))}: ${t.rank!=null?`CFP #${t.rank}`:'unranked'}, ${t.seed!=null?`projected ${t.seed} seed`:'outside the projected field'}`).join(' · ');
-    return {p,tier,label,why,order:Math.abs((homeNum(p.model_pct)??50)-50)};
+    const nm=t=>esc(homeShort(t.name)),bubble=ranked.find(t=>t.rank>=9&&t.rank<=16);
+    const why=tier===1?'Both teams are in the projected playoff field.'
+      :tier===2?`A loss puts ${nm(field[0])}'s projected ${field[0].seed} seed at risk.`
+      :tier===3?`${nm(bubble)} sits on the playoff bubble at CFP #${bubble.rank}.`
+      :'Both teams are in the CFP ranking.';
+    const meta=t=>[t.rank!=null?`CFP #${t.rank}`:'',t.seed!=null?`${t.seed} seed`:t.rank!=null?'outside field':''].filter(Boolean).join(' · ');
+    return {p,tier,label,why,teams:teams.map(t=>({name:t.name,pct:t.pct,meta:meta(t)})),order:Math.abs((homeNum(p.model_pct)??50)-50)};
   }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
   return {rows,empty:'No games in the next seven days involve a CFP-ranked team.'};
 }
@@ -1240,21 +1242,32 @@ async function homeBasketballStakes(){
   const teams=Object.values(data.teams||{});
   const odds=v=>window.MatchdayBracketology.formatOdds(v);
   const rows=homeStakesGames().map(p=>{
-    const bubble=[p.home,p.away].map(name=>({name,t:teams.find(t=>homeSame(t.team_name,name))}))
-      .filter(s=>s.t?.status==='bubble'&&homeNum(s.t?.odds?.make_field)!=null);
+    const both=[p.home,p.away].map(name=>({name,t:teams.find(t=>homeSame(t.team_name,name))}));
+    const bubble=both.filter(s=>s.t?.status==='bubble'&&homeNum(s.t?.odds?.make_field)!=null);
     if(!bubble.length)return null;
     return {p,tier:bubble.length===2?1:2,label:bubble.length===2?'Bubble teams meet':'Bubble',
-      why:bubble.map(s=>`${esc(homeShort(s.name))}: ${odds(s.t.odds.make_field)} to make the field`).join(' · '),
+      why:bubble.length===2?'Both teams are on the tournament bubble.':`${esc(homeShort(bubble[0].name))} is on the tournament bubble.`,
+      teams:both.map(s=>({name:s.name,pct:homeSidePct(p,s.name),meta:bubble.includes(s)?`${odds(s.t.odds.make_field)} to make field`:''})),
       order:Math.min(...bubble.map(s=>Math.abs(s.t.odds.make_field-.5)))};
   }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
   return {rows,empty:'No bubble teams play in the next seven days.'};
 }
+/* Each game is a small scoreboard: both teams stacked with their standing and
+   the model's chance, then one sentence on why the game matters. Six fit a
+   three-by-two grid; full-width rows left the middle of the line empty. */
 function homeStakesRowsHTML(result){
   if(!result.rows.length)return `<div class="gamesEmpty">${esc(result.empty)}</div>`;
-  return `<div class="gamesDifferenceRows homeStakesRows">`+result.rows.slice(0,6).map(r=>{
-    const p=r.p,match=homeFindMatch(p);
-    const body=`<i class="gdMarks">${teamMark(p.home)}${teamMark(p.away)}</i><span><em>${esc(r.label)} · ${esc(kickIn(p.kickoff))}</em><b>${esc(homeShort(p.home))} vs ${esc(homeShort(p.away))}</b><small>${r.why}</small></span><strong title="Model's pick">${esc(homeShort(p.pick_name))} ${modelPctLabel(p.model_pct)}</strong>`;
-    return match?`<button type="button" onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="gamesDifferenceRow">${body}</div>`;
+  const pickSide=r=>{const a=homeNum(r.teams[0]?.pct),b=homeNum(r.teams[1]?.pct);return a!=null&&b!=null&&a!==b?(a>b?0:1):r.teams.findIndex(t=>homeSame(t.name,r.p.pick_name))};
+  return `<div class="homeStakesGrid">`+result.rows.slice(0,6).map(r=>{
+    const p=r.p,match=homeFindMatch(p),pick=pickSide(r);
+    // Away team on top, home below, the usual scoreboard order.
+    const order=[...r.teams].sort((a,b)=>(homeSame(a.name,p.away)?0:1)-(homeSame(b.name,p.away)?0:1));
+    const line=t=>{const pct=homeNum(t.pct),fav=r.teams.indexOf(t)===pick;
+      const bar=pct!=null?`<i class="homeStakesBar" aria-hidden="true"><i style="width:${Math.max(2,Math.min(100,pct))}%"></i></i>`:'<i></i>';
+      return `<li class="${fav?'fav':''}">${teamMark(t.name)}<span><b>${esc(homeShort(t.name))}</b>${t.meta?`<small>${t.meta}</small>`:''}</span>${bar}<strong>${pct!=null?modelPctLabel(pct):''}</strong></li>`};
+    const body=`<span class="homeStakesHead"><em>${esc(r.label)}</em><small>${esc(kickIn(p.kickoff))}</small></span><ul>${order.map(line).join('')}</ul><small class="homeStakesWhy">${r.why}</small>`;
+    const name=`${homeShort(p.away)} at ${homeShort(p.home)}`;
+    return match?`<button type="button" class="homeStakesGame" aria-label="${esc(name)}: open match" onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="homeStakesGame">${body}</div>`;
   }).join('')+`</div>`+(result.rows.length>6?`<button type="button" class="gamesTextLink homeWeekMore" onclick="setView('matches')">View all games <span aria-hidden="true">→</span></button>`:'');
 }
 function homeWeekHTML(){

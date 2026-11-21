@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120C",
+  "tag": "Fix",
+  "title": "Denser Home week blocks and a two-column head to head",
+  "items": [
+   "Games that matter is now a three-by-two grid of small scoreboards: both teams stacked with their CFP rank or bubble odds, a bar for the model's chance, and one line on why the game matters.",
+   "Last week puts the model's record, best call, worst miss and other upsets side by side in one row, with all six ranking moves in a row beneath.",
+   "On wide screens the match window's head to head splits into two balanced halves, ratings on one side and how each team plays on the other, so every number sits next to its label."
+  ]
+ },
+ {
   "date": "Build 1120B",
   "tag": "Fix",
   "title": "Home: no more empty space in Last week and beside the playoff picture",

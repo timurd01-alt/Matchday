@@ -47,7 +47,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         signals = (ROOT / "research-signals.js").read_text(encoding="utf-8")
         # Between the ratings rows and the roster row, in the same columns.
-        self.assertIn("${ratings}<!-- matchday-advanced-profile -->${roster}", panels)
+        self.assertIn("${ratings}${adv?adv.join(''):'<!-- matchday-advanced-profile -->'}${roster}", panels)
+        self.assertIn("window.matchdayAdvancedTapeGroups(m)", panels)
+        self.assertIn("window.matchdayAdvancedTapeGroups=advancedTapeGroups", signals)
         self.assertIn("html.includes(slot)?html.replace(slot,advancedTape(m)):html", signals)
 
     def test_home_skips_empty_market_comparison_section(self):

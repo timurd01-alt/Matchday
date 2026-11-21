@@ -130,15 +130,19 @@
       ['Pace',[['tempo','Possessions per 40 minutes','plain',null]]]
     ]
   };
-  function advancedTape(m){
+  // One HTML string per group, so matchupTape can balance them across the
+  // two halves of a wide head to head.
+  function advancedTapeGroups(m){
     const comp=String(m?._comp||DATA?.comp_key||'').toUpperCase();
-    if(!m?.advanced_metrics_meta||!['NCAAF','NCAAM'].includes(comp)||typeof tapeRow!=='function')return '';
+    if(!m?.advanced_metrics_meta||!['NCAAF','NCAAM'].includes(comp)||typeof tapeRow!=='function')return [];
     const raw=m.advanced_metrics||{},home=cfbProfile(raw.home)||{},away=cfbProfile(raw.away)||{};
     return tapeGroups[comp==='NCAAM'?'hoops':'cfb'].map(([title,items])=>tapeGroup(title,items.map(([key,label,type,higher])=>{
       const hv=finite(home[key]),av=finite(away[key]);
       return hv==null&&av==null?'':tapeRow(label,format(hv,type),format(av,type),hv,av,higher);
-    }).join(''))).join('');
+    }).join(''))).filter(Boolean);
   }
+  function advancedTape(m){return advancedTapeGroups(m).join('')}
+  window.matchdayAdvancedTapeGroups=advancedTapeGroups;
   function coverageText(meta){
     const coverage=meta?.coverage||{},parts=[];
     if(coverage.season)parts.push(`season ${coverage.season}`);

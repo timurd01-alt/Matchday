@@ -65,13 +65,19 @@ class HomeWeekTests(unittest.TestCase):
             self.assertIn(needle, html)
 
 
-    def test_recap_record_is_a_strip_and_columns_pair_up(self):
-        # The record used to be its own column; beside a taller Calls column it
-        # left a block of empty space under the Scorecard link.
+    def test_recap_is_a_row_of_tiles_then_ranking_moves(self):
+        # Two wide columns left most of each line empty at desktop widths.
         recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
-        self.assertIn("homeWeekRecap${single?' single':''}\">${record}", recap)
-        self.assertNotIn('<div class="homeWeekCol">${record}', recap)
-        self.assertIn("const single=!(calls.length&&moves)", recap)
+        self.assertIn('<div class="homeWeekTiles">${tiles.join(' + "''" + ')}</div>${moves}', recap)
+        self.assertNotIn("homeWeekCol", recap)
+
+    def test_stakes_are_a_grid_of_scoreboards(self):
+        html = _section(self.week, "function homeStakesRowsHTML(", "function homeWeekHTML(")
+        self.assertIn('<div class="homeStakesGrid">', html)
+        self.assertIn("result.rows.slice(0,6)", html)
+        for builder in ("function homeFootballStakes(", "async function homeBasketballStakes("):
+            body = self.week[self.week.index(builder):]
+            self.assertIn("teams:", body[:body.index(chr(10) + "}" + chr(10))])
 
     def test_side_column_marks_when_best_call_steps_aside(self):
         summary = _section(self.core, "function gamesSummaryHTML(", "function homeLatestReactionHTML(")

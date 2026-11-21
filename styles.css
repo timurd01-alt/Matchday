@@ -4378,6 +4378,9 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .tapeRow>span{color:var(--text);font-family:var(--sans);font-size:var(--fs-sm);text-align:center}
 .mTapeNote{margin-top:12px;color:var(--faint);font-size:var(--fs-xs);line-height:1.5}
 @media(max-width:560px){.mTape{padding:14px 12px}.mTapeHead,.tapeRow{gap:8px}}
+.mTapeCols{display:grid;gap:14px}
+@media(min-width:900px){.mTapeCols{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(28px,4vw,56px);align-items:stretch}.mTapeCol{display:flex;flex-direction:column}.mTapeCol>.tapeGroup{flex:1 1 auto;display:flex;flex-direction:column}.mTapeCol .tapeRow{flex:1 1 auto;align-items:center}}
+@media(max-width:899px){.mTapeCol+.mTapeCol>.mTapeHead{display:none}}
 
 /* The week on Home (Build 1120A): "Last week" and "Games that matter". */
 .homeWeek{margin:0 0 30px;border-top:1px solid var(--line)}
@@ -4386,59 +4389,67 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .homeWeekTabs button{min-height:44px;padding:0;border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;cursor:pointer}
 .homeWeekTabs button:hover{color:var(--text)}
 .homeWeekTabs button[aria-selected="true"]{color:var(--signal);border-bottom-color:var(--signal)}
-.homeWeekTabs button:focus-visible,.homeWeek .gamesTextLink:focus-visible,.homeStakesRows button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.homeWeekTabs button:focus-visible,.homeWeek .gamesTextLink:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 #view-home .homeWeekHead>small{font-size:var(--fs-xs)}
-.homeWeekRecap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px clamp(24px,4vw,56px);padding:16px 2px 0}
-.homeWeekRecap>.homeWeekRecord,.homeWeekRecap>.homeWeekYours,.homeWeekRecap.single>.homeWeekCol{grid-column:1/-1}
-.homeWeekRecap>.homeWeekRecord{grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:20px;row-gap:10px;padding-bottom:18px;border-bottom:1px solid var(--line)}
-.homeWeekRecap>.homeWeekRecord>span{grid-column:1/-1}
-.homeWeekRecap.single .homeWeekCalls{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,56px)}
-.homeWeekRecap.single .homeWeekCalls>li:not(.hit):not(.miss){grid-column:1/-1}
-.homeWeekRecap>.homeWeekYours ul{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));column-gap:clamp(24px,4vw,56px)}
-@media(min-width:761px){.gamesSideCol.noNotable .gamesSeeds{grid-template-columns:1fr;gap:12px}}
-.homeWeekCol{display:grid;align-content:start;gap:12px;min-width:0}
-.homeWeekCol>span,.homeWeekRecord>span,.homeWeekYours>span{font:var(--fw-bold) var(--fs-xs)/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--signal)}
-.homeWeekRecord{display:grid;gap:6px}
+.homeWeekRecap{display:grid;gap:18px;padding:16px 2px 0}
+.homeWeekTiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px clamp(24px,3vw,48px)}
+.homeWeekTile{display:grid;align-content:start;gap:6px;min-width:0}
+.homeWeekTile>span,.homeWeekMoves>span,.homeWeekYours>span{font:var(--fw-bold) var(--fs-xs)/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--signal);padding-bottom:4px}
 .homeWeekRecord strong{font:var(--fw-heavy) var(--fs-title)/1 var(--display);letter-spacing:.02em}
-.homeWeekRecord p{color:var(--muted);font-size:var(--fs-sm);line-height:1.45}
-.homeWeek .gamesTextLink{justify-self:start;min-height:44px;margin-top:0}
-.homeWeekYours{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
-.homeWeekYours ul,.homeWeekCalls,.homeWeekMovers{list-style:none;margin:0;padding:0;display:grid}
-.homeWeekYours ul{gap:10px}
-.homeWeekYours li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px}
-.homeWeekYours li>span{display:grid;gap:2px;min-width:0}
-.homeWeekYours b,.homeWeekMovers b{font-family:var(--sans);font-size:var(--fs-base);font-weight:var(--fw-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.homeWeekYours small{color:var(--muted);font-size:var(--fs-sm);line-height:1.35}
-.homeWeekCalls{gap:14px}
-.homeWeekCalls li{display:grid;gap:4px}
-.homeWeekCalls em{font:normal var(--fw-bold) var(--fs-2xs)/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.homeWeekCalls b{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:var(--fs-lg);font-weight:var(--fw-bold)}
-.homeWeekCalls b i{font-style:normal}
-.homeWeekCalls .hit b i{color:var(--win)}
-.homeWeekCalls .miss b i{color:var(--loss)}
-.homeWeekCalls small{color:var(--muted);font-size:var(--fs-sm);line-height:1.4}
-.homeWeekMovers{gap:8px}
-.homeWeekMovers+.homeWeekMovers{padding-top:10px;border-top:1px solid var(--line)}
-.homeWeekMovers li{display:grid;grid-template-columns:44px auto minmax(0,1fr) auto;align-items:center;gap:10px}
-.homeWeekMovers small{color:var(--muted);font:var(--fw-bold) var(--fs-sm)/1 var(--mono);white-space:nowrap}
-.homeWeekMove{font:var(--fw-bold) var(--fs-sm)/1 var(--mono);white-space:nowrap}
+.homeWeekTile p,.homeWeekTile small{color:var(--muted);font-size:var(--fs-sm);line-height:1.4}
+.homeWeekTile>b{display:flex;align-items:center;gap:8px;min-width:0;font-family:var(--sans);font-size:var(--fs-lg);font-weight:var(--fw-bold)}
+.homeWeekTile>b i{font-style:normal}
+.homeWeekTile.hit>b i{color:var(--win)}
+.homeWeekTile.miss>b i{color:var(--loss)}
+.homeWeekTile ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.homeWeekTile li{display:grid;gap:2px}
+.homeWeekTile li b{font-family:var(--sans);font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--text)}
+.homeWeekMoves{display:grid;gap:8px;padding-top:16px;border-top:1px solid var(--line)}
+.homeWeekMovers{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px clamp(24px,3vw,48px)}
+@media(min-width:1500px){.homeWeekMovers{grid-template-columns:repeat(6,minmax(0,1fr));column-gap:24px}}
+.homeWeekMovers li{display:flex;align-items:center;gap:10px;min-width:0}
+.homeWeekMovers b{font-family:var(--sans);font-size:var(--fs-base);font-weight:var(--fw-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.homeWeekMovers small{color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono);white-space:nowrap}
+.homeWeekMove{min-width:34px;font:var(--fw-bold) var(--fs-sm)/1 var(--mono);white-space:nowrap}
 .homeWeekMove.up{color:var(--win)}
 .homeWeekMove.down{color:var(--loss)}
-.homeWeekYours .teamMark,.homeWeekMovers .teamMark,.homeWeekCalls .teamMark{width:28px;height:28px;flex:0 0 28px;border-radius:7px}
-.homeStakesRows{margin-top:6px}
-.homeStakesRows em{font:normal var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-#view-home .homeStakesRows .gamesDifferenceRow{grid-template-columns:auto minmax(0,1fr) auto;gap:16px}
-.homeStakesRows strong{min-width:0;white-space:nowrap;font-size:var(--fs-md)}
+.homeWeekYours{display:grid;gap:8px;padding-top:16px;border-top:1px solid var(--line)}
+.homeWeekYours ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px clamp(24px,3vw,48px)}
+.homeWeekYours li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px}
+.homeWeekYours li>span{display:grid;gap:2px;min-width:0}
+.homeWeekYours b{font-family:var(--sans);font-size:var(--fs-base);font-weight:var(--fw-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.homeWeekYours small{color:var(--muted);font-size:var(--fs-sm);line-height:1.35}
+.homeWeekYours .teamMark,.homeWeekMovers .teamMark,.homeWeekTile .teamMark{width:28px;height:28px;flex:0 0 28px;border-radius:7px}
+.homeWeekLinks{display:flex;flex-wrap:wrap;gap:10px 14px}
+.homeWeek .gamesTextLink{min-height:44px;margin-top:0}
+@media(min-width:761px){.gamesSideCol.noNotable .gamesSeeds{grid-template-columns:1fr;gap:12px}}
+.homeStakesGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(24px,3vw,48px);margin-top:6px}
+.homeStakesGame{display:grid;align-content:start;gap:10px;min-width:0;padding:16px 2px 18px;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;text-align:left}
+button.homeStakesGame{cursor:pointer}
+button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
+.homeStakesGame:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.homeStakesHead{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.homeStakesHead em{font:normal var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+.homeStakesHead small{font:var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.homeStakesGame ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.homeStakesGame li{display:grid;grid-template-columns:auto minmax(0,10.5em) minmax(36px,1fr) 4.2em;align-items:center;gap:12px}
+.homeStakesGame li .teamMark{width:28px;height:28px;flex:0 0 28px;border-radius:7px}
+.homeStakesGame li>span{display:grid;gap:3px;min-width:0}
+.homeStakesGame li b{font-family:var(--sans);font-size:var(--fs-base);font-weight:var(--fw-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.homeStakesGame li small{color:var(--muted);font:var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.homeStakesBar{display:block;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.homeStakesBar>i{display:block;height:100%;border-radius:3px;background:var(--muted);opacity:.55}
+.homeStakesGame li.fav .homeStakesBar>i{background:var(--signal);opacity:1}
+.homeStakesGame li strong{font:var(--fw-bold) var(--fs-sm)/1 var(--mono);color:var(--muted);text-align:right}
+.homeStakesGame li.fav strong{color:var(--signal)}
+.homeStakesWhy{color:var(--muted);font-size:var(--fs-sm);line-height:1.4}
 .homeWeek .homeWeekMore{margin-top:10px}
+@media(max-width:1100px){.homeStakesGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){
   .homeWeekHead{flex-wrap:wrap;gap:0 12px}
   .homeWeekTabs{flex-wrap:nowrap;gap:18px;width:100%}
   .homeWeekTabs button{white-space:nowrap}
   #view-home .homeWeekHead>small{width:100%;padding:8px 0 2px}
-  .homeWeekRecap{grid-template-columns:1fr;gap:22px}
-  .homeWeekRecap>.homeWeekRecord{grid-template-columns:auto minmax(0,1fr)}
-  .homeWeekRecap>.homeWeekRecord>.gamesTextLink{grid-column:1/-1}
-  .homeWeekRecap.single .homeWeekCalls{grid-template-columns:1fr}
-  #view-home .homeStakesRows button,#view-home .homeStakesRows .gamesDifferenceRow{grid-template-columns:auto minmax(0,1fr);gap:8px 10px}
-  .homeStakesRows strong{grid-column:2;justify-self:start;text-align:left}
+  .homeWeekMovers{grid-template-columns:1fr}
+  .homeStakesGrid{grid-template-columns:1fr}
 }
