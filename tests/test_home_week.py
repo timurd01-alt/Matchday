@@ -71,6 +71,16 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn('<div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join(' + "''" + ')}</div>${moves}', recap)
         self.assertNotIn("homeWeekCol", recap)
 
+    def test_against_the_market_counts_only_real_disagreements(self):
+        # The market made the model's team the underdog: the games that test it.
+        data = _section(self.week, "function homeRecapData(", "function homeGradedGame(")
+        self.assertIn("const split=graded.filter(r=>homeMarket(r)!=null&&homeMarket(r)<50);", data)
+        self.assertIn("biggest=split.filter(scored)", data)
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn("<span>Against the market</span>", recap)
+        # With no priced disagreement that week, the upsets cell stands in.
+        self.assertLess(recap.index("if(d.split.length){"), recap.index("if(d.upsets.length)tiles.push("))
+
     def test_your_team_is_a_cell_of_the_strip_not_a_row(self):
         # One followed team on a row of its own left the rest of the row empty.
         recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")

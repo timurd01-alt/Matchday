@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120J",
+  "tag": "Feature",
+  "title": "Against the market replaces Other upsets in Last week",
+  "items": [
+   "Last week now shows the model's record on the games where it and the market picked different teams, for example 2–3 on 5 disagreements in football and 5–10 on 15 in basketball. Agreeing with the market proves little; these are the games that test the model.",
+   "Under it, the biggest split of the week: the model's and the market's chance and how it ended.",
+   "A week with no priced disagreement falls back to the other upsets, as before."
+  ]
+ },
+ {
   "date": "Build 1120I",
   "tag": "Fix",
   "title": "Your team joins the Last week strip; week cells on the page background",

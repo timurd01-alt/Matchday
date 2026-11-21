@@ -1152,7 +1152,12 @@ function homeRecapData(now=Date.now()){
   const miss=losses.filter(scored).sort((a,b)=>p(b)-p(a))[0]||null;
   // An upset is a loss on a pick the model gave 60% or more: the winner had 40% or less.
   const upsets=losses.filter(r=>r!==miss&&scored(r)&&p(r)>=60).sort((a,b)=>p(b)-p(a)).slice(0,2);
-  return {anchor,keys,graded,wins:wins.length,losses:losses.length,expected,best,miss,upsets};
+  // Against the market: picks where the market made the model's team the
+  // underdog. Agreeing with the market proves little; these are the games
+  // that test the model. Biggest split: the widest gap among them.
+  const split=graded.filter(r=>homeMarket(r)!=null&&homeMarket(r)<50);
+  const biggest=split.filter(scored).sort((a,b)=>(p(b)-homeMarket(b))-(p(a)-homeMarket(a)))[0]||null;
+  return {anchor,keys,graded,wins:wins.length,losses:losses.length,expected,best,miss,upsets,split,splitWins:split.filter(won).length,biggest};
 }
 // "Oklahoma 24, Ole Miss 17" from a graded row: event "Away at Home", score home–away.
 function homeGradedGame(r){
@@ -1210,7 +1215,14 @@ function homeRecapHTML(){
   const call=(r,cls,label,mark,aria,right)=>`<div class="homeWeekTile ${cls}"><span>${label}</span><div class="homeTileRow"><b>${teamMark(r.selection)}${esc(homeShort(r.selection))} <i aria-label="${aria}">${mark}</i></b><strong title="Model">${modelPctLabel(r.probability_pct)}</strong></div><div class="homeTileRow"><small>${homeGradedGame(r)}</small>${right?`<small>${right}</small>`:''}</div></div>`;
   if(d.best)tiles.push(call(d.best,'hit','Best call','✓','correct',homeMarket(d.best)!=null?`market ${modelPctLabel(homeMarket(d.best))}`:''));
   if(d.miss)tiles.push(call(d.miss,'miss','Worst miss','✗','missed',homeMarket(d.miss)!=null?`market ${modelPctLabel(homeMarket(d.miss))}`:''));
-  if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li class="homeTileRow"><small>${homeGradedGame(r)}</small><small>had ${esc(homeShort(r.selection))} <b>${modelPctLabel(r.probability_pct)}</b></small></li>`).join('')}</ul></div>`);
+  if(d.split.length){
+    const b=d.biggest,bw=b&&String(b.result).toLowerCase()==='win';
+    // The pick's own score first: event is "Away at Home", score is home–away.
+    const own=r=>{const [away,home]=String(r.event_name||'').split(' at '),[hs,as]=String(r.score||'').split(/[–-]/).map(x=>homeNum(String(x).trim()));
+      return home&&hs!=null&&as!=null?(homeSame(r.selection,home)?`${hs}–${as}`:`${as}–${hs}`):''};
+    tiles.push(`<div class="homeWeekTile homeWeekRecord homeWeekMarket" title="Picks where the market made the model's team the underdog: the games that test the model."><span>Against the market</span><div class="homeTileRow"><strong>${d.splitWins}–${d.split.length-d.splitWins}</strong><p>on ${d.split.length} ${d.split.length===1?'disagreement':'disagreements'}</p></div>`
+      +(b?`<div class="homeTileRow ${bw?'hit':'miss'}"><small><b>${esc(homeShort(b.selection))}</b> ${modelPctLabel(b.probability_pct)} vs market ${modelPctLabel(homeMarket(b))}</small><small><i aria-label="${bw?'correct':'missed'}">${bw?'✓':'✗'}</i> ${bw?'won':'lost'} ${own(b)}</small></div>`:'')+`</div>`);
+  }else if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li class="homeTileRow"><small>${homeGradedGame(r)}</small><small>had ${esc(homeShort(r.selection))} <b>${modelPctLabel(r.probability_pct)}</b></small></li>`).join('')}</ul></div>`);
   const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<span><b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></span></li>`;
   const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers" style="--m:${movers.up.length+movers.down.length}">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
   // The visitor's teams are one more cell of the strip, not a row of their
