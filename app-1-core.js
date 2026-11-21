@@ -1186,7 +1186,7 @@ function homeYourNextHTML(team){
   const p=typeof homeUpcomingFor==='function'?homeUpcomingFor(team)[0]:null;
   if(!p)return `<li class="homeTileRow homeYourNext"><small>Next: no game in the next 7 days</small></li>`;
   const home=homeSame(p.home,team),opp=home?p.away:p.home,pct=p.sides?.length||p.model_pct!=null?homeSidePct(p,team):null;
-  return `<li class="homeTileRow homeYourNext"><small>Next: <b>${home?'vs':'at'} ${esc(homeShort(opp))}</b> · ${esc(kickIn(p.kickoff))}</small>${pct!=null?`<strong title="Model's chance">${modelPctLabel(pct)}</strong>`:''}</li>`;
+  return `<li class="homeTileRow homeYourNext"><small>Next: <b>${home?'vs':'at'} ${esc(homeShort(opp))}</b> <span class="yrWhen"> · ${esc(kickIn(p.kickoff))}</span></small>${pct!=null?`<strong title="Model's chance">${modelPctLabel(pct)}</strong>`:''}</li>`;
 }
 function homeYourTeams(keys,anchor){
   const favs=favoriteTeams().slice(0,3);if(!favs.length)return [];
@@ -1217,25 +1217,25 @@ function homeRecapHTML(){
   if(!d.graded.length&&!movers&&!yours.length)return `<div class="gamesEmpty">No graded games in the week of ${esc(homeWeekLabel(d.keys))}.</div>`;
   const hit=d.graded.length?d.wins/d.graded.length*100:null;
   const tiles=[d.graded.length
-    ?`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><div class="homeTileRow"><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p></div></div>`
+    ?`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><div class="homeTileRow"><strong>${d.wins}–${d.losses}</strong><p><span>${hit.toFixed(0)}% of ${d.graded.length} locked picks</span> · <span>${d.expected.toFixed(0)}% expected</span></p></div></div>`
     :`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><p>No locked picks were graded this week.</p></div>`];
   // Each line runs edge to edge: the team on the left, the number on the right.
-  const call=(r,cls,label,mark,aria,right)=>`<div class="homeWeekTile ${cls}"><span>${label}</span><div class="homeTileRow"><b>${teamMark(r.selection)}${esc(homeShort(r.selection))} <i aria-label="${aria}">${mark}</i></b><strong title="Model">${modelPctLabel(r.probability_pct)}</strong></div><div class="homeTileRow"><small>${homeGradedGame(r)}</small>${right?`<small>${right}</small>`:''}</div></div>`;
+  const call=(r,cls,label,mark,aria,right)=>`<div class="homeWeekTile ${cls}"${right?` title="Model ${modelPctLabel(r.probability_pct)}, ${right}"`:''}><span>${label}</span><div class="homeTileRow"><b>${teamMark(r.selection)}${esc(homeShort(r.selection))} <i aria-label="${aria}">${mark}</i></b><strong title="Model">${modelPctLabel(r.probability_pct)}</strong></div><div class="homeTileRow"><small>${homeGradedGame(r)}</small>${right?`<small class="homeCallMkt">${right}</small>`:''}</div></div>`;
   if(d.best)tiles.push(call(d.best,'hit','Best call','✓','correct',homeMarket(d.best)!=null?`market ${modelPctLabel(homeMarket(d.best))}`:''));
   if(d.miss)tiles.push(call(d.miss,'miss','Worst miss','✗','missed',homeMarket(d.miss)!=null?`market ${modelPctLabel(homeMarket(d.miss))}`:''));
   if(d.split.length){
     // The pick's own score first: event is "Away at Home", score is home–away.
     const own=r=>{const [away,home]=String(r.event_name||'').split(' at '),[hs,as]=String(r.score||'').split(/[–-]/).map(x=>homeNum(String(x).trim()));
       return home&&hs!=null&&as!=null?(homeSame(r.selection,home)?`${hs}–${as}`:`${as}–${hs}`):''};
-    tiles.push(`<div class="homeWeekTile homeWeekRecord homeWeekMarket" title="Picks where the market made the model's team the underdog: the games that test the model."><span>Against the market</span><div class="homeTileRow"><strong>${d.splitWins}–${d.split.length-d.splitWins}</strong><p>on ${d.split.length} ${d.split.length===1?'disagreement':'disagreements'} · model vs market</p></div>`
+    tiles.push(`<div class="homeWeekTile homeWeekRecord homeWeekMarket" title="Picks where the market made the model's team the underdog: the games that test the model."><span>Against the market</span><div class="homeTileRow"><strong>${d.splitWins}–${d.split.length-d.splitWins}</strong><p>on ${d.split.length} ${d.split.length===1?'disagreement':'disagreements'}</p></div>`
       +(d.splits.length?`<ul class="homeSplits">${d.splits.slice(0,3).map(r=>{const w=String(r.result).toLowerCase()==='win';
         return `<li class="homeTileRow ${w?'hit':'miss'}" title="${esc(homeShort(r.selection))}: model ${modelPctLabel(r.probability_pct)}, market ${modelPctLabel(homeMarket(r))}, ${w?'won':'lost'} ${own(r)}"><small><b>${esc(homeShort(r.selection))}</b> ${Math.round(r.probability_pct)}% vs ${Math.round(homeMarket(r))}%</small><small><i aria-label="${w?'won':'lost'}">${w?'✓':'✗'}</i> ${own(r)}</small></li>`}).join('')}</ul>`:'')+`</div>`);
   }else if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li class="homeTileRow"><small>${homeGradedGame(r)}</small><small>had ${esc(homeShort(r.selection))} <b>${modelPctLabel(r.probability_pct)}</b></small></li>`).join('')}</ul></div>`);
-  const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<span><b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></span></li>`;
+  const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<span><b>${esc(homeShort(r.name))}</b><small><span class="mvFrom">${r.prev} → </span><span class="mvHash">#</span>${r.rank}</small></span></li>`;
   const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers" style="--m:${movers.up.length+movers.down.length}">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
   // The visitor's teams are one more cell of the strip, not a row of their
   // own: a single followed team left the rest of that row empty.
-  if(yours.length)tiles.push(`<div class="homeWeekTile homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li class="homeTileRow"><span class="homeYourWho">${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}</small></span></span><span class="homeYourRank">${homeMoveTag(y.prev,y.rank)}${y.rank!=null?`<b>#${y.rank}</b>`:''}</span></li>${homeYourNextHTML(y.team)}`).join('')}</ul></div>`);
+  if(yours.length)tiles.push(`<div class="homeWeekTile homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li class="homeTileRow"><span class="homeYourWho">${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small title="${y.lines.length?y.lines.join(' · '):''}">${y.lines.length?y.lines.map((l,i)=>`<span class="yrLine${i<y.lines.length-1?' yrOlder':''}">${l}</span>`).join('<span class="yrOlder"> · </span>'):'No game this week'}</small></span></span><span class="homeYourRank">${homeMoveTag(y.prev,y.rank)}${y.rank!=null?`<b>#${y.rank}</b>`:''}</span></li>${homeYourNextHTML(y.team)}`).join('')}</ul></div>`);
   // Boxed strips like the Home overview above them, one cell per item, so
   // every cell is a filled panel and the row has no loose gaps.
   return `<div class="homeWeekRecap"><div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join('')}</div>${moves}</div>`;

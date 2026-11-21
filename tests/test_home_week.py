@@ -27,7 +27,7 @@ class HomeWeekTests(unittest.TestCase):
 
     def test_recap_hit_rate_always_sits_beside_the_expected_rate(self):
         recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
-        self.assertIn("% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected", recap)
+        self.assertIn("% of ${d.graded.length} locked picks</span> · <span>${d.expected.toFixed(0)}% expected", recap)
 
     def test_recap_reads_the_graded_scorecard_not_a_second_forecast(self):
         data = _section(self.week, "function homeRecapData(", "function homeGradedGame(")
@@ -80,6 +80,13 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn("<span>Against the market</span>", recap)
         # With no priced disagreement that week, the upsets cell stands in.
         self.assertLess(recap.index("if(d.split.length){"), recap.index("if(d.upsets.length)tiles.push("))
+
+    def test_five_cells_sit_in_one_compact_row_on_wide_screens(self):
+        # Three over two left ~800px cells with a gap in the middle.
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("@media(min-width:641px) and (max-width:1599px){.homeWeekTiles.t5{", css)
+        self.assertIn("@container (max-width:300px){.homeWeekTile .homeCallMkt{display:none}}", css)
+        self.assertIn("@container (max-width:250px){.homeWeekMovers .mvFrom{display:none}", css)
 
     def test_wide_week_cells_carry_more_not_a_gap(self):
         # Wide cells listed one split or one team line with the middle empty.

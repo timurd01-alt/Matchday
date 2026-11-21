@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120O",
+  "tag": "Fix",
+  "title": "Last week: one row of compact cells",
+  "items": [
+   "With a team followed, the five Last week cells now sit in one row of compact cells on wide screens, like Ranking moves, instead of three over two with wide cells.",
+   "Each compact cell keeps one line per row: the latest result, the next opponent and the score; the market price and earlier results are in the tooltip.",
+   "Narrow Ranking moves cells show the new rank (#23) beside the arrow, so long team names are no longer cut off."
+  ]
+ },
+ {
   "date": "Build 1120N",
   "tag": "Fix",
   "title": "Your team: every team appears once",
