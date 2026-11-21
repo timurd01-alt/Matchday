@@ -87,6 +87,11 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn("@media(min-width:641px) and (max-width:1279px){.homeWeekTiles.t5{", css)
         self.assertIn("@container (max-width:250px){.homeWeekMovers .mvFrom{display:none}", css)
 
+    def test_models_week_shows_hit_rate_against_its_forecast(self):
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn('<div class="homeHitBar" role="img"', recap)
+        self.assertIn("pts against its own forecast", recap)
+
     def test_cell_contents_scale_with_the_cell(self):
         # Small type in a wider cell left it looking empty; two steps up by cell width.
         css = (ROOT / "styles.css").read_text(encoding="utf-8")

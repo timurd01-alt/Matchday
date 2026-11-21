@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1121B",
+  "tag": "Fix",
+  "title": "Model's week shows its hit rate against its own forecast",
+  "items": [
+   "The Model's week cell adds a bar: green to the share of locked picks that won, with a tick where the model expected to land, and how many points above or below that it finished.",
+   "Against the market lists its two biggest disagreements in a compact cell instead of one, so every Last week cell is equally full."
+  ]
+ },
+ {
   "date": "Build 1121A",
   "tag": "Fix",
   "title": "Last week cells fill their boxes",

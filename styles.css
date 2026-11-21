@@ -4529,7 +4529,7 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
 .homeYourNext b{color:var(--text);font-weight:var(--fw-bold)}
 .homeWeekTile .homeTileRow.homeYourNext>strong{font:var(--fw-bold) var(--fs-sm)/1 var(--mono);color:var(--signal)}
 .homeWeekYours li+li:not(.homeYourNext){margin-top:8px}
-@container (max-width:399px){.homeSplits>li:nth-child(n+2){display:none}}
+@container (max-width:399px){.homeSplits>li:nth-child(n+3){display:none}}
 @container (min-width:400px) and (max-width:759px){.homeSplits>li:nth-child(n+3){display:none}}
 @container (min-width:400px){.homeSplits{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
 /* Five cells sit in one row of compact cells, like Ranking moves, wherever
@@ -4588,3 +4588,11 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
   .homeTileLabel .homeYourRank{font-size:var(--fs-base)}
 }
 #view-home .homeWeekYours li.homeYourNext{padding-left:0}
+/* Model's week: the hit rate as a bar with the expected rate marked, so the
+   cell carries as much as its neighbours. */
+.homeHitBar{position:relative;height:8px;margin-top:4px;border-radius:4px;background:var(--line)}
+.homeHitBar>i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--win)}
+.homeHitBar>b{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--text)}
+.homeHitGap{color:var(--muted);font-size:var(--fs-sm)}
+@container (min-width:280px){#view-home .homeHitGap{font-size:var(--fs-base)}}
+@container (max-width:220px){#view-home .homeSplits .splitMkt{display:none}}
