@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120E",
+  "tag": "Feature",
+  "title": "Rankings: the games behind every move",
+  "items": [
+   "Selecting a team now shows This week: each game that moved its rating, the score, and the chance the model gave that team in its pick locked before kickoff, plus where the team started in preseason.",
+   "A team that moved without playing says so: teams around it moved.",
+   "Hovering a move arrow on the power rating table gives the same games in one line.",
+   "The power rating section now says what it measures: how good a team is now, not what it has earned, so a team can rate above one with a better record.",
+   "How it works adds three answers: why a team with a worse record can rate higher, what is left out of the model, and whether a pick can change after it is made."
+  ]
+ },
+ {
   "date": "Build 1120D",
   "tag": "Update",
   "title": "The weekly Top 25 ballot is now the Matchday Terminal Poll",
