@@ -1159,6 +1159,7 @@ function computeTeamProfile(name){
     rating: ranked?.rating??side?.rating??rec.rating??null,
     sos: ranked?.sos??null, offense: ranked?.adj_o??null, defense: ranked?.adj_d??null,
     conference: ranked?.conference||'', published: rankings?.published_on||'',
+    ratingRow: ranked, ratingTable: rankings,
     // Oldest to newest, the same direction as the form dots above it.
     next, recent: finished.slice(0,5).reverse()
   };
@@ -1187,6 +1188,7 @@ function teamProfileHTML(p){
         ${p.offense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted offense</span><b>${Number(p.offense).toFixed(1)}</b></div>`:''}
         ${p.defense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted defense</span><b>${Number(p.defense).toFixed(1)}</b></div>`:''}
       </div>
+      ${typeof ratingWhyHTML==='function'?ratingWhyHTML(p.ratingRow,p.ratingTable):''}
       ${formRow('Overall form',p.form)}
       ${formRow('Home form',p.formHome)}
       ${formRow('Away form',p.formAway)}
@@ -1470,6 +1472,65 @@ const _collegeTable=()=>['NCAAF','NCAAM'].includes(DATA.comp_key);
 const _tableLacksPoints=g=>_collegeTable()&&!(g?.teams||[]).every(t=>!(Number(t.pld)>0)||(Number(t.gf)||0)+(Number(t.ga)||0)>0);
 function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isPollTable),st=_tables.filter(g=>!isPollTable(g)),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length&&!polls.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}const averages=DATA.comp_key==='NCAAM'?basketballAverageCells():null;const groupsTwoWay=TWO_WAY_COMPETITIONS.has(String(DATA.comp_key||'').toLowerCase());const americanSport=['us_sport','college','college_basketball'].includes(navProfile());const ratingSorted=false;const US_SCORE_UNIT={ncaaf:['PF','PA'],ncaam:['PF','PA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conference record, then head-to-head':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="Power rating from TRDLab">Power</th>':''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?'<th title="Conference record: games against teams in this table only">Conf</th><th title="Non-conference record: every other game">Non-con</th><th title="Overall record">Overall</th>':''}${_collegeTable()?'':`<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th>`}${averages?'<th title="Points per game">PPG</th><th title="Rebounds per game">RPG</th><th title="Assists per game">APG</th>':_tableLacksPoints(g)?'':`<th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th>`}<th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}${['NCAAF','NCAAM'].includes(DATA.comp_key)?`<td><b>${esc(t.conf_record||'0-0')}</b></td><td>${Math.max(0,(Number(t.w)||0)-(t.cw||0))}-${Math.max(0,(Number(t.l)||0)-(t.cl||0))}</td><td>${Number(t.w)||0}-${Number(t.l)||0}</td>`:''}${_collegeTable()?'':`<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td>`}${averages?averages(t):_tableLacksPoints(g)?'':`<td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td>`}<td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
 
+/* Why a team sits where it does this week, in results rather than numbers.
+   A power rating answers "how good is this team now", and fans read a
+   surprising order as a bug or an agenda unless the games behind it are shown
+   (docs/research/2026-11-20-fan-complaints.md, findings 1 and 2). These are
+   the team's finals in the seven days ending at the ratings edition, each with
+   the chance the model gave the team in its locked pick before kickoff, read
+   from the same graded record the Scorecard shows. Nothing here forecasts. */
+function ratingWeekGames(name,table){
+  const edition=String(table?.published_on||'');
+  const end=Date.parse(edition+'T12:00:00Z');
+  if(!name||!Number.isFinite(end))return [];
+  const from=new Date(end-7*864e5).toISOString().slice(0,10);
+  // The table names the sport, not whichever board happens to be open: both
+  // sports have a "Duke Blue Devils".
+  const sport=typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'&&table===MATCHDAY_NCAAM_RANKINGS?'ncaam':'ncaaf';
+  const results=(typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_RESULTS))?MATCHDAY_TRDLAB_RESULTS:[];
+  const picks=(typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined'&&MATCHDAY_TRDLAB_SCORECARD?.sports?.[sport]?.recent)||[];
+  const same=(a,b)=>teamKey(a)===teamKey(b)||bbNameMatches(a,b);
+  return results
+    .filter(r=>String(r.sport||'').toLowerCase()===sport&&r.played_on>from&&r.played_on<=edition&&(same(r.home,name)||same(r.away,name)))
+    .sort((a,b)=>String(a.kickoff||a.played_on).localeCompare(String(b.kickoff||b.played_on)))
+    .map(r=>{
+      const home=same(r.home,name),mine=Number(home?r.home_score:r.away_score),theirs=Number(home?r.away_score:r.home_score);
+      const day=Date.parse(r.played_on+'T12:00:00Z');
+      // Pick names differ from result names ("Michigan St" / "Michigan State"),
+      // and a team plays at most once a day, so the team plus the date is the key.
+      const pick=picks.filter(p=>String(p.event_name||'').split(/ at | vs\.? /).some(side=>same(side,name))
+        &&Math.abs(Date.parse(p.starts_at)-day)<1.5*864e5)
+        .sort((a,b)=>Math.abs(Date.parse(a.starts_at)-day)-Math.abs(Date.parse(b.starts_at)-day))[0];
+      const p=Number(pick?.probability_pct);
+      const chance=pick&&Number.isFinite(p)?(same(pick.selection,name)?p:100-p):null;
+      return {opponent:home?r.away:r.home,home,neutral:!!r.neutral,won:mine>theirs,mine,theirs,chance,played_on:r.played_on};
+    });
+}
+// A 99.7% chance is not a certainty, so it never rounds to 100.
+const ratingChancePct=c=>c>=99.5?'>99%':c<0.5?'<1%':Math.round(c)+'%';
+// One line for a hover title: the move, then the games behind it.
+function ratingWhyText(row,table){
+  const m=Number(row?.movement);
+  const games=ratingWeekGames(row?.name,table);
+  const move=!Number.isFinite(m)?'':m>0?`Up ${m}`:m<0?`Down ${-m}`:'Unchanged';
+  const list=games.map(g=>`${g.won?'beat':'lost to'} ${g.opponent} ${g.mine}–${g.theirs}${g.chance!=null?` (model gave ${ratingChancePct(g.chance)} before kickoff)`:''}`).join('; ');
+  if(list)return `${move?move+': ':''}${list}`;
+  return move&&m!==0?`${move}: did not play; teams around it moved`:move;
+}
+function ratingWhyHTML(row,table){
+  if(!row)return '';
+  const games=ratingWeekGames(row.name,table);
+  const m=Number(row.movement);
+  const move=!Number.isFinite(m)?'':m>0?`<b class="tpUp">▲${m}</b> to #${row.rank}`:m<0?`<b class="tpDown">▼${-m}</b> to #${row.rank}`:`unchanged at #${row.rank}`;
+  const pre=Number(row.preseason_rank)>0?`preseason #${Number(row.preseason_rank)}`:'';
+  const rows=games.map(g=>`<div class="tpRecentRow"><i class="tpDot ${g.won?'W':'L'}">${g.won?'W':'L'}</i><span>${g.home||g.neutral?'vs':'@'} ${esc(g.opponent)}</span><b>${g.mine}-${g.theirs}</b><span class="tpFaint">${g.chance!=null?`model ${ratingChancePct(g.chance)}`:'no locked pick'}</span></div>`).join('');
+  const quiet=!games.length&&Number.isFinite(m)&&m!==0?`<div class="tpWhyNote">Did not play this week; moved because teams around it did.</div>`:'';
+  const head=[move,pre].filter(Boolean).join(' · ');
+  if(!head&&!rows)return '';
+  return `<div class="tpSeclbl">This week <span class="tpFaint">· ${head}</span></div>${rows}${quiet}`
+    +`<div class="tpWhyNote">The rating measures how good a team is now, not what it has earned. Percentages are the model's chance for this team in its pick locked before kickoff.</div>`;
+}
+
 /* The published power rating, on the Conferences tab.
    The tab previously held conference tables only, so the ranking that the whole
    site is built on existed nowhere outside the home board. This renders the
@@ -1506,7 +1567,7 @@ function collegeRankingTableHTML(){
   };
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
-    +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
+    +(moved?`<td class="pollMove">${movementTag(r).replace(/title="[^"]*"/,`title="${esc(ratingWhyText(r,table))}"`)}</td>`:'')
     +`<td class="pollTeam teamClickable" data-team="${esc(r.name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.name)}<span>${esc(r.name)}</span>${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</span></td>`
     +`<td>${esc(r.conference||'—')}</td>`
     +`<td class="pollNum">${num(r.rating)}</td>`
@@ -1585,7 +1646,7 @@ renderGroups=function(){
   const ballot=host.querySelector('.ballotSection');
   if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div>`);
   const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
-  if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
+  if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">How good each team is now, not what it has earned, so a team can rate above one with a better record. Select a team for the games behind its move.</div>`);
   const conference=host.querySelector('.tablewrap:not(.officialPoll)');
   if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Ordered by conference record (games against conference opponents only), then head-to-head, overall record and model rating.</div>`);
   // Conference tables carry no caption: the rating/schedule description
