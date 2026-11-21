@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120H",
+  "tag": "Fix",
+  "title": "Your team: more kinds of games to watch",
+  "items": [
+   "Games to watch now takes one game of each kind that applies instead of three of the same: playoff race, conference race, a future opponent, a past opponent, and the conference's headliner.",
+   "Conference race only appears while your team is within a game of the conference lead.",
+   "A past opponent's results feed your team's schedule strength, which moves its rating; the card says so.",
+   "On a bye week, Next game shows the next scheduled game instead of an empty card."
+  ]
+ },
+ {
   "date": "Build 1120G",
   "tag": "Fix",
   "title": "Home without empty space: boxed week strips, balanced columns, one-table head to head",
