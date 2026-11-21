@@ -1213,10 +1213,12 @@ function homeRecapHTML(){
   if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li class="homeTileRow"><small>${homeGradedGame(r)}</small><small>had ${esc(homeShort(r.selection))} <b>${modelPctLabel(r.probability_pct)}</b></small></li>`).join('')}</ul></div>`);
   const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<span><b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></span></li>`;
   const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers" style="--m:${movers.up.length+movers.down.length}">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
-  const mine=yours.length?`<div class="homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li>${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}${y.rank!=null?` · ranked ${y.rank}`:''}</small></span>${homeMoveTag(y.prev,y.rank)}</li>`).join('')}</ul></div>`:'';
+  // The visitor's teams are one more cell of the strip, not a row of their
+  // own: a single followed team left the rest of that row empty.
+  if(yours.length)tiles.push(`<div class="homeWeekTile homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li class="homeTileRow"><span class="homeYourWho">${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}</small></span></span><span class="homeYourRank">${homeMoveTag(y.prev,y.rank)}${y.rank!=null?`<b>#${y.rank}</b>`:''}</span></li>`).join('')}</ul></div>`);
   // Boxed strips like the Home overview above them, one cell per item, so
   // every cell is a filled panel and the row has no loose gaps.
-  return `<div class="homeWeekRecap"><div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join('')}</div>${moves}${mine}</div>`;
+  return `<div class="homeWeekRecap"><div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join('')}</div>${moves}</div>`;
 }
 /* Games in the next seven days that carry a published read for this sport. */
 function homeStakesGames(now=Date.now()){

@@ -71,6 +71,12 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn('<div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join(' + "''" + ')}</div>${moves}', recap)
         self.assertNotIn("homeWeekCol", recap)
 
+    def test_your_team_is_a_cell_of_the_strip_not_a_row(self):
+        # One followed team on a row of its own left the rest of the row empty.
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn('if(yours.length)tiles.push(`<div class="homeWeekTile homeWeekYours">', recap)
+        self.assertNotIn("${moves}${mine}", recap)
+
     def test_stakes_are_a_grid_of_scoreboards(self):
         html = _section(self.week, "function homeStakesRowsHTML(", "function homeWeekHTML(")
         self.assertIn("homeStakesGridOpen(shown.length)", html)

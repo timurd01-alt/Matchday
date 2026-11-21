@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120I",
+  "tag": "Fix",
+  "title": "Your team joins the Last week strip; week cells on the page background",
+  "items": [
+   "The teams you follow now sit in the Last week strip as one more cell, each with its result on the left and its ranking move on the right, instead of on a half-empty row of their own.",
+   "With five cells the strip runs three over two, so every cell keeps its lines on one row.",
+   "Last week, Games that matter and Your team drop the gray fill and sit on the page background with thin dividers, like the games list below; Ranking moves keeps its panel."
+  ]
+ },
+ {
   "date": "Build 1120H",
   "tag": "Fix",
   "title": "Your team: more kinds of games to watch",
