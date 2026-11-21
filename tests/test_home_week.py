@@ -156,7 +156,9 @@ class HomeYourTeamTests(unittest.TestCase):
         self.assertIn("for(const list of kinds){if(watch.length>=3)break;list.some(take)}", data)
         # Never two of a kind.
         self.assertNotIn("while(watch.length<3", data)
-        self.assertIn("'Next opponent'", data)
+        self.assertNotIn("'Next opponent'", data)
+        # No team appears in two cards.
+        self.assertIn("if(!p||onBoard(p.home)||onBoard(p.away))return false;", data)
         # The conference race only shows while the team is within a game of the lead.
         self.assertIn("(Number(me.cl)||0)-(Number(lead.cl)||0)<=1", data)
 

@@ -1413,12 +1413,6 @@ function homeYourTeamData(){
         kinds.push(rivals.map(tm=>({team:tm.name,label:'Conference race',why:`${esc(homeShort(tm.name))} is ${spot(tm,conf.teams.indexOf(tm))}; ${esc(short)} is ${spot(me,conf.index)}.`})));
       }
     }
-    // Next opponent: its game before it meets this team (a bye week, or a
-    // basketball opponent that plays in between).
-    kinds.push(next.map(p=>homeSame(p.home,name)?p.away:p.home).filter(Boolean).map(opp=>{
-      const at=next.find(p=>involves(p,opp));
-      return {team:opp,before:Date.parse(at.kickoff),label:'Next opponent',why:`${esc(homeShort(opp))} plays this game before it meets ${esc(short)} on ${esc(day(at.kickoff))}.`};
-    }));
     // Future opponent: a team still on the schedule after the next seven days.
     const soon=Date.now()+7*86400000,sportPicks=typeof MATCHDAY_TRDLAB_PICKS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_PICKS)?MATCHDAY_TRDLAB_PICKS.filter(p=>p.sport===sport):[];
     const later=[...sportPicks.map(p=>({home:p.home,away:p.away,kickoff:p.kickoff})),...(DATA.matches||[]).filter(m=>m.status!=='FINISHED').map(m=>({home:m.home?.name,away:m.away?.name,kickoff:m.kickoff}))]
@@ -1443,11 +1437,15 @@ function homeYourTeamData(){
         .map(p=>({p,label:`${conf.group} headliner`,why:`The best-ranked ${esc(conf.group)} meeting this week by power rating.`})));
     }
     const watch=[];
+    // A team appears on the board once: the next opponent is already in Next
+    // game, so a card about its other game reads as a repeat (owner, 2026-11-20).
+    const shown=next.flatMap(p=>[p.home,p.away]).filter(Boolean);
+    const onBoard=n=>shown.some(x=>homeSame(x,n));
     const take=c=>{
       if(c.used)return false;
       const p=c.p?(!seen.has(String(c.p.event_id))?c.p:null):gameOf(c.team,c.before);
-      if(!p)return false;
-      c.used=true;seen.add(String(p.event_id));
+      if(!p||onBoard(p.home)||onBoard(p.away))return false;
+      c.used=true;seen.add(String(p.event_id));shown.push(p.home,p.away);
       watch.push({p,label:c.label,why:c.why,teams:[p.home,p.away].map(n=>({name:n,pct:side(p,n),meta:meta(n)}))});
       return true;
     };
