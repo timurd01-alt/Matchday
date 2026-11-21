@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120M",
+  "tag": "Fix",
+  "title": "The site picks up new builds by itself",
+  "items": [
+   "Right after an update, a browser could keep showing the previous version for up to ten minutes.",
+   "The site now checks for a newer version when it loads and when you come back to the tab, and reloads once if there is one."
+  ]
+ },
+ {
   "date": "Build 1120L",
   "tag": "Fix",
   "title": "Wide Last week cells carry more instead of a gap",
