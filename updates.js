@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120N",
+  "tag": "Fix",
+  "title": "Your team: every team appears once",
+  "items": [
+   "Removed the Next opponent card: your next opponent is already in Next game, so it showed the same team twice.",
+   "A game to watch is skipped if either team already appears on your board."
+  ]
+ },
+ {
   "date": "Build 1120M",
   "tag": "Fix",
   "title": "The site picks up new builds by itself",
