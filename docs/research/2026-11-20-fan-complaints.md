@@ -1,6 +1,6 @@
 # What fans complain about in sports analysis (2026-11-20)
 
-**Status:** research only, nothing on the site changed.
+**Status:** research; see the follow-up at the end for what shipped.
 **Question:** what do fans complain about when it comes to sports analysis and prediction sites, and what does that mean for Matchday?
 **Follows:** `2026-11-16-competitive-analysis.md` (what competitors offer). This note covers the other side: what the audience dislikes.
 
@@ -110,3 +110,10 @@ The owner pasted this report into the session the same day. Its sources are IBM,
 | Official "where to watch" links | TV network per game is a public fact; whether a current provider response already carries it is unchecked |
 
 **Conclusion:** both pieces of research point the same way. Matchday's opening is the weekly companion that explains (what happened, why, and what matters next for my team), not a live cockpit it has no feed for.
+
+## Follow-up: what shipped (Build 1120E, same day)
+- **Opportunity 1, partly.** Selecting a team opens a *This week* block: each final in the seven days to the ratings edition, with the chance the model gave the team in its locked pick, and its preseason rank. A team that moved without playing says so. The move arrows on the power table carry the same games as a hover title, and the Power Ratings hint says the rating measures how good a team is, not what it has earned. Still open: a one-sentence explanation of *how much* the rating changed. The snapshot carries rank movement, not the previous rating, so a "+2.1" line needs the engine to publish the previous rating.
+- **Opportunity 5, partly.** `qa.html` (How it works) already explained the numbers. It now also answers why a worse record can rate higher, what is left out (other sites' power ratings), and whether a pick can change after it is made.
+- **Phone tables (complaint 8).** Checked at 375px on 2026-11-20: the phone power table shows rank, move, team, rating and record. The 11-11 finding (every number hidden) no longer applies.
+- **Already done elsewhere today:** the Sunday recap and "Games that matter" (Builds 1120A to 1120C) cover opportunity 3 and the report's "catch me up" and "attention routing".
+- **Not started:** the preseason share (opportunity 2, needs the prior weight from TRDLab) and "Your team this week" (opportunity 4).
