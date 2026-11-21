@@ -225,7 +225,10 @@ function kickoffTimeTbd(m){
 }
 function easternDayKey(ms){try{return intlFormat(Intl.DateTimeFormat,'en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms))}catch(e){return boardDayKey(ms)}}
 function kickMs(m){const t=Date.parse(m?.kickoff||'');return Number.isFinite(t)?t:0}
-function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0&&(Date.now()-t)>STALE_MATCH_MINUTES*60000}
+// A game with no announced time is stamped midnight Eastern, so it runs any
+// time that day: it goes stale from the end of its date, not 2.5h after
+// midnight, which had filed six of one Saturday's games under Results at dawn.
+function isStaleUpcoming(m){const t=kickMs(m);if(m?.status!=='UPCOMING'||t<=0)return false;const past=Date.now()-t;return past>STALE_MATCH_MINUTES*60000&&(past>(24*60+STALE_MATCH_MINUTES)*60000||!kickoffTimeTbd(m))}
 function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
 function isVisibleUpcoming(m){return m?.status==='UPCOMING'&&!isStaleUpcoming(m)}
 function fixtureSort(a,b){const o={LIVE:0,UPCOMING:1,FINISHED:2};return (o[a.status]??9)-(o[b.status]??9)||(a.kickoff||'').localeCompare(b.kickoff||'')}
@@ -861,7 +864,10 @@ function groupedBoardHTML(list){
     const ms=kickMs(m);
     // An unannounced kickoff belongs to its Eastern calendar date, and sits
     // after that day's timed games.
-    const key=m.status==='LIVE'?'0-live':(ms?'1-'+(kickoffTimeTbd(m)?easternDayKey(ms):boardDayKey(ms)):'2-tbd');
+    // Tipped off and not final yet: In play, until the score or the stale
+    // cutoff moves it to Results.
+    const started=m.status==='UPCOMING'&&ms&&ms<=now&&!kickoffTimeTbd(m);
+    const key=m.status==='LIVE'||started?'0-live':(ms?'1-'+(kickoffTimeTbd(m)?easternDayKey(ms):boardDayKey(ms)):'2-tbd');
     if(!buckets.has(key))buckets.set(key,[]);
     buckets.get(key).push(m);
   });
@@ -1673,21 +1679,29 @@ function renderMatches(){const M=DATA.matches||[];
   clearTimeout(boardTipTimer);
   const basketball=currentSportKey()==='ncaam';
   const now=Date.now();
-  const beforeTip=m=>m.status==='UPCOMING'&&(kickoffTimeTbd(m)||!kickMs(m)||kickMs(m)>now);
   // One sport's full schedule, in kickoff order with favorites pinned. The
   // horizon headings below (In play / Today / This week) do the work the old
   // merged board needed a watchability ranking for: a long schedule stays
   // readable because it is grouped by when it happens, not trimmed.
   GAME_TEAM_CACHE=new Map();
-  const all=M.filter(m=>!isCompleteOrPast(m)&&(!basketball||beforeTip(m))).sort(favoriteFixtureSort);
+  // A game stays on the board from schedule to final. Basketball used to drop
+  // a game at tipoff, but Results takes it only once final or 2.5h past tip,
+  // so a game in progress was shown nowhere. It now sits under In play.
+  const all=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   if(basketball){
     const tips=all.filter(m=>!kickoffTimeTbd(m)&&kickMs(m)>now).map(kickMs);
+    // Re-render at the next tip so that game moves under In play.
     if(tips.length)boardTipTimer=setTimeout(()=>{if(VIEW==='matches')renderMatches()},Math.min(2147483647,Math.max(1,Math.min(...tips)-Date.now())));
   }
   const filterBar=gameFilterBarHTML(all);
   const active=all.filter(m=>gameMatchesFilter(m,GAME_FILTER));
   const filtered=GAME_FILTER.kind!=='all'||!!GAME_FILTER.conf;
-  const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
+  // Paging starts after today: every game in play or due today is on the first
+  // page, so a busy Saturday (80+ basketball games) never hides some of today's
+  // slate behind Load more.
+  const todayKey=boardDayKey(now);
+  const dueToday=m=>{const ms=kickMs(m);return m.status==='LIVE'||(ms>0&&(ms<=now||(kickoffTimeTbd(m)?easternDayKey(ms):boardDayKey(ms))<=todayKey))};
+  const shown=active.filter((m,i)=>i<MATCH_VISIBLE||dueToday(m)),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
   const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>This week comes first. Open any matchup for the full model, market and team analysis.</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
   const empty=filtered&&all.length
@@ -1695,7 +1709,7 @@ function renderMatches(){const M=DATA.matches||[];
     :`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`;
   const html=missing+intro+(all.length?filterBar:'')+
     (shown.length?groupedBoardHTML(shown):empty)+
-    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
+    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE=${shown.length}+FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));
   // Notes go behind each card's ? first, so the power rating card is trimmed
   // against the cards' real, shorter heights.
@@ -1754,7 +1768,7 @@ function renderResults(){const M=DATA.matches||[];
   $('#view-results').innerHTML=`<div class="vhead">${t('Results')}</div>`+
     (shown.length?shown.map(m=>cardHTML(m,{hidePick:true})).join(''):`<div class="empty" style="grid-column:1/-1">No completed matches yet.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${done.length} results</span><button class="actionbtn" onclick="RESULT_VISIBLE+=FIXTURE_PAGE_SIZE;renderResults()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'')+
-    (waiting.length?`<div class="seclbl" style="grid-column:1/-1">Awaiting final score · ${waiting.length}</div>`+waiting.slice(0,12).map(m=>cardHTML(m,{hidePick:true})).join(''):'');enhanceMatchCards($('#view-results'));}
+    (waiting.length?`<div class="seclbl" style="grid-column:1/-1">Awaiting final score · ${waiting.length}</div>`+waiting.map(m=>cardHTML(m,{hidePick:true})).join(''):'');enhanceMatchCards($('#view-results'));}
 function groupLetter(g){return String(g||'').replace(/^Group\s*/i,'').replace(/^GROUP_/i,'').trim()}
 function cleanGroup(g){g=String(g||'').trim();if(!g)return'';if(/^GROUP_/i.test(g))return g.replace('GROUP_','Group ').replaceAll('_',' ').replace(/\b\w/g,c=>c.toUpperCase());if(/^Group\s+/i.test(g))return 'Group '+groupLetter(g).toUpperCase();return g}
 function rowKey(n){return String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
