@@ -123,7 +123,15 @@ class HomeYourTeamTests(unittest.TestCase):
     def test_watch_list_is_capped_and_excludes_the_teams_own_games(self):
         data = _section(self.yours, "function homeYourTeamData(", "function homeYourChangedHTML(")
         self.assertIn("watch.length>=3", data)
-        self.assertIn("!homeSame(p.home,name)&&!homeSame(p.away,name)", data)
+        self.assertIn("!involves(p,name)", data)
+
+    def test_games_to_watch_take_one_of_each_kind_first(self):
+        data = _section(self.yours, "function homeYourTeamData(", "function homeYourChangedHTML(")
+        for label in ("'Playoff race'", "'Conference race'", "'Future opponent'", "'Past opponent'", "headliner"):
+            self.assertIn(label, data)
+        self.assertIn("for(const list of kinds){if(watch.length>=3)break;list.some(take)}", data)
+        # The conference race only shows while the team is within a game of the lead.
+        self.assertIn("(Number(me.cl)||0)-(Number(lead.cl)||0)<=1", data)
 
     def test_rating_is_labelled_as_strength_not_resume(self):
         self.assertIn("How good the team is now, not what it has earned.", self.yours)

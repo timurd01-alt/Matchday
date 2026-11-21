@@ -1354,35 +1354,78 @@ function homeYourTeamData(){
     .filter((row,i,all)=>all.indexOf(row)===i).slice(0,3).map(row=>{
     const name=row.name||row.team_name,short=homeShort(name),mine=cfpRank(name);
     const changed=typeof ratingWeekGames==='function'?ratingWeekGames(name,t):[];
-    const next=homeUpcomingFor(name);
+    let next=homeUpcomingFor(name);
+    // A bye week still has a next game: show the first one, whenever it is.
+    if(!next.length){
+      const picks=typeof MATCHDAY_TRDLAB_PICKS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_PICKS)?MATCHDAY_TRDLAB_PICKS:[];
+      const ahead=[...picks.filter(p=>p.sport===sport),...(DATA.matches||[]).filter(m=>m.status!=='FINISHED').map(m=>({event_id:m.id,home:m.home?.name,away:m.away?.name,kickoff:m.kickoff,sides:[]}))]
+        .filter(p=>(homeSame(p.home,name)||homeSame(p.away,name))&&Date.parse(p.kickoff)>Date.now())
+        .sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff)||(b.sides?.length||0)-(a.sides?.length||0));
+      if(ahead[0])next=[ahead[0]];
+    }
     const cards=next.map(p=>{
       const opp=homeSame(p.home,name)?p.away:p.home,mkt=homeNum(p.market_pct);
       const ours=mkt==null||!p.pick_name?null:homeSame(p.pick_name,name)?mkt:100-mkt;
       return {p,label:'Next game',why:ours!=null&&ours>0&&ours<100?`Market gives ${esc(short)} ${modelPctLabel(ours)}.`:(p.sides?.length||p.model_pct!=null?'No market price yet.':'No model read yet.'),
         teams:[name,opp].map(n=>({name:n,pct:p.sides?.length||p.model_pct!=null?side(p,n):null,meta:meta(n)}))};
     });
-    // The teams whose results move this one's standing, nearest first.
-    const watchTeams=[];
-    if(mine!=null)cfp.filter(r=>!homeSame(r.name,name)&&Math.abs(homeNum(r.rank)-mine)<=3)
-      .sort((a,b)=>Math.abs(a.rank-mine)-Math.abs(b.rank-mine)||a.rank-b.rank)
-      .forEach(r=>watchTeams.push({name:r.name,why:`${esc(homeShort(r.name))} is CFP #${r.rank}, ${Math.abs(r.rank-mine)} ${r.rank<mine?'above':'below'} ${esc(short)}.`}));
+    // Games to watch: one game of each kind that applies, so the board never
+    // repeats one idea three times (owner, 2026-11-20: three "Conference race"
+    // cards for a 3-7 team). Every kind says why it bears on this team.
     const conf=homeConferenceSpot(name);
+    const seen=new Set(next.map(p=>String(p.event_id)));
+    const involves=(p,n)=>homeSame(p.home,n)||homeSame(p.away,n);
+    const gameOf=team=>homeUpcomingFor(team).find(p=>p.sides?.length&&!seen.has(String(p.event_id))&&!involves(p,name));
+    const day=iso=>new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const kinds=[];
+    // Playoff race: CFP neighbours within three places, nearest first.
+    if(mine!=null)kinds.push(cfp.filter(r=>!homeSame(r.name,name)&&Math.abs(homeNum(r.rank)-mine)<=3)
+      .sort((a,b)=>Math.abs(a.rank-mine)-Math.abs(b.rank-mine)||a.rank-b.rank)
+      .map(r=>({team:r.name,label:'Playoff race',why:`${esc(homeShort(r.name))} is CFP #${r.rank}, ${Math.abs(r.rank-mine)} ${r.rank<mine?'above':'below'} ${esc(short)}.`})));
+    // Conference race: only while the team is within a game of the leader.
     if(conf?.started){
-      const ahead=conf.index>0?conf.teams.slice(0,conf.index).reverse():conf.teams.slice(1,3);
-      const spot=(tm,i)=>`${homeOrdinal(i+1)} in the ${esc(conf.group)}${tm.conf_record?` at ${esc(tm.conf_record)}`:''}`;
-      ahead.forEach(tm=>watchTeams.push({name:tm.name,why:`${esc(homeShort(tm.name))} is ${spot(tm,conf.teams.indexOf(tm))}; ${esc(short)} is ${spot(conf.teams[conf.index],conf.index)}.`,label:'Conference race'}));
+      const lead=conf.teams[0],me=conf.teams[conf.index];
+      if((Number(me.cl)||0)-(Number(lead.cl)||0)<=1){
+        const spot=(tm,i)=>`${homeOrdinal(i+1)} in the ${esc(conf.group)}${tm.conf_record?` at ${esc(tm.conf_record)}`:''}`;
+        const rivals=conf.index>0?conf.teams.slice(0,conf.index).reverse():conf.teams.slice(1,3);
+        kinds.push(rivals.map(tm=>({team:tm.name,label:'Conference race',why:`${esc(homeShort(tm.name))} is ${spot(tm,conf.teams.indexOf(tm))}; ${esc(short)} is ${spot(me,conf.index)}.`})));
+      }
     }
-    // Two playoff neighbours at most, so the conference race keeps a place.
-    const race=watchTeams.filter(w=>w.label),playoff=watchTeams.filter(w=>!w.label);
-    const ordered=[...playoff.slice(0,2),...race,...playoff.slice(2)];
-    const seen=new Set(next.map(p=>String(p.event_id))),watch=[];
-    for(const w of ordered){
-      if(watch.length>=3)break;
-      const p=homeUpcomingFor(w.name).find(p=>p.sides?.length&&!seen.has(String(p.event_id))&&!homeSame(p.home,name)&&!homeSame(p.away,name));
-      if(!p)continue;
-      seen.add(String(p.event_id));
-      watch.push({p,label:w.label||'Playoff race',why:w.why,teams:[p.home,p.away].map(n=>({name:n,pct:side(p,n),meta:meta(n)}))});
+    // Future opponent: a team still on the schedule after the next seven days.
+    const soon=Date.now()+7*86400000,sportPicks=typeof MATCHDAY_TRDLAB_PICKS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_PICKS)?MATCHDAY_TRDLAB_PICKS.filter(p=>p.sport===sport):[];
+    const later=[...sportPicks.map(p=>({home:p.home,away:p.away,kickoff:p.kickoff})),...(DATA.matches||[]).filter(m=>m.status!=='FINISHED').map(m=>({home:m.home?.name,away:m.away?.name,kickoff:m.kickoff}))]
+      .filter(g=>involves(g,name)&&Date.parse(g.kickoff)>soon).sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff));
+    const laterOpps=[];const nextOpps=next.map(p=>homeSame(p.home,name)?p.away:p.home);
+    later.forEach(g=>{const opp=homeSame(g.home,name)?g.away:g.home;if(opp&&!nextOpps.some(n=>homeSame(n,opp))&&!laterOpps.some(o=>homeSame(o.name,opp)))laterOpps.push({name:opp,kickoff:g.kickoff})});
+    kinds.push(laterOpps.map(o=>({team:o.name,label:'Future opponent',why:`${esc(short)} plays ${esc(homeShort(o.name))} on ${esc(day(o.kickoff))}.`})));
+    // Past opponent: the rating is opponent-adjusted, so how a beaten (or
+    // beating) team does now changes this team's schedule strength.
+    const results=typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_RESULTS)?MATCHDAY_TRDLAB_RESULTS:[];
+    const pastOpps=[];results.filter(r=>r.sport===sport&&involves(r,name)).sort((a,b)=>String(b.played_on).localeCompare(String(a.played_on))).forEach(r=>{
+      const home=homeSame(r.home,name),opp=home?r.away:r.home,us=Number(home?r.home_score:r.away_score),them=Number(home?r.away_score:r.home_score);
+      if(!pastOpps.some(o=>homeSame(o.team,opp)))pastOpps.push({team:opp,label:'Past opponent',
+        why:`${esc(homeShort(opp))} ${them>us?'beat':'lost to'} ${esc(short)} ${Math.max(us,them)}–${Math.min(us,them)} on ${esc(day(r.played_on+'T12:00:00Z'))}. Its results feed ${esc(short)}'s schedule strength.`});
+    });
+    kinds.push(pastOpps);
+    // Conference headliner: the best-ranked meeting in the conference this week.
+    if(conf){
+      const inConf=n=>conf.teams.some(tm=>homeSame(tm.name,n)),rk=n=>powerRank(n)??999;
+      kinds.push(homeStakesGames().filter(p=>p.sides?.length&&inConf(p.home)&&inConf(p.away)&&!involves(p,name))
+        .sort((a,b)=>(rk(a.home)+rk(a.away))-(rk(b.home)+rk(b.away)))
+        .map(p=>({p,label:`${conf.group} headliner`,why:`The best-ranked ${esc(conf.group)} meeting this week by power rating.`})));
     }
+    const watch=[];
+    const take=c=>{
+      if(c.used)return false;
+      const p=c.p?(!seen.has(String(c.p.event_id))?c.p:null):gameOf(c.team);
+      if(!p)return false;
+      c.used=true;seen.add(String(p.event_id));
+      watch.push({p,label:c.label,why:c.why,teams:[p.home,p.away].map(n=>({name:n,pct:side(p,n),meta:meta(n)}))});
+      return true;
+    };
+    // One of each kind first; a second of a kind only if fewer than three apply.
+    for(const list of kinds){if(watch.length>=3)break;list.some(take)}
+    for(const list of kinds){while(watch.length<3&&list.some(take));}
     return {row,name,short,cfp:mine,conf,changed,cards,watch};
   });
   return {teams,followed:favoriteTeams().length};
@@ -1413,7 +1456,7 @@ function homeYourTeamHTML(){
     const rec=y.row.record?` · ${esc(y.row.record)}`:'';
     const conf=y.conf?.started?` · ${homeOrdinal(y.conf.index+1)} in the ${esc(y.conf.group)}`:'';
     const head=`<div class="homeYourHead">${teamMark(y.name)}<b>${esc(y.name)}</b><small>Power #${y.row.rank}${y.cfp!=null?` · CFP #${y.cfp}`:''}${rec}${conf}</small></div>`;
-    const next=y.cards.length?y.cards.map(homeStakesCardHTML).join(''):`<div class="homeStakesGame"><span class="homeStakesHead"><em>Next game</em></span><small class="homeStakesWhy">No game in the next seven days.</small></div>`;
+    const next=y.cards.length?y.cards.map(homeStakesCardHTML).join(''):`<div class="homeStakesGame"><span class="homeStakesHead"><em>Next game</em></span><small class="homeStakesWhy">No game on the schedule.</small></div>`;
     const cells=[homeYourChangedHTML(y,fmt),...(y.cards.length?y.cards.map(r=>homeStakesCardHTML(r)):[next]),...y.watch.map(r=>homeStakesCardHTML(r))];
     return `<section class="homeYourTeam" aria-label="${esc(y.name)}">${head}${homeStakesGridOpen(cells.length)}${cells.join('')}</div></section>`;
   }).join('')+`</div>`;
