@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120F",
+  "tag": "Feature",
+  "title": "Home: a Your team tab",
+  "items": [
+   "Home's week section has a third tab, Your team, beside Last week and Games that matter.",
+   "For each team you follow in this sport: what changed (last week's result, the chance the model gave it, and its power rating move), its next game with the model's and market's chance, and up to three other games that bear on it.",
+   "Football's games to watch are the teams within three places of yours in the CFP ranking, then the conference teams just ahead of yours once conference play has begun. Basketball shows the conference race once conference play starts.",
+   "Not following anyone yet? The tab lets you choose a team. Change teams any time in Customize."
+  ]
+ },
+ {
   "date": "Build 1120E",
   "tag": "Feature",
   "title": "Rankings: the games behind every move",
