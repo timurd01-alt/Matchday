@@ -124,7 +124,19 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn('<div class="homeStakesGrid n${n}" style="--c:${cols}">', grid)
         for builder in ("function homeFootballStakes(", "async function homeBasketballStakes("):
             body = self.week[self.week.index(builder):]
-            self.assertIn("teams:", body[:body.index(chr(10) + "}" + chr(10))])
+            self.assertIn("homePickStories(homeGameStories(", body[:body.index(chr(10) + "}" + chr(10))])
+        picker = _section(self.week, "function homePickStories(", "function homeFootballStakes(")
+        self.assertIn("teams:g.teams.map(", picker)
+
+    def test_games_that_matter_mixes_story_types(self):
+        # Every card used to be a playoff label; stories now vary and are capped.
+        stories = _section(self.week, "const HOME_RIVALRIES=", "function homeFootballStakes(")
+        for kind in ("'rivalry'", "'top25'", "'upset'", "'bowl'", "'market'", "'coin'", "'streak'"):
+            self.assertIn("kind:" + kind, stories)
+        self.assertIn("cap=k=>k==='rivalry'?3:2", stories)
+        self.assertIn(".slice(0,5)", stories)  # five different story types first
+        # No invented facts: no coaching or hot-seat story without data behind it.
+        self.assertNotIn("hot seat", stories.lower().split("no hot seat")[-1])
 
     def test_home_columns_are_balanced_after_every_render(self):
         # A short games list beside a tall side column left ~300px empty.

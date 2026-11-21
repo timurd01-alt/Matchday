@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1121D",
+  "tag": "Feature",
+  "title": "Games that matter tells more kinds of stories",
+  "items": [
+   "Each game is now read for several stories and its card shows the strongest: named rivalries (Egg Bowl, Iron Bowl, Lone Star Showdown, Tobacco Road and more), bowl eligibility on the line, Top 25 clashes, upset alerts, model-vs-market splits, coin flips and hot or cold streaks, alongside the playoff and tournament-bubble stakes.",
+   "The grid takes the best game for five different story types before filling the last card, and no story type takes more than two cards (rivalries three), so the week reads varied rather than as one list.",
+   "Basketball gets the same stories with its own rivalries and the AP Top 25. There is no coaching data, so there is no hot-seat story.",
+   "Phones show one Games that matter card per row again; a wider-screen rule had been squeezing team names out."
+  ]
+ },
+ {
   "date": "Build 1121C",
   "tag": "Fix",
   "title": "Basketball games in progress stay on Games",

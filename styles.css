@@ -4496,7 +4496,7 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
   #view-home .homeWeekMeta>small{margin-right:auto}
   .homeWeekMovers,.homeWeekTiles,.homeWeekTiles.t4,.homeWeekTiles.t5{grid-template-columns:1fr}
   .homeWeekTiles.t5>.homeWeekTile,.homeWeekTiles.t5>.homeWeekTile:nth-child(n+4){grid-column:auto}
-  .homeStakesGrid{grid-template-columns:1fr}
+  .homeStakesGrid,.homeStakesGrid:not(.n1){grid-template-columns:1fr}
 }
 /* Side blocks moved under the games list (balanceHomeSupport). */
 .gamesMainCol{display:flex;flex-direction:column;min-width:0}

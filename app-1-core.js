@@ -1264,48 +1264,144 @@ function homeFindMatch(p){
   return (DATA.matches||[]).find(m=>String(m.id)===String(p.event_id))
     ||(DATA.matches||[]).find(m=>centralDayKey(kickMs(m))===day&&homeSame(m.home?.name,p.home)&&homeSame(m.away?.name,p.away))||null;
 }
+/* Games that matter (Build 1121D). Every game in the next seven days is read
+   for the stories this site's own data can back, and each card shows its
+   strongest one; no story type takes more than two of the six cards, so the
+   grid reads as a week, not one list (owner, 2026-11-21: "more variety ...
+   rivalry, hot seat?"). There is no coaching data, so no hot seat: every
+   label below is a fact from the rankings, results, polls, bracket or the
+   model and market prices already on the page. */
+const HOME_RIVALRIES={
+  ncaaf:[['Michigan Wolverines','Ohio State Buckeyes','The Game'],['Alabama Crimson Tide','Auburn Tigers','Iron Bowl'],
+    ['Texas Longhorns','Texas A&M Aggies','Lone Star Showdown'],['Texas Longhorns','Oklahoma Sooners','Red River Rivalry'],
+    ['USC Trojans','UCLA Bruins','Crosstown rivalry'],['USC Trojans','Notre Dame Fighting Irish','Jeweled Shillelagh'],
+    ['Florida Gators','Florida State Seminoles','Sunshine Showdown'],['Florida Gators','Georgia Bulldogs','Georgia–Florida'],
+    ['Georgia Bulldogs','Georgia Tech Yellow Jackets','Clean, Old-Fashioned Hate'],['Clemson Tigers','South Carolina Gamecocks','Palmetto Bowl'],
+    ['Ole Miss Rebels','Mississippi State Bulldogs','Egg Bowl'],['Oregon Ducks','Oregon State Beavers','Oregon rivalry'],
+    ['Washington Huskies','Washington State Cougars','Apple Cup'],['Tennessee Volunteers','Vanderbilt Commodores','Tennessee–Vanderbilt'],
+    ['Kentucky Wildcats','Louisville Cardinals',"Governor's Cup"],['Minnesota Golden Gophers','Wisconsin Badgers',"Paul Bunyan's Axe"],
+    ['Iowa Hawkeyes','Nebraska Cornhuskers','Heroes Game'],['Iowa Hawkeyes','Iowa State Cyclones','Cy-Hawk'],
+    ['Kansas Jayhawks','Kansas State Wildcats','Sunflower Showdown'],['Arizona Wildcats','Arizona State Sun Devils','Territorial Cup'],
+    ['Utah Utes','BYU Cougars','Holy War'],['Stanford Cardinal','California Golden Bears','Big Game'],
+    ['Army Black Knights','Navy Midshipmen','Army–Navy'],['LSU Tigers','Arkansas Razorbacks','Battle for the Boot'],
+    ['LSU Tigers','Alabama Crimson Tide','LSU–Alabama'],['Indiana Hoosiers','Purdue Boilermakers','Old Oaken Bucket'],
+    ['Michigan Wolverines','Michigan State Spartans','Paul Bunyan Trophy'],['Virginia Cavaliers','Virginia Tech Hokies','Commonwealth Clash'],
+    ['North Carolina Tar Heels','NC State Wolfpack','Carolina rivalry'],['North Carolina Tar Heels','Duke Blue Devils','Victory Bell'],
+    ['Miami Hurricanes','Florida State Seminoles','Miami–FSU'],['Oklahoma Sooners','Oklahoma State Cowboys','Bedlam'],
+    ['Baylor Bears','TCU Horned Frogs','Revivalry'],['Pittsburgh Panthers','West Virginia Mountaineers','Backyard Brawl'],
+    ['Illinois Fighting Illini','Northwestern Wildcats','Land of Lincoln Trophy'],['Colorado Buffaloes','Colorado State Rams','Rocky Mountain Showdown'],
+    ['Missouri Tigers','Kansas Jayhawks','Border War'],['Missouri Tigers','Arkansas Razorbacks','Battle Line Rivalry'],
+    ['Penn State Nittany Lions','Ohio State Buckeyes','Penn State–Ohio State'],['Auburn Tigers','Georgia Bulldogs',"Deep South's Oldest Rivalry"]],
+  ncaam:[['Duke Blue Devils','North Carolina Tar Heels','Tobacco Road'],['Kentucky Wildcats','Louisville Cardinals','Battle of the Bluegrass'],
+    ['Indiana Hoosiers','Purdue Boilermakers','Indiana–Purdue'],['Kansas Jayhawks','Kansas State Wildcats','Sunflower Showdown'],
+    ['Kansas Jayhawks','Missouri Tigers','Border War'],['Michigan Wolverines','Michigan State Spartans','Michigan rivalry'],
+    ['Michigan Wolverines','Ohio State Buckeyes','Michigan–Ohio State'],['Syracuse Orange','Georgetown Hoyas','Syracuse–Georgetown'],
+    ['Villanova Wildcats',"Saint Joseph's Hawks",'Holy War'],['Cincinnati Bearcats','Xavier Musketeers','Crosstown Shootout'],
+    ['Arizona Wildcats','Arizona State Sun Devils','Territorial rivalry'],['UCLA Bruins','USC Trojans','Crosstown rivalry'],
+    ['Gonzaga Bulldogs',"Saint Mary's Gaels",'WCC rivalry'],['Iowa Hawkeyes','Iowa State Cyclones','Cy-Hawk'],
+    ['BYU Cougars','Utah Utes','Holy War'],['Marquette Golden Eagles','Wisconsin Badgers','I-94 rivalry'],
+    ['Texas Longhorns','Texas A&M Aggies','Lone Star rivalry'],['Alabama Crimson Tide','Auburn Tigers','Alabama–Auburn'],
+    ['Florida Gators','Florida State Seminoles','Florida–FSU'],['Virginia Cavaliers','Virginia Tech Hokies','Commonwealth Clash'],
+    ['North Carolina Tar Heels','NC State Wolfpack','Carolina rivalry'],['Oregon Ducks','Oregon State Beavers','Oregon rivalry'],
+    ['Washington Huskies','Washington State Cougars','Apple Cup'],['UConn Huskies','Syracuse Orange','Big East rivalry'],
+    ['Kentucky Wildcats','Indiana Hoosiers','Kentucky–Indiana'],['Memphis Tigers','Tennessee Volunteers','Memphis–Tennessee']]
+};
+function homeRivalry(sport,a,b){
+  const hit=(HOME_RIVALRIES[sport]||[]).find(([x,y])=>(homeSame(a,x)&&homeSame(b,y))||(homeSame(a,y)&&homeSame(b,x)));
+  return hit?hit[2]:null;
+}
+// The current run of results, newest last in recent_form: {kind:'W'|'L', n}.
+function homeStreakOf(row){const m=String(row?.recent_form||'').match(/(W+|L+)$/);return m?{kind:m[1][0],n:m[1].length}:null}
+function homePollRanks(sport){
+  const cfp=sport==='ncaaf'&&typeof MATCHDAY_CFB_CFP_POLL!=='undefined'&&MATCHDAY_CFB_CFP_POLL?.rankings?.length?MATCHDAY_CFB_CFP_POLL:null;
+  const poll=cfp||(sport==='ncaaf'?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL:null):(typeof MATCHDAY_NCAAM_AP_POLL!=='undefined'?MATCHDAY_NCAAM_AP_POLL:null));
+  const list=Array.isArray(poll?.rankings)?poll.rankings:[];
+  return {tag:cfp?'CFP':'AP',rankOf:name=>homeNum(list.find(r=>homeSame(r.name,name))?.rank)};
+}
+/* Shared stories for both sports. `extra(p,teams)` adds the sport's own
+   (playoff field and bubble for football, tournament bubble for basketball). */
+function homeGameStories(sport,extra){
+  const table=homeRankingTable(),poll=homePollRanks(sport);
+  const rowOf=name=>table?.rankings?.find(r=>homeSame(r.name||r.team_name,name))||null;
+  const nm=n=>esc(homeShort(n));
+  return homeStakesGames().map(p=>{
+    const teams=[p.home,p.away].map(name=>{const row=rowOf(name);return {name,row,rank:poll.rankOf(name),pct:homeSidePct(p,name),record:row?.record||'',wins:homeNum(row?.wins),losses:homeNum(row?.losses),streak:homeStreakOf(row)}});
+    const stories=[...(extra?extra(p,teams):[])];
+    // Coin flips, streaks and market splits are everywhere; prefer games
+    // between teams our own ratings put near the top.
+    const best=Math.min(...teams.map(t=>homeNum(t.row?.rank)??999)),notable=Math.max(0,(80-best)/8),known=best<=(sport==='ncaam'?120:90);
+    const rival=homeRivalry(sport,p.home,p.away);
+    if(rival)stories.push({kind:'rivalry',label:rival,score:96+(teams.some(t=>t.rank!=null)?3:0),why:`Rivalry game: ${rival}.`});
+    const ranked=teams.filter(t=>t.rank!=null);
+    if(ranked.length===2)stories.push({kind:'top25',label:'Top 25 clash',score:80+(50-ranked[0].rank-ranked[1].rank)/5,why:`${poll.tag} #${ranked[0].rank} meets ${poll.tag} #${ranked[1].rank}.`});
+    if(ranked.length===1&&ranked[0].pct!=null&&ranked[0].pct<60)stories.push({kind:'upset',label:'Upset alert',score:72+(60-ranked[0].pct)/2,why:`The model gives ${poll.tag} #${ranked[0].rank} ${nm(ranked[0].name)} only ${modelPctLabel(ranked[0].pct)}.`});
+    if(sport==='ncaaf'){
+      const bowl=teams.filter(t=>t.wins===5&&t.losses!=null&&t.losses<=6);
+      if(bowl.length)stories.push({kind:'bowl',label:'Bowl on the line',score:82+(bowl.some(t=>t.losses===6)?4:0),why:`${bowl.map(t=>`${nm(t.name)} is ${t.record}`).join(' and ')}: one more win makes ${bowl.length>1?'them':'it'} bowl eligible.`});
+    }
+    const mkt=homeNum(p.market_pct),model=homeNum(p.model_pct);
+    if(known&&mkt!=null&&model!=null&&mkt>0&&mkt<100){
+      if(mkt<50)stories.push({kind:'market',label:'Model vs market',score:70+(model-mkt)/2+notable,why:`The model backs ${nm(p.pick_name)} at ${modelPctLabel(model)}; the market has ${modelPctLabel(mkt)}.`});
+      else if(Math.abs(model-mkt)>=10)stories.push({kind:'market',label:'Model vs market',score:58+Math.abs(model-mkt)/3+notable,why:`The model has ${nm(p.pick_name)} at ${modelPctLabel(model)}, the market at ${modelPctLabel(mkt)}.`});
+    }
+    if(known&&model!=null&&model<=55)stories.push({kind:'coin',label:'Coin flip',score:53+(55-model)+notable,why:`The model has it ${Math.round(model)}–${100-Math.round(model)}.`});
+    // A streak is a story only in a game it could change: both sides 25-75%.
+    const close=teams.every(t=>t.pct!=null&&t.pct>=25&&t.pct<=75);
+    const hot=close?teams.filter(t=>t.streak&&t.streak.n>=4&&(homeNum(t.row?.rank)??999)<=(sport==='ncaam'?120:90)).sort((a,b)=>b.streak.n-a.streak.n)[0]:null;
+    if(hot)stories.push({kind:'streak',label:hot.streak.kind==='W'?'Hot streak':'Cold streak',score:48+hot.streak.n+Math.max(0,(80-(homeNum(hot.row?.rank)??999))/8),why:`${nm(hot.name)} has ${hot.streak.kind==='W'?'won':'lost'} ${hot.streak.n} straight.`,team:hot.name,streak:hot.streak});
+    return {p,teams,stories:stories.sort((a,b)=>b.score-a.score)};
+  }).filter(g=>g.stories.length);
+}
+// Variety first: the best game for each of five different story types, then
+// the last card by strength (rivalries may take three cards, others two). A
+// game shows a story other than its best only if that one is strong too, so
+// the Iron Bowl is never relabelled as a streak. Caps relax only if the grid
+// would otherwise run short.
+function homePickStories(games,meta){
+  const pool=[...games].sort((a,b)=>b.stories[0].score-a.stories[0].score||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
+  const ok=(g,x)=>x===g.stories[0]||x.score>=75,used={},out=[],cap=k=>k==='rivalry'?3:2;
+  const take=(g,st)=>{used[st.kind]=(used[st.kind]||0)+1;out.push({g,st})};
+  const kinds=[...new Set(pool.flatMap(g=>g.stories.filter(x=>ok(g,x)).map(x=>x.kind)))];
+  const bestOf=k=>pool.filter(g=>!out.some(o=>o.g===g)).map(g=>({g,st:g.stories.find(x=>x.kind===k&&ok(g,x))})).filter(c=>c.st).sort((a,b)=>b.st.score-a.st.score)[0];
+  kinds.map(k=>bestOf(k)).filter(Boolean).sort((a,b)=>b.st.score-a.st.score).slice(0,5).forEach(({g,st})=>{if(!out.some(o=>o.g===g))take(g,st)});
+  for(const relax of [false,true])for(const g of pool){
+    if(out.length>=6)break;if(out.some(o=>o.g===g))continue;
+    const st=relax?g.stories[0]:g.stories.find(x=>(used[x.kind]||0)<cap(x.kind)&&ok(g,x));if(!st)continue;
+    take(g,st);
+  }
+  out.sort((a,b)=>b.st.score-a.st.score);
+  return out.map(({g,st})=>({p:g.p,label:st.label,why:st.why,teams:g.teams.map(t=>({name:t.name,pct:t.pct,meta:meta(t,st)}))}));
+}
 function homeFootballStakes(){
   const cfp=typeof MATCHDAY_CFB_CFP_POLL!=='undefined'&&Array.isArray(MATCHDAY_CFB_CFP_POLL?.rankings)&&MATCHDAY_CFB_CFP_POLL.rankings.length?MATCHDAY_CFB_CFP_POLL:null;
-  if(!cfp)return {rows:[],empty:'Playoff stakes appear once the CFP committee publishes its ranking.'};
-  const rankOf=name=>homeNum(cfp.rankings.find(r=>homeSame(r.name,name))?.rank);
   const seeds=[];
   (typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&Array.isArray(MATCHDAY_CFB_AP_BRACKET)?MATCHDAY_CFB_AP_BRACKET:[]).forEach(round=>(round.matches||[]).forEach(m=>
     [[m.home,m.home_slot],[m.away,m.away_slot]].forEach(([team,slot])=>{if(team&&/^\d+$/.test(String(slot||''))&&!/^winner/i.test(team))seeds.push([team,Number(slot)])})));
   const seedOf=name=>seeds.find(([team])=>homeSame(team,name))?.[1]??null;
-  const rows=homeStakesGames().map(p=>{
-    const teams=[p.home,p.away].map(name=>({name,rank:rankOf(name),seed:seedOf(name),pct:homeSidePct(p,name)}));
-    const field=teams.filter(t=>t.seed!=null),ranked=teams.filter(t=>t.rank!=null);
-    let tier=0,label='';
-    if(field.length===2){tier=1;label='Playoff teams meet'}
-    else if(field.length===1&&field[0].pct!=null&&field[0].pct<70){tier=2;label='Playoff team at risk'}
-    else if(ranked.some(t=>t.rank>=9&&t.rank<=16)){tier=3;label='Bubble'}
-    else if(ranked.length===2){tier=4;label='Ranked meeting'}
-    if(!tier)return null;
-    const nm=t=>esc(homeShort(t.name)),bubble=ranked.find(t=>t.rank>=9&&t.rank<=16);
-    const why=tier===1?'Both teams are in the projected playoff field.'
-      :tier===2?`A loss puts ${nm(field[0])}'s projected ${field[0].seed} seed at risk.`
-      :tier===3?`${nm(bubble)} sits on the playoff bubble at CFP #${bubble.rank}.`
-      :'Both teams are in the CFP ranking.';
-    const meta=t=>[t.rank!=null?`CFP #${t.rank}`:'',t.seed!=null?`${t.seed} seed`:t.rank!=null?'outside field':''].filter(Boolean).join(' · ');
-    return {p,tier,label,why,teams:teams.map(t=>({name:t.name,pct:t.pct,meta:meta(t)})),order:Math.abs((homeNum(p.model_pct)??50)-50)};
-  }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
-  return {rows,empty:'No games in the next seven days involve a CFP-ranked team.'};
+  const nm=n=>esc(homeShort(n));
+  const playoff=(p,teams)=>{
+    if(!cfp)return [];
+    const field=teams.filter(t=>seedOf(t.name)!=null),bubble=teams.find(t=>t.rank>=9&&t.rank<=16&&seedOf(t.name)==null),out=[];
+    if(field.length===2)out.push({kind:'playoff',label:'Playoff teams meet',score:100,why:'Both teams are in the projected playoff field.'});
+    else if(field.length===1&&field[0].pct!=null&&field[0].pct<70)out.push({kind:'playoff',label:'Playoff team at risk',score:90+(70-field[0].pct)/5,why:`A loss puts ${nm(field[0].name)}'s projected ${seedOf(field[0].name)} seed at risk.`});
+    if(bubble)out.push({kind:'bubble',label:'Playoff bubble',score:76,why:`${nm(bubble.name)} sits on the playoff bubble at CFP #${bubble.rank}.`});
+    return out;
+  };
+  const meta=(t,st)=>{const seed=seedOf(t.name);
+    return [t.rank!=null?`CFP #${t.rank}`:'',st.kind==='playoff'&&seed!=null?`${seed} seed`:st.kind==='streak'&&st.team===t.name?`${st.streak.kind}${st.streak.n}`:t.record].filter(Boolean).join(' · ')};
+  return {rows:homePickStories(homeGameStories('ncaaf',playoff),meta),empty:'No games in the next seven days have a published read yet.'};
 }
 async function homeBasketballStakes(){
   const data=window.MatchdayBracketology?.snapshot?await window.MatchdayBracketology.snapshot():null;
-  if(!data)return {rows:[],empty:'Bracketology is not available right now.'};
-  const teams=Object.values(data.teams||{});
-  const odds=v=>window.MatchdayBracketology.formatOdds(v);
-  const rows=homeStakesGames().map(p=>{
-    const both=[p.home,p.away].map(name=>({name,t:teams.find(t=>homeSame(t.team_name,name))}));
-    const bubble=both.filter(s=>s.t?.status==='bubble'&&homeNum(s.t?.odds?.make_field)!=null);
-    if(!bubble.length)return null;
-    return {p,tier:bubble.length===2?1:2,label:bubble.length===2?'Bubble teams meet':'Bubble',
-      why:bubble.length===2?'Both teams are on the tournament bubble.':`${esc(homeShort(bubble[0].name))} is on the tournament bubble.`,
-      teams:both.map(s=>({name:s.name,pct:homeSidePct(p,s.name),meta:bubble.includes(s)?`${odds(s.t.odds.make_field)} to make field`:''})),
-      order:Math.min(...bubble.map(s=>Math.abs(s.t.odds.make_field-.5)))};
-  }).filter(Boolean).sort((a,b)=>a.tier-b.tier||a.order-b.order||Date.parse(a.p.kickoff)-Date.parse(b.p.kickoff));
-  return {rows,empty:'No bubble teams play in the next seven days.'};
+  const pool=Object.values(data?.teams||{});
+  const odds=v=>window.MatchdayBracketology?.formatOdds?window.MatchdayBracketology.formatOdds(v):Math.round(v*100)+'%';
+  const nm=n=>esc(homeShort(n));
+  const bubbleOf=name=>{const t=pool.find(x=>homeSame(x.team_name,name));return t?.status==='bubble'&&homeNum(t?.odds?.make_field)!=null?t:null};
+  const bubble=(p,ts)=>{const b=ts.filter(t=>bubbleOf(t.name));
+    return !b.length?[]:[{kind:'bubble',label:b.length===2?'Bubble teams meet':'Tournament bubble',score:b.length===2?74:66,why:b.length===2?'Both teams are on the tournament bubble.':`${nm(b[0].name)} is on the tournament bubble.`}]};
+  const meta=(t,st)=>{const b=bubbleOf(t.name);
+    return [t.rank!=null?`AP #${t.rank}`:'',st.kind==='bubble'&&b?`${odds(b.odds.make_field)} to make field`:st.kind==='streak'&&st.team===t.name?`${st.streak.kind}${st.streak.n}`:t.record].filter(Boolean).join(' · ')};
+  return {rows:homePickStories(homeGameStories('ncaam',bubble),meta),empty:'No games in the next seven days have a published read yet.'};
 }
 /* Each game is a small scoreboard: both teams stacked with their standing and
    the model's chance, then one sentence on why the game matters. Six fit a
