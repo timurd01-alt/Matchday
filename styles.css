@@ -4483,6 +4483,36 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
 .homeYourChanged li b{font-family:var(--sans);font-size:var(--fs-base);font-weight:var(--fw-bold)}
 .homeYourChanged li small{color:var(--muted);font:var(--fw-regular) var(--fs-sm)/1.35 var(--sans);letter-spacing:0;white-space:normal}
 .homeYourChanged .homeWeekMove{min-width:0;margin-right:4px}
+/* What changed spans the team's grid: story left, rating tiles right (Build 1121E). */
+.homeStakesGame.homeYourChanged{grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px 28px}
+.homeYourChanged>.homeStakesHead{grid-column:1/-1}
+.homeYourStory{display:grid;align-content:start;gap:8px;min-width:0}
+.homeYourStory>p{margin:0;color:var(--text);font-size:var(--fs-base);font-weight:var(--fw-semibold)}
+.homeYourStory>p small{color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono)}
+.homeYourSince{color:var(--muted);font-size:var(--fs-sm);line-height:1.35}
+.homeYourChanged .homeYourStory ul{gap:12px;margin-top:4px}
+.homeYourChanged li{gap:4px}
+.homeYourChanged li>.homeYourResult{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;min-width:0}
+.homeYourResult i{font:normal var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.homeYourResult i.up{color:var(--win)}
+.homeYourResult i.down{color:var(--loss)}
+.homeYourChanged li small.homeYourPlays b{font-family:var(--sans);font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--text)}
+.homeYourTiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:0;align-self:stretch;overflow:hidden;border:1px solid var(--line);border-radius:var(--r)}
+@media(min-width:1400px){.homeYourTiles.one{grid-template-columns:repeat(var(--t,6),minmax(0,1fr))}}
+.homeYourTile{display:grid;align-content:center;gap:5px;min-width:0;padding:9px 16px;box-shadow:-1px 0 0 var(--line),0 -1px 0 var(--line)}
+.homeYourTile>span{font:var(--fw-bold) var(--fs-2xs)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+.homeYourTile>strong{font:var(--fw-bold) var(--fs-xl)/1 var(--mono);color:var(--text);white-space:nowrap}
+.homeYourTile>small{color:var(--muted);font:var(--fw-bold) var(--fs-2xs)/1.25 var(--mono);letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.homeYourForm{display:inline-flex;gap:4px}
+.homeYourForm i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:4px;font:normal var(--fw-bold) var(--fs-2xs)/1 var(--mono);color:var(--muted);background:var(--line)}
+.homeYourForm i.w{color:var(--bg);background:var(--win)}
+.homeYourForm i.l{color:var(--bg);background:var(--loss)}
+@media(max-width:1023px){
+  .homeStakesGame.homeYourChanged{grid-template-columns:minmax(0,1fr)}
+  .homeYourTiles{grid-template-columns:repeat(var(--t,6),minmax(0,1fr))}
+}
+@media(max-width:760px){.homeYourTiles,.homeYourTiles.one{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:420px){.homeYourTiles,.homeYourTiles.one{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .homeYourEmpty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:6px;padding:16px 20px;border:1px solid var(--line);border-radius:var(--r);background:none}
 .homeYourEmpty>p{flex:1 1 24em}
 .homeYourEmpty>select{flex:0 1 320px;min-height:44px}

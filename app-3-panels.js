@@ -1503,7 +1503,13 @@ function ratingWeekGames(name,table){
         .sort((a,b)=>Math.abs(Date.parse(a.starts_at)-day)-Math.abs(Date.parse(b.starts_at)-day))[0];
       const p=Number(pick?.probability_pct);
       const chance=pick&&Number.isFinite(p)?(same(pick.selection,name)?p:100-p):null;
-      return {opponent:home?r.away:r.home,home,neutral:!!r.neutral,won:mine>theirs,mine,theirs,chance,played_on:r.played_on};
+      // The market's price on the locked pick, turned to this team's side; 0 and
+      // 100 are a missing price, not a probability.
+      const mk=Number(pick?.market_probability_pct);
+      const market=pick&&Number.isFinite(mk)&&mk>0&&mk<100?(same(pick.selection,name)?mk:100-mk):null;
+      // Football results carry the engine's play-by-play; basketball has none.
+      const pm=r.play_metrics,plays=pm?.home&&pm?.away?{mine:home?pm.home:pm.away,theirs:home?pm.away:pm.home}:null;
+      return {opponent:home?r.away:r.home,home,neutral:!!r.neutral,won:mine>theirs,mine,theirs,chance,market,plays,played_on:r.played_on};
     });
 }
 // A 99.7% chance is not a certainty, so it never rounds to 100.
