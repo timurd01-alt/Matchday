@@ -996,7 +996,7 @@ function gamesSummaryHTML(active,options={}){
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol${options.hideNotable?' noNotable':''}">${gamesRecordHTML()}${options.hideNotable?'':gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?`<div class="gamesMainCol">${gamesDifferencesHTML(top)}<div class="gamesSideCol gamesSideSpill"></div></div>`:''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and polls</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function homeLatestReactionHTML(){
@@ -1058,16 +1058,42 @@ function renderHome(){
     +`<section class="homeKpis" aria-label="This week's overview"><div title="Monday to Sunday, Central time, finished games included"><strong>${weekGameCount(DATA.matches,weekKeys)}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +homeWeekHTML()
     +homeLatestReactionHTML()
-    +gamesSummaryHTML(active,{hideNotable:homeWeekShowsCalls()});
+    +gamesSummaryHTML(active);
   homeWeekHydrate();
+  requestAnimationFrame(balanceHomeSupport);
   const seedsHost=host.querySelector('[data-home-basketball-seeds]');
   if(seedsHost&&window.MatchdayBracketology)window.MatchdayBracketology.projectedTopSeeds().then(seeds=>{
     if(!seedsHost.isConnected||DATA.comp_key!=='NCAAM')return;
     if(!seeds.length){seedsHost.textContent='Current projections are unavailable.';return}
     if(seeds.basis==='preseason'){const label=seedsHost.parentElement?.querySelector('span');if(label)label.textContent='Projected No. 1 seeds · preseason'}
     seedsHost.innerHTML=`<ul class="gamesSeeds">${seeds.map(team=>`<li>${teamMark(team.team_name)}<span><b>${esc(typeof rsShortName==='function'?rsShortName(team.team_name):team.team_name)}</b><small>${esc(team.region)}</small></span></li>`).join('')}</ul>`;
+    requestAnimationFrame(balanceHomeSupport);
   });
 }
+/* Even the two columns under the featured game. The games list grows with
+   the number of priced games -- two in some basketball weeks -- while the
+   side column does not, which left up to 300px empty under the list. Whole
+   side blocks move under the list when that evens the columns; on one-column
+   layouts everything stays where it was. */
+function balanceHomeSupport(){
+  const grid=document.querySelector('#view-home .gamesSupportGrid:not(.noComparisons)');if(!grid)return;
+  const side=grid.querySelector(':scope>.gamesSideCol'),spill=grid.querySelector('.gamesSideSpill'),list=grid.querySelector('.gamesDifferences');
+  if(!side||!spill||!list)return;
+  [...side.children].forEach((b,i)=>{if(b.dataset.order==null)b.dataset.order=i});
+  [...spill.children].forEach(b=>side.appendChild(b));
+  [...side.children].sort((a,b)=>a.dataset.order-b.dataset.order).forEach(b=>side.appendChild(b));
+  if(getComputedStyle(grid).gridTemplateColumns.split(' ').length<2)return;
+  const H=e=>e.getBoundingClientRect().height,blocks=[...side.children],hs=blocks.map(H),base=H(list),total=hs.reduce((a,b)=>a+b,0);
+  let best={mask:0,gap:Math.abs(base-total)};
+  for(let mask=1;mask<(1<<blocks.length)-1;mask++){
+    const moved=hs.reduce((t,h,i)=>mask&(1<<i)?t+h:t,0),gap=Math.abs(base+moved-(total-moved));
+    if(gap<best.gap)best={mask,gap};
+  }
+  if(!best.mask||Math.abs(base-total)-best.gap<40)return;
+  blocks.forEach((b,i)=>{if(best.mask&(1<<i))spill.appendChild(b)});
+}
+let HOME_BALANCE_TIMER=0;
+window.addEventListener('resize',()=>{clearTimeout(HOME_BALANCE_TIMER);HOME_BALANCE_TIMER=setTimeout(balanceHomeSupport,150)});
 /* The week on Home (Build 1120A). One section, two tabs:
    - "Last week": the most recent Monday-to-Sunday week whose Saturday is over:
      the model's locked-pick record that week, its best call and worst miss,
@@ -1128,10 +1154,6 @@ function homeRecapData(now=Date.now()){
   const upsets=losses.filter(r=>r!==miss&&scored(r)&&p(r)>=60).sort((a,b)=>p(b)-p(a)).slice(0,2);
   return {anchor,keys,graded,wins:wins.length,losses:losses.length,expected,best,miss,upsets};
 }
-function homeWeekShowsCalls(){
-  if(homeWeekTab()!=='recap'||!['ncaaf','ncaam'].includes(currentSportKey()))return false;
-  const d=homeRecapData();return !!(d.best||d.miss);
-}
 // "Oklahoma 24, Ole Miss 17" from a graded row: event "Away at Home", score home–away.
 function homeGradedGame(r){
   const [away,home]=String(r.event_name||'').split(' at ');
@@ -1182,16 +1204,19 @@ function homeRecapHTML(){
   if(!d.graded.length&&!movers&&!yours.length)return `<div class="gamesEmpty">No graded games in the week of ${esc(homeWeekLabel(d.keys))}.</div>`;
   const hit=d.graded.length?d.wins/d.graded.length*100:null;
   const tiles=[d.graded.length
-    ?`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p></div>`
+    ?`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><div class="homeTileRow"><strong>${d.wins}–${d.losses}</strong><p>${hit.toFixed(0)}% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected</p></div></div>`
     :`<div class="homeWeekTile homeWeekRecord"><span>Model's week</span><p>No locked picks were graded this week.</p></div>`];
-  if(d.best)tiles.push(`<div class="homeWeekTile hit"><span>Best call</span><b>${teamMark(d.best.selection)}${esc(homeShort(d.best.selection))} <i aria-label="correct">✓</i></b><small>Model ${modelPctLabel(d.best.probability_pct)}${homeMarket(d.best)!=null?` · market ${modelPctLabel(homeMarket(d.best))}`:''}</small><small>${homeGradedGame(d.best)}</small></div>`);
-  if(d.miss)tiles.push(`<div class="homeWeekTile miss"><span>Worst miss</span><b>${teamMark(d.miss.selection)}${esc(homeShort(d.miss.selection))} <i aria-label="missed">✗</i></b><small>Model ${modelPctLabel(d.miss.probability_pct)}</small><small>${homeGradedGame(d.miss)}</small></div>`);
-  if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li><b>${homeGradedGame(r)}</b><small>Model had ${esc(homeShort(r.selection))} ${modelPctLabel(r.probability_pct)}</small></li>`).join('')}</ul></div>`);
-  const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></li>`;
-  const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
+  // Each line runs edge to edge: the team on the left, the number on the right.
+  const call=(r,cls,label,mark,aria,right)=>`<div class="homeWeekTile ${cls}"><span>${label}</span><div class="homeTileRow"><b>${teamMark(r.selection)}${esc(homeShort(r.selection))} <i aria-label="${aria}">${mark}</i></b><strong title="Model">${modelPctLabel(r.probability_pct)}</strong></div><div class="homeTileRow"><small>${homeGradedGame(r)}</small>${right?`<small>${right}</small>`:''}</div></div>`;
+  if(d.best)tiles.push(call(d.best,'hit','Best call','✓','correct',homeMarket(d.best)!=null?`market ${modelPctLabel(homeMarket(d.best))}`:''));
+  if(d.miss)tiles.push(call(d.miss,'miss','Worst miss','✗','missed',homeMarket(d.miss)!=null?`market ${modelPctLabel(homeMarket(d.miss))}`:''));
+  if(d.upsets.length)tiles.push(`<div class="homeWeekTile"><span>Other upsets</span><ul>${d.upsets.map(r=>`<li class="homeTileRow"><small>${homeGradedGame(r)}</small><small>had ${esc(homeShort(r.selection))} <b>${modelPctLabel(r.probability_pct)}</b></small></li>`).join('')}</ul></div>`);
+  const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<span><b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></span></li>`;
+  const moves=movers?`<div class="homeWeekMoves"><span>Ranking moves</span><ul class="homeWeekMovers" style="--m:${movers.up.length+movers.down.length}">${[...movers.up,...movers.down].map(mv).join('')}</ul></div>`:'';
   const mine=yours.length?`<div class="homeWeekYours"><span>Your ${yours.length===1?'team':'teams'}</span><ul>${yours.map(y=>`<li>${teamMark(y.team)}<span><b>${esc(homeShort(y.team))}</b><small>${y.lines.length?y.lines.join(' · '):'No game this week'}${y.rank!=null?` · ranked ${y.rank}`:''}</small></span>${homeMoveTag(y.prev,y.rank)}</li>`).join('')}</ul></div>`:'';
-  const links=`<div class="homeWeekLinks"><button type="button" class="gamesTextLink" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button>${movers?`<button type="button" class="gamesTextLink" onclick="setView('groups')">View rankings <span aria-hidden="true">→</span></button>`:''}</div>`;
-  return `<div class="homeWeekRecap"><div class="homeWeekTiles">${tiles.join('')}</div>${moves}${mine}${links}</div>`;
+  // Boxed strips like the Home overview above them, one cell per item, so
+  // every cell is a filled panel and the row has no loose gaps.
+  return `<div class="homeWeekRecap"><div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join('')}</div>${moves}${mine}</div>`;
 }
 /* Games in the next seven days that carry a published read for this sport. */
 function homeStakesGames(now=Date.now()){
@@ -1258,7 +1283,14 @@ async function homeBasketballStakes(){
    three-by-two grid; full-width rows left the middle of the line empty. */
 function homeStakesRowsHTML(result){
   if(!result.rows.length)return `<div class="gamesEmpty">${esc(result.empty)}</div>`;
-  return `<div class="homeStakesGrid">`+result.rows.slice(0,6).map(homeStakesCardHTML).join('')+`</div>`+(result.rows.length>6?`<button type="button" class="gamesTextLink homeWeekMore" onclick="setView('matches')">View all games <span aria-hidden="true">→</span></button>`:'');
+  const shown=result.rows.slice(0,6);
+  return homeStakesGridOpen(shown.length)+shown.map(r=>homeStakesCardHTML({...r,quiet:true})).join('')+`</div>`;
+}
+// Columns follow the count so the boxed grid never has an empty cell: four
+// cards are two by two, five leave the last card spanning two cells.
+function homeStakesGridOpen(n){
+  const cols=n===4?2:Math.max(1,Math.min(3,n));
+  return `<div class="homeStakesGrid n${n}" style="--c:${cols}">`;
 }
 function homeStakesCardHTML(r){
   const pickSide=r=>{const a=homeNum(r.teams[0]?.pct),b=homeNum(r.teams[1]?.pct);return a!=null&&b!=null&&a!==b?(a>b?0:1):r.teams.findIndex(t=>homeSame(t.name,r.p.pick_name))};
@@ -1269,9 +1301,14 @@ function homeStakesCardHTML(r){
     const line=t=>{const pct=homeNum(t.pct),fav=r.teams.indexOf(t)===pick;
       const bar=pct!=null?`<i class="homeStakesBar" aria-hidden="true"><i style="width:${Math.max(2,Math.min(100,pct))}%"></i></i>`:'<i></i>';
       return `<li class="${fav?'fav':''}">${teamMark(t.name)}<span><b>${esc(homeShort(t.name))}</b>${t.meta?`<small>${t.meta}</small>`:''}</span>${bar}<strong>${pct!=null?modelPctLabel(pct):''}</strong></li>`};
-    const body=`<span class="homeStakesHead"><em>${esc(r.label)}</em><small>${esc(kickIn(p.kickoff))}</small></span><ul>${order.map(line).join('')}</ul><small class="homeStakesWhy">${r.why}</small>`;
-    const name=`${homeShort(p.away)} at ${homeShort(p.home)}`;
-    return match?`<button type="button" class="homeStakesGame" aria-label="${esc(name)}: open match" onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="homeStakesGame">${body}</div>`;
+    // On Games that matter the label and each team's rank and seed already say
+    // why the game matters, so that sentence moves to the accessible name and
+    // tooltip. Your team cards keep theirs: it carries the market price or the
+    // race, which nothing else on the card shows.
+    const why=r.why&&!r.quiet?`<small class="homeStakesWhy">${r.why}</small>`:'';
+    const body=`<span class="homeStakesHead"><em>${esc(r.label)}</em><small>${esc(kickIn(p.kickoff))}</small></span><ul>${order.map(line).join('')}</ul>${why}`;
+    const name=`${homeShort(p.away)} at ${homeShort(p.home)}.${r.why?' '+String(r.why).replace(/<[^>]*>/g,''):''}`;
+    return match?`<button type="button" class="homeStakesGame" title="${esc(name)}" aria-label="${esc(name)} Open match." onclick="openMatchModal('${esc(String(match.id))}')">${body}</button>`:`<div class="homeStakesGame" title="${esc(name)}">${body}</div>`;
   }
 }
 /* "Your team" (Build 1120F): each followed team in this sport, as three
@@ -1377,8 +1414,9 @@ function homeYourTeamHTML(){
     const conf=y.conf?.started?` · ${homeOrdinal(y.conf.index+1)} in the ${esc(y.conf.group)}`:'';
     const head=`<div class="homeYourHead">${teamMark(y.name)}<b>${esc(y.name)}</b><small>Power #${y.row.rank}${y.cfp!=null?` · CFP #${y.cfp}`:''}${rec}${conf}</small></div>`;
     const next=y.cards.length?y.cards.map(homeStakesCardHTML).join(''):`<div class="homeStakesGame"><span class="homeStakesHead"><em>Next game</em></span><small class="homeStakesWhy">No game in the next seven days.</small></div>`;
-    return `<section class="homeYourTeam" aria-label="${esc(y.name)}">${head}<div class="homeStakesGrid">${homeYourChangedHTML(y,fmt)}${next}${y.watch.map(homeStakesCardHTML).join('')}</div></section>`;
-  }).join('')+`<div class="homeWeekLinks"><button type="button" class="gamesTextLink" onclick="setView('customize')">Change teams <span aria-hidden="true">→</span></button></div></div>`;
+    const cells=[homeYourChangedHTML(y,fmt),...(y.cards.length?y.cards.map(r=>homeStakesCardHTML(r)):[next]),...y.watch.map(r=>homeStakesCardHTML(r))];
+    return `<section class="homeYourTeam" aria-label="${esc(y.name)}">${head}${homeStakesGridOpen(cells.length)}${cells.join('')}</div></section>`;
+  }).join('')+`</div>`;
 }
 function homeWeekHTML(){
   const sport=currentSportKey();if(!['ncaaf','ncaam'].includes(sport))return '';
@@ -1392,7 +1430,11 @@ function homeWeekHTML(){
     :`<div data-home-stakes><div class="gamesEmpty">Loading bracketology…</div></div>`;
   const tabs=HOME_WEEK_TABS.map(([key,label])=>
     `<button type="button" role="tab" id="homeWeekTab-${key}" aria-selected="${key===tab}" aria-controls="homeWeekPanel" tabindex="${key===tab?0:-1}" onclick="setHomeWeekTab('${key}')" onkeydown="homeWeekTabKey(event)">${label}</button>`).join('');
-  return `<section class="homeWeek" data-home-week><div class="gamesSectionHead homeWeekHead"><div class="homeWeekTabs" role="tablist" aria-label="The week">${tabs}</div><small>${esc(meta)}</small></div>`
+  // Links live in the header line beside the date: a button alone under the
+  // content left a full-width empty row (owner, 2026-11-20).
+  const link=(go,label)=>`<button type="button" class="homeWeekLink" onclick="${go}">${label} <span aria-hidden="true">→</span></button>`;
+  const links=tab==='recap'?link("setView('score')",'Scorecard')+link("setView('groups')",'Rankings'):tab==='yours'?link("setView('customize')",'Change teams'):link('openAllGames()','All games');
+  return `<section class="homeWeek" data-home-week><div class="gamesSectionHead homeWeekHead"><div class="homeWeekTabs" role="tablist" aria-label="The week">${tabs}</div><div class="homeWeekMeta"><small>${esc(meta)}</small>${links}</div></div>`
     +`<div id="homeWeekPanel" role="tabpanel" aria-labelledby="homeWeekTab-${tab}">${body}</div></section>`;
 }
 function homeWeekHydrate(){
@@ -1403,8 +1445,8 @@ function homeWeekHydrate(){
 }
 function setHomeWeekTab(tab){
   HOME_WEEK_TAB=HOME_WEEK_TABS.some(([key])=>key===tab)?tab:'recap';
-  // Redrawn with Home, because the recap's best call and worst miss replace the
-  // side panel's recent calls while it is showing.
+  // Redrawn with Home: the tab changes the section's height, and the columns
+  // below are re-balanced after every Home render.
   renderHome();
   document.getElementById('homeWeekTab-'+HOME_WEEK_TAB)?.focus();
 }

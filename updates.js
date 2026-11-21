@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120G",
+  "tag": "Fix",
+  "title": "Home without empty space: boxed week strips, balanced columns, one-table head to head",
+  "items": [
+   "Last week is two boxed strips: the model's record, best call, worst miss and other upsets in one, the six ranking moves in the other, each line running edge to edge.",
+   "Games that matter and Your team are boxed grids sized to the number of games, so no cell is left empty; the Scorecard, Rankings, All games and Change teams links sit in the header beside the date instead of in a row of their own.",
+   "The games list and the side column under the featured game now end level: when the list is short, a side block moves under it.",
+   "The match window's head to head is one table again, with the gaps between Ratings, Offense, Defense and Roster cut to a label's height."
+  ]
+ },
+ {
   "date": "Build 1120F",
   "tag": "Feature",
   "title": "Home: a Your team tab",

@@ -1803,25 +1803,8 @@ function matchupTape(m){
   const RT=(typeof MATCHDAY_ROSTER_TIERS!=='undefined'&&MATCHDAY_ROSTER_TIERS)||{};
   const notes=['Rating: points better than an average team, schedule-adjusted. Offense and defense: points scored and allowed against an average opponent.'];
   if(roster&&RT.source)notes.push(`Talent: ${RT.source}, ${RT.composite_season||RT.season}.`);
-  // Wide windows split the table in two so a value never sits 400px from
-  // its label. Ratings stay on the left; the smaller groups (pace, roster)
-  // move left only when that evens the halves. Each half repeats the team
-  // names, the copy hidden from screen readers.
-  const head=copy=>`<div class="mTapeHead"${copy?' aria-hidden="true"':''}><b>${esc(homeName)}</b><span>Head to head</span><b>${esc(awayName)}</b></div>`;
-  const adv=advanced&&typeof window.matchdayAdvancedTapeGroups==='function'?window.matchdayAdvancedTapeGroups(m):null;
-  const right=[...(adv||[]),roster].filter(Boolean),weight=g=>(String(g).match(/class="tapeRow"/g)||[]).length+1.5;
-  const sum=list=>list.reduce((t,g)=>t+weight(g),0);
-  let best=null;
-  for(let k=0;ratings&&k<right.length;k++){
-    const L=[ratings,...right.slice(right.length-k)],R=right.slice(0,right.length-k);
-    const ratio=Math.min(sum(L),sum(R))/Math.max(sum(L),sum(R));
-    if(!best||ratio>best.ratio)best={L,R,ratio};
-  }
-  const table=`role="table" aria-label="Head to head: ratings, play and roster"`;
-  return `<section class="mTape" aria-label="Head to head">`
-    +(adv&&best&&best.ratio>=.5
-      ?`<div class="mTapeCols" ${table}><div class="mTapeCol" role="none">${head(false)}${best.L.join('')}</div><div class="mTapeCol" role="none">${head(true)}${best.R.join('')}</div></div>`
-      :`${head(false)}<div ${table}>${ratings}${adv?adv.join(''):'<!-- matchday-advanced-profile -->'}${roster}</div>`)
+  return `<section class="mTape" aria-label="Head to head"><div class="mTapeHead"><b>${esc(homeName)}</b><span>Head to head</span><b>${esc(awayName)}</b></div>`
+    +`<div role="table" aria-label="Head to head: ratings, play and roster">${ratings}<!-- matchday-advanced-profile -->${roster}</div>`
     +`<p class="mTapeNote">${esc(notes.join(' '))}</p></section>`;
 }
 /* The model read, from the engine the rest of this board already quotes.

@@ -30,13 +30,13 @@ class HomeWeekTests(unittest.TestCase):
         self.assertIn("% of ${d.graded.length} locked picks · ${d.expected.toFixed(0)}% expected", recap)
 
     def test_recap_reads_the_graded_scorecard_not_a_second_forecast(self):
-        data = _section(self.week, "function homeRecapData(", "function homeWeekShowsCalls(")
+        data = _section(self.week, "function homeRecapData(", "function homeGradedGame(")
         self.assertIn("trdlabScorecard()", data)
         for banned in ("predict(", "picks_log", "MATCHDAY_TRDLAB_PICKS"):
             self.assertNotIn(banned, data)
 
     def test_named_calls_need_a_real_final(self):
-        data = _section(self.week, "function homeRecapData(", "function homeWeekShowsCalls(")
+        data = _section(self.week, "function homeRecapData(", "function homeGradedGame(")
         self.assertIn("h+a>0", data)
         for name in ("const best=", "const miss=", "const upsets="):
             line = data[data.index(name):].split("\n", 1)[0]
@@ -68,20 +68,28 @@ class HomeWeekTests(unittest.TestCase):
     def test_recap_is_a_row_of_tiles_then_ranking_moves(self):
         # Two wide columns left most of each line empty at desktop widths.
         recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
-        self.assertIn('<div class="homeWeekTiles">${tiles.join(' + "''" + ')}</div>${moves}', recap)
+        self.assertIn('<div class="homeWeekTiles t${tiles.length}" style="--n:${tiles.length}">${tiles.join(' + "''" + ')}</div>${moves}', recap)
         self.assertNotIn("homeWeekCol", recap)
 
     def test_stakes_are_a_grid_of_scoreboards(self):
         html = _section(self.week, "function homeStakesRowsHTML(", "function homeWeekHTML(")
-        self.assertIn('<div class="homeStakesGrid">', html)
+        self.assertIn("homeStakesGridOpen(shown.length)", html)
         self.assertIn("result.rows.slice(0,6)", html)
+        self.assertIn("homeStakesCardHTML({...r,quiet:true})", html)
+        grid = _section(self.week, "function homeStakesGridOpen(", "function homeStakesCardHTML(")
+        self.assertIn("n===4?2:Math.max(1,Math.min(3,n))", grid)
+        self.assertIn('<div class="homeStakesGrid n${n}" style="--c:${cols}">', grid)
         for builder in ("function homeFootballStakes(", "async function homeBasketballStakes("):
             body = self.week[self.week.index(builder):]
             self.assertIn("teams:", body[:body.index(chr(10) + "}" + chr(10))])
 
-    def test_side_column_marks_when_best_call_steps_aside(self):
+    def test_home_columns_are_balanced_after_every_render(self):
+        # A short games list beside a tall side column left ~300px empty.
+        home = _section(self.core, "function renderHome(){", "function balanceHomeSupport(")
+        self.assertIn("requestAnimationFrame(balanceHomeSupport)", home)
         summary = _section(self.core, "function gamesSummaryHTML(", "function homeLatestReactionHTML(")
-        self.assertIn("gamesSideCol${options.hideNotable?' noNotable':''}", summary)
+        self.assertIn('<div class="gamesSideCol gamesSideSpill"></div>', summary)
+        self.assertIn("${gamesNotableHTML()}", summary)
 
 if __name__ == "__main__":
     unittest.main()
