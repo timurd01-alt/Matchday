@@ -2191,3 +2191,36 @@ function submitPick(matchId,pick,render=true,lock=true){
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
   btmSave(db);if(render)renderCommunity();if(lock)lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }
+/* Stale-page check. GitHub Pages lets a browser keep index.html for ten
+   minutes, so right after a deploy a visitor -- or the owner checking a fix
+   (2026-11-20: a fixed Your team board still showed the old cards) -- keeps
+   running the previous build. The deployed page names its commit in
+   <meta name="matchday-build-sha">. On load, and when the tab comes back after
+   five minutes hidden, a fresh copy is compared with it and the page reloads
+   once when a newer build is live. Locally the tag still reads __BUILD__ and
+   nothing runs. Without sessionStorage there is no reload loop guard, so it
+   does nothing at all. */
+(function(){
+  const mine=document.querySelector('meta[name="matchday-build-sha"]')?.content||'';
+  if(!/^[0-9a-f]{6,40}$/.test(mine))return;
+  let store=null;try{store=window.sessionStorage;store.getItem('mdReloadedFor')}catch(e){return}
+  let hiddenAt=0,busy=false;
+  async function checkBuild(){
+    if(busy)return;busy=true;
+    try{
+      const r=await fetch('/index.html?build-check='+Date.now(),{cache:'no-store'});
+      if(!r.ok)return;
+      const live=(/name="matchday-build-sha" content="([0-9a-f]{6,40})"/.exec(await r.text())||[])[1];
+      // One reload per build: if the CDN is still catching up, wait for it.
+      if(!live||live===mine||store.getItem('mdReloadedFor')===live)return;
+      store.setItem('mdReloadedFor',live);
+      location.reload();
+    }catch(e){}finally{busy=false}
+  }
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){hiddenAt=Date.now();return}
+    if(hiddenAt&&Date.now()-hiddenAt>5*60000)checkBuild();
+  });
+  if(document.readyState==='complete')setTimeout(checkBuild,1500);
+  else window.addEventListener('load',()=>setTimeout(checkBuild,1500),{once:true});
+})();
