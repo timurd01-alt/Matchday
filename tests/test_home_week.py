@@ -65,5 +65,17 @@ class HomeWeekTests(unittest.TestCase):
             self.assertIn(needle, html)
 
 
+    def test_recap_record_is_a_strip_and_columns_pair_up(self):
+        # The record used to be its own column; beside a taller Calls column it
+        # left a block of empty space under the Scorecard link.
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn("homeWeekRecap${single?' single':''}\">${record}", recap)
+        self.assertNotIn('<div class="homeWeekCol">${record}', recap)
+        self.assertIn("const single=!(calls.length&&moves)", recap)
+
+    def test_side_column_marks_when_best_call_steps_aside(self):
+        summary = _section(self.core, "function gamesSummaryHTML(", "function homeLatestReactionHTML(")
+        self.assertIn("gamesSideCol${options.hideNotable?' noNotable':''}", summary)
+
 if __name__ == "__main__":
     unittest.main()

@@ -996,7 +996,7 @@ function gamesSummaryHTML(active,options={}){
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${options.hideNotable?'':gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol${options.hideNotable?' noNotable':''}">${gamesRecordHTML()}${options.hideNotable?'':gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and polls</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function homeLatestReactionHTML(){
@@ -1187,9 +1187,13 @@ function homeRecapHTML(){
   if(d.upsets.length)calls.push(`<li><em>Other upsets</em>${d.upsets.map(r=>`<small>${homeGradedGame(r)} · model had ${esc(homeShort(r.selection))} ${modelPctLabel(r.probability_pct)}</small>`).join('')}</li>`);
   const mv=r=>`<li>${homeMoveTag(r.prev,r.rank)}${teamMark(r.name)}<b>${esc(homeShort(r.name))}</b><small>${r.prev} → ${r.rank}</small></li>`;
   const moves=movers?`<div class="homeWeekCol"><span>Ranking moves</span>${movers.up.length?`<ul class="homeWeekMovers">${movers.up.map(mv).join('')}</ul>`:''}${movers.down.length?`<ul class="homeWeekMovers">${movers.down.map(mv).join('')}</ul>`:''}<button type="button" class="gamesTextLink" onclick="setView('groups')">View rankings <span aria-hidden="true">→</span></button></div>`:'';
-  return `<div class="homeWeekRecap"><div class="homeWeekCol">${record}${mine}</div>`
+  // The record is a strip across the top; Calls and Ranking moves sit side by
+  // side under it so neither column is left half empty. With only one of the
+  // two, it takes the full width.
+  const single=!(calls.length&&moves);
+  return `<div class="homeWeekRecap${single?' single':''}">${record}`
     +(calls.length?`<div class="homeWeekCol"><span>Calls</span><ul class="homeWeekCalls">${calls.join('')}</ul></div>`:'')
-    +moves+`</div>`;
+    +moves+mine+`</div>`;
 }
 /* Games in the next seven days that carry a published read for this sport. */
 function homeStakesGames(now=Date.now()){
