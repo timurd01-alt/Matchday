@@ -116,4 +116,5 @@ The owner pasted this report into the session the same day. Its sources are IBM,
 - **Opportunity 5, partly.** `qa.html` (How it works) already explained the numbers. It now also answers why a worse record can rate higher, what is left out (other sites' power ratings), and whether a pick can change after it is made.
 - **Phone tables (complaint 8).** Checked at 375px on 2026-11-20: the phone power table shows rank, move, team, rating and record. The 11-11 finding (every number hidden) no longer applies.
 - **Already done elsewhere today:** the Sunday recap and "Games that matter" (Builds 1120A to 1120C) cover opportunity 3 and the report's "catch me up" and "attention routing".
-- **Not started:** the preseason share (opportunity 2, needs the prior weight from TRDLab) and "Your team this week" (opportunity 4).
+- **Opportunity 4 (Build 1120F).** Home's week section has a third tab, *Your team*: for each followed team, what changed (results with the locked-pick chance, rating move), its next games with model and market chances, and up to three games to watch (CFP neighbours within three places, then the conference teams just ahead once conference play starts). The default tab is unchanged.
+- **Not started:** the preseason share (opportunity 2, needs the prior weight from TRDLab).
