@@ -4431,8 +4431,8 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .homeWeekMoves{display:grid;gap:8px}
 .homeWeekMovers{list-style:none;margin:0;padding:0;grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(min-width:1500px){.homeWeekMovers{grid-template-columns:repeat(var(--m,6),minmax(0,1fr))}}
-@media(max-width:1300px){.homeWeekTiles.t4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:641px) and (max-width:1599px){.homeWeekTiles.t5{grid-template-columns:repeat(6,minmax(0,1fr))}.homeWeekTiles.t5>.homeWeekTile{grid-column:span 2}.homeWeekTiles.t5>.homeWeekTile:nth-child(n+4){grid-column:span 3}}
+@media(max-width:1099px){.homeWeekTiles.t4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:641px) and (max-width:1279px){.homeWeekTiles.t5{grid-template-columns:repeat(6,minmax(0,1fr))}.homeWeekTiles.t5>.homeWeekTile{grid-column:span 2}.homeWeekTiles.t5>.homeWeekTile:nth-child(n+4){grid-column:span 3}}
 .homeTileRow{flex-wrap:wrap}.homeTileRow>:last-child{margin-left:auto}
 .homeTileRow>:only-child{margin-left:0;text-align:left}
 .homeWeekMovers li{display:flex;align-items:center;gap:10px;min-width:0;padding:12px 16px}
@@ -4534,7 +4534,8 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
 @container (min-width:400px){.homeSplits{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
 /* Five cells sit in one row of compact cells, like Ranking moves, wherever
    each still gets ~290px; the split list then shows one game per cell. */
-@media(min-width:1600px){.homeWeekTiles.t5>.homeWeekTile{padding:16px 16px}}
+@media(min-width:1280px){.homeWeekTiles.t5>.homeWeekTile{padding:16px 16px}}
+@media(min-width:1100px) and (max-width:1599px){.homeWeekTiles.t4>.homeWeekTile{padding:16px 16px}}
 .homeWeekRecord .homeTileRow>p>span{white-space:nowrap}
 /* A narrow mover cell keeps the team's name whole: the arrow already says how
    far it moved, so the new rank alone ("#23") replaces "31 → 23". */
@@ -4545,3 +4546,17 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
    them in the tooltip) and the next opponent without the countdown. */
 @container (max-width:340px){.homeWeekYours .yrOlder,.homeWeekYours .yrWhen{display:none}}
 @container (max-width:300px){.homeWeekTile .homeCallMkt{display:none}}
+/* Compact cells (five across from 1280px, the width of a 1920 screen at 125-150%
+   scaling) step the big figures down a size so every line still fits. */
+@container (max-width:250px){
+  #view-home .homeWeekTile .homeTileRow>b{font-size:var(--fs-base)}
+  #view-home .homeWeekTile .homeTileRow>strong{font-size:var(--fs-lg)}
+  #view-home .homeWeekTile.homeWeekRecord .homeTileRow>strong{font-size:var(--fs-2xl)}
+  #view-home .homeWeekTile .homeTileRow>small,#view-home .homeWeekTile .homeTileRow>p,#view-home .homeSplits small{font-size:var(--fs-xs)}
+}
+@container (max-width:200px){#view-home .homeWeekTile .teamMark{display:none}}
+#view-home .homeWeekTile .homeTileRow.homeYourNext>strong{font:var(--fw-bold) var(--fs-sm)/1 var(--mono)}
+/* Your team: name and rank on one line, then the result and the next game
+   each on a full-width line of their own. */
+#view-home .homeWeekYours li.homeYourNext{padding-left:38px}
+@container (max-width:260px){#view-home .homeWeekYours li.homeYourNext{padding-left:0}}

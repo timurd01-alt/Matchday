@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120P",
+  "tag": "Fix",
+  "title": "Last week stays one compact row on scaled laptop screens",
+  "items": [
+   "The five Last week cells now share one row from 1280px instead of 1600px, which covers 1920-wide screens at 125% and 150% Windows scaling; the four-cell version stays in one row from 1100px.",
+   "Narrow cells step their figures down a size and drop the team logos so every line fits.",
+   "Your team puts the name and ranking move on one line, with the latest result and the next game on full-width lines below."
+  ]
+ },
+ {
   "date": "Build 1120O",
   "tag": "Fix",
   "title": "Last week: one row of compact cells",
