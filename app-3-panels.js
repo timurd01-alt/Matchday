@@ -925,11 +925,12 @@ function viewIsReusable(v){
   return !!(stamp&&host&&host.firstChild&&stamp.epoch===VIEW_EPOCH&&stamp.data===DATA&&stamp.lang===LANG&&stamp.sport===DATA_FILE&&Date.now()-stamp.at<(VIEW_REUSE_MS[v]||VIEW_REUSE_DEFAULT_MS));
 }
 function renderViewChrome(){renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
-function paintCurrentView(){captureSignalsIfFresh();({home:renderHome,reactions:()=>window.renderReactions(),matches:renderMatches,results:renderResults,groups:renderStandings,standings:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,learn:()=>window.renderLearn?.(),community:renderCommunity}[VIEW]||renderHome)();const stamp={epoch:VIEW_EPOCH,data:DATA,lang:LANG,sport:DATA_FILE,at:Date.now()};VIEW_STAMPS[VIEW]=stamp;
+const VIEW_RENDERERS={home:()=>renderHome(),reactions:()=>window.renderReactions(),matches:()=>renderMatches(),results:()=>renderResults(),groups:()=>renderStandings(),standings:()=>renderStandings(),bracket:()=>renderBracket(),score:()=>renderScore(),news:()=>renderNews(),learn:()=>window.renderLearn?.(),community:()=>renderCommunity()};
+function stampView(v){const stamp={epoch:VIEW_EPOCH,data:DATA,lang:LANG,sport:DATA_FILE,at:Date.now()};VIEW_STAMPS[v]=stamp;
   // renderGroups() builds Rankings and Conference standings together (it moves
   // the conference tables into #view-standings), so either visit builds both.
-  if(VIEW==='groups'||VIEW==='standings'){VIEW_STAMPS.groups=stamp;VIEW_STAMPS.standings=stamp}
-  renderViewChrome()}
+  if(v==='groups'||v==='standings'){VIEW_STAMPS.groups=stamp;VIEW_STAMPS.standings=stamp}}
+function paintCurrentView(){captureSignalsIfFresh();(VIEW_RENDERERS[VIEW]||VIEW_RENDERERS.home)();stampView(VIEW);renderViewChrome();scheduleViewPrerender()}
 function renderCurrent(){invalidateViewStamps();paintCurrentView()}
 // State one view changes and another shows -- favourites, the watchlist,
 // Pick 'Em picks and the Beat the Model record, settings, the language, the
@@ -958,6 +959,16 @@ function syncViewLocation(v,mode='push'){
   url.searchParams.set('view',publicName);if(sport)url.searchParams.set('sport',sport);url.searchParams.delete('match');
   window.history[mode==='replace'?'replaceState':'pushState']({view:publicName,sport},'',url);
 }
+// The address bar follows the view once the view is on screen. Any history
+// entry -- even one for the URL already shown -- makes Chromium restyle the
+// whole document, and done inside the click that put 20-80ms of style work in
+// front of the switch. Switches faster than a frame record only the last view.
+// A back/forward switch (history:false) drops any pending entry.
+let VIEW_LOCATION_PENDING=null;
+function queueViewLocation(v,mode){
+  const scheduled=!!VIEW_LOCATION_PENDING;VIEW_LOCATION_PENDING={v,mode};if(scheduled)return;
+  afterPaint(()=>{const p=VIEW_LOCATION_PENDING;VIEW_LOCATION_PENDING=null;if(p)syncViewLocation(p.v,p.mode)});
+}
 // Pick 'Em gets its own tab title so shared links and bookmarks say what it is.
 const BASE_DOC_TITLE=document.title;
 function viewDocTitle(v){
@@ -969,7 +980,7 @@ function viewDocTitle(v){
 // view in full, so they keep display:none.
 const VIEW_PARK_DISPLAY=(()=>{try{return CSS.supports('content-visibility','hidden')?'block':'none'}catch(e){return 'none'}})();
 function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDocTitle(v)}catch(e){}if(typeof closeNavSheet==='function')closeNavSheet();
-  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const reuse=viewIsReusable(v);
+  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const reuse=viewIsReusable(v),stale=!reuse&&viewIsShowable(v);
   // Hidden views are parked with content-visibility:hidden rather than
   // display:none. display:none discards every computed style in the view, so
   // showing it again recalculated style and layout for the whole subtree
@@ -978,32 +989,81 @@ function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDo
   // A parked view keeps its own display type. Games and Results are grids, and
   // parking them as display:block threw their layout away, so every return to
   // either re-laid out every card (~60ms of a ~110ms switch).
-  document.querySelectorAll('.view').forEach(el=>{const on=el.id==='view-'+v;el.classList.toggle('viewParked',!on);el.style.display=(on||VIEW_PARK_DISPLAY!=='none')?((el.id==='view-matches'||el.id==='view-results')?'grid':'block'):'none'});if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');if(reuse){captureSignalsIfFresh();renderViewChrome()}else paintCurrentView();
+  document.querySelectorAll('.view').forEach(el=>{const on=el.id==='view-'+v;el.classList.toggle('viewParked',!on);el.style.display=(on||VIEW_PARK_DISPLAY!=='none')?((el.id==='view-matches'||el.id==='view-results')?'grid':'block'):'none'});if(options.history!==false)queueViewLocation(v,options.replace?'replace':'push');else VIEW_LOCATION_PENDING=null;
+  // A view whose stamp has merely lapsed (a minute passed, a setting was
+  // saved, the hourly data arrived) is shown as it stands and rebuilt once it
+  // is on screen: rebuilding inside the click held the switch for 100-400ms.
+  // A view built for the other sport or language is never shown that way.
+  if(v==='matches'&&MATCHES_FIT_PENDING&&(reuse||stale))fitMatchesBoard();
+  if(reuse){captureSignalsIfFresh();renderViewChrome()}else if(stale){renderViewChrome();refreshViewAfterPaint(v)}else paintCurrentView();
   // A new view opens at its top. The scroll position used to carry over from
   // the previous view, so the CFP bracket opened scrolled to the bottom.
-  const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}
-  playViewEntrance($('#view-'+v))}
-// Same motion the .viewEntering class used to give, without its cost: the
-// class had to be removed, the layout forced (void offsetWidth) and the class
-// re-added, restyling every node in the view twice on each switch. Animations
-// on the view and its direct cards touch nothing else. Reduced motion skips it,
-// as the stylesheet's prefers-reduced-motion block did.
-// fill:'backwards' holds the start frame through a card's stagger delay and
-// then lets go: a forwards fill would leave an identity transform on the view
-// (a containing block for its fixed-position children) after the fade ended.
-function playViewEntrance(view){
-  if(!view||typeof view.animate!=='function')return;
-  try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){}
-  view.getAnimations().forEach(a=>a.cancel());
-  view.animate([{opacity:.5,transform:'translateY(5px)'},{opacity:1,transform:'none'}],{duration:160,easing:'ease-out',fill:'backwards'});
-  const typeIndex=Object.create(null);
-  for(const child of view.children){
-    const n=typeIndex[child.tagName]=(typeIndex[child.tagName]||0)+1;
-    if(!child.classList.contains('card'))continue;
-    child.getAnimations().forEach(a=>a.cancel());
-    // nth-of-type(2..6) were delayed 25ms apiece; later cards started at once.
-    child.animate([{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'none'}],{duration:200,easing:'ease-out',delay:n>=2&&n<=6?(n-1)*25:0,fill:'backwards'});
-  }
+  const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}}
+// There is no entrance motion on a switch. The fade and staggered card rise
+// cost 370-600ms on every return to Games or Results -- each card's
+// getAnimations()/animate() forced the view's style to be resolved inside the
+// click -- and even when cheap it held the page half-faded for a third of a
+// second, which read as lag. The owner asked for instant switches.
+function viewIsShowable(v){
+  const stamp=VIEW_STAMPS[v],host=document.getElementById('view-'+v);
+  return !!(stamp&&host&&host.firstChild&&stamp.lang===LANG&&stamp.sport===DATA_FILE);
+}
+function afterPaint(fn){let done=false;const run=()=>{if(done)return;done=true;fn()};
+  // requestAnimationFrame does not fire in a background tab; the timer does.
+  try{requestAnimationFrame(()=>setTimeout(run,0))}catch(e){}setTimeout(run,120)}
+function refreshViewAfterPaint(v){afterPaint(()=>{if(VIEW!==v||viewIsReusable(v))return;
+  const scroller=document.querySelector('.content'),top=scroller?scroller.scrollTop:0,y=window.scrollY||0;
+  paintCurrentView();
+  if(scroller&&scroller.scrollTop!==top)scroller.scrollTop=top;if((window.scrollY||0)!==y)try{window.scrollTo(0,y)}catch(e){}})}
+// First visits. Rankings (~360ms) and Research (~220ms) were built inside the
+// first click on them. Views that do not measure their own layout while
+// building are built ahead, one per idle moment, into their parked host, so a
+// first visit is a reuse. Games fits its cards to measured heights, which a
+// parked view cannot give, so its fit is held until the layout pass below
+// (fitMatchesBoard). Home and the bracket measure throughout their build and
+// are still built on the visit. Each build waits for a fully idle slice of
+// the main thread and is skipped on data-saver connections.
+const PRERENDER_VIEWS=['matches','groups','news','results','score'];let PRERENDER_QUEUED=false;
+function viewNeedsPrerender(v){
+  if(v===VIEW||(v==='standings'&&VIEW==='groups')||(v==='groups'&&VIEW==='standings'))return false;
+  const host=document.getElementById('view-'+v),btn=document.querySelector('.navbtn[data-v="'+v+'"]');
+  if(!host||!btn||btn.style.display==='none')return false;
+  const stamp=VIEW_STAMPS[v];return !stamp||stamp.data!==DATA||stamp.lang!==LANG||stamp.sport!==DATA_FILE;
+}
+function scheduleViewPrerender(){
+  if(PRERENDER_QUEUED||typeof requestIdleCallback!=='function'||!LAST_OK)return;
+  try{if((navigator.connection||{}).saveData)return}catch(e){}
+  PRERENDER_QUEUED=true;requestIdleCallback(prerenderNextView);
+}
+// A view built while parked has never been laid out, and its first showing
+// paid for that layout inside the click (Research: ~550ms on a phone-speed
+// CPU). So each built view is also laid out once, in its own idle slice: for
+// the length of one task it is unparked as an absolutely positioned box the
+// width of the view on screen, laid out, and parked again. It is never
+// painted that way, and a parked view keeps its layout, so the first showing
+// reuses it. Only non-inherited properties are touched: an inherited one
+// (visibility) would make the whole subtree restyle when it was put back.
+const VIEW_WARMED=Object.create(null);
+function viewNeedsWarm(v){
+  const stamp=VIEW_STAMPS[v],host=document.getElementById('view-'+v);
+  return VIEW_PARK_DISPLAY==='block'&&!!stamp&&VIEW_WARMED[v]!==stamp&&!!host&&host.classList.contains('viewParked')&&!viewNeedsPrerender(v)&&v!==VIEW;
+}
+function warmViewLayout(v){
+  const host=document.getElementById('view-'+v),shown=document.getElementById('view-'+VIEW);
+  const width=shown&&!shown.classList.contains('viewParked')?shown.offsetWidth:0;
+  VIEW_WARMED[v]=VIEW_STAMPS[v];if(!host||!width)return;
+  const before=host.getAttribute('style');
+  host.style.position='absolute';host.style.top='0';host.style.left='0';host.style.boxSizing='border-box';host.style.width=width+'px';
+  host.classList.remove('viewParked');host.offsetHeight;
+  if(v==='matches'&&MATCHES_FIT_PENDING)fitMatchesBoard();
+  host.classList.add('viewParked');if(before==null)host.removeAttribute('style');else host.setAttribute('style',before);
+}
+function prerenderNextView(deadline){PRERENDER_QUEUED=false;
+  const v=PRERENDER_VIEWS.find(viewNeedsPrerender),w=v?null:PRERENDER_VIEWS.find(viewNeedsWarm);if(!v&&!w)return;
+  if(deadline.timeRemaining()<40){scheduleViewPrerender();return}
+  if(v){try{captureSignalsIfFresh();VIEW_RENDERERS[v]();stampView(v)}catch(e){delete VIEW_STAMPS[v];return}}
+  else{try{warmViewLayout(w);if(w==='groups'&&VIEW!=='standings')warmViewLayout('standings')}catch(e){}}
+  scheduleViewPrerender();
 }
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
@@ -1479,28 +1539,59 @@ function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isP
    the team's finals in the seven days ending at the ratings edition, each with
    the chance the model gave the team in its locked pick before kickoff, read
    from the same graded record the Scorecard shows. Nothing here forecasts. */
-function ratingWeekGames(name,table){
+// Asked for every row of the ratings table, twice (hover text and panel).
+// Each call scanned every result of the season and re-split every graded
+// pick's event name, which on the 365-team basketball table was ~800ms of a
+// Rankings build. The week's results and the sport's picks are now indexed
+// once per table edition; every match still goes through the same test
+// (teamKey equality or bbNameMatches) in the same order, so the games and
+// chances are exactly the ones the full scan found.
+const RATING_WEEK_INDEX=new WeakMap();
+function ratingWeekIndex(table){
   const edition=String(table?.published_on||'');
   const end=Date.parse(edition+'T12:00:00Z');
-  if(!name||!Number.isFinite(end))return [];
+  if(!Number.isFinite(end))return null;
   const from=new Date(end-7*864e5).toISOString().slice(0,10);
   // The table names the sport, not whichever board happens to be open: both
   // sports have a "Duke Blue Devils".
   const sport=typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'&&table===MATCHDAY_NCAAM_RANKINGS?'ncaam':'ncaaf';
   const results=(typeof MATCHDAY_TRDLAB_RESULTS!=='undefined'&&Array.isArray(MATCHDAY_TRDLAB_RESULTS))?MATCHDAY_TRDLAB_RESULTS:[];
   const picks=(typeof MATCHDAY_TRDLAB_SCORECARD!=='undefined'&&MATCHDAY_TRDLAB_SCORECARD?.sports?.[sport]?.recent)||[];
+  const cached=RATING_WEEK_INDEX.get(table);
+  if(cached&&cached.edition===edition&&cached.results===results&&cached.picks===picks)return cached;
+  // bbNameMatches needs one name's first word to be a prefix of the other's,
+  // so both start with the same character; teamKey equality is indexed apart.
+  const firstChar=n=>(bbNameWords(n)[0]||'')[0]||'';
+  const byFirst=new Map(),byKey=new Map(),add=(map,k,i)=>{if(!k)return;let l=map.get(k);if(!l)map.set(k,l=[]);if(l[l.length-1]!==i)l.push(i)};
+  const week=results.filter(r=>String(r.sport||'').toLowerCase()===sport&&r.played_on>from&&r.played_on<=edition);
+  week.forEach((r,i)=>{for(const side of [r.home,r.away]){add(byFirst,firstChar(side),i);add(byKey,teamKey(side),i)}});
+  const DAY=864e5,pickDays=new Map();
+  const parsed=picks.map((p,i)=>({p,i,ms:Date.parse(p.starts_at),sides:String(p.event_name||'').split(/ at | vs\.? /)}));
+  parsed.forEach(x=>{if(Number.isFinite(x.ms))add(pickDays,Math.floor(x.ms/DAY),x)});
+  const index={edition,results,picks,week,byFirst,byKey,parsed,pickDays,memo:new Map()};
+  RATING_WEEK_INDEX.set(table,index);return index;
+}
+function ratingWeekGames(name,table){
+  if(!name)return [];
+  const index=ratingWeekIndex(table);if(!index)return [];
+  const hit=index.memo.get(name);if(hit)return hit.slice();
   const same=(a,b)=>teamKey(a)===teamKey(b)||bbNameMatches(a,b);
-  return results
-    .filter(r=>String(r.sport||'').toLowerCase()===sport&&r.played_on>from&&r.played_on<=edition&&(same(r.home,name)||same(r.away,name)))
+  const first=(bbNameWords(name)[0]||'')[0]||'';
+  const candidates=[...new Set([...(index.byFirst.get(first)||[]),...(index.byKey.get(teamKey(name))||[])])].sort((a,b)=>a-b);
+  const DAY=864e5;
+  const games=candidates.map(i=>index.week[i])
+    .filter(r=>same(r.home,name)||same(r.away,name))
     .sort((a,b)=>String(a.kickoff||a.played_on).localeCompare(String(b.kickoff||b.played_on)))
     .map(r=>{
       const home=same(r.home,name),mine=Number(home?r.home_score:r.away_score),theirs=Number(home?r.away_score:r.home_score);
       const day=Date.parse(r.played_on+'T12:00:00Z');
       // Pick names differ from result names ("Michigan St" / "Michigan State"),
       // and a team plays at most once a day, so the team plus the date is the key.
-      const pick=picks.filter(p=>String(p.event_name||'').split(/ at | vs\.? /).some(side=>same(side,name))
-        &&Math.abs(Date.parse(p.starts_at)-day)<1.5*864e5)
-        .sort((a,b)=>Math.abs(Date.parse(a.starts_at)-day)-Math.abs(Date.parse(b.starts_at)-day))[0];
+      const near=[];
+      if(Number.isFinite(day))for(let d=Math.floor((day-1.5*DAY)/DAY);d<=Math.floor((day+1.5*DAY)/DAY);d++)near.push(...(index.pickDays.get(d)||[]));
+      const pick=near.sort((a,b)=>a.i-b.i)
+        .filter(x=>x.sides.some(side=>same(side,name))&&Math.abs(x.ms-day)<1.5*DAY)
+        .sort((a,b)=>Math.abs(a.ms-day)-Math.abs(b.ms-day))[0]?.p;
       const p=Number(pick?.probability_pct);
       const chance=pick&&Number.isFinite(p)?(same(pick.selection,name)?p:100-p):null;
       // The market's price on the locked pick, turned to this team's side; 0 and
@@ -1511,6 +1602,7 @@ function ratingWeekGames(name,table){
       const pm=r.play_metrics,plays=pm?.home&&pm?.away?{mine:home?pm.home:pm.away,theirs:home?pm.away:pm.home}:null;
       return {opponent:home?r.away:r.home,home,neutral:!!r.neutral,won:mine>theirs,mine,theirs,chance,market,plays,played_on:r.played_on};
     });
+  index.memo.set(name,games);return games.slice();
 }
 // A 99.7% chance is not a certainty, so it never rounds to 100.
 const ratingChancePct=c=>c>=99.5?'>99%':c<0.5?'<1%':Math.round(c)+'%';

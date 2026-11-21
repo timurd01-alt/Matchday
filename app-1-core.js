@@ -1868,6 +1868,15 @@ function renderMatches(){const M=DATA.matches||[];
   // Notes go behind each card's ? first, so the power rating card is trimmed
   // against the cards' real, shorter heights.
   if(typeof collapseBoardNotes==='function')collapseBoardNotes($('#view-matches'));
+  fitMatchesBoard();}
+// The board fits its cards to measured heights. Built while parked (ahead of
+// a first visit, see prerenderNextView) it has no heights yet, so the fit
+// waits for the view's idle layout pass or its first showing, whichever is
+// first.
+let MATCHES_FIT_PENDING=false;
+function fitMatchesBoard(){
+  if($('#view-matches')?.classList.contains('viewParked')){MATCHES_FIT_PENDING=true;return}
+  MATCHES_FIT_PENDING=false;
   if(typeof fitRankingCard==='function')fitRankingCard();
   if(typeof balanceBoardMods==='function')balanceBoardMods();}
 /* Season finals for the Results tab (Build 1111SR). The hourly college feed

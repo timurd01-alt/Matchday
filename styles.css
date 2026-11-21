@@ -1802,10 +1802,8 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 @keyframes welcomeExit{to{opacity:0;transform:scale(1.012)}}
 @keyframes appReveal{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:none}}
 
-/* The tab-entry fade (opacity .5 -> 1, 5px rise; cards 0 -> 1, 7px rise,
-   staggered 25ms) runs from playViewEntrance() in app-3-panels.js through the
-   Web Animations API. As a class toggled on the view it restyled the whole
-   view twice per switch, with a forced reflow between. */
+/* No tab-entry fade and no bar-growth reveal: tab switches are instant
+   (see setView() in app-3-panels.js). */
 .matchModal.show{animation:modalBackdropIn .16s ease-out both}/* No backdrop blur: blurring the whole board behind the sheet made every
    scroll inside it repaint ~2,900 elements, which is what felt laggy. */
 @keyframes modalBackdropIn{from{background:rgba(2,5,10,0)}to{background:rgba(2,5,10,.84)}}
@@ -1892,7 +1890,6 @@ html{color-scheme:dark}
 .card.probChanged .pick{animation:probabilityShift .7s ease both}
 .alertBell.hasUnseen svg{transform-origin:50% 12%;animation:bellRing .7s ease both}
 .alertBell.hasUnseen::after{content:"";position:absolute;inset:-4px;border:1px solid rgba(180,214,44,.6);border-radius:13px;pointer-events:none;animation:alertHalo 1.15s ease-out both}
-.probMiniTrack i,.probFill,.raceBar i,.forecastBar i{transform-origin:left center;animation:meterReveal .46s cubic-bezier(.2,.8,.2,1) both}
 .bracketWideShell.isGliding .bracketWideBoard{animation:bracketGlide .4s ease both}
 @keyframes scorePop{0%{color:var(--text);transform:scale(1)}32%{color:var(--signal);transform:scale(1.28);text-shadow:0 0 22px rgba(180,214,44,.75)}100%{color:var(--text);transform:scale(1);text-shadow:none}}
 @keyframes updateTag{0%{opacity:0;transform:translateY(-3px) scale(.9)}24%,66%{opacity:1;transform:none}100%{opacity:0;transform:translateY(2px)}}
@@ -1900,7 +1897,6 @@ html{color-scheme:dark}
 @keyframes probabilityShift{0%{background:rgba(180,214,44,.22);transform:translateY(-2px)}100%{transform:none}}
 @keyframes bellRing{0%,100%{transform:rotate(0)}18%{transform:rotate(14deg)}36%{transform:rotate(-12deg)}54%{transform:rotate(8deg)}72%{transform:rotate(-5deg)}}
 @keyframes alertHalo{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(1.22)}}
-@keyframes meterReveal{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes bracketGlide{0%{opacity:1;transform:translateY(0)}45%{opacity:.74;transform:translateY(2px)}100%{opacity:1;transform:none}}
 
 /* Conventional North American standings: compact divisions/conferences,
