@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120K",
+  "tag": "Fix",
+  "title": "Your team: no repeated kinds of games to watch",
+  "items": [
+   "Games to watch never shows two games of the same kind. When fewer kinds apply, it shows fewer games.",
+   "New kind: Next opponent, the game your next opponent plays before it meets your team."
+  ]
+ },
+ {
   "date": "Build 1120J",
   "tag": "Feature",
   "title": "Against the market replaces Other upsets in Last week",
