@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120D",
+  "tag": "Update",
+  "title": "The weekly Top 25 ballot is now the Matchday Terminal Poll",
+  "items": [
+   "The weekly résumé ballot is now called the Matchday Terminal Poll on the Rankings page, the Home board, alerts, the glossary and the Q&A page. It is still one person's ranking, kept separate from the model."
+  ]
+ },
+ {
   "date": "Build 1120C",
   "tag": "Fix",
   "title": "Denser Home week blocks and a two-column head to head",

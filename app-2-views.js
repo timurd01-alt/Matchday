@@ -571,7 +571,7 @@ function modBallot(){
       +`<span class="modSos">${s.power_rank?'PR #'+Number(s.power_rank):''}</span>`
       +ballotMove(r)+`</li>`;
   }).join('');
-  return `<section class="boardMod modBallot"><header><h3>Personal Ballot</h3><span>a person's ranking, not the model · ${esc(b.published_on||'')}</span></header>`
+  return `<section class="boardMod modBallot"><header><h3>Matchday Terminal Poll</h3><span>a person's ranking, not the model · ${esc(b.published_on||'')}</span></header>`
     +`<ol class="modList">${body}</ol>`
     +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')} Full résumés on the Rankings tab.</p></section>`;
 }

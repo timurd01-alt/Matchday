@@ -109,7 +109,7 @@
     ['Expected hit rate','How often the picks should have won, going by their own probabilities.'],
     ['Upset watch','Market underdogs the model rates closer than their price suggests. Up to three a week, and never official picks.'],
     ['AP Top 25','The Associated Press media poll, shown for comparison. It never feeds the model.'],
-    ['Personal Ballot','One person\'s weekly Top 25, ranked on résumé. It is not the model.'],
+    ['Matchday Terminal Poll','One person\'s weekly Top 25, ranked on résumé. It is not the model.'],
     ['Projected score','A typical final: in football, the middle of thousands of simulated games; in basketball, the projected margin and total split into two scores.'],
     ['EPA per play','Expected points added per play: how much each play changed the expected score.'],
     ['Success rate','Share of plays that kept the offense on schedule.'],
