@@ -85,8 +85,15 @@ class HomeWeekTests(unittest.TestCase):
         # Three over two left ~800px cells with a gap in the middle.
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn("@media(min-width:641px) and (max-width:1279px){.homeWeekTiles.t5{", css)
-        self.assertIn("@container (max-width:300px){.homeWeekTile .homeCallMkt{display:none}}", css)
         self.assertIn("@container (max-width:250px){.homeWeekMovers .mvFrom{display:none}", css)
+
+    def test_cell_contents_scale_with_the_cell(self):
+        # Small type in a wider cell left it looking empty; two steps up by cell width.
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("@container (min-width:230px){", css)
+        self.assertIn("@container (min-width:280px){", css)
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn('<div class="homeTileRow homeCallNums"><strong title="Model">', recap)
 
     def test_wide_week_cells_carry_more_not_a_gap(self):
         # Wide cells listed one split or one team line with the middle empty.

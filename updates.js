@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1121A",
+  "tag": "Fix",
+  "title": "Last week cells fill their boxes",
+  "items": [
+   "Team names, logos, records and percentages in the Last week strip now grow with the width of each cell, so the cells read full instead of sparse.",
+   "Best call and Worst miss put the team on its own line with the model's number large beneath it, beside the market's price.",
+   "With one followed team, its ranking move sits on the Your team label line so the name has the whole row."
+  ]
+ },
+ {
   "date": "Build 1120P",
   "tag": "Fix",
   "title": "Last week stays one compact row on scaled laptop screens",

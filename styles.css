@@ -4545,7 +4545,6 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
 /* A compact Your team cell keeps one line each: the latest result (all of
    them in the tooltip) and the next opponent without the countdown. */
 @container (max-width:340px){.homeWeekYours .yrOlder,.homeWeekYours .yrWhen{display:none}}
-@container (max-width:300px){.homeWeekTile .homeCallMkt{display:none}}
 /* Compact cells (five across from 1280px, the width of a 1920 screen at 125-150%
    scaling) step the big figures down a size so every line still fits. */
 @container (max-width:250px){
@@ -4560,3 +4559,32 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
    each on a full-width line of their own. */
 #view-home .homeWeekYours li.homeYourNext{padding-left:38px}
 @container (max-width:260px){#view-home .homeWeekYours li.homeYourNext{padding-left:0}}
+/* Cell contents scale with the cell (owner, 2026-11-20: "expand them so they
+   fit the box"). Three steps on the type scale, chosen by each cell's own
+   width; the compact step below 250px stays as it was. */
+.homeTileLabel{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.homeTileLabel .homeYourRank{font:var(--fw-bold) var(--fs-sm)/1 var(--mono);letter-spacing:0;text-transform:none;color:var(--text)}
+.homeTileLabel .homeYourRank b{font-family:var(--mono)}
+#view-home .homeWeekTile .homeCallNums{align-items:baseline}
+#view-home .homeWeekTile .homeCallNums>strong{font:var(--fw-bold) var(--fs-2xl)/1 var(--mono);color:var(--signal)}
+@container (min-width:230px){
+  #view-home .homeWeekTile .teamMark{width:34px;height:34px;flex:0 0 34px}
+  #view-home .homeWeekTile .teamMark img{width:28px;height:28px}
+  #view-home .homeWeekTile .homeTileRow>b,#view-home .homeWeekYours .homeYourWho b{font-size:var(--fs-xl)}
+  #view-home .homeWeekTile .homeCallNums>strong{font-size:var(--fs-3xl)}
+  #view-home .homeWeekTile.homeWeekRecord .homeTileRow>strong{font-size:var(--fs-5xl)}
+  #view-home .homeWeekTile .homeTileRow>small,#view-home .homeWeekTile .homeTileRow>p,#view-home .homeSplits small,#view-home .homeWeekYours li.homeYourNext small{font-size:var(--fs-md)}
+  #view-home .homeWeekTile .homeTileRow.homeYourNext>strong{font-size:var(--fs-md)}
+  .homeTileLabel .homeYourRank{font-size:var(--fs-md)}
+}
+@container (min-width:280px){
+  #view-home .homeWeekTile .teamMark{width:38px;height:38px;flex:0 0 38px}
+  #view-home .homeWeekTile .teamMark img{width:32px;height:32px}
+  #view-home .homeWeekTile .homeTileRow>b,#view-home .homeWeekYours .homeYourWho b{font-size:var(--fs-2xl)}
+  #view-home .homeWeekTile .homeCallNums>strong{font-size:var(--fs-4xl)}
+  #view-home .homeWeekTile.homeWeekRecord .homeTileRow>strong{font-size:var(--fs-6xl)}
+  #view-home .homeWeekTile .homeTileRow>small,#view-home .homeWeekTile .homeTileRow>p,#view-home .homeSplits small,#view-home .homeWeekYours li.homeYourNext small{font-size:var(--fs-base)}
+  #view-home .homeWeekTile .homeTileRow.homeYourNext>strong{font-size:var(--fs-base)}
+  .homeTileLabel .homeYourRank{font-size:var(--fs-base)}
+}
+#view-home .homeWeekYours li.homeYourNext{padding-left:0}
