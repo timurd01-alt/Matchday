@@ -75,11 +75,19 @@ class HomeWeekTests(unittest.TestCase):
         # The market made the model's team the underdog: the games that test it.
         data = _section(self.week, "function homeRecapData(", "function homeGradedGame(")
         self.assertIn("const split=graded.filter(r=>homeMarket(r)!=null&&homeMarket(r)<50);", data)
-        self.assertIn("biggest=split.filter(scored)", data)
+        self.assertIn("const splits=split.filter(scored)", data)
         recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
         self.assertIn("<span>Against the market</span>", recap)
         # With no priced disagreement that week, the upsets cell stands in.
         self.assertLess(recap.index("if(d.split.length){"), recap.index("if(d.upsets.length)tiles.push("))
+
+    def test_wide_week_cells_carry_more_not_a_gap(self):
+        # Wide cells listed one split or one team line with the middle empty.
+        recap = _section(self.week, "function homeRecapHTML(", "function homeStakesGames(")
+        self.assertIn('<ul class="homeSplits">${d.splits.slice(0,3)', recap)
+        self.assertIn("</li>${homeYourNextHTML(y.team)}", recap)
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".homeWeekTile{container-type:inline-size}", css)
 
     def test_your_team_is_a_cell_of_the_strip_not_a_row(self):
         # One followed team on a row of its own left the rest of the row empty.

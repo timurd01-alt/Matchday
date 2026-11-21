@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1120L",
+  "tag": "Fix",
+  "title": "Wide Last week cells carry more instead of a gap",
+  "items": [
+   "Against the market lists the week's biggest disagreements side by side when its cell is wide: up to three, each with the model's and the market's chance and the final.",
+   "Your team adds each team's next game under it: the opponent, when, and the model's chance.",
+   "Each cell shows as much as fits its own width, so nothing is cut off on narrower screens."
+  ]
+ },
+ {
   "date": "Build 1120K",
   "tag": "Fix",
   "title": "Your team: no repeated kinds of games to watch",

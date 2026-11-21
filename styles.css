@@ -4515,3 +4515,21 @@ button.homeStakesGame:hover{background:rgba(255,255,255,.018)}
   #view-home .gamesSideSpill .gamesNotable li>small{text-align:right}
   #view-home .gamesSideSpill .gamesSeeds{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+/* Wide week cells carry more instead of a gap in the middle: up to three
+   market splits side by side, and each followed team's next game. The cell's
+   own width decides (container queries), not the window's. */
+.homeWeekTile{container-type:inline-size}
+.homeSplits{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:6px 28px}
+.homeSplits>li.homeTileRow{flex-wrap:nowrap;min-width:0}
+.homeSplits>li>small:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.homeSplits>li>small:last-child{white-space:nowrap}
+.homeWeekYours ul{display:grid;gap:4px}
+.homeWeekYours li.homeYourNext{padding-left:38px}
+.homeYourNext small{color:var(--muted);font-size:var(--fs-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.homeYourNext b{color:var(--text);font-weight:var(--fw-bold)}
+.homeWeekTile .homeTileRow.homeYourNext>strong{font:var(--fw-bold) var(--fs-sm)/1 var(--mono);color:var(--signal)}
+.homeWeekYours li+li:not(.homeYourNext){margin-top:8px}
+@container (max-width:399px){.homeSplits>li:nth-child(n+2){display:none}}
+@container (min-width:400px) and (max-width:759px){.homeSplits>li:nth-child(n+3){display:none}}
+@container (min-width:400px){.homeSplits{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+
