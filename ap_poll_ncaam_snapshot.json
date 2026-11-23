@@ -3,184 +3,184 @@
   "source": "ESPN scoreboard published AP rank",
   "fetched_on": "2026-11-23",
   "season": "2026-27",
-  "period": "Week 3",
+  "period": "Week 4",
   "is_final": false,
-  "published_on": "2026-11-16",
+  "published_on": "2026-11-23",
   "rankings": [
     {
       "rank": 1,
-      "name": "Florida Gators",
-      "previous_rank": 1,
-      "movement": 0,
-      "record": "4-0"
+      "name": "Houston Cougars",
+      "previous_rank": 8,
+      "movement": 7,
+      "record": "6-0"
     },
     {
       "rank": 2,
-      "name": "Michigan State Spartans",
-      "previous_rank": 5,
-      "movement": 3,
-      "record": "4-0"
+      "name": "Virginia Cavaliers",
+      "previous_rank": 4,
+      "movement": 2,
+      "record": "7-0"
     },
     {
       "rank": 3,
-      "name": "UConn Huskies",
-      "previous_rank": 4,
-      "movement": 1,
-      "record": "4-0"
+      "name": "Florida Gators",
+      "previous_rank": 1,
+      "movement": -2,
+      "record": "6-1"
     },
     {
       "rank": 4,
-      "name": "Virginia Cavaliers",
-      "previous_rank": 6,
-      "movement": 2,
-      "record": "5-0"
+      "name": "Illinois Fighting Illini",
+      "previous_rank": 10,
+      "movement": 6,
+      "record": "5-1"
     },
     {
       "rank": 5,
-      "name": "Duke Blue Devils",
-      "previous_rank": 2,
-      "movement": -3,
-      "record": "3-1"
+      "name": "Texas Tech Red Raiders",
+      "previous_rank": 9,
+      "movement": 4,
+      "record": "5-0"
     },
     {
       "rank": 6,
-      "name": "Texas Longhorns",
+      "name": "UCLA Bruins",
       "previous_rank": 7,
       "movement": 1,
-      "record": "4-0"
+      "record": "6-0"
     },
     {
       "rank": 7,
-      "name": "UCLA Bruins",
-      "previous_rank": 9,
-      "movement": 2,
-      "record": "3-0"
+      "name": "Texas Longhorns",
+      "previous_rank": 6,
+      "movement": -1,
+      "record": "6-0"
     },
     {
       "rank": 8,
-      "name": "Houston Cougars",
-      "previous_rank": 8,
-      "movement": 0,
-      "record": "3-0"
+      "name": "Arizona Wildcats",
+      "previous_rank": 12,
+      "movement": 4,
+      "record": "4-1"
     },
     {
       "rank": 9,
-      "name": "Texas Tech Red Raiders",
-      "previous_rank": 16,
-      "movement": 7,
-      "record": "4-0"
+      "name": "Tennessee Volunteers",
+      "previous_rank": 14,
+      "movement": 5,
+      "record": "5-0"
     },
     {
       "rank": 10,
-      "name": "Illinois Fighting Illini",
+      "name": "UConn Huskies",
       "previous_rank": 3,
       "movement": -7,
-      "record": "3-1"
+      "record": "4-1"
     },
     {
       "rank": 11,
-      "name": "Kansas Jayhawks",
-      "previous_rank": 15,
-      "movement": 4,
-      "record": "3-0"
+      "name": "Michigan State Spartans",
+      "previous_rank": 2,
+      "movement": -9,
+      "record": "5-1"
     },
     {
       "rank": 12,
-      "name": "Arizona Wildcats",
-      "previous_rank": 12,
-      "movement": 0,
-      "record": "3-1"
+      "name": "Kansas Jayhawks",
+      "previous_rank": 11,
+      "movement": -1,
+      "record": "5-1"
     },
     {
       "rank": 13,
       "name": "St. John's Red Storm",
       "previous_rank": 13,
       "movement": 0,
-      "record": "4-0"
+      "record": "5-0"
     },
     {
       "rank": 14,
-      "name": "Tennessee Volunteers",
-      "previous_rank": 11,
-      "movement": -3,
-      "record": "3-0"
+      "name": "Vanderbilt Commodores",
+      "previous_rank": 15,
+      "movement": 1,
+      "record": "6-0"
     },
     {
       "rank": 15,
-      "name": "Vanderbilt Commodores",
-      "previous_rank": 22,
-      "movement": 7,
-      "record": "4-0"
+      "name": "Alabama Crimson Tide",
+      "previous_rank": 16,
+      "movement": 1,
+      "record": "5-0"
     },
     {
       "rank": 16,
-      "name": "Alabama Crimson Tide",
-      "previous_rank": 18,
-      "movement": 2,
-      "record": "4-0"
+      "name": "Duke Blue Devils",
+      "previous_rank": 5,
+      "movement": -11,
+      "record": "4-2"
     },
     {
       "rank": 17,
       "name": "Miami Hurricanes",
       "previous_rank": 17,
       "movement": 0,
-      "record": "3-1"
-    },
-    {
-      "rank": 18,
-      "name": "Michigan Wolverines",
-      "previous_rank": 20,
-      "movement": 2,
-      "record": "3-1"
+      "record": "5-1"
     },
     {
       "rank": 18,
       "name": "USC Trojans",
+      "previous_rank": 18,
+      "movement": 0,
+      "record": "6-0"
+    },
+    {
+      "rank": 19,
+      "name": "BYU Cougars",
       "previous_rank": 21,
-      "movement": 3,
-      "record": "4-0"
+      "movement": 2,
+      "record": "5-0"
     },
     {
       "rank": 20,
-      "name": "Arkansas Razorbacks",
-      "previous_rank": 19,
-      "movement": -1,
-      "record": "3-1"
+      "name": "LSU Tigers",
+      "previous_rank": 25,
+      "movement": 5,
+      "record": "6-0"
     },
     {
       "rank": 21,
-      "name": "BYU Cougars",
-      "previous_rank": 23,
-      "movement": 2,
-      "record": "4-0"
+      "name": "Nebraska Cornhuskers",
+      "previous_rank": 24,
+      "movement": 3,
+      "record": "6-0"
     },
     {
       "rank": 22,
       "name": "Gonzaga Bulldogs",
-      "previous_rank": 14,
-      "movement": -8,
-      "record": "2-1"
+      "previous_rank": 22,
+      "movement": 0,
+      "record": "3-1"
     },
     {
       "rank": 23,
-      "name": "Louisville Cardinals",
-      "previous_rank": 10,
-      "movement": -13,
-      "record": "2-1"
+      "name": "Indiana Hoosiers",
+      "previous_rank": null,
+      "movement": null,
+      "record": "6-0"
     },
     {
       "rank": 24,
-      "name": "Nebraska Cornhuskers",
-      "previous_rank": 25,
-      "movement": 1,
-      "record": "4-0"
+      "name": "Memphis Tigers",
+      "previous_rank": null,
+      "movement": null,
+      "record": "4-1"
     },
     {
       "rank": 25,
-      "name": "LSU Tigers",
-      "previous_rank": null,
-      "movement": null,
-      "record": "4-0"
+      "name": "Louisville Cardinals",
+      "previous_rank": 23,
+      "movement": -2,
+      "record": "3-1"
     }
   ]
 }
