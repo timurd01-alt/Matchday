@@ -1,5 +1,40 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-11-23 (terms check, no sourcing change. Question: may the
+conference QB availability facts collected by `qb_availability.py` since
+2026-10-25 also feed TRDLab's QB-injury shadow experiment? Terms read live:
+- **SEC** (`secsports.com/fbreports` footer → Disney Terms of Use,
+  `disneytermsofuse.com/english/`, last updated 2024-05-24): bans accessing,
+  copying or extracting Disney Products by "robot, spider, script, or other
+  automated means", including for data mining, web scraping or "compiling...
+  any collection of data". Explicit prohibition on automated collection.
+- **Big Ten** (`bigten.org/sports/2026/7/22/terms-of-use.aspx`, no revision
+  date): Content "only for Your personal and non-commercial use"; no copying,
+  display, publishing or other use "for commercial or public purposes" of any
+  Content "including... any information" without prior written approval;
+  caching prohibited.
+- **ACC, Big 12, Mountain West** (footers → SIDEARM Terms of Service,
+  `sidearmsports.com/terms-of-service`, last updated 2023-04-11): personal,
+  noncommercial use; "Copying or storing of any Content for other than personal
+  use is expressly prohibited without prior written permission". No scraping
+  or data-mining clause; "Content" is defined by example (articles,
+  photographs, images, audio, video) and availability facts are not named. No
+  Mountain West availability page was found.
+- **HD Intelligence** (the vendor whose public endpoint the collector calls):
+  no terms of use published (`/terms`, `/terms-of-service`, `/terms-of-use`
+  all 404) and no robots.txt on `app.hdintelligence.com`. The conferences'
+  terms are treated as governing their own reports; calling the vendor
+  directly is not a way around them.
+Under the plain text, SEC and Big Ten do not permit automated collection or
+public use without written permission, which also covers the matchup display
+approved on 2026-10-25; ACC and Big 12 are unclear (facts vs "Content").
+Player availability status is a public fact, and the owner's standing
+public-facts rule (ESPN, under the same Disney terms) may be applied here, but
+that is the owner's decision, not this review's. Free route to certainty:
+written permission from each conference office. Until decided, the facts do
+not enter any forecast or shadow experiment; the live collector and display
+are unchanged.)
+
 Reviewed: 2026-11-18 (Build 1118B: the ESPN final-score fallback already used for football now also settles men's basketball games that CollegeBasketballData still lists as live or unplayed 2.5 hours after tip. Same approved public-facts scope as the 2026-09-12 amendment: home score, away score and "finished" only, for fixtures already on Matchday's schedule, from ESPN's public Division I scoreboard. No statistics, odds, team data or raw payload is taken or stored, and the scoreboard never adds a fixture.)
 
 Reviewed: 2026-11-12 (Build 1112T: football Results now also lists archived finals -- teams and final scores already held in Matchday's game archive from the pipeline and the TRDLab handoff's `results`. Fifteen archived team names corrected to the handoff's own names; one tiny archive guard. No new provider calls, fields, sources or redistribution.)
