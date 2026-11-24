@@ -194,4 +194,7 @@ class HomeYourTeamTests(unittest.TestCase):
         self.assertIn("(Number(me.cl)||0)-(Number(lead.cl)||0)<=1", data)
 
     def test_rating_is_labelled_as_strength_not_resume(self):
-        self.assertIn("How good the team is now, not what it has earned.", self.yours)
+        # Build 1123A moved the sentence from a footnote under the story (owner:
+        # "a lot of text on the left side") to the Rating tile's tooltip; the
+        # Rankings hint above the power table still shows it in full.
+        self.assertIn("['Rating',f1(row.rating),rank!=null?`#${rank} of ${n}`:'','How good the team is now, not what it has earned']", self.yours)

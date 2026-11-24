@@ -1577,9 +1577,12 @@ function homeYourChangedHTML(y,edition){
   const t=homeRankingTable(),rows=t?.rankings||[],row=y.row;
   const m=homeNum(row.movement),rank=homeNum(row.rank),prev=homeNum(row.previous_rank);
   const arrow=(n,tail)=>n>0?`<span class="homeWeekMove up">▲${n}</span>${tail}`:n<0?`<span class="homeWeekMove down">▼${-n}</span>${tail}`:'';
-  const move=m==null?'':m?`${arrow(m,` to #${rank} in the power rating`)}${prev!=null?`<small> from #${prev}</small>`:''}`:`Unchanged at #${rank} in the power rating`;
-  const season=homeNum(row.movement_since_preseason),pre=homeNum(row.preseason_rank);
-  const since=pre!=null?`<small class="homeYourSince">${season?`${season>0?'Up':'Down'} ${Math.abs(season)} since preseason #${pre}`:`Level with preseason #${pre}`}${row.record?` · ${esc(row.record)} record`:''}</small>`:'';
+  // Build 1123A: the left column was five lines of prose beside half-empty
+  // tiles. The preseason rank rides on the move line, the record on the form
+  // tile, and the "now, not earned" footnote became the Rating tile's tooltip.
+  const pre=homeNum(row.preseason_rank);
+  const from=[prev!=null&&m?`from #${prev}`:'',pre!=null?`preseason #${pre}`:''].filter(Boolean).join(' · ');
+  const move=m==null?'':`${m?arrow(m,` to #${rank} in the power rating`):`Unchanged at #${rank} in the power rating`}${from?`<small> ${from}</small>`:''}`;
   const pct=c=>typeof ratingChancePct==='function'?ratingChancePct(c):Math.round(c)+'%';
   const powerOf=n=>homeNum(rows.find(r=>homeSame(r.name||r.team_name,n))?.rank);
   const sign=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(2);
@@ -1588,18 +1591,18 @@ function homeYourChangedHTML(y,edition){
     const where=g.neutral?'Neutral site':g.home?'Home':'Away';
     const c=g.chance;
     const tag=c==null?'':g.won&&c<45?['up','Upset win']:!g.won&&c>55?['down','Upset loss']:c>=45&&c<=55?['','Coin flip']:['','As expected'];
-    const odds=c!=null?`Model ${esc(y.short)} ${pct(c)}${g.market!=null?`, market ${pct(g.market)}`:''}`:'No locked pick';
+    const odds=c!=null?`<span title="${esc(y.short)}'s pregame chance to win">Model ${pct(c)}${g.market!=null?`, market ${pct(g.market)}`:''}</span>`:'No locked pick';
     let plays='';
     if(g.plays){
       const a=homeNum(g.plays.mine.epa_per_play),b=homeNum(g.plays.theirs.epa_per_play);
       const sa=homeNum(g.plays.mine.success_rate),sb=homeNum(g.plays.theirs.success_rate);
       if(a!=null&&b!=null){
         const better=a>b,verdict=better===g.won?(better?`Out-played ${opp}`:`Out-played by ${opp}`):(better?'Won the plays, lost the score':'Lost the plays, won the score');
-        plays=`<small class="homeYourPlays"><b>${verdict}.</b> ${sign(a)} vs ${sign(b)} EPA per play${sa!=null&&sb!=null?` · ${Math.round(sa*100)}% vs ${Math.round(sb*100)}% success rate`:''}</small>`;
+        plays=`<small class="homeYourPlays"><b>${verdict}.</b> ${sign(a)} vs ${sign(b)} EPA/play${sa!=null&&sb!=null?` · ${Math.round(sa*100)}% vs ${Math.round(sb*100)}% success`:''}</small>`;
       }
     }
     return `<li><span class="homeYourResult"><b>${g.won?'Beat':'Lost to'} ${opp} ${g.mine}–${g.theirs}</b>${tag?`<i class="${tag[0]}">${tag[1]}</i>`:''}</span>`
-      +`<small>${where} · ${opp}${orank!=null?` is Power #${orank}`:''} · ${odds}</small>${plays}</li>`;
+      +`<small>${where}${orank!=null?` vs Power #${orank}`:''} · ${odds}</small>${plays}</li>`;
   }).join('');
   const quiet=!y.changed.length?`<li><small>${m?'Did not play; teams around it moved.':'Did not play this week.'}</small></li>`:'';
   // Tiles: each value with its rank among the rated teams. Defense is points
@@ -1609,16 +1612,16 @@ function homeYourChangedHTML(y,edition){
   // Neither sport can end level: a "D" in the engine's form string is a game
   // its record does not count (8 basketball teams on 2026-11-16), so it is dropped.
   const tiles=[
-    ['Rating',f1(row.rating),rank!=null?`#${rank} of ${n}`:''],
+    ['Rating',f1(row.rating),rank!=null?`#${rank} of ${n}`:'','How good the team is now, not what it has earned'],
     ['Offense',(r=>r?`#${r}`:null)(homeRankAmong(rows,'adj_o',row.adj_o,true)),f1(row.adj_o)!=null?`${f1(row.adj_o)} scored`:''],
     ['Defense',(r=>r?`#${r}`:null)(homeRankAmong(rows,'adj_d',row.adj_d,false)),f1(row.adj_d)!=null?`${f1(row.adj_d)} allowed`:''],
     ['Schedule',(r=>r?`#${r}`:null)(homeRankAmong(rows,'sos',row.sos,true)),f1(row.sos)!=null?`Strength ${f1(row.sos)}`:''],
-    ['Margin',margin==null?null:(margin>0?'+':margin<0?'−':'')+Math.abs(margin).toFixed(1),margin==null?'':'Points per game'],
-    ['Form',form.length?`<span class="homeYourForm">${form.map(c=>`<i class="${c==='W'?'w':'l'}">${c}</i>`).join('')}</span>`:null,form.length?`Last ${form.length} games`:''],
+    ['Margin',margin==null?null:(margin>0?'+':margin<0?'−':'')+Math.abs(margin).toFixed(1),margin==null?'':'Per game'],
+    [`Last ${form.length}`,form.length?`<span class="homeYourForm">${form.map(c=>`<i class="${c==='W'?'w':'l'}">${c}</i>`).join('')}</span>`:null,row.record?`${esc(row.record)} season`:''],
   ].filter(x=>x[1]!=null);
-  const tileHTML=tiles.map(([label,value,note])=>`<div class="homeYourTile"><span>${label}</span><strong>${value}</strong>${note?`<small>${note}</small>`:''}</div>`).join('');
+  const tileHTML=tiles.map(([label,value,note,tip])=>`<div class="homeYourTile"${tip?` title="${tip}"`:''}><span>${label}</span><strong>${value}</strong>${note?`<small>${note}</small>`:''}</div>`).join('');
   return `<div class="homeStakesGame homeYourChanged"><span class="homeStakesHead"><em>What changed</em><small>${esc(edition||'')}</small></span>`
-    +`<div class="homeYourStory"><p>${move}</p>${since}<ul>${games}${quiet}</ul><small class="homeYourSince">How good the team is now, not what it has earned.</small></div>`
+    +`<div class="homeYourStory"><p>${move}</p><ul>${games}${quiet}</ul></div>`
     // One game or none leaves a short story: one row of tiles matches its
     // height. Two or more games take the 3 x 2 block (owner rule: no half-empty
     // columns).
