@@ -220,12 +220,6 @@ jobs:
         continue-on-error: true
         run: python data_freshness.py --output data_freshness_report.json --github
 
-      # Conference availability is context only. It never enters TRDLab's
-      # frozen source or changes a probability. Failures retain last-good facts.
-      - name: Collect official quarterback availability reports
-        continue-on-error: true
-        run: python qb_availability.py
-
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
 
@@ -302,9 +296,6 @@ jobs:
           fi
           if [ -f archive/conflicts.jsonl ]; then
             git add -- archive/conflicts.jsonl
-          fi
-          if [ -f archive/availability/ncaaf.jsonl ]; then
-            git add -- archive/availability/ncaaf.jsonl qb_availability_snapshot.json qb-availability.js
           fi
           ledgers=$(ls market_snapshot_ledger.jsonl 2>/dev/null || true)
           if [ -n "$ledgers" ]; then

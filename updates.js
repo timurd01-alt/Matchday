@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1123D",
+  "tag": "Fix",
+  "title": "Stopped collecting conference availability reports",
+  "items": [
+   "The site no longer collects or stores the conferences' football player availability reports. Their terms do not allow automated collection or reuse without written permission. Nothing on the site displayed them, and they were never used in any prediction."
+  ]
+ },
+ {
   "date": "Build 1123C",
   "tag": "Fix",
   "title": "Basketball scorecard catches up on last week",

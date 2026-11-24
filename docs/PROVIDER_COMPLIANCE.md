@@ -26,14 +26,18 @@ conference QB availability facts collected by `qb_availability.py` since
   terms are treated as governing their own reports; calling the vendor
   directly is not a way around them.
 Under the plain text, SEC and Big Ten do not permit automated collection or
-public use without written permission, which also covers the matchup display
-approved on 2026-10-25; ACC and Big 12 are unclear (facts vs "Content").
-Player availability status is a public fact, and the owner's standing
-public-facts rule (ESPN, under the same Disney terms) may be applied here, but
-that is the owner's decision, not this review's. Free route to certainty:
-written permission from each conference office. Until decided, the facts do
-not enter any forecast or shadow experiment; the live collector and display
-are unchanged.)
+public use without written permission; ACC and Big 12 are unclear (facts vs
+"Content"). (The matchup display approved on 2026-10-25 was already removed
+the same day, Build 1025F; only the hourly collector was still running.)
+**Owner's decision, 2026-11-23: we can't use them.** Build 1123D removes
+`qb_availability.py`, its hourly `deploy.yml` step and commit-back, its test,
+and the stored facts (`archive/availability/ncaaf.jsonl`,
+`qb_availability_snapshot.json`, `qb-availability.js`; recoverable from git
+history only for audit). Conference availability reports must not be
+collected, stored, displayed or used as a forecast or shadow input unless a
+conference grants written permission. TRDLab's
+`scripts/qb_report_collector.py` (same endpoint, plus American and MAC) is
+covered by the same rule; its scheduled task is disabled.)
 
 Reviewed: 2026-11-18 (Build 1118B: the ESPN final-score fallback already used for football now also settles men's basketball games that CollegeBasketballData still lists as live or unplayed 2.5 hours after tip. Same approved public-facts scope as the 2026-09-12 amendment: home score, away score and "finished" only, for fixtures already on Matchday's schedule, from ESPN's public Division I scoreboard. No statistics, odds, team data or raw payload is taken or stored, and the scoreboard never adds a fixture.)
 
