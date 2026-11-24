@@ -132,3 +132,29 @@ class MobileNavigationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ParkedViewSpaceTests(unittest.TestCase):
+    """A parked (hidden) tab must never leave blank space on a phone.
+
+    Hidden views are parked with content-visibility:hidden instead of
+    display:none. Where a browser kept a parked view's height, every other
+    tab's height stacked up as empty space above the one on screen.
+    """
+
+    def setUp(self):
+        self.js = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+
+    def test_parking_is_gated_on_a_collapse_probe(self):
+        probe = re.search(r"let VIEW_PARK_DISPLAY=\(\(\)=>\{(.*?)\}\)\(\);", self.js, flags=re.DOTALL)
+        self.assertIsNotNone(probe, "VIEW_PARK_DISPLAY must be decided by a probe")
+        body = probe.group(1)
+        self.assertIn("contentVisibility='hidden'", body)
+        self.assertRegex(body, r"parked===0\?'block':'none'")
+
+    def test_switch_checks_parked_views_after_paint(self):
+        self.assertIn("afterPaint(checkParkedViewsCollapse)", self.js)
+        guard = re.search(r"function checkParkedViewsCollapse\(\)\{(.*?)\n\}", self.js, flags=re.DOTALL)
+        self.assertIsNotNone(guard)
+        self.assertIn("offsetHeight>0", guard.group(1))
+        self.assertIn("VIEW_PARK_DISPLAY='none'", guard.group(1))

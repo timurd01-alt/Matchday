@@ -978,7 +978,27 @@ function viewDocTitle(v){
 }
 // Older browsers (Safari before 18) would render a content-visibility-parked
 // view in full, so they keep display:none.
-const VIEW_PARK_DISPLAY=(()=>{try{return CSS.supports('content-visibility','hidden')?'block':'none'}catch(e){return 'none'}})();
+// Supporting the property is not enough: a parked view must also take no
+// space. Where one kept its height (phone browsers), every other tab's full
+// height sat as blank space above and below the one on screen, so a visitor
+// scrolled through emptiness to reach Rankings. The probe parks a box that
+// has already been laid out and requires it to collapse to zero.
+let VIEW_PARK_DISPLAY=(()=>{try{
+  if(!CSS.supports('content-visibility','hidden')||!document.body)return 'none';
+  const probe=document.createElement('div'),inner=document.createElement('div');
+  probe.style.cssText='position:absolute;left:-9999px;top:0;width:10px;visibility:hidden';inner.style.height='100px';
+  probe.appendChild(inner);document.body.appendChild(probe);const laid=probe.offsetHeight;
+  probe.style.contentVisibility='hidden';const parked=probe.offsetHeight;probe.remove();
+  return laid>0&&parked===0?'block':'none';
+}catch(e){return 'none'}})();
+// The probe is one box; the views are the real thing. Once a switch has
+// painted (layout is already clean, so this read is free), any parked view
+// that still has height turns parking into display:none for the session.
+function checkParkedViewsCollapse(){if(VIEW_PARK_DISPLAY==='none')return;
+  const leak=[...document.querySelectorAll('.view.viewParked')].some(el=>el.offsetHeight>0);
+  if(!leak)return;VIEW_PARK_DISPLAY='none';
+  document.querySelectorAll('.view.viewParked').forEach(el=>{el.style.display='none'});
+}
 function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDocTitle(v)}catch(e){}if(typeof closeNavSheet==='function')closeNavSheet();
   $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const reuse=viewIsReusable(v),stale=!reuse&&viewIsShowable(v);
   // Hidden views are parked with content-visibility:hidden rather than
@@ -998,7 +1018,8 @@ function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDo
   if(reuse){captureSignalsIfFresh();renderViewChrome()}else if(stale){renderViewChrome();refreshViewAfterPaint(v)}else paintCurrentView();
   // A new view opens at its top. The scroll position used to carry over from
   // the previous view, so the CFP bracket opened scrolled to the bottom.
-  const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}}
+  const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}
+  if(VIEW_PARK_DISPLAY!=='none')afterPaint(checkParkedViewsCollapse);}
 // There is no entrance motion on a switch. The fade and staggered card rise
 // cost 370-600ms on every return to Games or Results -- each card's
 // getAnimations()/animate() forced the view's style to be resolved inside the
