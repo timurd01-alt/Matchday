@@ -1,6 +1,6 @@
-COLLEGE MATCHDAY -- WEEK OF 2026-11-23
-Games from 2026-11-23T03:19Z to 2026-11-23T23:59Z (UTC).
-17 of 467 picks in the handoff fall in this window; the rest are later dates and are excluded.
+COLLEGE MATCHDAY -- WEEK OF 2026-11-24
+Games from 2026-11-24T22:53Z to 2026-11-30T23:59Z (UTC).
+360 of 387 picks in the handoff fall in this window; the rest are later dates and are excluded.
 Ratings published 2026-11-22 -- Opponent-adjusted scoring margin.
 
 == TOP 25 ==
@@ -33,16 +33,16 @@ Ratings published 2026-11-22 -- Opponent-adjusted scoring margin.
 
 == THIS WEEK'S GAMES ==
 DAY   HOME                             AWAY                             MODEL    MARKET   PICK
-Mon   Clemson Tigers                   #15 Ole Miss Rebels              73.0%    --       Ole Miss Rebels
-Mon   #17 BYU Cougars                  Washington Huskies               85.2%    --       BYU Cougars
-Mon   Oregon State Beavers             Tulsa Golden Hurricane           53.0%    --       Oregon State Beavers
-Mon   Georgia State Panthers           Tulane Green Wave                54.3%    --       Georgia State Panthers
-Mon   Loyola Chicago Ramblers          San José State Spartans          65.2%    --       Loyola Chicago Ramblers
-Mon   App State Mountaineers           St. Bonaventure Bonnies          59.8%    --       St. Bonaventure Bonnies
-Mon   Florida International Panthers   Long Beach State Beach           74.0%    --       Florida International Panthers
-Mon   Florida Gulf Coast Eagles        Charlotte 49ers                  62.9%    --       Charlotte 49ers
-Mon   Wright State Raiders             Akron Zips                       71.3%    --       Wright State Raiders
-Mon   Southern Utah Thunderbirds       Arkansas State Red Wolves        73.9%    --       Arkansas State Red Wolves
+Wed   #16 Louisville Cardinals         #13 Texas Tech Red Raiders       75.9%    64.2%    Texas Tech Red Raiders
+Fri   #14 Iowa Hawkeyes                #18 Nebraska Cornhuskers         65.5%    67.1%    Iowa Hawkeyes
+Sat   #4 Wake Forest Demon Deacons     #23 Duke Blue Devils             82.9%    82.2%    Wake Forest Demon Deacons
+Thu   Cincinnati Bearcats              #1 Georgia Bulldogs              67.6%    --       Cincinnati Bearcats
+Sat   #1 Georgia Bulldogs              UCF Knights                      69.0%    --       Georgia Bulldogs
+Sat   #1 Georgia Bulldogs              Georgia Tech Yellow Jackets      97.3%    --       Georgia Bulldogs
+Sat   Syracuse Orange                  #2 Notre Dame Fighting Irish     91.8%    93.0%    Notre Dame Fighting Irish
+Sat   #3 Miami Hurricanes              Boston College Eagles            95.6%    93.2%    Miami Hurricanes
+Thu   Mississippi State Bulldogs       #4 Wake Forest Demon Deacons     68.3%    --       Mississippi State Bulldogs
+Wed   #5 Alabama Crimson Tide          Baylor Bears                     53.7%    47.2%    Baylor Bears
 
 == UPSET WATCH ==
 No game this week has the model backing a side the market has as an underdog.

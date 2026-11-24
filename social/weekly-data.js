@@ -2,10 +2,10 @@
 // Every number here comes from trdlab_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF NOV 23",
+  "week": "WEEK OF NOV 24",
   "season": "2026 SEASON",
   "published": "2026-11-22",
-  "generated_at": "2026-11-23T03:19:48Z",
+  "generated_at": "2026-11-24T22:53:25Z",
   "logos": {
     "Georgia Bulldogs": "logos/georgia.png",
     "GEORGIA": "logos/georgia.png",
@@ -42,7 +42,7 @@ window.MATCHDAY_SOCIAL = {
     "Tennessee": "logos/tennessee.png",
     "LSU Tigers": "logos/lsu.png",
     "LSU": "logos/lsu.png",
-    "Texas Tech Red Raiders": "logos/texasTech.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
     "Iowa Hawkeyes": "logos/iowa.png",
@@ -77,25 +77,10 @@ window.MATCHDAY_SOCIAL = {
     "Northwestern Wildcats": "logos/northwestern.png",
     "NORTHWESTERN": "logos/northwestern.png",
     "Northwestern": "logos/northwestern.png",
-    "Clemson Tigers": "logos/clemson.png",
-    "CLEMSON": "logos/clemson.png",
-    "Clemson": "logos/clemson.png",
-    "Washington Huskies": "logos/washington.png",
-    "WASHINGTON": "logos/washington.png",
-    "Washington": "logos/washington.png",
-    "Oregon State Beavers": "logos/oregonState.png",
-    "OREGON STATE BEAVERS": "logos/oregonState.png",
-    "Tulsa Golden Hurricane": "logos/tulsa.png",
-    "TULSA": "logos/tulsa.png",
-    "Tulsa": "logos/tulsa.png",
-    "Georgia State Panthers": "logos/georgia.png",
-    "GEORGIA STATE": "logos/georgiaState.png",
-    "Georgia State": "logos/georgiaState.png",
-    "Tulane Green Wave": "logos/tulane.png",
-    "TULANE": "logos/tulane.png",
-    "Tulane": "logos/tulane.png",
-    "Loyola Chicago Ramblers": "logos/loyolaChicago.png",
-    "LOYOLA CHICAGO RAMBLERS": "logos/loyolaChicago.png"
+    "Cincinnati Bearcats": "logos/cincinnati.png",
+    "CINCINNATI BEARCATS": "logos/cincinnati.png",
+    "UCF Knights": "logos/ucf.png",
+    "UCF": "logos/ucf.png"
   },
   "top25": [
     [
@@ -211,38 +196,38 @@ window.MATCHDAY_SOCIAL = {
   "slate": [
     {
       "rank": 1,
-      "away": "OLE MISS",
-      "home": "CLEMSON",
-      "time": "MON · 2:30 PM ET",
-      "hook": "RANKED #15 ON THE ROAD"
+      "away": "TEXAS TECH",
+      "home": "LOUISVILLE",
+      "time": "TUE · 8:00 PM ET",
+      "hook": "#13 vs #16"
     },
     {
       "rank": 2,
-      "away": "WASHINGTON",
-      "home": "BYU",
-      "time": "MON · 5:00 PM ET",
-      "hook": "RANKED #17 AT HOME"
+      "away": "NEBRASKA CORNHUSKERS",
+      "home": "IOWA",
+      "time": "FRI · 12:00 PM ET",
+      "hook": "#18 vs #14"
     },
     {
       "rank": 3,
-      "away": "TULSA",
-      "home": "OREGON STATE BEAVERS",
-      "time": "MON · 2:00 PM ET",
-      "hook": "MON KICKOFF"
+      "away": "DUKE",
+      "home": "WAKE FOREST",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#23 vs #4"
     },
     {
       "rank": 4,
-      "away": "TULANE",
-      "home": "GEORGIA STATE",
-      "time": "MON · 4:00 PM ET",
-      "hook": "MON KICKOFF"
+      "away": "GEORGIA",
+      "home": "CINCINNATI BEARCATS",
+      "time": "THU · 11:00 AM ET",
+      "hook": "RANKED #1 ON THE ROAD"
     },
     {
       "rank": 5,
-      "away": "SAN JOSÉ STATE",
-      "home": "LOYOLA CHICAGO RAMBLERS",
-      "time": "SUN · 11:59 PM ET",
-      "hook": "MON KICKOFF"
+      "away": "UCF",
+      "home": "GEORGIA",
+      "time": "FRI · 7:00 PM ET",
+      "hook": "RANKED #1 AT HOME"
     }
   ]
 };
