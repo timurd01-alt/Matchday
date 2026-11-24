@@ -5,7 +5,7 @@ from unittest.mock import patch
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from refresh_engine_scorecard import merge_scorecard
+from refresh_engine_scorecard import merge_scorecard, overdue_cards
 
 
 class RefreshScorecardTests(unittest.TestCase):
@@ -64,12 +64,31 @@ class RefreshScorecardTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 merge_scorecard(self.old, self.fresh, 'ncaam', self.now)
 
-    def test_refuses_overdue_but_allows_upcoming(self):
-        row = {'event_name': 'A at B', 'starts_at': '2026-11-10T23:00:00Z', 'result': 'pending'}
-        self.fresh['sports']['ncaam']['recent'] = [row]
-        with self.assertRaisesRegex(ValueError, 'Overdue'):
+    def _week(self, graded, overdue):
+        rows = [{'event_name': f'W{i}', 'starts_at': '2026-11-09T23:00:00Z', 'result': 'win'}
+                for i in range(graded)]
+        rows += [{'event_name': f'P{i}', 'starts_at': '2026-11-10T23:00:00Z', 'result': 'pending'}
+                 for i in range(overdue)]
+        self.fresh['sports']['ncaam']['recent'] = rows
+
+    def test_a_few_overdue_cards_publish_as_pending(self):
+        # 2026-11-15..23: one stuck exhibition froze the whole week's record.
+        self._week(graded=330, overdue=22)
+        card = merge_scorecard(self.old, self.fresh, 'ncaam', self.now)['scorecard']['sports']['ncaam']
+        self.assertEqual(sum(r['result'] == 'pending' for r in card['recent']), 22)
+        self._week(graded=0, overdue=10)
+        merge_scorecard(self.old, self.fresh, 'ncaam', self.now)
+
+    def test_a_pile_of_overdue_cards_blocks(self):
+        self._week(graded=50, overdue=11)
+        with self.assertRaisesRegex(ValueError, 'not settling'):
             merge_scorecard(self.old, self.fresh, 'ncaam', self.now)
-        row['starts_at'] = '2026-11-11T23:00:00Z'
+
+    def test_upcoming_and_old_pending_are_not_overdue(self):
+        self.fresh['sports']['ncaam']['recent'] = [
+            {'event_name': f'U{i}', 'starts_at': '2026-11-11T23:00:00Z', 'result': 'pending'} for i in range(20)
+        ] + [{'event_name': f'O{i}', 'starts_at': '2026-11-01T23:00:00Z', 'result': 'pending'} for i in range(20)]
+        self.assertEqual(overdue_cards(self.fresh['sports']['ncaam'], self.now), ([], 0))
         merge_scorecard(self.old, self.fresh, 'ncaam', self.now)
 
     def test_methodology_change_requires_full_export(self):
